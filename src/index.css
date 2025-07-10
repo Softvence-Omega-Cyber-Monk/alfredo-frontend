@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Grand+Hotel&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-primary-blue: #3174cd;
+  --color-primary-gray-bg: #f4f7fc;
+  --color-primary-border-color: #bfd4f0;
+
+  /* font  */
+  --font-DM-sans: "DM Sans", sans-serif;
+  --font-Grand-Hotel: "Grand Hotel", cursive;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-DM-sans);
+  }
+}
