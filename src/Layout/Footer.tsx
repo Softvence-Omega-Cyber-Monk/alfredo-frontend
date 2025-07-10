@@ -87,7 +87,7 @@ const Footer: React.FC = () => {
             <p className="text-sm mb-4">
               Subscribe to our newsletter to get the latest updates.
             </p>
-            <form className="flex">
+            <form className="flex-col lg:flex gap-4">
               <input
                 type="email"
                 placeholder="Your email"
@@ -95,7 +95,7 @@ const Footer: React.FC = () => {
               />
               <button
                 type="submit"
-                className="bg-[#124e66] text-[#d3d9d4] px-4 rounded-md hover:bg-[#124e66]/50"
+                className="bg-[#124e66] text-[#d3d9d4] px-4 h-[44px] rounded-md hover:bg-[#124e66]/50"
               >
                 Subscribe
               </button>
