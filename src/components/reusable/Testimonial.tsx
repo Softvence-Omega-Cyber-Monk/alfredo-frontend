@@ -1,20 +1,18 @@
 import CommonWrapper from "@/common/CommonWrapper";
 import testimonailPerson from "@/assets/testimonailPerson.jpg";
 import comma from "@/assets/comma.svg";
-import ClientHeading from "./ClientHeading";
 
 const Testimonial = () => {
   return (
     <div className="lg:h-[751px] lg:py-[140px]">
       <CommonWrapper>
         <div className="">
-          {/* <h1 className="text-[64px] text-[#505050] text-center">
+          <h1 className="text-[64px] text-[#505050] text-center">
             What Our Client{" "}
             <span className="font-Grand-Hotel text-[96px] text-primary-blue">
               Say
             </span>
-          </h1> */}
-          <ClientHeading headingText="What Our Client" spanText="Say" />
+          </h1>
           <p className="text-basic-dark text-center text-[24px] lg:w-[641px] mx-auto">
             A trusted community of verified homeowners and passionate travelers.
           </p>
