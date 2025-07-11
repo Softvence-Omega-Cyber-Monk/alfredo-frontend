@@ -21,7 +21,7 @@ const Subscribe = () => {
 
       {/* Content (positioned on top of overlay) */}
       <div className="w-full h-full backdrop-blur-[3px]">
-        <div className="relative z-10 flex flex-col md:flex-row max-w-[1000px] h-full mx-auto items-center gap-12 px-4 py-10 md:py-0 md:px-0">
+        <div className="relative z-10 flex flex-col md:flex-row max-w-[1000px] h-full mx-auto items-center gap-6 px-4 py-10 md:py-0 md:px-0">
           <div className="text-white text-center md:text-left mb-8 md:mb-0">
             <h1 className="text-3xl sm:text-4xl lg:text-[64px] leading-tight">
               Start Your Journey with{" "}
