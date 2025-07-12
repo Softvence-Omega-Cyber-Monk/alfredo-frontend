@@ -8,6 +8,7 @@
   --color-basic-dark: #808080;
   --color-primary-border-color: #bfd4f0;
   --color-dark-2: #505050;
+  --color-dark-3: #808080;
 
   /* font  */
   --font-DM-sans: "DM Sans", sans-serif;
@@ -21,4 +22,11 @@
   input::placeholder {
     color: #808080 !important;
   }
+}
+
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
 }
