@@ -1,12 +1,16 @@
-import CommonWrapper from "../common/CommonWrapper";
+import Banner from '../components/home/Banner';
+import CommunityStats from '../components/home/CommunityStats';
+import HowItWorks from '../components/home/HowItWorks';
+import Discover from '../components/home/Discover';
 
 const Home = () => {
   return (
-    <CommonWrapper>
-      <div className="h-screen bg-website-color-lightGreen">
-        <h1 className="font-Grand-Hotel text-6xl text-primary-blue">Say</h1>
-      </div>
-    </CommonWrapper>
+    <>
+    <Banner/>
+    <CommunityStats/>
+    <HowItWorks/>
+    <Discover/>
+    </>
   );
 };
 
