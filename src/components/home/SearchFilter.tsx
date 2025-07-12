@@ -1,4 +1,5 @@
 import { FaMapMarkerAlt, FaUser, FaHome, FaCalendarAlt } from "react-icons/fa";
+import PrimaryButton from '../reusable/PrimaryButton';
 
 const SearchFilter = () => {
   return (
@@ -89,12 +90,12 @@ const SearchFilter = () => {
 
           {/* Search Button */}
           <div className="w-full pt-4 sm:pt-0 sm:px-4 sm:col-span-2 lg:col-span-1 flex items-end">
-            <button className="w-full bg-primary-blue hover:bg-blue-600 text-white px-8 py-2 rounded-full transition-colors text-lg font-medium relative overflow-hidden">
-              <div className="absolute bottom-0 right-0 flex z-1 opacity-80 items-center justify-center overflow-hidden">
-                <img src="/buttonHomeIcon.svg" className="w-full" alt="" />
-              </div>
-              <p className="z-5">Search</p>
-            </button>
+            <PrimaryButton
+                title="Search"
+                textColor="text-white"
+                bgColor="bg-primary-blue"
+                borderColor=""
+                bgImage="/buttonHomeIcon.svg"/>
           </div>
         </div>
       </div>
