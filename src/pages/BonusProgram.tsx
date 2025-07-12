@@ -56,9 +56,9 @@ const BonusProgram: FC = () => {
                 alt=""
                 className="absolute top-0 right-10 w-[120px] opacity-25 rotate-[20deg] blur-[2px] translate-x-4 -translate-y-4 pointer-events-none select-none"
               />
-              <div className="relative z-10 text-left">
+              <div className="relative z-10 text-left max-[767px]:text-center">
                 <p
-                  className="text-[40px] md:text-[64px] font-semibold leading-none"
+                  className="text-[60px] md:text-[64px] font-semibold leading-none"
                   style={{ color: card.color }}
                 >
                   {card.amount}
@@ -77,7 +77,6 @@ const BonusProgram: FC = () => {
             </div>
           ))}
         </div>
-
         {/* Invite Blocks */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mx-auto mb-10">
           {inviteData.map((invite, index) => (
@@ -156,7 +155,6 @@ const BonusProgram: FC = () => {
             </li>
           </ul>
         </div>
-
         {/* Terms & Conditions Section */}
         <div className="mb-[140px] max-[767px]:mb-[80px]">
           <div className="border-b border-[#BFD4F0] pb-3 mb-6">
