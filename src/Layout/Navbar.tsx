@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useAppDispatch } from "@/hooks/useRedux";
 import { logout } from "@/store/Slices/AuthSlice/authSlice";
 import UserAvatar from "@/ui/UserAvatar";
+import CommonWrapper from "@/common/CommonWrapper";
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
@@ -26,103 +27,105 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-primary-blue shadow-lg">
-      <div className=" mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <Link to="/" className="text-white text-2xl font-bold">
-              MyApp
-            </Link>
-          </div>
+    <nav className="bg-primary-blue shadow-lg w-full">
+      <CommonWrapper>
+        <div className=" mx-auto px-4 lg:px-0 ">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <Link to="/" className="text-white text-2xl font-bold">
+                MyApp
+              </Link>
+            </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-4">
-            <Link
-              to="/"
-              className="text-white hover:bg-website-color-lightGray hover:text-black px-3 py-2 rounded-md text-sm font-medium"
-            >
-              Home
-            </Link>
-            <Link
-              to="/faq"
-              className="text-white hover:bg-website-color-lightGray hover:text-black px-3 py-2 rounded-md text-sm font-medium"
-            >
-              FAQ
-            </Link>
-            <Link
-              to="/articles"
-              className="text-white hover:bg-website-color-lightGray hover:text-black px-3 py-2 rounded-md text-sm font-medium"
-            >
-              Articles
-            </Link>
-            <Link
-              to="/contact"
-              className="text-white hover:bg-website-color-lightGray hover:text-black px-3 py-2 rounded-md text-sm font-medium"
-            >
-              Contact Us
-            </Link>
-            <Link
-              to="/bonus-program"
-              className="text-white hover:bg-website-color-lightGray hover:text-black px-3 py-2 rounded-md text-sm font-medium"
-            >
-              Bonus Program
-            </Link>
-            <Link
-              to="/plans"
-              className="text-white hover:bg-website-color-lightGray hover:text-black px-3 py-2 rounded-md text-sm font-medium"
-            >
-              Plan
-            </Link>
-
-            <Popover>
-              <PopoverTrigger>
-                <UserAvatar userName="Mahim" />
-              </PopoverTrigger>
-              <PopoverContent className="mr-3 bg-website-color-darkGray border-none text-white">
-                <Button
-                  onClick={handleLogout}
-                  className="bg-website-color-lightGray text-black w-full"
-                >
-                  Logout
-                </Button>
-              </PopoverContent>
-            </Popover>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={toggleMenu}
-              type="button"
-              className="text-white hover:text-gray-300 focus:outline-none"
-            >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+            {/* Desktop Menu */}
+            <div className="hidden md:flex space-x-4">
+              <Link
+                to="/"
+                className="text-white hover:bg-website-color-lightGray hover:text-black px-3 py-2 rounded-md text-sm font-medium"
               >
-                {isOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16m-7 6h7"
-                  />
-                )}
-              </svg>
-            </button>
+                Home
+              </Link>
+              <Link
+                to="/faq"
+                className="text-white hover:bg-website-color-lightGray hover:text-black px-3 py-2 rounded-md text-sm font-medium"
+              >
+                FAQ
+              </Link>
+              <Link
+                to="/articles"
+                className="text-white hover:bg-website-color-lightGray hover:text-black px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Articles
+              </Link>
+              <Link
+                to="/contact"
+                className="text-white hover:bg-website-color-lightGray hover:text-black px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Contact Us
+              </Link>
+              <Link
+                to="/bonus-program"
+                className="text-white hover:bg-website-color-lightGray hover:text-black px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Bonus Program
+              </Link>
+              <Link
+                to="/plans"
+                className="text-white hover:bg-website-color-lightGray hover:text-black px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Plan
+              </Link>
+
+              <Popover>
+                <PopoverTrigger>
+                  <UserAvatar userName="Mahim" />
+                </PopoverTrigger>
+                <PopoverContent className="mr-3 bg-website-color-darkGray border-none text-white">
+                  <Button
+                    onClick={handleLogout}
+                    className="bg-website-color-lightGray text-black w-full"
+                  >
+                    Logout
+                  </Button>
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden flex items-center">
+              <button
+                onClick={toggleMenu}
+                type="button"
+                className="text-white hover:text-gray-300 focus:outline-none"
+              >
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  {isOpen ? (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  ) : (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16m-7 6h7"
+                    />
+                  )}
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </CommonWrapper>
 
       {/* Mobile Menu */}
       {isOpen && (
@@ -135,23 +138,44 @@ const Navbar: React.FC = () => {
               Home
             </Link>
             <Link
-              to="/about"
+              to="/faq"
               className="text-white block hover:bg-purple-700 px-3 py-2 rounded-md text-base font-medium"
             >
-              About
+              FAQ
             </Link>
             <Link
-              to="/services"
+              to="/articles"
               className="text-white block hover:bg-purple-700 px-3 py-2 rounded-md text-base font-medium"
             >
-              Services
+              Articles
             </Link>
             <Link
               to="/contact"
               className="text-white block hover:bg-purple-700 px-3 py-2 rounded-md text-base font-medium"
             >
-              Contact
+              Contact Us
             </Link>
+            <Link
+              to="/bonus-program"
+              className="text-white block hover:bg-purple-700 px-3 py-2 rounded-md text-base font-medium"
+            >
+              Bonus Program
+            </Link>
+            <Link
+              to="/plans"
+              className="text-white block hover:bg-purple-700 px-3 py-2 rounded-md text-base font-medium"
+            >
+              Plan
+            </Link>
+
+            <div className="mt-8 flex items-center gap-4">
+              <button className="bg-white w-[150px] py-2 rounded-full">
+                Login
+              </button>
+              <button className="bg-white w-[150px] py-2 rounded-full">
+                Join Us
+              </button>
+            </div>
           </div>
         </div>
       )}
