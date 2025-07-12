@@ -7,7 +7,11 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className=" border border-t-black ">
+    <footer className="relative border border-t-black ">
+
+      <div className="absolute bottom-0 right-0 flex -z-5 opacity-70 items-center justify-center">
+        <img src="/homeIcon.svg" className="w-full" alt="" />
+      </div>
       {/* Overlay for better text readability */}
 
       <div className="max-w-7xl mx-auto pt-10 px-4">
