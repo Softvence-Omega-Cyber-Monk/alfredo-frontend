@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <footer className="relative border border-t-black ">
 
-      <div className="absolute bottom-0 right-0 flex -z-5 opacity-70 items-center justify-center">
+      <div className="absolute bottom-0 right-0 flex -z-5 opacity-80 items-center justify-center">
         <img src="/homeIcon.svg" className="w-full" alt="" />
       </div>
       {/* Overlay for better text readability */}
@@ -128,7 +128,7 @@ const Footer = () => {
       </div>
       {/* Footer Bottom Section */}
       <div className="relative text-center py-6 md:py-8 lg:py-10 text-dark-2 font-normal text-base">
-        <div className="absolute inset-0 -z-10 backdrop-blur-[50px] bg-gradient-to-b from-white via-[rgba(255,255,255,0.5)] via-40% to-[rgba(49,116,205,0.4)]"></div>
+        <div className="absolute inset-0 -z-10 backdrop-blur-[50px] bg-gradient-to-b from-white via-[rgba(255,255,255,0.5)] via-50%  to-[rgba(49,116,205,0.3)]"></div>
         <p>Copyright WP Estate. All Rights Reserved.</p>
       </div>
     </footer>
