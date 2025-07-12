@@ -1,13 +1,12 @@
 import facebook from "../assets/footer/fb.svg";
 import instagram from "../assets/footer/instagram.svg";
 import linkedin from "../assets/footer/linkedin.svg";
-import cityscape from "../assets/footer/cityscape.svg";
 
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="relative border border-t-black ">
+    <footer className="relative ">
 
       <div className="absolute bottom-0 right-0 flex -z-5 opacity-80 items-center justify-center">
         <img src="/homeIcon.svg" className="w-full" alt="" />
@@ -16,7 +15,7 @@ const Footer = () => {
 
       <div className="max-w-7xl mx-auto pt-10 px-4">
         <div className="max-w-[1132px] mx-auto -mb-2">
-          <img src={cityscape} alt="" className="w-full mx-auto" />
+          <img src="/cityscape.svg" alt="" className="w-full mx-auto" />
         </div>
 
         <div
