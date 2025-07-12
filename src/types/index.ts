@@ -14,3 +14,12 @@ export interface User {
     component: React.ComponentType;
     exact?: boolean;
   };
+
+  // Contact page type 
+  export type FormData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  message: string;
+};
