@@ -1,65 +1,83 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+import { useState, useRef } from "react";
+import icn from "../../assets/Vector.svg"; // your SVG icon
 
-const AccordionComponent = () => {
-    return (
-        <div>
-            <Accordion
-                type="single"
-                collapsible
-                className="w-full"
-                defaultValue="item-1"
-            >
-                <AccordionItem value="item-1">
-                    <AccordionTrigger>Product Information</AccordionTrigger>
-                    <AccordionContent className="flex flex-col gap-4 text-balance">
-                        <p>
-                            Our flagship product combines cutting-edge technology with sleek
-                            design. Built with premium materials, it offers unparalleled
-                            performance and reliability.
-                        </p>
-                        <p>
-                            Key features include advanced processing capabilities, and an
-                            intuitive user interface designed for both beginners and experts.
-                        </p>
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-2">
-                    <AccordionTrigger>Shipping Details</AccordionTrigger>
-                    <AccordionContent className="flex flex-col gap-4 text-balance">
-                        <p>
-                            We offer worldwide shipping through trusted courier partners.
-                            Standard delivery takes 3-5 business days, while express shipping
-                            ensures delivery within 1-2 business days.
-                        </p>
-                        <p>
-                            All orders are carefully packaged and fully insured. Track your
-                            shipment in real-time through our dedicated tracking portal.
-                        </p>
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-3">
-                    <AccordionTrigger>Return Policy</AccordionTrigger>
-                    <AccordionContent className="flex flex-col gap-4 text-balance">
-                        <p>
-                            We stand behind our products with a comprehensive 30-day return
-                            policy. If you&apos;re not completely satisfied, simply return the
-                            item in its original condition.
-                        </p>
-                        <p>
-                            Our hassle-free return process includes free return shipping and
-                            full refunds processed within 48 hours of receiving the returned
-                            item.
-                        </p>
-                    </AccordionContent>
-                </AccordionItem>
-            </Accordion>
-        </div>
-    )
+interface AccordionItem {
+  title: string;
+  content: string;
 }
+
+interface AccordionProps {
+  items: AccordionItem[];
+  allowMultipleOpen?: boolean;
+}
+
+const AccordionComponent: React.FC<AccordionProps> = ({
+  items,
+  allowMultipleOpen = false,
+}) => {
+  const [openIndexes, setOpenIndexes] = useState<number[]>([]);
+  const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const toggleIndex = (index: number) => {
+    if (allowMultipleOpen) {
+      setOpenIndexes((prev) =>
+        prev.includes(index)
+          ? prev.filter((i) => i !== index)
+          : [...prev, index]
+      );
+    } else {
+      setOpenIndexes(openIndexes[0] === index ? [] : [index]);
+    }
+  };
+
+  return (
+    <div className="w-full flex flex-col gap-8">
+      {items.map((item, index) => {
+        const isOpen = openIndexes.includes(index);
+        return (
+          <div key={index} className="w-full">
+            {/* Title Row */}
+            <button
+              onClick={() => toggleIndex(index)}
+              className="w-full flex justify-between items-center text-left cursor-pointer gap-4"
+              aria-expanded={isOpen}
+              aria-controls={`accordion-content-${index}`}
+              id={`accordion-header-${index}`}
+            >
+              <div className="flex items-start gap-2 text-[20px] md:text-[24px] lg:text-[24px] text-basic-dark">
+                <span>{index + 1}.</span>
+                <span>{item.title}</span>
+              </div>
+              <img
+                src={icn}
+                alt="arrow"
+                className={`h-6 w-6 transition-transform duration-300 ${isOpen ? "rotate-180" : ""
+                  }`}
+              />
+            </button>
+
+            {/* Content */}
+            <div
+              ref={(el) => {
+                contentRefs.current[index] = el;
+              }}
+              id={`accordion-content-${index}`}
+              role="region"
+              aria-labelledby={`accordion-header-${index}`}
+              style={{
+                maxHeight: isOpen
+                  ? contentRefs.current[index]?.scrollHeight + "px"
+                  : "0px",
+              }}
+              className="overflow-hidden transition-[max-height] duration-300 text-basic-dark text-[18px] leading-relaxed pt-4"
+            >
+              <p className="">{item.content}</p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 export default AccordionComponent;

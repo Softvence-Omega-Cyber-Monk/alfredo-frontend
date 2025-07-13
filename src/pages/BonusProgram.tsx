@@ -1,3 +1,4 @@
+import { FC, useRef } from "react";
 import CommonWrapper from "@/common/CommonWrapper";
 import { cardData, inviteData } from "@/lib/bonusData";
 import { FiCopy } from "react-icons/fi";
@@ -8,8 +9,19 @@ import { Link } from "react-router-dom";
 import Conversation from "@/components/reusable/Conversation";
 import Subscribe from "@/components/reusable/Subscribe";
 import AccordionComponent from "@/components/reusable/AccordionComponent";
+import { bonus } from "@/lib/AccordionData/accordionData";
+import ReusableButton from "@/components/reusable/ReusableButton";
 
-const BonusProgram = () => {
+const BonusProgram : FC = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleCopy = () => {
+    if (inputRef.current) {
+      navigator.clipboard.writeText(inputRef.current.value);
+    }
+  };
+
+
   return (
     <div>
       <CommonWrapper>
@@ -80,10 +92,7 @@ const BonusProgram = () => {
                 </h2>
                 <ul className="list-disc pl-6 space-y-2">
                   {invite.points.map((point, idx) => (
-                    <li
-                      key={idx}
-                      className="text-[18px] text-basic-dark"
-                    >
+                    <li key={idx} className="text-[18px] text-basic-dark">
                       {point}
                     </li>
                   ))}
@@ -104,17 +113,20 @@ const BonusProgram = () => {
             </p>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 justify-center mt-[20px]">
               <input
+                ref={inputRef}
                 className="w-3/4 border border-primary-border-color py-3 px-4 rounded-[25px] text-[16px] text-basic-dark bg-white"
                 type="text"
                 value="vacanza.com/r/yourname"
                 readOnly
               />
-              <button
+              <ReusableButton
                 type="button"
-                className="w-full sm:w-auto py-3 px-6 rounded-full bg-primary-blue text-white flex items-center justify-center hover:bg-primary-dark transition cursor-pointer"
+                onClick={handleCopy}
+                className="w-full sm:w-auto py-3 px-6 flex items-center justify-center gap-2"
               >
-                <FiCopy size={20} className="mr-2" /> Copy
-              </button>
+                <FiCopy size={20} />
+                Copy
+              </ReusableButton>
             </div>
           </div>
         </div>
@@ -134,7 +146,8 @@ const BonusProgram = () => {
               </Link>
             </li>
             <li>
-              <Link to="/"
+              <Link
+                to="/"
                 className="font-regular lg:text-xl flex gap-2 items-center"
               >
                 <img src={insta} alt="" className="w-8 h-8" />
@@ -153,9 +166,11 @@ const BonusProgram = () => {
 
         {/* terms & condition section  */}
         <div className="mb-[140px]">
-          <h2 className="font-semibold text-[20px] text-primary-blue mb-6 leading-[130%]">
-            Terms and Conditions
-          </h2>
+          <div className="border-b border-[#BFD4F0] pb-3 mb-6">
+            <h2 className="font-semibold text-[20px] text-primary-blue leading-[130%]">
+              Terms and Conditions
+            </h2>
+          </div>
           <ul className="list-disc list-outside pl-6 space-y-3">
             {[
               "The referral bonus is granted only when the referred friend signs up through your unique referral link.",
@@ -174,7 +189,9 @@ const BonusProgram = () => {
             ))}
           </ul>
         </div>
-        <AccordionComponent/>
+        <div className="lg:w-3/4 md:w-3/4 mx-auto">
+          <AccordionComponent items={bonus} />
+        </div>
         <div className="my-[150px]">
           <Conversation />
         </div>

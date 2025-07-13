@@ -1,6 +1,7 @@
 import CommonWrapper from "@/common/CommonWrapper";
 import ClientHeading from "@/components/reusable/ClientHeading";
 import Conversation from "@/components/reusable/Conversation";
+import ReusableButton from "@/components/reusable/ReusableButton";
 import Subscribe from "@/components/reusable/Subscribe";
 import { FormData } from "@/types";
 import { useForm } from "react-hook-form";
@@ -145,12 +146,13 @@ const Contact = () => {
               </div>
 
               {/* Submit */}
-              <button
+              <ReusableButton
                 type="submit"
-                className="text-[18px] md:text-[24px] w-full bg-primary-blue text-white font-semibold py-2 px-6 rounded-full"
+                className="text-[18px] md:text-[24px] w-full font-semibold py-6 px-6 rounded-full"
               >
                 Book Now
-              </button>
+              </ReusableButton>
+
             </form>
           </div>
         </div>
