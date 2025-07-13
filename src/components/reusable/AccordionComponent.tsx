@@ -39,19 +39,20 @@ const AccordionComponent: React.FC<AccordionProps> = ({
             {/* Title Row */}
             <button
               onClick={() => toggleIndex(index)}
-              className="w-full flex justify-between items-center text-left cursor-pointer"
+              className="w-full flex justify-between items-center text-left cursor-pointer gap-4"
               aria-expanded={isOpen}
               aria-controls={`accordion-content-${index}`}
               id={`accordion-header-${index}`}
             >
-              <div className="flex items-center gap-2 text-[20px] md:text-[24px] lg:text-[24px] text-basic-dark">
+              <div className="flex items-start gap-2 text-[20px] md:text-[24px] lg:text-[24px] text-basic-dark">
                 <span>{index + 1}.</span>
                 <span>{item.title}</span>
               </div>
               <img
                 src={icn}
                 alt="arrow"
-                className={`h-6 w-6 transition-transform duration-300 ${isOpen ? "rotate-180" : ""} max-[767px]:h-5 max-[767px]:w-5`}
+                className={`h-6 w-6 transition-transform duration-300 ${isOpen ? "rotate-180" : ""
+                  }`}
               />
             </button>
 
