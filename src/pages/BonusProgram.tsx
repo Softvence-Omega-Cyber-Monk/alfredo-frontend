@@ -12,7 +12,7 @@ import AccordionComponent from "@/components/reusable/AccordionComponent";
 import { bonus } from "@/lib/AccordionData/accordionData";
 import ReusableButton from "@/components/reusable/ReusableButton";
 
-const BonusProgram: FC = () => {
+const BonusProgram : FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleCopy = () => {
@@ -90,10 +90,7 @@ const BonusProgram: FC = () => {
                 </h2>
                 <ul className="list-disc pl-6 space-y-2">
                   {invite.points.map((point, idx) => (
-                    <li
-                      key={idx}
-                      className="text-[18px] text-basic-dark max-[767px]:text-sm"
-                    >
+                    <li key={idx} className="text-[18px] text-basic-dark">
                       {point}
                     </li>
                   ))}
@@ -116,7 +113,7 @@ const BonusProgram: FC = () => {
             <div className="flex flex-col sm:flex-row sm:items-center items-center gap-4 justify-center mt-[20px]">
               <input
                 ref={inputRef}
-                className="w-full sm:w-3/4 border border-primary-border-color py-3 px-4 rounded-[25px] text-[16px] text-basic-dark bg-white"
+                className="w-3/4 border border-primary-border-color py-3 px-4 rounded-[25px] text-[16px] text-basic-dark bg-white"
                 type="text"
                 value="vacanza.com/r/yourname"
                 readOnly
@@ -154,11 +151,7 @@ const BonusProgram: FC = () => {
                 to="/"
                 className="font-regular lg:text-xl flex gap-2 items-center"
               >
-                <img
-                  src={insta}
-                  alt="instagram"
-                  className="w-8 h-8 max-[767px]:w-6 max-[767px]:h-6"
-                />
+                <img src={insta} alt="" className="w-8 h-8" />
               </Link>
             </li>
             <li>
@@ -175,8 +168,9 @@ const BonusProgram: FC = () => {
             </li>
           </ul>
         </div>
-        {/* Terms & Conditions Section */}
-        <div className="mb-[140px] max-[767px]:mb-[80px]">
+
+        {/* terms & condition section  */}
+        <div className="mb-[140px]">
           <div className="border-b border-[#BFD4F0] pb-3 mb-6">
             <h2 className="font-semibold text-[20px] text-primary-blue leading-[130%]">
               Terms and Conditions
@@ -200,14 +194,10 @@ const BonusProgram: FC = () => {
             ))}
           </ul>
         </div>
-
-        {/* Accordion Section */}
-        <div className="lg:w-3/4 md:w-3/4 w-full mx-auto px-4">
+        <div className="lg:w-3/4 md:w-3/4 mx-auto">
           <AccordionComponent items={bonus} />
         </div>
-
-        {/* Conversation Section */}
-        <div className="my-[150px] px-4">
+        <div className="my-[150px]">
           <Conversation />
         </div>
       </CommonWrapper>

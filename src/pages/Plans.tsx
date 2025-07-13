@@ -7,8 +7,10 @@ import Subscribe from "@/components/reusable/Subscribe";
 import { bonus } from "@/lib/AccordionData/accordionData";
 import { MembershipStage } from "@/types";
 import { FC } from "react";
+// import element from "../assets/plans/elements.svg";
 
 const Plans: FC = () => {
+
   const membershipStages: MembershipStage[] = [
     { title: "New Member", subtitle: "1st Year", completed: true },
     { title: "Bronze Member", subtitle: "2nd Year", completed: true },
@@ -48,70 +50,49 @@ const Plans: FC = () => {
   return (
     <div>
       <CommonWrapper>
-        <div className="mt-16 max-[767px]:mt-8">
-          <ClientHeading headingText="our" spanText="plans" />
-          <p className="text-[24px] sm:text-[24px] text-center text-basic-dark max-sm:text-[16px] max-sm:leading-[24px]">
-            Flexible membership options designed to fit every traveler’s needs—
-            <br className="hidden sm:block" />
-            whether you exchange once a year or every month.
-          </p>
-        </div>
+      <div className="mt-[64px]">
+        <ClientHeading headingText="our" spanText="plans" />
+        <p className="text-[24px] not-italic font-normal text-center text-basic-dark max-[767px]:text-[18px] max-[767px]:leading-[28px]">
+          Flexible membership options designed to fit every traveler’s needs— <br />
+          whether you exchange once a year or every month.
+        </p>
+      </div>
+      <div className="mt-[80px]">
+        <ServicePlan />
+      </div>
+      <div className="mt-[140px]">
+        <h2 className="text-[24px] font-semibold text-primary-blue mb-[24px]">Rewards for Your Continued Trust</h2>
+        <h4 className="text-[24px] font-semibold text-[#505050]">Enjoy Loyalty Discounts, Extra GuestPoints, and an Exclusive Badge</h4>
+        <p className="text-[24px] text-[#808080] mt-4 mb-6">Our experts are available to answer any questions you might have. We’ve got the answers.</p>
 
-        <div className="mt-20">
-          <ServicePlan />
-        </div>
-
-        <div className="mt-36 max-sm:mt-16">
-          <h2 className="text-[20px] sm:text-[24px] font-semibold text-primary-blue mb-6">
-            Rewards for Your Continued Trust
-          </h2>
-          <h4 className="text-[18px] sm:text-[24px] font-semibold text-[#505050]">
-            Enjoy Loyalty Discounts, Extra GuestPoints, and an Exclusive Badge
-          </h4>
-          <p className="text-[16px] sm:text-[24px] text-[#808080] mt-4 mb-6">
-            Our experts are available to answer any questions you might have. We’ve got the answers.
-          </p>
-
-          <div className="flex items-center gap-0 overflow-x-auto bg-[#FFFAE8] py-8 rounded-3xl mt-6 scrollbar-hide">
-            {membershipStages.map((stage, index) => (
-              <div key={index} className="relative flex items-center flex-shrink-0">
-                <div className="flex flex-col items-center min-w-[100px]">
-                  <div className="relative">
-                    {stage.completed ? <CompletedStar /> : <IncompleteStar />}
-                    <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[16px] sm:text-[20px] font-bold text-[#DC091E]">
-                      {index + 1}
-                    </span>
-                  </div>
-                  <p className="text-sm font-semibold text-center mt-2 whitespace-nowrap">{stage.title}</p>
-                  <p className="text-xs text-gray-500 text-center">{stage.subtitle}</p>
+        <div className="flex items-center justify-center gap-0 overflow-x-auto bg-[#FFFAE8] px-[24px] py-[32px] rounded-[24px] mt-[24px]">
+          {membershipStages.map((stage, index) => (
+            <div key={index} className="relative flex items-center">
+              <div className="flex flex-col items-center">
+                <div className="relative">
+                  {stage.completed ? <CompletedStar /> : <IncompleteStar />}
+                  <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20px] font-bold text-[#DC091E]">
+                    {index + 1}
+                  </span>
                 </div>
-                {index < membershipStages.length - 1 && (
-                  <div
-                    className="w-[40px] sm:w-[80px] h-[4px] mx-1 rounded-full"
-                    style={{
-                      marginTop: "-24px",
-                      background: stage.completed
-                        ? "linear-gradient(90deg, #FF2323, #FFA600)"
-                        : "rgba(128, 128, 128, 0.2)",
-                    }}
-                  />
-                )}
+                <p className="text-sm font-semibold text-center mt-2">{stage.title}</p>
+                <p className="text-xs text-gray-500 text-center">{stage.subtitle}</p>
               </div>
-            ))}
-          </div>
-          <div className="text-center text-sm text-gray-400 mt-2 sm:hidden">← Swipe to explore →</div>
+              {index < membershipStages.length - 1 && (
+                <div className="w-[80px] h-[4px] mx-1 rounded-full" style={{ marginTop: "-24px", background: stage.completed ? "linear-gradient(90deg, #FF2323, #FFA600)" : "rgba(128, 128, 128, 0.2)" }}></div>
+              )}
+            </div>
+          ))}
         </div>
-
-        <div className="lg:w-3/4 md:w-3/4 w-full mx-auto mt-[117px] max-sm:mt-[60px]">
+      </div>
+       <div className="lg:w-3/4 md:w-3/4 mx-auto mt-[117px]">
           <AccordionComponent items={bonus} />
         </div>
-
-        <div className="my-[150px] max-sm:my-[80px]">
+        <div className="my-[150px]">
           <Conversation />
         </div>
-      </CommonWrapper>
-
-      <Subscribe />
+    </CommonWrapper>
+    <Subscribe/>
     </div>
   );
 };
