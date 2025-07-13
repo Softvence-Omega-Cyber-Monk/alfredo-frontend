@@ -7,22 +7,31 @@ interface PrimaryButtonProps {
   textColor?: string;
   bgColor?: string;
   borderColor?: string;
+  padding?: string;
+  onClick?: () => void;
+  className?: string;
 }
 
 const PrimaryButton: React.FC<PrimaryButtonProps> = ({
   title,
-  bgImage="/buttonHomeIcon.svg",
+  bgImage = "/buttonHomeIcon.svg",
   textColor = "text-white",
   bgColor = "bg-primary-blue",
   borderColor = "",
+  padding = "px-8 py-2",
+  onClick,
+  className,
 }) => {
   return (
     <button
+      onClick={onClick}
       className={clsx(
-        "relative overflow-hidden px-8 py-2 rounded-full transition-colors text-lg font-medium",
+        "relative overflow-hidden rounded-full transition-colors text-lg font-medium cursor-pointer",
+        padding,
         textColor,
         bgColor,
-        borderColor && `border ${borderColor}`
+        borderColor && `border ${borderColor}`,
+        className
       )}
     >
       <span className="relative z-10">{title}</span>
