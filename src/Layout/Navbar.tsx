@@ -12,8 +12,11 @@ import UserAvatar from "@/ui/UserAvatar";
 import CommonWrapper from "@/common/CommonWrapper";
 import { navigationConfig, userMenuItems } from "@/config/navigationConfig";
 import clsx from "clsx";
-import PrimaryButton from '../components/reusable/PrimaryButton';
-import { Menu } from 'lucide-react';
+import PrimaryButton from "../components/reusable/PrimaryButton";
+import { Menu } from "lucide-react";
+import messageIcon from "@/assets/icons/message-multiple-02.svg";
+import arrow from "@/assets/icons/arrowdown.svg";
+
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
@@ -68,10 +71,19 @@ const Navbar: React.FC = () => {
 
             {/* Auth Buttons */}
             <div className="hidden lg:block">
-              {isAuthenticated ? (
+              {!isAuthenticated ? (
                 <Popover>
                   <PopoverTrigger>
-                    <UserAvatar userName={user?.name || "User"} />
+                    <div className="bg-white rounded-2xl p-2 flex items-center gap-3">
+                      <div className="p-2.5 rounded-full bg-white shadow-[0_0_10px_0_#B9D7FF]">
+                        <img src={messageIcon} className="w-6 h-6" alt="" />
+                      </div>
+                      <UserAvatar userName={user?.name || "User"} />
+                      <p className="text-primary-blue font-medium text-lg">Jon Don</p>
+                      <div className="p-2">
+                        <img src={arrow} alt="" />
+                      </div>
+                    </div>
                   </PopoverTrigger>
                   <PopoverContent className="mr-3 bg-website-color-darkGray border-none text-white w-48">
                     {userMenuItems.map((item) => (
@@ -107,7 +119,6 @@ const Navbar: React.FC = () => {
                     onClick={() => navigate("/login")}
                     textColor="text-white"
                     bgColor="bg-primary-blue"
-                      
                   />
                 </div>
               )}
