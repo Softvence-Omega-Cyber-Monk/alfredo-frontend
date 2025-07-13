@@ -34,7 +34,7 @@ const OwnerInfo = ({
   owner,
   callToAction,
   isPremiumMember = false,
-  onSubscribeClick,
+//   onSubscribeClick,
 }: OwnerInfoProps) => {
   return (
     <div className="relative p-6 border border-[#F4F7FC] rounded-lg md:rounded-3xl bg-white">

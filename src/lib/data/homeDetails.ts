@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Wifi,
   Tv,
@@ -30,7 +31,7 @@ export interface HomeDetailsType {
     alt: string;
   }[];
   features: {
-    icon: any;
+    icon: React.ElementType;
     label: string;
     value: string;
   }[];
@@ -40,17 +41,17 @@ export interface HomeDetailsType {
   };
   amenities: {
     main: {
-      icon: any;
+      icon: React.ElementType;
       title: string;
       items: string[];
     }[];
     transport: {
-      icon: any;
+      icon: React.ElementType;
       title: string;
       items: string[];
     }[];
     surrounding: {
-      icon: any;
+      icon: React.ElementType;
       title: string;
       items: string[];
     }[];
@@ -61,11 +62,11 @@ export interface HomeDetailsType {
     email: string;
     location: string;
     badges: {
-      icon: any;
+      icon: React.ElementType;
       color: string;
     }[];
     verifications: {
-      icon: any;
+      icon: React.ElementType;
       text: string;
       bgColor: string;
       iconColor: string;

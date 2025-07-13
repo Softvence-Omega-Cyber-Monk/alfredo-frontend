@@ -4,8 +4,8 @@ import ClientHeading from "../reusable/ClientHeading";
 import CommonCard from "../reusable/CommonCard";
 import cardImg from "@/assets/home/cardImg.jpg";
 import cardAvatar from "@/assets/home/cardAvatar.jpg";
-import PrimaryButton from '../reusable/PrimaryButton';
-
+import PrimaryButton from "../reusable/PrimaryButton";
+import { useNavigate } from 'react-router-dom';
 
 const propertyCards = [
   {
@@ -103,6 +103,8 @@ const propertyCards = [
 ];
 
 const FutureList = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="px-4">
       <CommonWrapper>
@@ -113,15 +115,19 @@ const FutureList = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 px-4">
           {propertyCards.map((card, index) => (
-            <CommonCard key={index} {...card} />
+            <CommonCard
+              key={index}
+              {...card}
+              onViewDetails={() => {
+                navigate(`/home-details/${index}`);
+              }}
+            />
           ))}
-
-          
         </div>
         <div className="mt-8 flex justify-center">
-            <PrimaryButton
-            title="Explore All  "
-            onClick={() => console.log("View All Clicked")}
+          <PrimaryButton
+            title="Explore All"
+            onClick={() => navigate('/properties')}
           />
         </div>
       </CommonWrapper>

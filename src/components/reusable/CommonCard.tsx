@@ -25,7 +25,7 @@ interface CommonCardProps {
   price: number;
   priceUnit?: string;
   features: PropertyFeatures;
-  
+  onViewDetails?: () => void;
 }
 
 const CommonCard: React.FC<CommonCardProps> = ({
@@ -38,7 +38,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
   price,
   priceUnit = "/mt",
   features,
-
+  onViewDetails,
 }) => {
   return (
     <div className="p-3 rounded-3xl bg-[#F4F7FC]">
@@ -126,11 +126,14 @@ const CommonCard: React.FC<CommonCardProps> = ({
       </div>
 
       {/* Action Button */}
-      <PrimaryButton title= "View Details"
-      textColor= "text-primary-blue"
-      bgColor= "bg-[#F4F7FC] w-full"
-      borderColor="border-2 border-primary-blue"
-      bgImage= "/cardButtonHome.svg" />
+      <PrimaryButton
+        title="View Details"
+        textColor="text-primary-blue"
+        bgColor="bg-[#F4F7FC] w-full"
+        borderColor="border-2 border-primary-blue"
+        bgImage="/cardButtonHome.svg"
+        onClick={onViewDetails}
+      />
     </div>
   );
 };
