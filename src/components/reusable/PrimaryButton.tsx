@@ -7,6 +7,7 @@ interface PrimaryButtonProps {
   textColor?: string;
   bgColor?: string;
   borderColor?: string;
+  padding?: string;
 }
 
 const PrimaryButton: React.FC<PrimaryButtonProps> = ({
@@ -15,11 +16,13 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
   textColor = "text-white",
   bgColor = "bg-primary-blue",
   borderColor = "",
+  padding = "px-8 py-2",
 }) => {
   return (
     <button
       className={clsx(
-        "relative overflow-hidden px-8 py-2 rounded-full transition-colors text-lg font-medium",
+        "relative overflow-hidden  rounded-full transition-colors text-lg font-medium",
+        padding,
         textColor,
         bgColor,
         borderColor && `border ${borderColor}`

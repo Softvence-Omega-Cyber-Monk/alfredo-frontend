@@ -20,7 +20,7 @@ interface AmenitiesProps {
 const Amenities: React.FC<AmenitiesProps> = ({ amenities }) => {
   return (
     <div className="py-8">
-      <h2 className="font-semibold text-primary-blue text-2xl font-regular mb-6">
+      <h2 className="font-semibold text-primary-blue text-xl md:text-2xl font-regular mb-6">
         Amenities
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -29,7 +29,7 @@ const Amenities: React.FC<AmenitiesProps> = ({ amenities }) => {
         ))}
       </div>
 
-      <h2 className="font-semibold text-primary-blue text-2xl font-regular mt-10 mb-6">
+      <h2 className="font-semibold text-primary-blue text-xl md:text-2xl font-regular mt-10 mb-6">
         Means of Transport
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -38,7 +38,7 @@ const Amenities: React.FC<AmenitiesProps> = ({ amenities }) => {
         ))}
       </div>
 
-      <h2 className="font-semibold text-primary-blue text-2xl font-regular mt-10 mb-6">
+      <h2 className="font-semibold text-primary-blue text-xl md:text-2xl font-regular mt-10 mb-6">
         What's surrounding your home?
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">

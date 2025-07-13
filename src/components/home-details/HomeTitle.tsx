@@ -14,7 +14,7 @@ const features = [
   { icon: Bath, label: "Baths",  value: "2 Baths",  },
   { icon: SquareArrowOutUpRight, label: "Area", value: "250 sqf", }
 ];
-
+const isPremiumMember:boolean = true; // This should be replaced with actual premium status from your auth context or state
 const HomeTitle = () => {
   return (
     <div>
@@ -23,13 +23,22 @@ const HomeTitle = () => {
           Home title Beautiful Beach House
         </h1>
         <div className="flex items-center justify-end gap-2">
-          <PrimaryButton
+          {isPremiumMember ? (
+
+            <PrimaryButton
+            title="Chat With"
+
+            />
+          ):(
+
+            <PrimaryButton
             title="Chat With"
             textColor="text-[#8B8B8B]"
             bgColor="bg-[#DEDEDE]"
             borderColor=""
             bgImage="/buttonHomeWhite.svg"
-          />
+            />
+          )}
 
           <div className="text-primary-blue bg-white shadow-[0px_0px_10px_0px_#B9D7FF] p-2 rounded-full cursor-pointer">
             <Share2 className="" />
