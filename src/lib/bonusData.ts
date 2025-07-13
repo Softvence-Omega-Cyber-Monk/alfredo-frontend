@@ -1,8 +1,9 @@
 import made from "../assets/bonus/made.png";
 import earn from "../assets/bonus/earn.png";
 import bonus from "../assets/bonus/bonus.png";
+import { Card, InviteDataItem } from "@/types";
 
-export const cardData = [
+export const cardData: Card[] = [
     {
         title: "Total referrals",
         titleSub: "made",
@@ -34,7 +35,7 @@ export const cardData = [
     },
 ];
 
-export const inviteData = [
+export const inviteData: InviteDataItem[] = [
   {
     headTitle: "Invite 1 Person",
     points: [
