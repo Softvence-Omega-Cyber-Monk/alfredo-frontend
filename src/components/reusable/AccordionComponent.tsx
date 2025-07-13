@@ -21,7 +21,9 @@ const AccordionComponent: React.FC<AccordionProps> = ({
   const toggleIndex = (index: number) => {
     if (allowMultipleOpen) {
       setOpenIndexes((prev) =>
-        prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+        prev.includes(index)
+          ? prev.filter((i) => i !== index)
+          : [...prev, index]
       );
     } else {
       setOpenIndexes(openIndexes[0] === index ? [] : [index]);
@@ -29,7 +31,7 @@ const AccordionComponent: React.FC<AccordionProps> = ({
   };
 
   return (
-    <div className="w-full flex flex-col gap-8 max-[767px]:gap-5">
+    <div className="w-full flex flex-col gap-8">
       {items.map((item, index) => {
         const isOpen = openIndexes.includes(index);
         return (
@@ -37,12 +39,12 @@ const AccordionComponent: React.FC<AccordionProps> = ({
             {/* Title Row */}
             <button
               onClick={() => toggleIndex(index)}
-              className="w-full flex justify-between items-center text-left cursor-pointer gap-4 max-[767px]:gap-3"
+              className="w-full flex justify-between items-center text-left cursor-pointer"
               aria-expanded={isOpen}
               aria-controls={`accordion-content-${index}`}
               id={`accordion-header-${index}`}
             >
-              <div className="flex items-start gap-2 text-[20px] md:text-[24px] text-basic-dark max-[767px]:text-[16px] max-[767px]:leading-snug">
+              <div className="flex items-center gap-2 text-[20px] md:text-[24px] lg:text-[24px] text-basic-dark">
                 <span>{index + 1}.</span>
                 <span>{item.title}</span>
               </div>
@@ -66,9 +68,9 @@ const AccordionComponent: React.FC<AccordionProps> = ({
                   ? contentRefs.current[index]?.scrollHeight + "px"
                   : "0px",
               }}
-              className="overflow-hidden transition-[max-height] duration-300 text-basic-dark text-[18px] leading-relaxed pt-4 max-[767px]:text-sm max-[767px]:leading-[1.6rem]"
+              className="overflow-hidden transition-[max-height] duration-300 text-basic-dark text-[18px] leading-relaxed pt-4"
             >
-              <p>{item.content}</p>
+              <p className="">{item.content}</p>
             </div>
           </div>
         );
