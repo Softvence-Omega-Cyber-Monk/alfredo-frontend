@@ -1,4 +1,3 @@
-import React from "react";
 import ArticleCard from "../reusable/ArticleCard";
 import articleImage from "@/assets/articleImg.png";
 import testimonealPerson from "@/assets/testimonailPerson.jpg";

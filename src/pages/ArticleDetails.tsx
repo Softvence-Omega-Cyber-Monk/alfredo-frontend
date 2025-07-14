@@ -26,7 +26,7 @@ const allArticles = [
 
 const ArticleDetails = () => {
   const { id } = useParams();
-  const article = allArticles.find((a) => a.id === id || a.id === "1"); // Fallback to first article if not found
+  const article = allArticles.find((a) => a.id === id) ?? allArticles[0];
 
   return (
     <div>

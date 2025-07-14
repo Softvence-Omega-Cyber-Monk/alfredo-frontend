@@ -1,4 +1,3 @@
-import React from "react";
 import CommonWrapper from "@/common/CommonWrapper";
 import testimonailPerson from "@/assets/testimonailPerson.jpg";
 import penIcon from "@/assets/icons/pen-icon.svg";
