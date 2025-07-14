@@ -56,9 +56,9 @@ const BonusProgram: FC = () => {
                 alt=""
                 className="absolute top-0 right-10 w-[120px] opacity-25 rotate-[20deg] blur-[2px] translate-x-4 -translate-y-4 pointer-events-none select-none"
               />
-              <div className="relative z-10 text-left">
+              <div className="relative z-10 text-left max-[767px]:text-center">
                 <p
-                  className="text-[40px] md:text-[64px] font-semibold leading-none"
+                  className="text-[60px] md:text-[64px] font-semibold leading-none"
                   style={{ color: card.color }}
                 >
                   {card.amount}
