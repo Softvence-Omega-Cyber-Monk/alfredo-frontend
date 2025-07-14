@@ -16,19 +16,19 @@ const HomeDetailsTabs: React.FC<HomeDetailsTabsProps> = ({ data }) => {
     {
       id: "Photos",
       label: "Photos",
-      content: 
-      <div className="space-y-6">
-      <Photos photos={data.photos} />
-      <Description
-          dates={{ from: data.dates.from, to: data.dates.to }}
-          description={data.description}
-        />
-      <Amenities amenities={data.amenities} />
-      <Map location={data.location} />
-      <AccordionComponent />
-      <Testimonial />
-      </div>
-      
+      content: (
+        <div className="space-y-6">
+          <Photos photos={data.photos} />
+          <Description
+            dates={{ from: data.dates.from, to: data.dates.to }}
+            description={data.description}
+          />
+          <Amenities amenities={data.amenities} />
+          <Map location={data.location} />
+          <AccordionComponent />
+          <Testimonial />
+        </div>
+      ),
     },
     {
       id: "Description",
@@ -38,7 +38,6 @@ const HomeDetailsTabs: React.FC<HomeDetailsTabsProps> = ({ data }) => {
           dates={{ from: data.dates.from, to: data.dates.to }}
           description={data.description}
         />
-        
       ),
     },
     {

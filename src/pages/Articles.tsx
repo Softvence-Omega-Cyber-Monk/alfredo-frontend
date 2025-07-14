@@ -40,8 +40,8 @@ const Articles = () => {
         </div>
 
         {/* tab component  */}
-        <div className="w-full">
-          <div className="flex border-b border-gray-200">
+        <div className="w-full mt-5">
+          <div className=" grid grid-cols-3 md:flex border-b border-gray-200">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
