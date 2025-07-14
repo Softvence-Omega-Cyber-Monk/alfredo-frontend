@@ -33,11 +33,11 @@ const TopArticle = () => {
         <div className="flex items-center gap-4">
           <img
             src={testimonailPerson}
-            className="w-12 h-12 rounded-full object-cover object-center"
+            className="w-16 h-16 rounded-full object-cover object-center"
             alt="Author Avatar"
           />
           <div className="flex flex-col gap-1">
-            <h3 className="text-lg font-bold text-primary-blue">
+            <h3 className="text-[20px] font-bold text-primary-blue">
               Mr. Jhon Don
             </h3>
             <p className="text-sm font-normal">Manager of IT</p>
