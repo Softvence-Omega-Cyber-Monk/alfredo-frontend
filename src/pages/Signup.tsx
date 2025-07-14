@@ -65,7 +65,7 @@ const Signup = () => {
                   type="text"
                   placeholder="John"
                   {...register("firstName")}
-                  className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
+                  className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
                 />
                 {errors.firstName && (
                   <p className="text-red-500 text-sm mt-1">
@@ -82,7 +82,7 @@ const Signup = () => {
                   type="text"
                   placeholder="Doe"
                   {...register("lastName")}
-                  className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
+                  className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
                 />
                 {errors.lastName && (
                   <p className="text-red-500 text-sm mt-1">
@@ -101,7 +101,7 @@ const Signup = () => {
                 type="email"
                 placeholder="you@example.com"
                 {...register("email")}
-                className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
+                className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
               />
               {errors.email && (
                 <p className="text-red-500 text-sm mt-1">
@@ -120,7 +120,7 @@ const Signup = () => {
                   type="password"
                   placeholder="12345667890"
                   {...register("password")}
-                  className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
+                  className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
                 />
                 {errors.password && (
                   <p className="text-red-500 text-sm mt-1">
@@ -137,7 +137,7 @@ const Signup = () => {
                   type="password"
                   placeholder="12345667890"
                   {...register("confirmPassword")}
-                  className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
+                  className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
                 />
                 {errors.confirmPassword && (
                   <p className="text-red-500 text-sm mt-1">
