@@ -1,8 +1,7 @@
 import AmenityCard from "../reusable/AmenityCard";
-import { LucideIcon } from "lucide-react";
 
 interface AmenitySection {
-  icon: LucideIcon;
+  icon: React.ElementType; // changed from LucideIcon
   title: string;
   items: string[];
 }
@@ -12,6 +11,7 @@ interface AmenitiesData {
   transport: AmenitySection[];
   surrounding: AmenitySection[];
 }
+
 
 interface AmenitiesProps {
   amenities: AmenitiesData;

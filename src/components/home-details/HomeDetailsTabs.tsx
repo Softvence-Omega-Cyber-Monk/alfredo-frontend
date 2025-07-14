@@ -6,12 +6,10 @@ import Amenities from "./Amenities";
 import Map from "./Map";
 import Testimonial from "@/components/reusable/Testimonial";
 import AccordionComponent from "../reusable/AccordionComponent";
+import { HomeDetailsType } from "@/lib/data/homeDetails.ts";
+import { bonus } from "@/lib/AccordionData/accordionData";
 
-interface HomeDetailsTabsProps {
-  data: any; // Replace with proper type from your data file
-}
-
-const HomeDetailsTabs: React.FC<HomeDetailsTabsProps> = ({ data }) => {
+const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
   const tabsData = [
     {
       id: "Photos",
@@ -25,7 +23,7 @@ const HomeDetailsTabs: React.FC<HomeDetailsTabsProps> = ({ data }) => {
           />
           <Amenities amenities={data.amenities} />
           <Map location={data.location} />
-          <AccordionComponent />
+          <AccordionComponent items={bonus} />
           <Testimonial />
         </div>
       ),
