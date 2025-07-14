@@ -1,3 +1,4 @@
+
 interface DescriptionProps {
   dates: {
     from: string;
@@ -8,6 +9,7 @@ interface DescriptionProps {
     homeId: string;
   };
 }
+
 
 const Description = ({ dates, description }: DescriptionProps) => {
   return (
