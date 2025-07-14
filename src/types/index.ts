@@ -14,3 +14,46 @@ export interface User {
     component: React.ComponentType;
     exact?: boolean;
   };
+
+  // Contact page type 
+  export type FormData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  message: string;
+};
+
+// Service plan card 
+export interface Plan {
+    title: string;
+    duration: string;
+    price: number;
+    originalPrice?: number;
+    badge?: string;
+    features: string[];
+}
+
+// Plans page 
+export interface MembershipStage {
+  title: string;
+  subtitle: string;
+  completed: boolean;
+}
+
+// Bonus Progamme page 
+export interface Card {
+  title: string;
+  titleSub: string;
+  amount: number;
+  currency?: string;
+  bgColor: string;
+  borderColor: string;
+  img: string;
+  color: string;
+}
+export interface InviteDataItem {
+  headTitle: string;
+  points: string[];
+}
+// -------------------------
