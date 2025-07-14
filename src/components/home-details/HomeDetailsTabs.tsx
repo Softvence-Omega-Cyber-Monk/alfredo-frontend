@@ -6,7 +6,8 @@ import Amenities from "./Amenities";
 import Map from "./Map";
 import Testimonial from "@/components/reusable/Testimonial";
 import AccordionComponent from "../reusable/AccordionComponent";
-import {HomeDetailsType} from "@/lib/data/homeDetails.ts"
+import { HomeDetailsType } from "@/lib/data/homeDetails.ts";
+import { bonus } from "@/lib/AccordionData/accordionData";
 
 const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
   const tabsData = [
@@ -22,7 +23,7 @@ const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
           />
           <Amenities amenities={data.amenities} />
           <Map location={data.location} />
-          <AccordionComponent />
+          <AccordionComponent items={bonus} />
           <Testimonial />
         </div>
       ),
