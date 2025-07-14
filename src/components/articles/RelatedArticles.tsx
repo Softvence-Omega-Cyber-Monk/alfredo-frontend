@@ -1,4 +1,3 @@
-import React from "react";
 import ClientHeading from "@/components/reusable/ClientHeading";
 import ArticleCard from '../reusable/ArticleCard';
 import articleImage from "@/assets/articleImg.png";
