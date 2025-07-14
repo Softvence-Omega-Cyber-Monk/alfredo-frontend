@@ -2,27 +2,27 @@ export const bonus = [
     {
       title: "What is home exchange?",
       content:
-        "Home exchange is a vacation accommodation method where you stay in someone else's home while they stay in yours.",
+        "Home exchange is a travel option where two parties agree to swap homes for a set period of time, allowing both to enjoy affordable, comfortable stays while exploring new destinations.",
     },
     {
       title: "Is home exchange safe?",
       content:
-        "Yes. Platforms ensure safety through verified profiles, reviews, and secure communication.",
+        "Yes! Our platform is built on trust. All members are verified, and we encourage detailed profiles, reviews, and direct communication to ensure safe and positive experiences.",
     },
     {
       title: "Do I need to exchange homes at the same time?",
       content:
-        "Not necessarily. Many platforms support non-simultaneous exchanges using points or flexible scheduling.",
+        "Not necessarily. We support both simultaneous and non-simultaneous exchanges, giving you and your exchange partner more flexibility.",
     },
     {
       title: "Can I list my home even if I’m not ready to travel?",
       content:
-        "Absolutely. You can list your home now and plan your exchange when you're ready.",
+        "Absolutely! You can list your home, explore other listings, and connect with members at your own pace. There’s no obligation to exchange right away.",
     },
     {
       title: "How do I find a suitable exchange partner?",
       content:
-        "Use filters, location preferences, and messaging tools on the platform to find your best match.",
+        "Use our search filters to find homes that match your preferences. You can then message members, ask questions, and arrange an exchange once you’re both comfortable.",
     },
   ];
 
