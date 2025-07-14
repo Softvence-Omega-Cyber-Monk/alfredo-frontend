@@ -23,7 +23,7 @@ const articles = [
     lastUpdate: "10-July-2024",
     title: "The Rise of Remote Work and Digital Nomads",
     excerpt:
-      "Discover how remote work is reshaping the job market and enabling more people to travel the world as digital nomads. Explore tools, platforms, and strategies used by professionals around the globe.",
+      "Discover how remote work is reshaping the job market and enabling more people to travel the world as digital nomads. Explore tools, platforms, and strategies used by professionals around the globe aound.",
     author: {
       name: "Sarah Khan",
       role: "Tech Journalist",
