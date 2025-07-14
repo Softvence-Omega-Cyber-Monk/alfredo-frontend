@@ -4,16 +4,17 @@ import testimonealPerson from "@/assets/testimonailPerson.jpg";
 import PrimaryButton from "../components/reusable/PrimaryButton";
 import RelatedArticles from "../components/articles/RelatedArticles";
 import CommonWrapper from "@/common/CommonWrapper";
-import Testimonial from '@/components/reusable/Testimonial';
-import Breadcrumb from '../components/articles/Breadcrumb';
+import Testimonial from "@/components/reusable/Testimonial";
+import Breadcrumb from "../components/articles/Breadcrumb";
 
 const allArticles = [
   {
     id: "1",
     image: articleImage,
     lastUpdate: "20-June-2024",
-    title: "Vacanza 101...",
-    content: "Full detailed content here...",
+    title: "Vacanza 101: How to travel without paying for accommodation",
+    excerpt:
+      "Vacanza is the first greek platform that brings to Greece exclusively the home exchange model. It has been proved to be very successful in other countries of Europe mainly for traveling without paying for accommodation, but also for forming bonds with new people...",
     author: {
       name: "Mr. Jhon Don",
       role: "Manager of IT",
@@ -27,19 +28,17 @@ const ArticleDetails = () => {
   const { id } = useParams();
   const article = allArticles.find((a) => a.id === id || a.id === "1"); // Fallback to first article if not found
 
-
-
   return (
     <div>
       <CommonWrapper>
         <div className="max-w-[996px] mx-auto px-4">
           <div className="mt-8 md:mt-12 lg:mt-16 mb-6 md:mb-8 lg:mb-10 text-center">
-           <Breadcrumb
-    items={[
-      { label: "Article", href: "/articles" },
-      { label: "Details" },
-    ]}
-  />
+            <Breadcrumb
+              items={[
+                { label: "Article", href: "/articles" },
+                { label: "Details" },
+              ]}
+            />
           </div>
           <p className="text-sm lg:text-base  mb-2 lg:mb-3 font-normal text-dark-3 text-center">
             Last Update: {article.lastUpdate}
@@ -117,7 +116,7 @@ const ArticleDetails = () => {
         <div className=" mt-24 md:mt-32 lg:mt-36">
           <RelatedArticles />
         </div>
-        <Testimonial/>
+        <Testimonial />
       </CommonWrapper>
     </div>
   );
