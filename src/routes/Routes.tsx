@@ -19,6 +19,7 @@ import OTP from "@/pages/OTP";
 import VerifyEmail from "@/pages/VerifyEmail";
 import ForgotPassword from "@/pages/ForgotPassword";
 import SetNewPassword from "@/pages/SetNewPassword";
+import Profile from '../pages/Profile';
 
 const routes = createBrowserRouter([
   {
