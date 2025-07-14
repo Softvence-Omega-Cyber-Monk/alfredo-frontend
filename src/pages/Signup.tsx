@@ -7,12 +7,16 @@ import CommonWrapper from "@/common/CommonWrapper";
 import SocialAuthButton from "@/components/reusable/SocialAuthButton";
 import AuthButton from "@/components/reusable/AuthButton";
 
-// ✅ Zod Schema (image removed)
+// ✅ Zod Schema (with fixed mobile validation)
 const signupSchema = z
   .object({
     firstName: z.string().min(2, "First name must be at least 2 characters"),
     lastName: z.string().min(2, "Last name must be at least 2 characters"),
     email: z.string().email("Invalid email format"),
+    mobile: z
+      .string()
+      .min(10, "Mobile number must be at least 10 digits")
+      .regex(/^\d+$/, "Mobile number must contain only digits"),
     password: z
       .string()
       .min(8, "Password must be at least 8 characters")
@@ -48,8 +52,8 @@ const Signup = () => {
 
   return (
     <CommonWrapper>
-      <div className="flex items-center justify-center">
-        <div className="w-3/4 bg-white">
+      <div className="flex items-center justify-center mt-16 max-[767px]:mt-[40px]">
+        <div className="w-[65%] max-[767px]:w-full bg-white">
           <AuthenticateHeading title="First time here? Sign up now!" />
 
           <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-6">
@@ -66,9 +70,7 @@ const Signup = () => {
                   className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
                 />
                 {errors.firstName && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.firstName.message}
-                  </p>
+                  <p className="text-red-500 text-sm mt-1">{errors.firstName.message}</p>
                 )}
               </div>
 
@@ -83,29 +85,45 @@ const Signup = () => {
                   className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
                 />
                 {errors.lastName && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.lastName.message}
-                  </p>
+                  <p className="text-red-500 text-sm mt-1">{errors.lastName.message}</p>
                 )}
               </div>
             </div>
 
-            {/* Email Field */}
-            <div>
-              <label className="text-[18px] font-semibold text-basic-dark">
-                Email Address
-              </label>
-              <input
-                type="email"
-                placeholder="you@example.com"
-                {...register("email")}
-                className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
-              />
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.email.message}
-                </p>
-              )}
+            {/* Email & Mobile Fields */}
+            <div className="flex flex-col md:flex-row gap-6">
+              <div className="w-full">
+                <label className="text-[18px] font-semibold text-basic-dark">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  placeholder="you@example.com"
+                  {...register("email")}
+                  className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                )}
+              </div>
+
+              <div className="w-full">
+                <label className="text-[18px] font-semibold text-basic-dark">
+                  Phone Number
+                </label>
+                <input
+                  type="text"
+                  placeholder="+000522559985"
+                  {...register("mobile")}
+                  className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2
+                    [&::-webkit-outer-spin-button]:appearance-none 
+                    [&::-webkit-inner-spin-button]:appearance-none 
+                    [-moz-appearance:textfield]"
+                />
+                {errors.mobile && (
+                  <p className="text-red-500 text-sm mt-1">{errors.mobile.message}</p>
+                )}
+              </div>
             </div>
 
             {/* Password Fields */}
@@ -121,9 +139,7 @@ const Signup = () => {
                   className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
                 />
                 {errors.password && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.password.message}
-                  </p>
+                  <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
                 )}
               </div>
 
@@ -144,11 +160,12 @@ const Signup = () => {
                 )}
               </div>
             </div>
+
             <p className="text-[16px] text-basic-dark">
               Minimum 8 characters, including 1 uppercase letter and 1 number.
             </p>
 
-            {/* Terms Checkbox */}
+            {/* Terms Agreement */}
             <div className="flex items-start gap-2">
               <input
                 type="checkbox"
@@ -172,16 +189,17 @@ const Signup = () => {
               </p>
             )}
 
-            {/* ✅ Submit Button */}
-            <AuthButton title="Signup" onClick={handleSubmit(onSubmit)} />
+            {/* Submit Button */}
+            <AuthButton title="Sign Up" onClick={handleSubmit(onSubmit)} />
           </form>
 
-          {/* OR Divider and Social Buttons */}
+          {/* OR + Social */}
           <div>
             <p className="text-[18px] font-semibold text-basic-dark text-center mt-[64px] mb-[32px]">
               Or Sign Up With
             </p>
             <SocialAuthButton />
+
             <p className="text-[18px] text-basic-dark text-center mt-[64px]">
               Already have an account?{" "}
               <Link
