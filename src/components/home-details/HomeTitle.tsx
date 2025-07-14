@@ -8,6 +8,10 @@ import {
   Share2,
 } from "lucide-react";
 
+interface HomeTitleProps {
+  title: string;
+}
+
 const features = [
   { icon: House, label: "Rooms",  value: "10 rooms",  },
   { icon: BedDouble, label: "Beds",  value: "10 beds", },
@@ -15,12 +19,12 @@ const features = [
   { icon: SquareArrowOutUpRight, label: "Area", value: "250 sqf", }
 ];
 const isPremiumMember:boolean = true; // This should be replaced with actual premium status from your auth context or state
-const HomeTitle = () => {
+const HomeTitle = ({ title }: HomeTitleProps) => {
   return (
     <div>
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
         <h1 className=" text-2xl md:text-3xl lg:text-[32px] font-medium text-dark-3">
-          Home title Beautiful Beach House
+         {title}
         </h1>
         <div className="flex items-center justify-end gap-2">
           {isPremiumMember ? (
@@ -63,3 +67,7 @@ const HomeTitle = () => {
 };
 
 export default HomeTitle;
+
+
+
+

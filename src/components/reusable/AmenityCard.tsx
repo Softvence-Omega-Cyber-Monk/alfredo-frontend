@@ -1,5 +1,5 @@
 interface AmenityItem {
-  icon: React.ElementType;
+  icon: React.ElementType; // also match this here
   title: string;
 }
 
