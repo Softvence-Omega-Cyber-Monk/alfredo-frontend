@@ -10,7 +10,7 @@ const AuthButton: FC <ReusableButtonProps> = ({ title, onClick }) => {
     <button
       type="button"
       onClick={onClick}
-      className="w-full bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 transition-all cursor-pointer"
+      className="w-full bg-primary-blue text-white p-3 rounded-md hover:bg-[#004AAD] transition-all cursor-pointer"
     >
       {title}
     </button>
