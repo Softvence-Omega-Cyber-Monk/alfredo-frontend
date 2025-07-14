@@ -15,6 +15,7 @@ import ArticleDetails from "@/pages/ArticleDetails";
 import Test from "@/pages/Test";
 import Chat from "@/pages/Chat";
 import HomeDetails from "@/pages/HomeDetails";
+import Profile from '../pages/Profile';
 
 const routes = createBrowserRouter([
   {
@@ -68,6 +69,11 @@ const routes = createBrowserRouter([
       {
         path: "test",
         element: <Test />,
+      },
+      {
+        path: "/profile",
+        element:<Profile/>
+
       },
       {
         path: "/admin",
