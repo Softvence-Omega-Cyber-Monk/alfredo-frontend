@@ -1,28 +1,17 @@
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import CommonWrapper from "@/common/CommonWrapper";
 import AuthenticateHeading from "@/components/reusable/AuthenticateHeading";
 import { Link } from "react-router-dom";
 
-const otpSchema = z.object({
-  mobile: z.string().min(10, "Mobile number is required"),
-  email: z.string().email("Invalid email address"),
-});
-
-type OtpFormInputs = z.infer<typeof otpSchema>;
-
 const OTP = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<OtpFormInputs>({
-    resolver: zodResolver(otpSchema),
-  });
+  const mobile = "+000********985";
+  const email = "j****e@example.com";
 
-  const onSubmit = (data: OtpFormInputs) => {
-    console.log("OTP Data:", data);
+  const handleMobileClick = () => {
+    console.log("Selected Mobile:", mobile);
+  };
+
+  const handleEmailClick = () => {
+    console.log("Selected Email:", email);
   };
 
   return (
@@ -34,33 +23,29 @@ const OTP = () => {
             We've sent a verification link to your email:
           </p>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            {/* Mobile Input */}
+          <div className="space-y-6">
+            {/* Mobile Button */}
             <div>
-              <input
-                type="tel"
-                placeholder="+000********985"
-                {...register("mobile")}
-                className="w-full px-4 py-3 bg-[#F4F7FC] rounded-[8px] text-center"
-              />
-              {errors.mobile && (
-                <p className="text-red-500 text-sm mt-1">{errors.mobile.message}</p>
-              )}
+              <button
+                type="button"
+                onClick={handleMobileClick}
+                className="w-full bg-[#F4F7FC] text-basic-dark p-3 rounded-md hover:bg-primary-blue duration-200 hover:text-white transition-all cursor-pointer"
+              >
+                {mobile}
+              </button>
             </div>
 
-            {/* Email Input */}
+            {/* Email Button */}
             <div>
-              <input
-                type="email"
-                placeholder="j****e@example.com"
-                {...register("email")}
-                className="w-full bg-[#3174CD] text-white p-3 rounded-md placeholder-white text-center"
-              />
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-              )}
+              <button
+                type="button"
+                onClick={handleEmailClick}
+                className="w-full bg-[#F4F7FC] text-basic-dark p-3 rounded-md hover:bg-primary-blue hover:text-white transition-all cursor-pointer duration-200"
+              >
+                {email}
+              </button>
             </div>
-          </form>
+          </div>
 
           {/* Support Link */}
           <p className="text-[16px] text-basic-dark text-center mt-8">
