@@ -1,51 +1,66 @@
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import CommonWrapper from "@/common/CommonWrapper";
 import AuthenticateHeading from "@/components/reusable/AuthenticateHeading";
 import { Link } from "react-router-dom";
 
+const otpSchema = z.object({
+  mobile: z.string().min(10, "Mobile number is required"),
+  email: z.string().email("Invalid email address"),
+});
+
+type OtpFormInputs = z.infer<typeof otpSchema>;
+
 const OTP = () => {
-  const mobile = "+000********985";
-  const email = "j****e@example.com";
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<OtpFormInputs>({
+    resolver: zodResolver(otpSchema),
+  });
 
-  const handleMobileClick = () => {
-    console.log("Selected Mobile:", mobile);
-  };
-
-  const handleEmailClick = () => {
-    console.log("Selected Email:", email);
+  const onSubmit = (data: OtpFormInputs) => {
+    console.log("OTP Data:", data);
   };
 
   return (
     <CommonWrapper>
-      <div className="flex justify-center items-center mx-auto my-[64px] max-[767px]:mt-[40px]">
-        <div className="w-[65%] max-[767px]:w-full bg-white">
+      <div className="flex justify-center items-center mx-auto my-[64px]">
+        <div className="w-3/4 bg-white">
           <AuthenticateHeading title="Choose OTP Delivery Method" />
           <p className="text-[18px] text-center text-basic-dark mt-4 mb-6">
             We've sent a verification link to your email:
           </p>
 
-          <div className="space-y-6">
-            {/* Mobile Button */}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {/* Mobile Input */}
             <div>
-              <button
-                type="button"
-                onClick={handleMobileClick}
-                className="w-full bg-[#F4F7FC] text-basic-dark p-3 rounded-md hover:bg-primary-blue duration-200 hover:text-white transition-all cursor-pointer"
-              >
-                {mobile}
-              </button>
+              <input
+                type="tel"
+                placeholder="+000********985"
+                {...register("mobile")}
+                className="w-full px-4 py-3 bg-[#F4F7FC] rounded-[8px] text-center"
+              />
+              {errors.mobile && (
+                <p className="text-red-500 text-sm mt-1">{errors.mobile.message}</p>
+              )}
             </div>
 
-            {/* Email Button */}
+            {/* Email Input */}
             <div>
-              <button
-                type="button"
-                onClick={handleEmailClick}
-                className="w-full bg-[#F4F7FC] text-basic-dark p-3 rounded-md hover:bg-primary-blue hover:text-white transition-all cursor-pointer duration-200"
-              >
-                {email}
-              </button>
+              <input
+                type="email"
+                placeholder="j****e@example.com"
+                {...register("email")}
+                className="w-full bg-[#3174CD] text-white p-3 rounded-md placeholder-white text-center"
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+              )}
             </div>
-          </div>
+          </form>
 
           {/* Support Link */}
           <p className="text-[16px] text-basic-dark text-center mt-8">
