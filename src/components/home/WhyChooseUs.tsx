@@ -1,4 +1,3 @@
-import React from "react";
 import ClientHeading from "../reusable/ClientHeading";
 import CommonWrapper from "@/common/CommonWrapper";
 import img from "@/assets/home/wcuImg.jpg";

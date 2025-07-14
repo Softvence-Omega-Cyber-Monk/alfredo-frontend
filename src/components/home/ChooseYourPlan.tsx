@@ -1,4 +1,3 @@
-import React from "react";
 import CommonWrapper from "@/common/CommonWrapper";
 import ClientHeading from "../reusable/ClientHeading";
 import PrimaryButton from '../reusable/PrimaryButton';

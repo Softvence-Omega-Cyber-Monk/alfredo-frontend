@@ -1,4 +1,3 @@
-import React from "react";
 import CommonWrapper from "@/common/CommonWrapper";
 import ClientHeading from "../reusable/ClientHeading";
 import discover from "@/assets/home/discover.mp4";
