@@ -27,8 +27,8 @@ const OTP = () => {
 
   return (
     <CommonWrapper>
-      <div className="flex justify-center items-center mx-auto my-[64px]">
-        <div className="w-3/4 bg-white">
+      <div className="flex justify-center items-center mx-auto my-[64px] max-[767px]:mt-[40px]">
+        <div className="w-[65%] max-[767px]:w-full bg-white">
           <AuthenticateHeading title="Choose OTP Delivery Method" />
           <p className="text-[18px] text-center text-basic-dark mt-4 mb-6">
             We've sent a verification link to your email:
