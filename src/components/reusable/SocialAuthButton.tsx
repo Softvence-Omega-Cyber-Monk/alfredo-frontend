@@ -11,7 +11,7 @@ const SocialAuthButton = () => {
             >
                 <img src={google} alt="Google logo" className="w-6 h-6 object-contain" />
                 <span className="text-[18px] text-primary-blue font-semibold">
-                    Sign in with Google
+                    Log In in with Google
                 </span>
             </button>
 

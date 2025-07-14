@@ -48,11 +48,13 @@ const Signup = () => {
 
   return (
     <CommonWrapper>
-      <div className="flex items-center justify-center">
-        <div className="w-3/4 bg-white">
-          <AuthenticateHeading title="First time here? Sign up now!" />
+      <div className="flex items-center justify-center mt-16 max-[767px]:mt-[40px]">
+        <div className="w-[65%] max-[767px]:w-full bg-white">
+          <div className="">
+            <AuthenticateHeading title="First time here? Sign up now!" />
+          </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
             {/* Name Fields */}
             <div className="flex flex-col md:flex-row gap-6">
               <div className="w-full">
@@ -74,7 +76,7 @@ const Signup = () => {
 
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
-                  Last Name
+                  Last Full Name
                 </label>
                 <input
                   type="text"
@@ -173,7 +175,7 @@ const Signup = () => {
             )}
 
             {/* ✅ Submit Button */}
-            <AuthButton title="Signup" onClick={handleSubmit(onSubmit)} />
+            <AuthButton title="Sign Up" onClick={handleSubmit(onSubmit)} />
           </form>
 
           {/* OR Divider and Social Buttons */}
@@ -186,7 +188,7 @@ const Signup = () => {
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="text-primary-blue hover:border-b border-primary-blue duration-200"
+                className="text-[#009DE8] hover:border-b border-primary-blue duration-200"
               >
                 Log In
               </Link>

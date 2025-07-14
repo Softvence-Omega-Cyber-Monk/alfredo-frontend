@@ -1,5 +1,78 @@
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import CommonWrapper from "@/common/CommonWrapper";
+import AuthenticateHeading from "@/components/reusable/AuthenticateHeading";
+import { Link } from "react-router-dom";
+import AuthButton from "@/components/reusable/AuthButton";
+
+// ✅ Zod schema
+const verifySchema = z.object({
+  email: z.string().email("Invalid email address"),
+});
+
+type VerifyFormInputs = z.infer<typeof verifySchema>;
+
 const ForgotPassword = () => {
-  return <div>ForgotPassword</div>;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<VerifyFormInputs>({
+    resolver: zodResolver(verifySchema),
+  });
+
+  const onSubmit = (data: VerifyFormInputs) => {
+    console.log("Verify Email Data:", data);
+  };
+
+  return (
+    <CommonWrapper>
+      <div className="flex justify-center items-center mx-auto my-[64px] max-[767px]:mt-[40px]">
+        <div className="w-[65%] max-[767px]:w-full bg-white">
+          <AuthenticateHeading title="Forgot your password?" />
+          <p className="text-[18px] text-center text-basic-dark mt-4 mb-6">
+            Enter your email address below and we'll send <br />
+            you a link to reset your password.
+          </p>
+
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-16">
+            {/* Email Input */}
+            <div>
+              <label className="text-[18px] font-semibold text-basic-dark">
+                Email Address
+              </label>
+              <input
+                type="email"
+                placeholder="you@example.com"
+                {...register("email")}
+                className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
+
+            {/* Submit Button */}
+            <AuthButton onClick={handleSubmit(onSubmit)} title="Send Reset Link" />
+          </form>
+
+          {/* Support Link */}
+          <p className="text-[18px] text-basic-dark text-center mt-[64px]">
+            Remember your password?{" "}
+            <Link
+              to="/login"
+              className="text-[#009DE8] hover:border-b border-primary-blue duration-200"
+            >
+              Log In
+            </Link>
+          </p>
+        </div>
+      </div>
+    </CommonWrapper>
+  );
 };
 
 export default ForgotPassword;

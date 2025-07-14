@@ -29,8 +29,8 @@ const VerifyEmail = () => {
 
   return (
     <CommonWrapper>
-      <div className="flex justify-center items-center mx-auto my-[64px]">
-        <div className="w-3/4 bg-white">
+      <div className="flex justify-center items-center mx-auto my-[64px] max-[767px]:mt-[40px]">
+        <div className="w-[65%] max-[767px]:w-full bg-white">
           <AuthenticateHeading title="Verify Your Email" />
           <p className="text-[18px] text-center text-basic-dark mt-4 mb-6">
             We've sent a verification code to your email: <br /> j****e@example.com
@@ -61,7 +61,7 @@ const VerifyEmail = () => {
               <span> 00:30</span>
             </div>
             <button
-              className="text-primary-blue hover:border-b border-primary-blue duration-200 cursor-pointer"
+              className="text-primary-blue hover:text-[#009DE8] duration-200 cursor-pointer text-[18px] font-semibold"
             >
               Resend Verification Code
             </button>
@@ -70,7 +70,7 @@ const VerifyEmail = () => {
             Didn't receive an email? Check your spam folder or <br />
             <Link
               to="#"
-              className="text-[#009DE8] hover:border-b border-primary-blue duration-200 font-semibold"
+              className="text-[#009DE8] hover:text-primary-blue duration-200 font-semibold"
             >
               Contact Support
             </Link>
