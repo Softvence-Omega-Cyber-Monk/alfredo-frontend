@@ -37,6 +37,7 @@ const ReusableButton: React.FC<ButtonProps> = ({
         font-[18px]
         hover:bg-[#2a66b5]
         transition-colors
+        cursor-pointer
         ${className}
       `}
         {...props}
