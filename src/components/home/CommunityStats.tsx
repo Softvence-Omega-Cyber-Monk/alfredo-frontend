@@ -1,4 +1,3 @@
-import React from "react";
 import CommonWrapper from "@/common/CommonWrapper";
 import communityStatsImage from "@/assets/home/happyUser.png";
 
