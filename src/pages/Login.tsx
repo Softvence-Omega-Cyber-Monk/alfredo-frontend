@@ -48,7 +48,7 @@ const Login = () => {
                 type="email"
                 placeholder="you@example.com"
                 {...register("email")}
-                className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
+                className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
               />
               {errors.email && (
                 <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
@@ -65,7 +65,7 @@ const Login = () => {
                   type="password"
                   placeholder="**************"
                   {...register("password")}
-                  className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue pr-12"
+                  className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
                 />
                 <FaRegEyeSlash size={24} className="absolute right-4 top-1/2 transform -translate-y-1/3 text-gray-500 text-lg cursor-pointer" />
               </div>

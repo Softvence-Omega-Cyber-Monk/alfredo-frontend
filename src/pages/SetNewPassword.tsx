@@ -59,7 +59,7 @@ const SetNewPassword = () => {
                     type="password"
                     placeholder="**************"
                     {...register("newPassword")}
-                    className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue pr-12"
+                    className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
                   />
                   <FaRegEyeSlash
                     size={24}
@@ -82,7 +82,7 @@ const SetNewPassword = () => {
                     type="password"
                     placeholder="**************"
                     {...register("confirmPassword")}
-                    className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue pr-12"
+                    className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
                   />
                   <FaRegEyeSlash
                     size={24}
