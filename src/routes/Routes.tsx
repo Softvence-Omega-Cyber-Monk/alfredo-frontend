@@ -15,11 +15,11 @@ import ArticleDetails from "@/pages/ArticleDetails";
 import Test from "@/pages/Test";
 import Chat from "@/pages/Chat";
 import HomeDetails from "@/pages/HomeDetails";
+import Profile from "../pages/Profile";
 import OTP from "@/pages/OTP";
 import VerifyEmail from "@/pages/VerifyEmail";
 import ForgotPassword from "@/pages/ForgotPassword";
 import SetNewPassword from "@/pages/SetNewPassword";
-import Profile from '../pages/Profile';
 
 const routes = createBrowserRouter([
   {
@@ -96,8 +96,7 @@ const routes = createBrowserRouter([
       },
       {
         path: "/profile",
-        element:<Profile/>
-
+        element: <Profile />,
       },
       {
         path: "/admin",
