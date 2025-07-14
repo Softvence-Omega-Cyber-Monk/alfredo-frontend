@@ -15,7 +15,11 @@ import ArticleDetails from "@/pages/ArticleDetails";
 import Test from "@/pages/Test";
 import Chat from "@/pages/Chat";
 import HomeDetails from "@/pages/HomeDetails";
-import Profile from '../pages/Profile';
+import Profile from "../pages/Profile";
+import OTP from "@/pages/OTP";
+import VerifyEmail from "@/pages/VerifyEmail";
+import ForgotPassword from "@/pages/ForgotPassword";
+import SetNewPassword from "@/pages/SetNewPassword";
 
 const routes = createBrowserRouter([
   {
@@ -63,6 +67,26 @@ const routes = createBrowserRouter([
         element: <Signup />,
       },
       {
+        path: "/otp",
+        element: <OTP />,
+      },
+      {
+        path: "/verify-email",
+        element: <VerifyEmail />,
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "/set-new-password",
+        element: <SetNewPassword />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
+      },
+      {
         path: "/chat",
         element: <Chat />,
       },
@@ -72,8 +96,7 @@ const routes = createBrowserRouter([
       },
       {
         path: "/profile",
-        element:<Profile/>
-
+        element: <Profile />,
       },
       {
         path: "/admin",
