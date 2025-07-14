@@ -10,9 +10,9 @@ const ClientHeading: React.FC<ClientHeadingProps> = ({
   spanText,
 }) => {
   return (
-    <h1 className="text-[64px] text-[#505050] text-center">
+    <h1 className="text-4xl lg:text-[64px] text-[#505050] text-center">
       {headingText}
-      <span className="font-Grand-Hotel text-[96px] ml-4 text-primary-blue">
+      <span className="font-Grand-Hotel text-5xl lg:text-[96px] ml-4 text-primary-blue">
         {spanText}
       </span>
     </h1>
