@@ -1,4 +1,3 @@
-import React from "react";
 import articleImage from "@/assets/articleImg.png";
 import testimonailPerson from "@/assets/testimonailPerson.jpg";
 const TopArticle = () => {

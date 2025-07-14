@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FC } from "react";
 
 interface ArticleProps {
   id: string;
@@ -10,7 +11,7 @@ interface ArticleProps {
     name: string;
     role: string;
     avatar: string;
-  };
+  };  
 }
 
 const ArticleCard: FC<ArticleProps> = ({
