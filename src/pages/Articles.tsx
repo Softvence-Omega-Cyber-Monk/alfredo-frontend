@@ -1,11 +1,16 @@
 import CommonWrapper from "@/common/CommonWrapper";
 import { useState } from "react";
+import TopArticle from '../components/articles/TopArticle';
+import ArticleGrid from '../components/articles/ArticleGrid';
+import Testimonial from '@/components/reusable/Testimonial';
 
 const Articles = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = [
-    { id: 0, label: "Topic Name 1", content: <div>Content for Tab 1</div> },
+    { id: 0, label: "Topic Name 1", content: <div><TopArticle/>
+    <ArticleGrid/>
+    </div> },
     { id: 1, label: "Topic Name 2", content: <div>Content for Tab 2</div> },
     { id: 2, label: "Topic Name 3", content: <div>Content for Tab 3</div> },
     { id: 3, label: "Topic Name 4", content: <div>Content for Tab 4</div> },
@@ -44,6 +49,9 @@ const Articles = () => {
             ))}
           </div>
           <div className="p-4 mt-10">{tabs[activeTab].content}</div>
+        </div>
+        <div>
+          <Testimonial/>
         </div>
       </CommonWrapper>
     </div>
