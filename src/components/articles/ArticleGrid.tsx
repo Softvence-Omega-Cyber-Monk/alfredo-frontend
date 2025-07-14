@@ -5,6 +5,7 @@ import testimonealPerson from "@/assets/testimonailPerson.jpg";
 
 const articles = [
   {
+    id: "1",
     image: articleImage,
     lastUpdate: "20-June-2024",
     title: "Vacanza 101: How to travel without paying for accommodation",
@@ -17,6 +18,7 @@ const articles = [
     },
   },
   {
+    id: "2",
     image: articleImage,
     lastUpdate: "10-July-2024",
     title: "The Rise of Remote Work and Digital Nomads",
@@ -29,6 +31,7 @@ const articles = [
     },
   },
   {
+    id: "3",
     image: articleImage,
     lastUpdate: "02-July-2024",
     title: "5 Ways to Stay Productive While Traveling",
@@ -41,6 +44,7 @@ const articles = [
     },
   },
   {
+    id: "4",
     image: articleImage,
     lastUpdate: "20-June-2024",
     title: "Vacanza 101: How to travel without paying for accommodation",
@@ -53,6 +57,7 @@ const articles = [
     },
   },
   {
+    id: "5",
     image: articleImage,
     lastUpdate: "10-July-2024",
     title: "The Rise of Remote Work and Digital Nomads",
@@ -65,6 +70,7 @@ const articles = [
     },
   },
   {
+    id: "6",
     image: articleImage,
     lastUpdate: "02-July-2024",
     title: "5 Ways to Stay Productive While Traveling",
