@@ -9,7 +9,10 @@ import time from "../assets/time.svg";
 
 // ✅ Zod schema
 const verifySchema = z.object({
-  email: z.string().email("Invalid email address"),
+  number: z
+    .string()
+    .min(4, "OTP must be at least 4 digits")
+    .regex(/^\d+$/, "OTP must contain only numbers"),
 });
 
 type VerifyFormInputs = z.infer<typeof verifySchema>;
@@ -37,16 +40,19 @@ const VerifyEmail = () => {
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-10">
-            {/* Email Input */}
+            {/* OTP Input */}
             <div>
               <input
-                type="email"
+                type="number"
                 placeholder="Type here the OTP code"
-                {...register("email")}
-                className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue text-center"
+                {...register("number")}
+                className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2 text-center
+                  [&::-webkit-outer-spin-button]:appearance-none 
+                  [&::-webkit-inner-spin-button]:appearance-none 
+                  [-moz-appearance:textfield]"
               />
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+              {errors.number && (
+                <p className="text-red-500 text-sm mt-1">{errors.number.message}</p>
               )}
             </div>
 
