@@ -32,7 +32,7 @@ const AccordionComponent: React.FC<AccordionProps> = ({
 
   return (
     <div className="w-full flex flex-col gap-8">
-      {items.map((item, index) => {
+      {items?.map((item, index) => {
         const isOpen = openIndexes.includes(index);
         return (
           <div key={index} className="w-full">
@@ -51,8 +51,9 @@ const AccordionComponent: React.FC<AccordionProps> = ({
               <img
                 src={icn}
                 alt="arrow"
-                className={`h-6 w-6 transition-transform duration-300 ${isOpen ? "rotate-180" : ""
-                  }`}
+                className={`h-6 w-6 transition-transform duration-300 ${
+                  isOpen ? "rotate-180" : ""
+                }`}
               />
             </button>
 
