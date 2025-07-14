@@ -22,7 +22,7 @@ const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
           />
           <Amenities amenities={data.amenities} />
           <Map location={data.location} />
-          {/* <AccordionComponent /> */}
+          <AccordionComponent />
           <Testimonial />
         </div>
       ),
