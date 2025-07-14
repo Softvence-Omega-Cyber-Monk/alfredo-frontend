@@ -6,7 +6,6 @@ import CommonWrapper from "@/common/CommonWrapper";
 import AuthenticateHeading from "@/components/reusable/AuthenticateHeading";
 import SocialAuthButton from "@/components/reusable/SocialAuthButton";
 import AuthButton from "@/components/reusable/AuthButton";
-import { FaRegEyeSlash } from "react-icons/fa";
 
 // ✅ Login schema (no agreeToTerms here)
 const loginSchema = z.object({
@@ -34,11 +33,11 @@ const Login = () => {
 
   return (
     <CommonWrapper>
-      <div className="flex items-center justify-center mt-16 max-[767px]:mt-[40px]">
-        <div className="w-[65%] max-[767px]:w-full bg-white">
+      <div className="flex items-center justify-center">
+        <div className="w-3/4 bg-white">
           <AuthenticateHeading title="Login now !" />
 
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-6">
             {/* Email Field */}
             <div>
               <label className="text-[18px] font-semibold text-basic-dark">
@@ -48,7 +47,7 @@ const Login = () => {
                 type="email"
                 placeholder="you@example.com"
                 {...register("email")}
-                className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
+                className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
               />
               {errors.email && (
                 <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
@@ -60,20 +59,16 @@ const Login = () => {
               <label className="text-[18px] font-semibold text-basic-dark">
                 Password
               </label>
-              <div className="relative">
-                <input
-                  type="password"
-                  placeholder="**************"
-                  {...register("password")}
-                  className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
-                />
-                <FaRegEyeSlash size={24} className="absolute right-4 top-1/2 transform -translate-y-1/3 text-gray-500 text-lg cursor-pointer" />
-              </div>
+              <input
+                type="password"
+                placeholder="**************"
+                {...register("password")}
+                className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
+              />
               {errors.password && (
                 <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
               )}
             </div>
-
 
             {/* Remember Password & Forgot */}
             <div className="flex items-center justify-between gap-2">
@@ -97,20 +92,15 @@ const Login = () => {
 
           {/* Divider and Social */}
           <div>
-            <div className="flex items-center gap-4 mt-[64px] mb-[32px]">
-              <div className="flex-1 h-px bg-basic-dark" />
-              <p className="text-[18px] font-semibold text-basic-dark whitespace-nowrap">
-                Or Continue With
-              </p>
-              <div className="flex-1 h-px bg-basic-dark" />
-            </div>
-
+            <p className="text-[18px] font-semibold text-basic-dark text-center mt-[64px] mb-[32px]">
+              Or Continue With
+            </p>
             <SocialAuthButton />
             <p className="text-[18px] text-basic-dark text-center mt-[64px]">
               Don’t have an account?{" "}
               <Link
                 to="/signup"
-                className="text-[#009DE8] hover:border-b border-primary-blue duration-200"
+                className="text-primary-blue hover:border-b border-primary-blue duration-200"
               >
                 Sign up
               </Link>
