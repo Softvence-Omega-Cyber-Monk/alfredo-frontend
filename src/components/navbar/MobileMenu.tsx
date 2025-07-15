@@ -7,14 +7,16 @@ import clsx from "clsx";
 import { logout } from "@/store/Slices/AuthSlice/authSlice";
 import { useAppDispatch } from "@/hooks/useRedux";
 
+interface User {
+  name: string;
+  role: string;
+}
+
 interface Props {
   isOpen: boolean;
   setIsOpen: (val: boolean) => void;
   isAuthenticated: boolean;
-  user:{
-    name: string;
-    role: string;
-  };
+  user: User | null;
   currentPath: string;
 }
 

@@ -16,12 +16,14 @@ import logoutHover from "@/assets/icons/logoutHover.svg";
 import { useAppDispatch } from "@/hooks/useRedux";
 import { logout } from "@/store/Slices/AuthSlice/authSlice";
 
+interface User {
+  name: string;
+  role: string;
+}
+
 interface Props {
   isAuthenticated: boolean;
-  user: {
-    name: string;
-    role: string;
-  };
+  user: User | null;
   setMobileMenuOpen: (state: boolean) => void;
 }
 
@@ -70,7 +72,8 @@ const AuthSection: React.FC<Props> = ({
           <div className="p-2 md:p-2.5 rounded-full bg-white shadow-[0_0_10px_0_#B9D7FF]">
             <img src={messageIcon} className="w-4 h-4 md:w-6 md:h-6" alt="" />
           </div>
-          <UserAvatar userName={user?.name} />
+         <UserAvatar userName={user?.name || "Guest"} />
+
           <p className="text-primary-blue font-medium text-sm sm:text-base md:text-lg">
             {user?.name.split(" ")[0]}
           </p>
