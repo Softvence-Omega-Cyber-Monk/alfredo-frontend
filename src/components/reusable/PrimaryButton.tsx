@@ -36,7 +36,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
       <span className="relative z-10">{title}</span>
       {bgImage && (
         <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
-          <img src={bgImage} alt="icon" className="full" />
+          <img src={bgImage} alt="icon" className="w-full" />
         </div>
       )}
     </button>
