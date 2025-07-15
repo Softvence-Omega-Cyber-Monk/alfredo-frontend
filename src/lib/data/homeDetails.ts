@@ -48,15 +48,15 @@ export interface HomeDetailsType {
   };
   amenities: {
     main: {
-      icon: React.ElementType;
+      icon: string;
       title: string;
     }[];
     transport: {
-      icon: React.ElementType;
+      icon: string;
       title: string;
     }[];
     surrounding: {
-      icon: React.ElementType;
+      icon: string;
       title: string;
     }[];
   };
