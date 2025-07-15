@@ -63,7 +63,7 @@ const FAQ = () => {
         {/* Plans Section */}
         <div className="">
           <ClientHeading headingText="Our" spanText="plans" />
-          <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-base text-center">
+          <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-base py-6 text-center">
             Flexible membership options designed to fit every traveler’s needs—<br className="max-[767px]:hidden" />
             whether you exchange once a year or every month.
           </p>
