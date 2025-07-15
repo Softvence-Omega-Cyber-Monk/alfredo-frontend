@@ -5,33 +5,29 @@ import ClientHeading from "./ClientHeading";
 
 const Testimonial = () => {
   return (
-    <div className="lg:h-[751px] lg:py-[140px]">
+    <div className="lg:h-[751px] lg:py-[140px] py-16">
       <CommonWrapper>
-        <div className="">
-          {/* <h1 className="text-[64px] text-[#505050] text-center">
-            What Our Client{" "}
-            <span className="font-Grand-Hotel text-[96px] text-primary-blue">
-              Say
-            </span>
-          </h1> */}
+        <div>
           <ClientHeading headingText="What Our Client" spanText="Say" />
-          <p className="text-basic-dark text-center text-[24px] lg:w-[641px] mx-auto">
+          <p className="text-basic-dark text-center text-base sm:text-lg md:text-xl lg:w-[641px] mx-auto">
             A trusted community of verified homeowners and passionate travelers.
           </p>
         </div>
-        <div className="mt-10 lg:flex items-start gap-6 justify-center">
-          {/* first card */}
-          <div className="flex flex-col gap-3 w-full sm:w-[350px] lg:w-[384px] bg-[url(/src/assets/Rectangle3.svg)] px-5 py-5 rounded-3xl text-basic-dark -rotate-2 hover:rotate-0 transition-transform duration-300 mb-8 lg:mb-0 transform origin-bottom">
+
+        {/* Cards container */}
+        <div className="mt-10 flex flex-col lg:flex-row items-center lg:items-start gap-6 justify-center">
+          {/* First card */}
+          <div className="flex flex-col gap-3 w-full sm:w-[350px] lg:w-[384px] bg-[url(/src/assets/Rectangle3.svg)] bg-cover bg-no-repeat px-5 py-5 rounded-3xl text-basic-dark -rotate-2 hover:rotate-0 transition-transform duration-300 transform origin-bottom">
             <p>
               HomeExchange transformed our family vacations! We've stayed in
               amazing places without breaking the bank
             </p>
-            <div className="bg-white h-px w-full"></div>
+            <div className="bg-white h-px w-full" />
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3 my-2">
                 <img
                   src={testimonailPerson}
-                  alt=""
+                  alt="Client"
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div className="flex flex-col">
@@ -40,24 +36,24 @@ const Testimonial = () => {
                 </div>
               </div>
               <div className="flex items-center">
-                <img src={comma} alt="" className="w-5" />
-                <img src={comma} alt="" className="w-5" />
+                <img src={comma} alt="Quote" className="w-5" />
+                <img src={comma} alt="Quote" className="w-5" />
               </div>
             </div>
           </div>
 
-          {/* middle card */}
-          <div className="flex flex-col gap-3 w-full sm:w-[350px] lg:w-[384px] bg-[url(/src/assets/Rectangle3.svg)] px-5 py-5 rounded-3xl text-basic-dark mb-8 lg:mb-0">
+          {/* Middle card */}
+          <div className="flex flex-col gap-3 w-full sm:w-[350px] lg:w-[384px] bg-[url(/src/assets/Rectangle3.svg)] bg-cover bg-no-repeat px-5 py-5 rounded-3xl text-basic-dark">
             <p>
               HomeExchange transformed our family vacations! We've stayed in
               amazing places without breaking the bank
             </p>
-            <div className="bg-white h-px w-full"></div>
+            <div className="bg-white h-px w-full" />
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3 my-2">
                 <img
                   src={testimonailPerson}
-                  alt=""
+                  alt="Client"
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div className="flex flex-col">
@@ -66,24 +62,24 @@ const Testimonial = () => {
                 </div>
               </div>
               <div className="flex items-center">
-                <img src={comma} alt="" className="w-5" />
-                <img src={comma} alt="" className="w-5" />
+                <img src={comma} alt="Quote" className="w-5" />
+                <img src={comma} alt="Quote" className="w-5" />
               </div>
             </div>
           </div>
 
-          {/* third card */}
-          <div className="flex flex-col gap-3 w-full sm:w-[350px] lg:w-[384px] bg-[url(/src/assets/Rectangle3.svg)] px-5 py-5 rounded-3xl text-basic-dark rotate-2 hover:rotate-0 transition-transform duration-300 transform origin-bottom">
+          {/* Third card */}
+          <div className="flex flex-col gap-3 w-full sm:w-[350px] lg:w-[384px] bg-[url(/src/assets/Rectangle3.svg)] bg-cover bg-no-repeat px-5 py-5 rounded-3xl text-basic-dark rotate-2 hover:rotate-0 transition-transform duration-300 transform origin-bottom">
             <p>
               HomeExchange transformed our family vacations! We've stayed in
               amazing places without breaking the bank
             </p>
-            <div className="bg-white h-px w-full"></div>
+            <div className="bg-white h-px w-full" />
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3 my-2">
                 <img
                   src={testimonailPerson}
-                  alt=""
+                  alt="Client"
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div className="flex flex-col">
@@ -92,8 +88,8 @@ const Testimonial = () => {
                 </div>
               </div>
               <div className="flex items-center">
-                <img src={comma} alt="" className="w-5" />
-                <img src={comma} alt="" className="w-5" />
+                <img src={comma} alt="Quote" className="w-5" />
+                <img src={comma} alt="Quote" className="w-5" />
               </div>
             </div>
           </div>
