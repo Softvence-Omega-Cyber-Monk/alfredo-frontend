@@ -198,7 +198,7 @@ const BonusProgram: FC = () => {
         </div>
 
         {/* Conversation Section */}
-        <div className="my-[150px] px-4">
+        <div className="my-[80px] lg:my-[140px]">
           <Conversation />
         </div>
       </CommonWrapper>
