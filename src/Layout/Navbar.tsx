@@ -17,12 +17,12 @@ import { Menu } from "lucide-react";
 import messageIcon from "@/assets/icons/message-multiple-02.svg";
 import arrow from "@/assets/icons/arrowdown.svg";
 
-
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
+
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
 
   const toggleMenu = () => {
@@ -34,19 +34,17 @@ const Navbar: React.FC = () => {
     navigate("/login");
   };
 
-  const isActivePath = (path: string) => {
-    return location.pathname === path;
-  };
+  const isActivePath = (path: string) => location.pathname === path;
 
   return (
-    <nav className="bg-[#F4F7FC] text-dark-3 w-full sticky top-0 z-50">
+    <nav className="bg-[#F4F7FC] text-dark-3 w-full sticky top-0 z-100">
       <CommonWrapper>
         <div className="mx-auto px-4 sm:px-6 lg:px-8 py-2 md:py-4 lg:py-6">
           <div className="flex items-center justify-between relative">
             {/* Logo */}
             <div className="flex-shrink-0 w-24 sm:w-28 md:w-32">
               <Link to="/">
-                <img src="/logo.svg" alt="" className="w-full h-auto" />
+                <img src="/logo.svg" alt="Logo" className="w-full h-auto" />
               </Link>
             </div>
 
@@ -71,15 +69,17 @@ const Navbar: React.FC = () => {
 
             {/* Auth Buttons */}
             <div className="hidden lg:block">
-              {!isAuthenticated ? (
+              {isAuthenticated && user ? (
                 <Popover>
                   <PopoverTrigger>
                     <div className="bg-white rounded-2xl p-2 flex items-center gap-3">
                       <div className="p-2.5 rounded-full bg-white shadow-[0_0_10px_0_#B9D7FF]">
                         <img src={messageIcon} className="w-6 h-6" alt="" />
                       </div>
-                      <UserAvatar userName={user?.name || "User"} />
-                      <p className="text-primary-blue font-medium text-lg">Jon Don</p>
+                      <UserAvatar userName={user.name} />
+                      <p className="text-primary-blue font-medium text-lg">
+                        {user.name}
+                      </p>
                       <div className="p-2">
                         <img src={arrow} alt="" />
                       </div>
@@ -107,7 +107,7 @@ const Navbar: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <PrimaryButton
                     title="Join"
-                    onClick={() => navigate("/login")}
+                    onClick={() => navigate("/signup")}
                     textColor="text-primary-blue"
                     bgColor="bg-white"
                     bgImage="/buttonHomeWhite.svg"
@@ -187,7 +187,7 @@ const Navbar: React.FC = () => {
                 ))}
               </div>
 
-              {isAuthenticated ? (
+              {!isAuthenticated && user ? (
                 <div className="border-t border-gray-100 mt-6 pt-6">
                   {userMenuItems.map((item) => (
                     <Link
