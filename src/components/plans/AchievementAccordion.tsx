@@ -29,7 +29,7 @@ interface AccordionProps {
 
 const AchievementAccordion: React.FC<AccordionProps> = ({
   items,
-  allowMultipleOpen = false,
+  allowMultipleOpen = true,
 }) => {
   const [openIndexes, setOpenIndexes] = useState<number[]>([]);
   const contentRefs = useRef<(HTMLDivElement | null)[]>([]);

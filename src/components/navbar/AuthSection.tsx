@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from 'react-router-dom';
 import {
   Popover,
   PopoverContent,
@@ -67,28 +67,30 @@ const AuthSection: React.FC<Props> = ({
 
   return (
     <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
-      <PopoverTrigger asChild>
-        <div className="bg-white rounded-2xl p-2 flex items-center gap-2 md:gap-3 cursor-pointer">
-          <div className="p-2 md:p-2.5 rounded-full bg-white shadow-[0_0_10px_0_#B9D7FF]">
-            <img src={messageIcon} className="w-4 h-4 md:w-6 md:h-6" alt="" />
-          </div>
-         <UserAvatar userName={user?.name || "Guest"} />
+      <div className="bg-white rounded-2xl p-2 flex items-center gap-2 md:gap-3 cursor-pointer">
+        <Link to="/messages" className="p-2 md:p-2.5 rounded-full bg-white shadow-[0_0_10px_0_#B9D7FF]">
+          <img src={messageIcon} className="w-4 h-4 md:w-6 md:h-6" alt="" />
+        </Link>
+        <PopoverTrigger>
+          <div className="flex items-center gap-2 md:gap-3">
+            <UserAvatar userName={user?.name || "Guest"} />
 
-          <p className="text-primary-blue font-medium text-sm sm:text-base md:text-lg">
-            {user?.name.split(" ")[0]}
-          </p>
-          <div className="p-1 md:p-2">
-            <img
-              src={arrow}
-              alt=""
-              className={clsx(
-                "transition-transform duration-300",
-                popoverOpen ? "rotate-180" : "rotate-0"
-              )}
-            />
+            <p className="text-primary-blue font-medium text-sm sm:text-base md:text-lg">
+              {user?.name.split(" ")[0]}
+            </p>
+            <div className="p-1 md:p-2">
+              <img
+                src={arrow}
+                alt=""
+                className={clsx(
+                  "transition-transform duration-300",
+                  popoverOpen ? "rotate-180" : "rotate-0"
+                )}
+              />
+            </div>
           </div>
-        </div>
-      </PopoverTrigger>
+        </PopoverTrigger>
+      </div>
 
       <PopoverContent className="bg-white text-dark-3 w-[190px] md:w-[240px] z-70 border-none rounded-xl p-4">
         {userMenuItems.map((item) => (
