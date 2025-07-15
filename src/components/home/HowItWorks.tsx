@@ -42,7 +42,7 @@ const cardsData = [
 
 const HowItWorks = () => {
   return (
-    <div className="py-12 md:py-16 lg:pt-24 lg:pb-32">
+    <div className="py-12 md:py-16 lg:pt-25 lg:pb-[130px]">
       <CommonWrapper>
         <ClientHeading headingText="How It" spanText="works" />
         <p className="text-lg md:text-xl lg:text-2xl text-dark-3 font-regular text-center max-w-3xl mx-auto mb-10">
@@ -51,7 +51,7 @@ const HowItWorks = () => {
         </p>
 
         {/* How it works Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10 px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10">
           {cardsData.map((card, index) => (
             <HowItWorksCard
               key={index}
