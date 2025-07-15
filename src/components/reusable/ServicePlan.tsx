@@ -182,7 +182,7 @@ const ServicePlan: FC = () => {
               <Dialog.Close asChild>
                 <Button
                   type="submit"
-                  className="w-full h-[52px] flex justify-center items-center gap-[45px] rounded-[35px] bg-[#3174CD] text-white text-lg hover:bg-[#2a65b5] transition"
+                  className="w-full h-[52px] flex justify-center items-center gap-[45px] rounded-[35px] bg-[#3174CD] text-white text-lg hover:bg-[#2a65b5] transition cursor-pointer"
                 >
                   Save
                 </Button>
