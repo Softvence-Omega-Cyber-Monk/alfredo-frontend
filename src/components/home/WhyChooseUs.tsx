@@ -28,7 +28,7 @@ const cardData = [
 
 const WhyChooseUs = () => {
   return (
-    <div className="px-4 pb-10 lg:pb-32">
+    <div className="pb-10 lg:pb-32">
       <CommonWrapper>
         <ClientHeading headingText="Why choose" spanText="us?" />
         <p className="text-lg md:text-xl lg:text-2xl text-dark-3 font-regular text-center max-w-3xl mx-auto mb-10">

@@ -5,15 +5,15 @@ import playBtn from "@/assets/home/playButton.png";
 
 const Discover = () => {
   return (
-    <div className="px-4 pb-10 lg:pb-32">
+    <div className="pb-10 lg:pb-32">
       <CommonWrapper>
         <ClientHeading headingText="Discover with" spanText="vacanza" />
-        <p className="text-lg md:text-xl lg:text-2xl text-dark-3 font-regular text-center max-w-4xl mx-auto mb-10">
+        <p className="text-lg md:text-xl lg:text-2xl text-dark-3 py-6 font-regular text-center max-w-4xl mx-auto mb-10">
           Watch our introductory video to learn more about how HomeExchange
           works and the amazing experiences awaiting you.
         </p>
 
-        <div className="mt-9 relative">
+        <div className="mt-9 relative md:px-20 lg:px-20">
           <video
             src={discover}
             className="w-full h-auto rounded-[40px]"

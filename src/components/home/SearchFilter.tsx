@@ -4,7 +4,7 @@ import PrimaryButton from "../reusable/PrimaryButton";
 const SearchFilter = () => {
   return (
     <div
-      className="w-full max-w-5xl mx-auto shadow-none rounded-lg lg:rounded-full px-5 py-4 md:px-6 md:py-5 bg-transparent"
+      className="w-full max-w-5xl mx-auto px-[26px] py-5 sm:px-4 md:px-6 bg-transparent lg:rounded-full"
       style={{
         backgroundImage: `url("/footerBg.svg")`,
         backgroundSize: "cover",
@@ -14,16 +14,13 @@ const SearchFilter = () => {
     >
       <div className="bg-white rounded-lg lg:rounded-full lg:px-10 lg:py-6">
         {/* Grid Container */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 divide-y sm:divide-y-0 sm:divide-x divide-[#BFD4F0] p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-y-5 sm:gap-y-0 lg:divide-x divide-[#BFD4F0] p-4">
           {/* Location */}
-          <div className="w-full pt-4 sm:pt-0 sm:px-4 first:pt-0">
-            <label
-              htmlFor="location"
-              className="block text-sm text-dark-3 mb-2"
-            >
+          <div className="w-full sm:px-4">
+            <label htmlFor="location" className="block text-sm text-dark-3 mb-2">
               Location
             </label>
-            <div className="flex items-center gap-2 rounded-lg border-none focus-within:border-none text-dark-2 placeholder:text-dark-2 text-base placeholder:text-base">
+            <div className="flex items-center gap-2 text-dark-2 placeholder:text-dark-2 text-base">
               <FaMapMarkerAlt className="text-primary-blue w-4 h-4 md:w-5 md:h-5" />
               <input
                 id="location"
@@ -35,11 +32,11 @@ const SearchFilter = () => {
           </div>
 
           {/* People */}
-          <div className="w-full pt-4 sm:pt-0 sm:px-4">
+          <div className="w-full sm:px-4">
             <label htmlFor="people" className="block text-sm text-dark-3 mb-2">
               Guests
             </label>
-            <div className="flex items-center gap-2 rounded-lg border-none focus-within:border-none text-dark-2 placeholder:text-dark-2 text-base placeholder:text-base">
+            <div className="flex items-center gap-2 text-dark-2 placeholder:text-dark-2 text-base">
               <FaUser className="text-primary-blue w-4 h-4 md:w-5 md:h-5" />
               <input
                 id="people"
@@ -52,11 +49,11 @@ const SearchFilter = () => {
           </div>
 
           {/* Type */}
-          <div className="w-full pt-4 sm:pt-0 sm:px-4">
+          <div className="w-full sm:px-4">
             <label htmlFor="type" className="block text-sm text-dark-3 mb-2">
               Property Type
             </label>
-            <div className="flex items-center gap-2 rounded-lg border-none focus-within:border-none text-dark-2 placeholder:text-dark-2 text-base placeholder:text-base">
+            <div className="flex items-center gap-2 text-dark-2 text-base">
               <FaHome className="text-primary-blue w-4 h-4 md:w-5 md:h-5" />
               <select
                 id="type"
@@ -71,29 +68,25 @@ const SearchFilter = () => {
           </div>
 
           {/* Date */}
-          <div className="w-full pt-4 sm:pt-0 sm:px-4">
-            <label
-              htmlFor="homeDate"
-              className="block text-sm text-dark-3 mb-2"
-            >
+          <div className="w-full sm:px-4">
+            <label htmlFor="homeDate" className="block text-sm text-dark-3 mb-2">
               Check-in Date
             </label>
-            <div className="flex items-center gap-2 rounded-lg border-none focus-within:border-none text-dark-2 placeholder:text-dark-2 text-base placeholder:text-base">
+            <div className="flex items-center gap-2 text-dark-2 text-base">
               <FaCalendarAlt className="text-primary-blue w-4 h-4 md:w-5 md:h-5" />
               <input
                 id="homeDate"
                 type="date"
-                placeholder="Select date"
                 className="outline-none w-full text-sm md:text-base bg-transparent cursor-pointer"
               />
             </div>
           </div>
 
           {/* Search Button */}
-          <div className="w-full pt-4 sm:pt-0 sm:px-4 sm:col-span-2 lg:col-span-1 flex items-end">
+          <div className="w-full sm:px-4 sm:col-span-2 md:mt-6 lg:mt-0 lg:col-span-1 flex items-end">
             <PrimaryButton
               title="Search"
-              textColor="text-white w-full text-md lg:text-lg "
+              textColor="text-white w-full text-sm md:text-base lg:text-lg"
               bgColor="bg-primary-blue"
               borderColor=""
               bgImage="/buttonHomeIcon.svg"
