@@ -51,7 +51,7 @@ const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
     {
       id: "FAQ",
       label: "FAQ",
-      content: <AccordionComponent />,
+      content: <AccordionComponent items={bonus} />,
     },
     {
       id: "Reviews",
@@ -81,7 +81,7 @@ const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
         </TabsList>
 
         <div className="mt-6 md:mt-10">
-          <HomeTitle title={data.title} />
+          <HomeTitle title={data.title} features={data.features} />
         </div>
 
         {tabsData.map((tab) => (
