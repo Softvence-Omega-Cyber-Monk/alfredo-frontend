@@ -20,6 +20,7 @@ import OTP from "@/pages/OTP";
 import VerifyEmail from "@/pages/VerifyEmail";
 import ForgotPassword from "@/pages/ForgotPassword";
 import SetNewPassword from "@/pages/SetNewPassword";
+import SettingPassword from "@/pages/SettingPassword";
 
 const routes = createBrowserRouter([
   {
@@ -97,6 +98,10 @@ const routes = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/setting-password",
+        element: <SettingPassword />,
       },
       {
         path: "/admin",
