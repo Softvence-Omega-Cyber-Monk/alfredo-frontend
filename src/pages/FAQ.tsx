@@ -10,7 +10,7 @@ const FAQ = () => {
   return (
     <div>
       <CommonWrapper>
-        <div className="mt-[64px] max-[767px]:mt-[34px] max-[767px]:text-center">
+        <div className="mt-[64px] max-[767px]:mt-[34px] max-[767px]:text-center border-b border-[#BFD4F0] pb-3 mb-6">
           <ClientHeading headingText="Frequently ask" spanText="questions" />
           <p className="text-[24px] py-6 font-normal text-basic-dark max-[767px]:text-base text-center">
             Explore our most frequently asked questions to understand how home exchange works, how to get started, <br className="max-[767px]:hidden" />
