@@ -14,7 +14,7 @@ const Plans: FC = () => {
       <CommonWrapper>
         <div className="mt-16 max-[767px]:mt-8">
           <ClientHeading headingText="our" spanText="plans" />
-          <p className="text-[24px] sm:text-[24px] text-center text-basic-dark max-sm:text-[16px] max-sm:leading-[24px]">
+          <p className="text-[24px] sm:text-[24px] py-6 text-center text-basic-dark max-sm:text-[16px] max-sm:leading-[24px]">
             Flexible membership options designed to fit every traveler’s needs—
             <br className="hidden sm:block" />
             whether you exchange once a year or every month.
