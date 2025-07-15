@@ -51,7 +51,7 @@ const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
     {
       id: "FAQ",
       label: "FAQ",
-      content: <AccordionComponent />,
+      content: <AccordionComponent items={bonus} />,
     },
     {
       id: "Reviews",
