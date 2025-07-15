@@ -77,7 +77,6 @@ const BonusProgram: FC = () => {
             </div>
           ))}
         </div>
-
         {/* Invite Blocks */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mx-auto mb-10">
           {inviteData.map((invite, index) => (
@@ -110,7 +109,7 @@ const BonusProgram: FC = () => {
             <p className="text-[18px] text-basic-dark max-[767px]:text-sm mb-4">
               Share this link with your friends to start earning.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row sm:items-center items-center gap-4 justify-center mt-[20px]">
               <input
                 ref={inputRef}
@@ -128,20 +127,23 @@ const BonusProgram: FC = () => {
                 Copy
               </ReusableButton>
             </div>
-
-
           </div>
         </div>
 
         {/* Social Section */}
         <div className="flex flex-row items-center justify-center gap-[24px] mt-[50px]  mb-[140px] max-[767px]:mt-[20px] max-[767px]:mb-[80px] text-center">
-          <h3 className="text-lg md:text-[24px] text-basic-dark">
-            Share via:
-          </h3>
+          <h3 className="text-lg md:text-[24px] text-basic-dark">Share via:</h3>
           <ul className="flex flex-row items-center gap-[15px] justify-center sm:mt-0">
             <li>
-              <Link to="/" className="font-regular lg:text-xl flex gap-2 items-center">
-                <img src={fb} alt="facebook" className="w-8 h-8 max-[767px]:w-6 max-[767px]:h-6" />
+              <Link
+                to="/"
+                className="font-regular lg:text-xl flex gap-2 items-center"
+              >
+                <img
+                  src={fb}
+                  alt="facebook"
+                  className="w-8 h-8 max-[767px]:w-6 max-[767px]:h-6"
+                />
               </Link>
             </li>
             <li>
@@ -150,8 +152,15 @@ const BonusProgram: FC = () => {
               </Link>
             </li>
             <li>
-              <Link to="/" className="font-regular lg:text-xl flex gap-2 items-center">
-                <img src={linkedin} alt="linkedin" className="w-8 h-8 max-[767px]:w-6 max-[767px]:h-6" />
+              <Link
+                to="/"
+                className="font-regular lg:text-xl flex gap-2 items-center"
+              >
+                <img
+                  src={linkedin}
+                  alt="linkedin"
+                  className="w-8 h-8 max-[767px]:w-6 max-[767px]:h-6"
+                />
               </Link>
             </li>
           </ul>
