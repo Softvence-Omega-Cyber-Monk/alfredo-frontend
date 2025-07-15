@@ -81,7 +81,7 @@ const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
         </TabsList>
 
         <div className="mt-6 md:mt-10">
-          <HomeTitle title={data.title} />
+          <HomeTitle title={data.title} features={data.features} />
         </div>
 
         {tabsData.map((tab) => (

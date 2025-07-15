@@ -1,18 +1,25 @@
-import {
-  Wifi,
-  Tv,
-  Car,
-  Utensils,
-  AirVent,
-  Dumbbell,
-  Bath,
-  Coffee,
-} from "lucide-react";
+import React from "react";
+// import {
+//   Wifi,
+//   Tv,
+//   Car,
+//   Utensils,
+//   AirVent,
+//   Dumbbell,
+//   Bath,
+//   Coffee,
+// } from "lucide-react";
 import { MdRocketLaunch } from "react-icons/md";
 import { RiVipDiamondFill } from "react-icons/ri";
 import { FaCheck } from "react-icons/fa";
 import cardImg from "@/assets/home/cardImg.jpg";
 import testimonailPerson from "@/assets/testimonailPerson.jpg";
+
+import fridge from "@/assets/icons/Fridge.svg";
+import Microwave from "@/assets/icons/Micro.svg";
+import washing from "@/assets/icons/washing.svg";
+import bicycle from "@/assets/icons/bicycle.svg";
+import Coastal from "@/assets/icons/sunbath.svg";
 
 export interface HomeDetailsType {
   title: string;
@@ -30,10 +37,11 @@ export interface HomeDetailsType {
     alt: string;
   }[];
   features: {
-    icon: React.ElementType;
-    label: string;
-    value: string;
-  }[];
+    rooms?: number;
+    baths?: number;
+    beds?: number;
+    area?: number;
+  };
   description: {
     text: string;
     homeId: string;
@@ -42,17 +50,14 @@ export interface HomeDetailsType {
     main: {
       icon: React.ElementType;
       title: string;
-      items: string[];
     }[];
     transport: {
       icon: React.ElementType;
       title: string;
-      items: string[];
     }[];
     surrounding: {
       icon: React.ElementType;
       title: string;
-      items: string[];
     }[];
   };
   owner: {
@@ -94,12 +99,12 @@ export const homeDetailsData: HomeDetailsType = {
     from: "01-Jun-2026",
     to: "30-Dec-2026",
   },
-  features: [
-    { icon: Car, label: "Rooms", value: "10 rooms" },
-    { icon: Bath, label: "Baths", value: "2 Baths" },
-    { icon: Dumbbell, label: "Beds", value: "10 beds" },
-    { icon: Coffee, label: "Area", value: "250 sqf" },
-  ],
+  features: {
+    rooms: 3,
+    baths: 2,
+    beds: 4,
+    area: 1200,
+  },
   photos: [
     { src: cardImg, alt: "Main view" },
     { src: cardImg, alt: "Second view" },
@@ -125,59 +130,161 @@ export const homeDetailsData: HomeDetailsType = {
   amenities: {
     main: [
       {
-        icon: Wifi,
-        title: "Technology",
-        items: ["Free WiFi", "Smart TV", "Work Space"],
+        icon: fridge,
+        title: "Fridge",
       },
       {
-        icon: Car,
-        title: "Parking",
-        items: ["Free Parking", "Garage"],
+        icon: Microwave,
+        title: "Microwave oven ",
       },
       {
-        icon: Tv,
-        title: "Outdoor",
-        items: ["Garden", "BBQ"],
+        icon: washing,
+        title: "Washing machine ",
       },
-      {
-        icon: Utensils,
-        title: "Kitchen",
-        items: ["Full Kitchen", "Coffee Maker"],
-      },
-      {
-        icon: AirVent,
-        title: "Climate",
-        items: ["AC", "Heating"],
-      },
-      {
-        icon: Bath,
-        title: "Bathroom",
-        items: ["Shower", "Essentials"],
-      },
-      {
-        icon: Dumbbell,
-        title: "Fitness",
-        items: ["Gym Access", "Yoga Mat"],
-      },
-      {
-        icon: Coffee,
-        title: "Services",
-        items: ["Cleaning", "Breakfast"],
-      },
+      // {
+      //   icon: Utensils,
+      //   title: "Bathtub ",
+      // },
+      // {
+      //   icon: AirVent,
+      //   title: "WIFI ",
+      // },
+      // {
+      //   icon: Bath,
+      //   title: "LED TV ",
+      // },
+      // {
+      //   icon: Dumbbell,
+      //   title: "Air Conditioner ",
+      // },
+      // {
+      //   icon: Coffee,
+      //   title: "Waste sorting",
+      // },
+      // {
+      //   icon: Utensils,
+      //   title: "Balcony ",
+      // },
+      // {
+      //   icon: Utensils,
+      //   title: "Easily accessible",
+      // },
+      // {
+      //   icon: Utensils,
+      //   title: "Computer",
+      // },
+      // {
+      //   icon: Utensils,
+      //   title: "Swimming Pool ",
+      // },
+      // {
+      //   icon: Utensils,
+      //   title: "Gym Space ",
+      // },
+      // {
+      //   icon: Utensils,
+      //   title: "Room Heater ",
+      // },
+      // {
+      //   icon: Utensils,
+      //   title: "Parking ",
+      // },
+      // {
+      //   icon: Utensils,
+      //   title: "Play Ground ",
+      // },
+      // {
+      //   icon: Utensils,
+      //   title: "Terrace ",
+      // },
+      // {
+      //   icon: Utensils,
+      //   title: "Garden ",
+      // },
+      // {
+      //   icon: Utensils,
+      //   title: "Heat pump ",
+      // },
+      // {
+      //   icon: Utensils,
+      //   title: "Dishwasher ",
+      // },
+      // {
+      //   icon: Utensils,
+      //   title: "Elevator ",
+      // },
+      // {
+      //   icon: Utensils,
+      //   title: "Private Pool",
+      // },
+      // {
+      //   icon: Utensils,
+      //   title: "BBQ ",
+      // },
+      // {
+      //   icon: Utensils,
+      //   title: "Garden ",
+      // },
     ],
     transport: [
       {
-        icon: Car,
-        title: "Transport",
-        items: ["Bus Stop", "Train Station", "Airport"],
+        icon: bicycle,
+        title: "Bicycle",
       },
+      // {
+      //   icon: Coffee,
+      //   title: "Car",
+      // },
+      // {
+      //   icon: Coffee,
+      //   title: "Bike",
+      // },
+      // {
+      //   icon: Coffee,
+      //   title: "Bus",
+      // },
+      // {
+      //   icon: Coffee,
+      //   title: "Boat",
+      // },
+      // {
+      //   icon: Coffee,
+      //   title: "Train",
+      // },
     ],
     surrounding: [
       {
-        icon: Coffee,
-        title: "Nearby",
-        items: ["Restaurants", "Shopping", "Beach"],
+        icon: Coastal,
+        title: "Countryside",
       },
+      {
+        icon: Coastal,
+        title: "Mountain",
+      },
+       {
+        icon: Coastal,
+        title: "Coastal",
+      },
+      // {
+      //   icon: Coffee,
+      //   title: "Lake",
+      // },
+      //  {
+      //   icon: Coffee,
+      //   title: "City",
+      // },
+      // {
+      //   icon: Coffee,
+      //   title: "Village",
+      // },
+      //  {
+      //   icon: Coffee,
+      //   title: "River",
+      // },
+      // {
+      //   icon: Coffee,
+      //   title: "Island",
+      // },
     ],
   },
   owner: {
