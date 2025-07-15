@@ -1,7 +1,7 @@
-import { FC, useRef } from "react";
+import { FC, useRef, useState } from "react";
 import CommonWrapper from "@/common/CommonWrapper";
 import { cardData, inviteData } from "@/lib/bonusData";
-import { FiCopy } from "react-icons/fi";
+import { FiCopy, FiCheckCircle } from "react-icons/fi"; // updated
 import fb from "../assets/footer/fb.svg";
 import insta from "../assets/footer/instagram.svg";
 import linkedin from "../assets/footer/linkedin.svg";
@@ -14,10 +14,13 @@ import ReusableButton from "@/components/reusable/ReusableButton";
 
 const BonusProgram: FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [copied, setCopied] = useState(false); // new state
 
   const handleCopy = () => {
     if (inputRef.current) {
       navigator.clipboard.writeText(inputRef.current.value);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000); // reset after 10 seconds
     }
   };
 
@@ -77,6 +80,7 @@ const BonusProgram: FC = () => {
             </div>
           ))}
         </div>
+
         {/* Invite Blocks */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mx-auto mb-10">
           {inviteData.map((invite, index) => (
@@ -90,7 +94,10 @@ const BonusProgram: FC = () => {
                 </h2>
                 <ul className="list-disc pl-6 space-y-2">
                   {invite.points.map((point, idx) => (
-                    <li key={idx} className="text-[18px] text-basic-dark max-[767px]:text-sm">
+                    <li
+                      key={idx}
+                      className="text-[18px] text-basic-dark max-[767px]:text-sm"
+                    >
                       {point}
                     </li>
                   ))}
@@ -123,9 +130,19 @@ const BonusProgram: FC = () => {
                 onClick={handleCopy}
                 className="w-full sm:w-auto py-3 px-6 flex items-center justify-center gap-2"
               >
-                <FiCopy size={20} />
-                Copy
+                {copied ? (
+                  <>
+                    <FiCheckCircle size={20} className="text-green-600" />
+                    <span className="inline-block w-[60px] text-left">Copied</span>
+                  </>
+                ) : (
+                  <>
+                    <FiCopy size={20} />
+                    <span className="inline-block w-[60px] text-left">Copy</span>
+                  </>
+                )}
               </ReusableButton>
+
             </div>
           </div>
         </div>
@@ -135,15 +152,8 @@ const BonusProgram: FC = () => {
           <h3 className="text-lg md:text-[24px] text-basic-dark">Share via:</h3>
           <ul className="flex flex-row items-center gap-[15px] justify-center sm:mt-0">
             <li>
-              <Link
-                to="/"
-                className="font-regular lg:text-xl flex gap-2 items-center"
-              >
-                <img
-                  src={fb}
-                  alt="facebook"
-                  className="w-8 h-8 max-[767px]:w-6 max-[767px]:h-6"
-                />
+              <Link to="/" className="font-regular lg:text-xl flex gap-2 items-center">
+                <img src={fb} alt="facebook" className="w-8 h-8 max-[767px]:w-6 max-[767px]:h-6" />
               </Link>
             </li>
             <li>
@@ -152,15 +162,8 @@ const BonusProgram: FC = () => {
               </Link>
             </li>
             <li>
-              <Link
-                to="/"
-                className="font-regular lg:text-xl flex gap-2 items-center"
-              >
-                <img
-                  src={linkedin}
-                  alt="linkedin"
-                  className="w-8 h-8 max-[767px]:w-6 max-[767px]:h-6"
-                />
+              <Link to="/" className="font-regular lg:text-xl flex gap-2 items-center">
+                <img src={linkedin} alt="linkedin" className="w-8 h-8 max-[767px]:w-6 max-[767px]:h-6" />
               </Link>
             </li>
           </ul>
