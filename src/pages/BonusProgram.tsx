@@ -33,7 +33,7 @@ const BonusProgram: FC = () => {
               Bonuses
             </span>
           </h1>
-          <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-sm mt-4">
+          <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-sm py-4">
             Share your referral link and earn rewards when your friends join{" "}
             <br className="max-[767px]:hidden" />
             and complete their first vacanza.
