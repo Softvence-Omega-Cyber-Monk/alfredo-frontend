@@ -5,7 +5,7 @@ interface Achievement {
   id: number;
   borderColor?: string;
   bgColor?: string;
-  icon: string;
+  icon?: string;
   title?: string;
   description: string;
   titleColor?: string;

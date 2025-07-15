@@ -3,7 +3,6 @@ import AmenityCard from "../reusable/AmenityCard";
 interface AmenitySection {
   icon: string; // changed from LucideIcon
   title: string;
-  items: string[];
 }
 
 interface AmenitiesData {
