@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CommonWrapper from "@/common/CommonWrapper";
 import AuthButton from "@/components/reusable/AuthButton";
 import AuthenticateHeading from "@/components/reusable/AuthenticateHeading";
-import { FaRegEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { LuEyeOff } from "react-icons/lu";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 
 // ✅ Zod validation schema
 const verifySchema = z
@@ -25,6 +27,9 @@ const verifySchema = z
 type VerifyFormInputs = z.infer<typeof verifySchema>;
 
 const SetNewPassword = () => {
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -50,21 +55,24 @@ const SetNewPassword = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-16">
             {/* Password Fields */}
             <div className="space-y-6">
+              {/* New Password */}
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
                   Set New Password
                 </label>
                 <div className="relative">
                   <input
-                    type="password"
+                    type={showNewPassword ? "text" : "password"}
                     placeholder="**************"
                     {...register("newPassword")}
-                    className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
+                    className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2 pr-12"
                   />
-                  <FaRegEyeSlash
-                    size={24}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/3 text-gray-500 text-lg cursor-pointer"
-                  />
+                  <div
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg cursor-pointer"
+                    onClick={() => setShowNewPassword((prev) => !prev)}
+                  >
+                    {showNewPassword ? <LuEyeOff size={22} /> : <MdOutlineRemoveRedEye size={22} />}
+                  </div>
                 </div>
                 {errors.newPassword && (
                   <p className="text-red-500 text-sm mt-1">
@@ -73,21 +81,28 @@ const SetNewPassword = () => {
                 )}
               </div>
 
+              {/* Confirm Password */}
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
                   Confirm New Password
                 </label>
                 <div className="relative">
                   <input
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     placeholder="**************"
                     {...register("confirmPassword")}
-                    className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
+                    className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2 pr-12"
                   />
-                  <FaRegEyeSlash
-                    size={24}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/3 text-gray-500 text-lg cursor-pointer"
-                  />
+                  <div
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg cursor-pointer"
+                    onClick={() => setShowConfirmPassword((prev) => !prev)}
+                  >
+                    {showConfirmPassword ? (
+                      <LuEyeOff size={22} />
+                    ) : (
+                      <MdOutlineRemoveRedEye size={22} />
+                    )}
+                  </div>
                 </div>
                 {errors.confirmPassword && (
                   <p className="text-red-500 text-sm mt-1">

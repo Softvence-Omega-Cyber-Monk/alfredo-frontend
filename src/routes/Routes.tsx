@@ -85,10 +85,6 @@ const routes = createBrowserRouter([
         element: <SetNewPassword />,
       },
       {
-        path: "/signup",
-        element: <Signup />,
-      },
-      {
         path: "/chat",
         element: <Chat />,
       },
