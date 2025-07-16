@@ -242,12 +242,12 @@ const conversationMessages: {
 };
 
 const Messages = () => {
-  const [selectedConversation, setSelectedConversation] =
-    useState<Conversation>(conversations[0]);
+  const [selectedConversation, setSelectedConversation] =useState<Conversation>(conversations[0]);
   const [messageInput, setMessageInput] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [showSidebar, setShowSidebar] = useState(false);
   const [currentView, setCurrentView] = useState<"list" | "chat">("list"); // For mobile navigation
+  const [showInfoPanel, setShowInfoPanel] = useState(false);
 
   // Get messages for the selected conversation
   const getCurrentMessages = () => {
@@ -288,8 +288,8 @@ const Messages = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-120px)] rounded-2xl overflow-hidden">
-      <div className="flex h-full relative">
+    <div className="flex flex-col min-h-screen">
+      <div className="flex-1 overflow-hidden">
         {/* Mobile view - Show either conversations list or chat */}
         <div className="md:hidden w-full h-full">
           {currentView === "list" ? (
@@ -311,10 +311,30 @@ const Messages = () => {
               onCall={handleCall}
               onCloseChat={handleCloseChat}
               isVisible={true}
+              onToggleInfo={() => setShowInfoPanel(true)}
             />
           )}
-        </div>
 
+          {/* ChatInfoPanel - Slide-up for mobile */}
+          {showInfoPanel && (
+            <div className="fixed inset-0 bg-black/40 z-50 md:hidden">
+              <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl p-4 max-h-[80vh] overflow-y-auto shadow-lg animate-slide-up">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-lg font-semibold text-dark-2">
+                    Profile Info
+                  </h2>
+                  <button
+                    className="text-dark-3 font-semibold text-sm"
+                    onClick={() => setShowInfoPanel(false)}
+                  >
+                    ✕ Close
+                  </button>
+                </div>
+                <ChatInfoPanel />
+              </div>
+            </div>
+          )}
+        </div>
         {/* Desktop view - Show both panels */}
         <div className="hidden md:flex w-full h-full">
           <ConversationsList
@@ -333,19 +353,15 @@ const Messages = () => {
             onMessageInputChange={setMessageInput}
             onSendMessage={handleSendMessage}
             onCall={handleCall}
-            onCloseChat={handleCloseChat}
+            onCloseChat={handleCloseChat} // Add this line
             isVisible={true}
+            onToggleInfo={() => setShowInfoPanel(true)} // Add this if needed
           />
+<div className="w-1/4 xl:w-1/5">
 
-          <ChatInfoPanel
-            // name={selectedConversation.name}
-            // avatar={selectedConversation.avatar}
-            // online={selectedConversation.online}
-            // type={selectedConversation.type}
-            // rating={selectedConversation.rating}
-          />
+          <ChatInfoPanel />
+</div>
         </div>
-
         {/* Sidebar overlay for mobile (when toggled from chat view) */}
         {showSidebar && (
           <div className="md:hidden">

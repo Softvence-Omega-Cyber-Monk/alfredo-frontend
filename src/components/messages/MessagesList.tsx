@@ -64,6 +64,14 @@ const MessagesList: React.FC<MessagesListProps> = ({
     return timestamp;
   };
 
+  useEffect(() => {
+  const ref = containerRef.current;
+  if (ref) {
+    const shouldScroll = ref.scrollHeight - ref.scrollTop === ref.clientHeight;
+    if (shouldScroll) scrollToBottom();
+  }
+}, [messages, conversationId]);
+
   return (
     <div
       ref={containerRef}
@@ -85,7 +93,7 @@ const MessagesList: React.FC<MessagesListProps> = ({
             >
               <div>
                 <div
-                  className={`max-w-[80%] lg:w-full px-6 py-2.5 rounded-full ${
+                  className={`max-w-[80%] lg:w-full px-6 py-2.5 rounded-lg lg:rounded-full ${
                     message.isOwn
                       ? "bg-primary-blue text-white ml-auto"
                       : "bg-[#F4F7FC] text-dark-2"

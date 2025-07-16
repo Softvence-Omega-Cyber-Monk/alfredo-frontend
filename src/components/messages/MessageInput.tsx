@@ -71,7 +71,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
         </div>
       </div>
       <div className=" p-3 md:p-4">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row gap-3 md:gap-0 justify-between items-stretch md:items-center">
           <div>
             <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
               <PopoverTrigger asChild>
@@ -116,7 +116,8 @@ const MessageInput: React.FC<MessageInputProps> = ({
                 </div>
                 <PrimaryButton
                   title="Send"
-                  className="w-full sm:text-sm md:text-base mt-4"
+                  textColor="w-full sm:text-sm md:text-base mt-4"
+                  className=""
                 />
               </PopoverContent>
             </Popover>
