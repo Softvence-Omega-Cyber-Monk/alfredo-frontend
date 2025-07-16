@@ -50,7 +50,7 @@ const ChatInfoPanel = () => {
   const isPremiumMember = true; // Toggle to false to see locked state
 
   return (
-    <div className="relative p-6 hidden md:flex flex-col w-1/4 xl:w-1/5 bg-white">
+    <div className="relative p-6 flex flex-col bg-white">
       {!isPremiumMember && (
         <div className="absolute inset-0 z-20 backdrop-blur-[3px] bg-white/60 rounded-lg md:rounded-3xl flex items-center justify-center">
           <div className="bg-primary-blue p-6 rounded-2xl max-w-[80%] text-center shadow-[0_0_25px_0_rgba(0,0,0,0.5)]">
