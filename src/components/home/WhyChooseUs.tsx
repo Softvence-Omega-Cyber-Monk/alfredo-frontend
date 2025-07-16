@@ -38,7 +38,7 @@ const WhyChooseUs = () => {
 
         <div className="mt-9 relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-12 gap-6 items-center">
-            <div className="xl:col-span-7 rounded-[40px] overflow-hidden">
+            <div className="xl:col-span-7 rounded-[40px] overflow-hidden shadow-[0_30px_40px_-6px_rgba(59,130,246,0.5)]">
               <img src={img} className="w-full" alt="" />
             </div>
             <div
