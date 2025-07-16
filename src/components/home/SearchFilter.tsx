@@ -4,7 +4,7 @@ import PrimaryButton from "../reusable/PrimaryButton";
 const SearchFilter = () => {
   return (
     <div
-      className="w-full max-w-5xl mx-auto px-[26px] py-5 sm:px-4 md:px-6 bg-transparent lg:rounded-full"
+      className="w-full max-w-5xl mx-auto px-[26px] py-5 sm:px-4 md:px-6 bg-transparent rounded-xl lg:rounded-full"
       style={{
         backgroundImage: `url("/footerBg.svg")`,
         backgroundSize: "cover",
@@ -12,7 +12,7 @@ const SearchFilter = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="bg-white rounded-lg lg:rounded-full lg:px-10 lg:py-6">
+      <div className="bg-white rounded-xl lg:rounded-full lg:px-10 lg:py-6">
         {/* Grid Container */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-y-5 sm:gap-y-0 lg:divide-x divide-[#BFD4F0] p-4">
           {/* Location */}
