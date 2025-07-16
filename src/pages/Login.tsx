@@ -39,7 +39,7 @@ const Login = () => {
 
   return (
     <CommonWrapper>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center pt-4 md:pt-10 lg:pt-10">
         <div className="w-3/4 bg-white">
           <AuthenticateHeading title="Login now !" />
 
