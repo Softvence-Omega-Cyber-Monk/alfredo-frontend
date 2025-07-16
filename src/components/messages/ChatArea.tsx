@@ -29,8 +29,9 @@ interface ChatAreaProps {
   messageInput: string;
   onMessageInputChange: (value: string) => void;
   onSendMessage: () => void;
-  onCall?: () => void;
-  onCloseChat?: () => void;
+  onCloseChat: () => void;
+  onCall: () => void;
+  onToggleInfo?: () => void;
   isVisible: boolean;
 }
 
@@ -40,6 +41,8 @@ const ChatArea: React.FC<ChatAreaProps> = ({
   messageInput,
   onMessageInputChange,
   onSendMessage,
+  onCloseChat,  // Add this
+  onToggleInfo, // Add this
   isVisible,
 }) => {
   return (
@@ -49,8 +52,27 @@ const ChatArea: React.FC<ChatAreaProps> = ({
       md:flex flex-1 flex-col
       w-full md:w-2/3 lg:w-3/4 
       bg-white border-x-2 border-[#EAF1FA]`}
-  
     >
+      {/** Top bar for mobile view */}
+      {/* Mobile header */}
+      <div className="md:hidden flex justify-between items-center px-4 py-2 border-b border-[#EAF1FA] bg-white">
+        <button
+          onClick={onCloseChat}
+          className="text-primary-blue font-medium text-sm"
+        >
+          ← Back
+        </button>
+        <p className="text-sm font-semibold text-dark-2 truncate w-full text-center">
+          {selectedConversation.name}
+        </p>
+        <button
+          onClick={onToggleInfo}
+          className="text-primary-blue text-sm font-medium"
+        >
+          ℹ️
+        </button>
+      </div>
+
       <MessagesList
         messages={messages}
         otherParticipant={{
