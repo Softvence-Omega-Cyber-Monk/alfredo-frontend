@@ -5,19 +5,24 @@ import ClientHeading from "./ClientHeading";
 
 const Testimonial = () => {
   return (
-    <div className="lg:h-[751px] lg:py-[140px] py-16">
+    <div className="lg:h-[751px] lg:py-[140px] md:py-[120px] py-2">
       <CommonWrapper>
         <div>
           <ClientHeading headingText="What Our Client" spanText="Say" />
-          <p className="text-basic-dark text-center text-base sm:text-lg md:text-xl lg:w-[641px] mx-auto">
+          <p className="text-basic-dark text-center text-base sm:text-lg md:text-xl lg:w-[641px] mx-auto my-6">
             A trusted community of verified homeowners and passionate travelers.
           </p>
         </div>
 
-        {/* Cards container */}
-        <div className="mt-10 flex flex-col lg:flex-row items-center lg:items-start gap-6 justify-center">
+        {/* Hover trigger only on medium screens and up */}
+        <div className="group mt-10 flex flex-col lg:flex-row items-center lg:items-start gap-6 justify-center">
           {/* First card */}
-          <div className="flex flex-col gap-3 w-full sm:w-[350px] lg:w-[384px] bg-[url(/src/assets/Rectangle3.svg)] bg-cover bg-no-repeat px-5 py-5 rounded-3xl text-basic-dark -rotate-2 hover:rotate-0 transition-transform duration-300 transform origin-bottom">
+          <div
+            className="flex flex-col gap-3 w-full sm:w-[350px] lg:w-[384px] 
+            bg-[url(/src/assets/Rectangle3.svg)] bg-cover bg-no-repeat px-5 py-5 
+            rounded-3xl text-basic-dark transform origin-bottom transition-transform duration-300
+            -rotate-3 max-[767px]:-rotate-0 md:group-hover:rotate-0"
+          >
             <p>
               HomeExchange transformed our family vacations! We've stayed in
               amazing places without breaking the bank
@@ -42,8 +47,12 @@ const Testimonial = () => {
             </div>
           </div>
 
-          {/* Middle card */}
-          <div className="flex flex-col gap-3 w-full sm:w-[350px] lg:w-[384px] bg-[url(/src/assets/Rectangle3.svg)] bg-cover bg-no-repeat px-5 py-5 rounded-3xl text-basic-dark">
+          {/* Middle card (no animation) */}
+          <div
+            className="flex flex-col gap-3 w-full sm:w-[350px] lg:w-[384px] 
+            bg-[url(/src/assets/Rectangle3.svg)] bg-cover bg-no-repeat px-5 py-5 
+            rounded-3xl text-basic-dark"
+          >
             <p>
               HomeExchange transformed our family vacations! We've stayed in
               amazing places without breaking the bank
@@ -69,7 +78,12 @@ const Testimonial = () => {
           </div>
 
           {/* Third card */}
-          <div className="flex flex-col gap-3 w-full sm:w-[350px] lg:w-[384px] bg-[url(/src/assets/Rectangle3.svg)] bg-cover bg-no-repeat px-5 py-5 rounded-3xl text-basic-dark rotate-2 hover:rotate-0 transition-transform duration-300 transform origin-bottom">
+          <div
+            className="flex flex-col gap-3 w-full sm:w-[350px] lg:w-[384px] 
+            bg-[url(/src/assets/Rectangle3.svg)] bg-cover bg-no-repeat px-5 py-5 
+            rounded-3xl text-basic-dark transform origin-bottom transition-transform duration-300
+            rotate-3 max-[767px]:rotate-0 md:group-hover:rotate-0"
+          >
             <p>
               HomeExchange transformed our family vacations! We've stayed in
               amazing places without breaking the bank

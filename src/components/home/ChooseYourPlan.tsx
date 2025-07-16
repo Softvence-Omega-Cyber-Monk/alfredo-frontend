@@ -16,7 +16,7 @@ const ChooseYourPlan = () => {
       <CommonWrapper>
         <ClientHeading headingText="Choose Your" spanText="plan" />
 
-        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-dark-3 font-regular text-center max-w-4xl mx-auto mb-10 px-4">
+        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-dark-3 font-regular text-center max-w-4xl mx-auto mb-10 px-4 pt-6">
           Select the plan that fits your needs and start your journey with
           confidence.
         </p>
