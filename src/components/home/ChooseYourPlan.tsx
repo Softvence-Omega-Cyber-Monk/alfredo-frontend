@@ -29,14 +29,14 @@ const ChooseYourPlan = () => {
             bgColor="bg-white"
             borderColor="border border-primary-blue"
             bgImage="/buttonHomeWhite.svg"
-            className="w-full sm:w-auto px-6 py-2 text-base md:text-lg rounded-full"
+            className="w-full sm:w-auto px-8 py-2 text-base md:text-lg rounded-full"
           />
           <PrimaryButton
             title="Premium"
             textColor="text-white"
             bgColor="bg-primary-blue"
             borderColor=""
-            className="w-full sm:w-auto px-6 py-2 text-base md:text-lg lg:px-10 lg:py-4 rounded-full font-semibold"
+            className="w-full sm:w-auto px-8 py-2 text-base md:text-lg rounded-full"
           />
         </div>
       </CommonWrapper>
