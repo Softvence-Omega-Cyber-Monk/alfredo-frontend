@@ -24,7 +24,9 @@ const ArticleCard: FC<ArticleProps> = ({
 }) => {
   return (
     <Link to={`/articles/${id}`} className="block">
-      <div className="border border-[#F4F7FC] rounded-xl lg:rounded-3xl overflow-hidden relative hover:border-[#75A2DE] hover:shadow-[0_0_25px_0_#B9D7FF] transition-all ease-in-out duration-300 bg-primary-blue/25 ">
+      <div
+        className="border border-[#F4F7FC] rounded-xl lg:rounded-3xl overflow-hidden relative hover:border-[#75A2DE] hover:shadow-[0_0_25px_0_#B9D7FF] transition-all ease-in-out duration-300 bg-transparent hover:bg-[#EAF1FA]/40 "
+      >
         <div className="absolute bottom-0 right-0 -z-10">
           <img src="/articleHomeIcon.svg" alt="" />
         </div>
