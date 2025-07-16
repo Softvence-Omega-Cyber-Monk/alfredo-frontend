@@ -5,7 +5,7 @@ import ClientHeading from "./ClientHeading";
 
 const Testimonial = () => {
   return (
-    <div className="lg:h-[751px] lg:py-[140px] md:py-[120px] py-2">
+    <div className="lg:h-[751px] lg:py-[140px] md:py-[120px] py-14">
       <CommonWrapper>
         <div>
           <ClientHeading headingText="What Our Client" spanText="Say" />
