@@ -7,7 +7,6 @@ import { useState } from "react";
 
 const AddCardDialog = () => {
   const [open, setOpen] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState("stripe");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +24,7 @@ const AddCardDialog = () => {
 
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/40 z-40" />
-        <Dialog.Content className="fixed z-50 top-1/2 left-1/2 w-full max-w-[692px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-8 shadow-xl space-y-8">
+        <Dialog.Content className="fixed z-50 top-1/2 left-1/2 w-full max-w-[692px]  -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-8 shadow-xl space-y-8">
           <Dialog.Title className="text-[40px] font-DM-sans text-center text-[#3174CD]">
             Checkout Information
           </Dialog.Title>
@@ -34,24 +33,24 @@ const AddCardDialog = () => {
             {/* Name fields */}
             <div className="flex flex-col md:flex-row gap-4">
               <div className="w-full flex flex-col space-y-2">
-                <label className="text-sm text-[#808080] font-DM-sans">
+                <label className="text-[14px]  text-[#808080] font-DM-sans">
                   First Name*
                 </label>
                 <input
                   type="text"
                   placeholder="Enter your first name"
-                  className="px-4 py-3 border rounded-full border-[#808080]"
+                  className="flex-1 px-4 py-3 border rounded-full border-[#808080]"
                   required
                 />
               </div>
               <div className="w-full flex flex-col space-y-2">
-                <label className="text-sm text-[#808080] font-DM-sans">
+                <label className="text-[14px]  text-[#808080] font-DM-sans">
                   Last Name*
                 </label>
                 <input
                   type="text"
                   placeholder="Enter your last name"
-                  className="px-4 py-3 border rounded-full border-[#808080]"
+                  className="flex-1 px-4 py-3 border rounded-full border-[#808080]"
                   required
                 />
               </div>
@@ -60,24 +59,25 @@ const AddCardDialog = () => {
             {/* Telephone and Email */}
             <div className="flex flex-col md:flex-row gap-4">
               <div className="w-full flex flex-col space-y-2">
-                <label className="text-sm text-[#808080] font-DM-sans">
+                <label className="text-[14px]  text-[#808080] font-DM-sans">
                   Telephone*
                 </label>
+
                 <input
                   type="tel"
                   placeholder="e.g., +1234567890"
-                  className="px-4 py-3 border rounded-full border-[#808080]"
+                  className="flex-1 px-4 py-3 border rounded-full border-[#808080]"
                   required
                 />
               </div>
               <div className="w-full flex flex-col space-y-2">
-                <label className="text-sm text-[#808080] font-DM-sans">
+                <label className="text-[14px]  text-[#808080] font-DM-sans">
                   Email*
                 </label>
                 <input
                   type="email"
                   placeholder="e.g., your.email@example.com"
-                  className="px-4 py-3 border rounded-full border-[#808080]"
+                  className="flex-1 px-4 py-3 border rounded-full border-[#808080]"
                   required
                 />
               </div>
@@ -85,44 +85,43 @@ const AddCardDialog = () => {
 
             {/* City */}
             <div className="w-full flex flex-col space-y-2">
-              <label className="text-sm text-[#808080] font-DM-sans">
+              <label className="text-[14px]  text-[#808080] font-DM-sans">
                 City*
               </label>
+
               <input
                 type="text"
                 placeholder="Enter your city"
-                className="px-4 py-3 border rounded-full border-[#808080]"
+                className="w-full px-4 py-3 border rounded-full border-[#808080]"
                 required
               />
             </div>
 
-            {/* Payment Method - Clickable Stripe */}
+            {/* Payment method */}
             <div className="w-full flex flex-col space-y-2">
-              <label className="text-sm text-[#808080] font-DM-sans">
+              <label className="text-[14px]  text-[#808080] font-DM-sans">
                 Payment Method*
               </label>
 
-              <label className="cursor-pointer border border-[#808080] px-4 py-3 rounded-full flex justify-between items-center hover:bg-[#f0f0f0] transition">
-                <div className="flex items-center gap-2 text-[#3174CD] font-medium">
+              <div className="border border-[#808080] px-4 py-3 rounded-full flex justify-between items-center">
+                <div className="flex items-center gap-2 text-[#3174CD] font-medium ">
                   <input
                     type="radio"
-                    name="payment"
-                    value="stripe"
-                    checked={paymentMethod === "stripe"}
-                    onChange={() => setPaymentMethod("stripe")}
+                    checked
+                    readOnly
                     className="w-4 h-4 accent-[#3174CD] cursor-pointer"
                   />
                   Stripe Pay
                 </div>
                 <FaCcStripe className="text-[#635bff] text-2xl" />
-              </label>
+              </div>
             </div>
 
-            {/* Submit */}
+            {/* Save button */}
             <Dialog.Close asChild>
               <Button
                 type="submit"
-                className="w-full h-[52px] flex justify-center items-center gap-[45px] rounded-[35px] bg-[#3174CD] text-white text-lg hover:bg-[#2a65b5] transition"
+                className="w-full h-[52px] flex px-8 py-3 justify-center items-center gap-[45px] self-stretch rounded-[35px] bg-[#3174CD] text-white text-lg hover:bg-[#2a65b5] cursor-pointer"
               >
                 Save
               </Button>
@@ -157,7 +156,7 @@ const Payment = () => {
                 type="checkbox"
                 className="peer appearance-none w-5 h-5 rounded-full border-2 border-white bg-transparent checked:bg-white checked:border-white"
               />
-              <span className="absolute top-1 left-1 w-3 h-3 bg-[#3174CD] rounded-full scale-0 peer-checked:scale-100 transition-transform" />
+              <span className="absolute top-1 left-1 w-3 h-3 bg-white rounded-full scale-0 peer-checked:scale-100 transition-transform" />
             </label>
           </Button>
         </div>

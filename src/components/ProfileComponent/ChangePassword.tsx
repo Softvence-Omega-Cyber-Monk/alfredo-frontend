@@ -47,7 +47,7 @@ const ChangePassword = () => {
           className="absolute top-1/2 right-4 -translate-y-1/2 text-xl text-gray-500 cursor-pointer"
           onClick={toggle}
         >
-          {show ? <MdOutlineRemoveRedEye /> : <LuEyeOff />}
+          {show ? <LuEyeOff /> : <MdOutlineRemoveRedEye />}
         </div>
       </div>
       {errors[name] && (
