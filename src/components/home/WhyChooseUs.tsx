@@ -31,7 +31,7 @@ const WhyChooseUs = () => {
     <div className="pb-10 lg:pb-32">
       <CommonWrapper>
         <ClientHeading headingText="Why choose" spanText="us?" />
-        <p className="text-lg md:text-xl lg:text-2xl text-dark-3 font-regular text-center max-w-3xl mx-auto mb-10">
+        <p className="text-lg md:text-xl lg:text-2xl text-dark-3 font-regular text-center my-6 max-w-3xl mx-auto mb-10">
           Trusted, flexible, and secure home exchanges—so you can travel
           comfortably and confidently.
         </p>
