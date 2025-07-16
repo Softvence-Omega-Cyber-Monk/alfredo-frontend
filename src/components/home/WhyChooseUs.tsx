@@ -31,14 +31,14 @@ const WhyChooseUs = () => {
     <div className="pb-10 lg:pb-32">
       <CommonWrapper>
         <ClientHeading headingText="Why choose" spanText="us?" />
-        <p className="text-lg md:text-xl lg:text-2xl text-dark-3 font-regular text-center max-w-3xl mx-auto mb-10">
+        <p className="text-lg md:text-xl lg:text-2xl text-dark-3 font-regular text-center my-6 max-w-3xl mx-auto mb-10">
           Trusted, flexible, and secure home exchanges—so you can travel
           comfortably and confidently.
         </p>
 
         <div className="mt-9 relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-12 gap-6 items-center">
-            <div className="xl:col-span-7 rounded-[40px] overflow-hidden">
+            <div className="xl:col-span-7 rounded-[40px] overflow-hidden shadow-[0_30px_40px_-6px_rgba(59,130,246,0.5)]">
               <img src={img} className="w-full" alt="" />
             </div>
             <div
