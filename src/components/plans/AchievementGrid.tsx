@@ -1,4 +1,3 @@
-import React from "react";
 import ClientHeading from "@/components/reusable/ClientHeading";
 import AchievementAccordion from "./AchievementAccordion";
 import achievementsData from "../../lib/data/achievements";

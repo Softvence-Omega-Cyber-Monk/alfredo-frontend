@@ -7,6 +7,9 @@ const SettingPassword = () => {
       <MiniWrapper>
         <ProfileTab />
       </MiniWrapper>
+      <div className="hidden md:block bottom-0 w-full  mx-auto -mb-40">
+        <img src="/cityscape.svg" alt="" className="w-full mx-auto" />
+      </div>
     </div>
   );
 };

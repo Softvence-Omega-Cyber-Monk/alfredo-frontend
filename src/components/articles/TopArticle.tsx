@@ -9,7 +9,7 @@ const TopArticle = () => {
         </p>
       </div>
       <div className="lg:col-span-5 rounded-3xl overflow-hidden">
-        <img src={articleImage} className="w-full" alt="" />
+        <img src={articleImage} className="w-full object-cover h-full" alt="" />
       </div>
       <div className="lg:col-span-7 flex flex-col gap-8 lg:gap-4 justify-between text-dark-3">
         <div>

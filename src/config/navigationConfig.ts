@@ -1,7 +1,15 @@
+import dashboard from "@/assets/icons/dashboard.svg";
+import dashboardHover from "@/assets/icons/dashboardHover.svg";
+import profile from "@/assets/icons/userHome.svg";
+import profileHover from "@/assets/icons/userHover.svg";
+import settings from "@/assets/icons/setting.svg";
+import settingsHover from "@/assets/icons/settingHover.svg";
+
 export interface NavItem {
   title: string;
   path: string;
-  icon?: React.ElementType;
+  icon?: string;
+  hoverIcon?: string;
   isPrivate?: boolean;
 }
 
@@ -35,15 +43,21 @@ export const navigationConfig: NavItem[] = [
 
 export const userMenuItems = [
   {
+    icon: dashboard,
+    hoverIcon: dashboardHover,
+    title: "Dashboard",
+    path: "/dashboard",
+  },
+  {
+    icon: profile,
+    hoverIcon: profileHover,
     title: "Profile",
     path: "/profile",
   },
   {
+    icon: settings,
+    hoverIcon: settingsHover,
     title: "Settings",
-    path: "/settings",
-  },
-  {
-    title: "My Properties",
-    path: "/my-properties",
+    path: "/setting-password",
   },
 ];
