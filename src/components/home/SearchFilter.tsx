@@ -85,7 +85,7 @@ const SearchFilter = () => {
                 alt="home icon"
                 className="w-4 h-4 md:w-5 md:h-5"
               />
-              <Select className="">
+              <Select>
                 <SelectTrigger className="outline-none w-full text-sm md:text-base bg-transparent border-none focus:border-none focus:ring-0 focus:ring-transparent shadow-none p-0 placeholder:text-base">
                   <SelectValue placeholder="Home" />
                 </SelectTrigger>
