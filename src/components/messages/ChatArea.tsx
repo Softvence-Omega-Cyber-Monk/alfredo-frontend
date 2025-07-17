@@ -1,6 +1,6 @@
-import React from "react";
 import MessagesList from "./MessagesList";
 import MessageInput from "./MessageInput";
+import { ChevronLeft, Info } from "lucide-react";
 
 interface Conversation {
   id: number;
@@ -41,7 +41,7 @@ const ChatArea: React.FC<ChatAreaProps> = ({
   messageInput,
   onMessageInputChange,
   onSendMessage,
-  onCloseChat,  // Add this
+  onCloseChat, // Add this
   onToggleInfo, // Add this
   isVisible,
 }) => {
@@ -58,18 +58,18 @@ const ChatArea: React.FC<ChatAreaProps> = ({
       <div className="md:hidden flex justify-between items-center px-4 py-2 border-b border-[#EAF1FA] bg-white">
         <button
           onClick={onCloseChat}
-          className="text-primary-blue font-medium text-sm"
+          className="text-white bg-primary-blue p-1 rounded-full font-medium cursor-pointe"
         >
-          ← Back
+          <ChevronLeft className="w-5 h-5" />
         </button>
         <p className="text-sm font-semibold text-dark-2 truncate w-full text-center">
           {selectedConversation.name}
         </p>
         <button
           onClick={onToggleInfo}
-          className="text-primary-blue text-sm font-medium"
+          className="text-white bg-primary-blue p-2 rounded-full font-medium cursor-pointer"
         >
-          ℹ️
+          <Info className="w-4 h-4" />
         </button>
       </div>
 
