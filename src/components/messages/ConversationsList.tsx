@@ -32,21 +32,12 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
     <div
       className={`${
         isVisible ? "block" : "hidden"
-      } md:block w-full md:w-1/4 lg:w-1/5 flex flex-col absolute md:relative inset-0 md:inset-auto z-50 md:z-auto
+      } md:block w-full md:w-1/4 lg:w-1/5 flex flex-col md:mt-0 md:relative inset-0 md:inset-auto z-50 md:z-auto
     `}
     >
       {/* Header */}
-      <div className=" mb-6">
-        <div className="flex items-center justify-between">
-          {/* Close button for mobile */}
-          <button
-            onClick={onClose}
-            className="md:hidden text-[#666666] hover:text-[#F04436] p-1"
-          >
-            ✕
-          </button>
-        </div>
-        <div className="relative bg-white rounded-full p-4">
+      <div className=" mb-2">
+        <div className="relative bg-white rounded-full px-4 py-2  md:p-4">
           <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 text-dark-2 w-6 rounded-full h-auto" />
           <Input
             placeholder="Search..."
