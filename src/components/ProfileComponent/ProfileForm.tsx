@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { RadioGroup } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "../ui/textarea";
 import testimonailPerson from "@/assets/testimonailPerson.jpg";
@@ -19,7 +19,7 @@ const ProfileForm = () => {
           </h1>
           <p className="text-base text-dark-3 py-3 md:py-6">
             <span className="text-dark-2 font-semibold">User ID: </span>
-            09352621254433079541
+            093526212544330792
           </p>
         </div>
         {/* image section */}
@@ -252,18 +252,19 @@ const ProfileForm = () => {
             className="flex flex-wrap gap-6 mt-2 md:mt-0"
           >
             {["By Myself", "Family", "Couple", "Friends"].map((group) => (
-              <div
+              <label
                 key={group}
-                className="flex items-center gap-2 cursor-pointer"
+                className="flex items-center gap-2 cursor-pointer text-base text-[var(--color-basic-dark)] font-DM-sans"
               >
-                <RadioGroupItem value={group} id={group} />
-                <Label
-                  htmlFor={group}
-                  className="text-[var(--color-basic-dark)] font-DM-sans text-base font-normal"
-                >
-                  {group}
-                </Label>
-              </div>
+                <input
+                  type="radio"
+                  name="role"
+                  value={group}
+                  defaultChecked={group === "Worker"}
+                  className="w-4 h-4 accent-[var(--Info-I-600,#009DE8)] cursor-pointer"
+                />
+                {group}
+              </label>
             ))}
           </RadioGroup>
         </div>
@@ -284,6 +285,7 @@ const ProfileForm = () => {
                     <input
                       type="checkbox"
                       defaultChecked={dest === "Big Cities"}
+                      className="w-5 h-5 rounded-[6px] border border-[#009DE8] bg-[#009DE8] cursor-pointer"
                     />
                     {dest}
                   </label>
@@ -302,7 +304,11 @@ const ProfileForm = () => {
             <div className="flex gap-4 flex-wrap mt-2 text-[#808080] text-base">
               {["Relax", "Adventure", "Work"].map((reason) => (
                 <label key={reason} className="flex items-center gap-2">
-                  <input type="checkbox" defaultChecked={reason === "Relax"} />
+                  <input
+                    type="checkbox"
+                    defaultChecked={reason === "Relax"}
+                    className="w-5 h-5 rounded-[6px] border border-[#009DE8] bg-[#009DE8] cursor-pointer"
+                  />
                   {reason}
                 </label>
               ))}
@@ -387,7 +393,7 @@ const ProfileForm = () => {
             <span className="text-green-600 font-semibold pl-2">Verified</span>
           </p>
         </div>
-        <div>
+        <div className="-mb-70 relative">
           <Button
             type="submit"
             className="w-full h-14 flex py-4 px-7 justify-center items-center self-stretch rounded-lg bg-[var(--color-primary-blue)] hover:bg-[#255DA8] text-white text-lg  cursor-pointer"
