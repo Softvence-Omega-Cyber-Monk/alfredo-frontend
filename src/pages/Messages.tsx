@@ -242,7 +242,8 @@ const conversationMessages: {
 };
 
 const Messages = () => {
-  const [selectedConversation, setSelectedConversation] =useState<Conversation>(conversations[0]);
+  const [selectedConversation, setSelectedConversation] =
+    useState<Conversation>(conversations[0]);
   const [messageInput, setMessageInput] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [showSidebar, setShowSidebar] = useState(false);
@@ -357,10 +358,9 @@ const Messages = () => {
             isVisible={true}
             onToggleInfo={() => setShowInfoPanel(true)} // Add this if needed
           />
-<div className="w-1/4 xl:w-1/5">
-
-          <ChatInfoPanel />
-</div>
+          <div className="w-1/4 xl:w-1/5">
+            <ChatInfoPanel />
+          </div>
         </div>
         {/* Sidebar overlay for mobile (when toggled from chat view) */}
         {showSidebar && (
