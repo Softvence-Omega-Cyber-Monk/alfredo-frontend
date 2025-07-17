@@ -10,9 +10,9 @@ const FAQ = () => {
   return (
     <div>
       <CommonWrapper>
-        <div className="mt-[64px] max-[767px]:mt-[34px] max-[767px]:text-center">
+        <div className="mt-[64px] max-[767px]:mt-[34px] max-[767px]:text-center border-b border-[#BFD4F0] pb-3 mb-6">
           <ClientHeading headingText="Frequently ask" spanText="questions" />
-          <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-base text-center">
+          <p className="text-[24px] py-6 font-normal text-basic-dark max-[767px]:text-base text-center">
             Explore our most frequently asked questions to understand how home exchange works, how to get started, <br className="max-[767px]:hidden" />
             and how we ensure a safe and trusted travel experience for all our members.
           </p>
@@ -63,7 +63,7 @@ const FAQ = () => {
         {/* Plans Section */}
         <div className="">
           <ClientHeading headingText="Our" spanText="plans" />
-          <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-base text-center">
+          <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-base py-6 text-center">
             Flexible membership options designed to fit every traveler’s needs—<br className="max-[767px]:hidden" />
             whether you exchange once a year or every month.
           </p>

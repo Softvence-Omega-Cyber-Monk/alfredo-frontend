@@ -1,7 +1,7 @@
-import { FC, useRef } from "react";
+import { FC, useRef, useState } from "react";
 import CommonWrapper from "@/common/CommonWrapper";
 import { cardData, inviteData } from "@/lib/bonusData";
-import { FiCopy } from "react-icons/fi";
+import { FiCopy, FiCheckCircle } from "react-icons/fi"; // updated
 import fb from "../assets/footer/fb.svg";
 import insta from "../assets/footer/instagram.svg";
 import linkedin from "../assets/footer/linkedin.svg";
@@ -14,10 +14,13 @@ import ReusableButton from "@/components/reusable/ReusableButton";
 
 const BonusProgram: FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [copied, setCopied] = useState(false); // new state
 
   const handleCopy = () => {
     if (inputRef.current) {
       navigator.clipboard.writeText(inputRef.current.value);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000); // reset after 10 seconds
     }
   };
 
@@ -33,7 +36,7 @@ const BonusProgram: FC = () => {
               Bonuses
             </span>
           </h1>
-          <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-sm mt-4">
+          <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-sm py-4">
             Share your referral link and earn rewards when your friends join{" "}
             <br className="max-[767px]:hidden" />
             and complete their first vacanza.
@@ -91,7 +94,10 @@ const BonusProgram: FC = () => {
                 </h2>
                 <ul className="list-disc pl-6 space-y-2">
                   {invite.points.map((point, idx) => (
-                    <li key={idx} className="text-[18px] text-basic-dark max-[767px]:text-sm">
+                    <li
+                      key={idx}
+                      className="text-[18px] text-basic-dark max-[767px]:text-sm"
+                    >
                       {point}
                     </li>
                   ))}
@@ -110,7 +116,7 @@ const BonusProgram: FC = () => {
             <p className="text-[18px] text-basic-dark max-[767px]:text-sm mb-4">
               Share this link with your friends to start earning.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row sm:items-center items-center gap-4 justify-center mt-[20px]">
               <input
                 ref={inputRef}
@@ -124,20 +130,26 @@ const BonusProgram: FC = () => {
                 onClick={handleCopy}
                 className="w-full sm:w-auto py-3 px-6 flex items-center justify-center gap-2"
               >
-                <FiCopy size={20} />
-                Copy
+                {copied ? (
+                  <>
+                    <FiCheckCircle size={20} className="text-green-600" />
+                    <span className="inline-block w-[60px] text-left">Copied</span>
+                  </>
+                ) : (
+                  <>
+                    <FiCopy size={20} />
+                    <span className="inline-block w-[60px] text-left">Copy</span>
+                  </>
+                )}
               </ReusableButton>
+
             </div>
-
-
           </div>
         </div>
 
         {/* Social Section */}
         <div className="flex flex-row items-center justify-center gap-[24px] mt-[50px]  mb-[140px] max-[767px]:mt-[20px] max-[767px]:mb-[80px] text-center">
-          <h3 className="text-lg md:text-[24px] text-basic-dark">
-            Share via:
-          </h3>
+          <h3 className="text-lg md:text-[24px] text-basic-dark">Share via:</h3>
           <ul className="flex flex-row items-center gap-[15px] justify-center sm:mt-0">
             <li>
               <Link to="/" className="font-regular lg:text-xl flex gap-2 items-center">
@@ -189,7 +201,7 @@ const BonusProgram: FC = () => {
         </div>
 
         {/* Conversation Section */}
-        <div className="my-[150px] px-4">
+        <div className="my-[80px] lg:my-[140px]">
           <Conversation />
         </div>
       </CommonWrapper>

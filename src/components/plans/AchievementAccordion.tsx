@@ -5,7 +5,7 @@ interface Achievement {
   id: number;
   borderColor?: string;
   bgColor?: string;
-  icon: string;
+  icon?: string;
   title?: string;
   description: string;
   titleColor?: string;
@@ -113,52 +113,72 @@ const AchievementAccordion: React.FC<AccordionProps> = ({
                       bgImage,
                       bgTitle,
                     } = achievement;
-
+                    // Icon Only Card
                     if (cardType === "iconOnly") {
                       return (
                         <div
                           key={id}
-                          className="flex flex-col items-center justify-center gap-2 text-center"
+                          className="rounded-xl p-6 border"
+                          style={{
+                            backgroundColor: bgColor,
+                            borderColor: borderColor,
+                          }}
                         >
-                          <img src={icon} alt={title} className="w-10 h-10" />
-                          <h3 className="text-base font-semibold">{title}</h3>
-                          <p className="text-sm text-gray-500">{description}</p>
+                          <div className="flex items-center gap-2 mb-3">
+                            <div className="w-10 h-10 flex justify-center items-center">
+                              <img src={icon} alt={title} className="w-full" />
+                            </div>
+                            <h3
+                              className="text-[20px] font-semibold"
+                              style={{ color: titleColor }}
+                            >
+                              {title}
+                            </h3>
+                          </div>
+                          <p
+                            className="text-base font-normal"
+                            style={{ color: descriptionColor }}
+                          >
+                            {description}
+                          </p>
                         </div>
                       );
                     }
 
+                    // Background Iocn Image and Title Card
                     if (cardType === "bgImage" && bgImage) {
                       return (
                         <div
-                        key={id}
-                        className="rounded-xl p-6 border"
-                        style={{
-                          backgroundColor: bgColor,
-                          borderColor: borderColor,
-                        }}
-                      >
-                        <div className="flex items-center gap-2 mb-3">
-                          <div
-                            className="w-10 h-10 flex justify-center items-center rounded-full relative overflow-hidden"
-                            
-                          >
-                            <img src={bgImage} alt={title} className="w-full" />
-                            <p className="absolute text-white">{bgTitle}</p>
-                          </div>
-                          <h3
-                            className="text-[20px] font-semibold"
-                            style={{ color: titleColor }}
-                          >
-                            {title}
-                          </h3>
-                        </div>
-                        <p
-                          className="text-base font-normal"
-                          style={{ color: descriptionColor }}
+                          key={id}
+                          className="rounded-xl p-6 border"
+                          style={{
+                            backgroundColor: bgColor,
+                            borderColor: borderColor,
+                          }}
                         >
-                          {description}
-                        </p>
-                      </div>
+                          <div className="flex items-center gap-2 mb-3">
+                            <div className="w-10 h-10 flex justify-center items-center rounded-full relative overflow-hidden">
+                              <img
+                                src={bgImage}
+                                alt={title}
+                                className="w-full"
+                              />
+                              <p className="absolute text-white">{bgTitle}</p>
+                            </div>
+                            <h3
+                              className="text-[20px] font-semibold"
+                              style={{ color: titleColor }}
+                            >
+                              {title}
+                            </h3>
+                          </div>
+                          <p
+                            className="text-base font-normal"
+                            style={{ color: descriptionColor }}
+                          >
+                            {description}
+                          </p>
+                        </div>
                       );
                     }
 
