@@ -1,14 +1,20 @@
 import MiniWrapper from "@/common/MiniWrapper";
 import ProfileTab from "@/components/ProfileComponent/ProfileTab";
 
+const background = {
+  backgroundImage: 'url("/cityscape.svg")',
+};
+
 const SettingPassword = () => {
   return (
-    <div className="mt-6 md:mt-10">
-      <MiniWrapper>
-        <ProfileTab />
-      </MiniWrapper>
-      <div className="hidden md:block bottom-0 w-full  mx-auto -mb-40">
-        <img src="/cityscape.svg" alt="" className="w-full mx-auto" />
+    <div
+      className="min-h-screen bg-bottom bg-repeat-x bg-contain"
+      style={background}
+    >
+      <div className="mt-6 md:mt-10">
+        <MiniWrapper>
+          <ProfileTab />
+        </MiniWrapper>
       </div>
     </div>
   );

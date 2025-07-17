@@ -1,16 +1,19 @@
 import MiniWrapper from "@/common/MiniWrapper";
 import ProfileForm from "@/components/ProfileComponent/ProfileForm";
 
+const background = {
+  backgroundImage: 'url("/cityscape.svg")',
+};
+
 const Profile = () => {
   return (
-    <div>
-      <div className="mt-6 md:mt-10 ">
-        <MiniWrapper>
-          <ProfileForm />
-        </MiniWrapper>
-      </div>
-      <div className="hidden md:block bottom-0 w-full mx-auto -mb-40">
-        <img src="/cityscape.svg" alt="" className="w-full mx-auto" />
+    <div className=" bg-bottom bg-repeat-x bg-contain" style={background}>
+      <div className="min-h-screen  bg-bottom bg-repeat-x bg-contain">
+        <div className="mt-6 md:mt-10  z-10">
+          <MiniWrapper>
+            <ProfileForm />
+          </MiniWrapper>
+        </div>
       </div>
     </div>
   );
