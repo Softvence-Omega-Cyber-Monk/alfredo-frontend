@@ -58,53 +58,57 @@ const ChangePassword = () => {
 
   return (
     <MiniWrapper>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-        <div>
-          <Button
-            type="button"
-            className="w-full text-2xl font-DM-sans flex h-14 justify-center items-center gap-2 self-stretch rounded-xl bg-[var(--Primary-P-25,#F4F7FC)] text-[var(--color-primary-blue)] hover:bg-[#e1e9f5] transition-colors duration-200 cursor-pointer"
-          >
-            Change Password
-          </Button>
-        </div>
-
-        {/* Password Fields */}
-        <div className="space-y-8">
-          {renderPasswordField("Old Password", "oldPassword", showOld, () =>
-            setShowOld(!showOld)
-          )}
-          {renderPasswordField("New Password", "newPassword", showNew, () =>
-            setShowNew(!showNew)
-          )}
-          {renderPasswordField(
-            "Confirm Password",
-            "confirmPassword",
-            showConfirm,
-            () => setShowConfirm(!showConfirm)
-          )}
-        </div>
-
-        {/* Submit Button */}
-        <div>
-          <Button
-            type="submit"
-            className="w-full text-lg font-DM-sans flex h-14 justify-center items-center gap-2 self-stretch rounded-xl bg-[#E9E9E9] text-[var(--color-basic-dark)] hover:bg-[#d4d3d3] transition-colors duration-200 cursor-pointer"
-          >
-            Update
-          </Button>
-        </div>
-
-        {/* Remember and Forgot */}
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-start gap-2">
-            <input type="checkbox" className="mt-2 cursor-pointer" />
-            <label className="text-lg text-basic-dark">Remember Password</label>
+      <div className="">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+          <div>
+            <Button
+              type="button"
+              className="w-full text-2xl font-DM-sans flex h-14 justify-center items-center gap-2 self-stretch rounded-xl bg-[var(--Primary-P-25,#F4F7FC)] text-[var(--color-primary-blue)] hover:bg-[#e1e9f5] transition-colors duration-200 cursor-pointer"
+            >
+              Change Password
+            </Button>
           </div>
-          <p className="text-lg text-[#009DE8] cursor-pointer">
-            Forgot Password?
-          </p>
-        </div>
-      </form>
+
+          {/* Password Fields */}
+          <div className="space-y-8">
+            {renderPasswordField("Old Password", "oldPassword", showOld, () =>
+              setShowOld(!showOld)
+            )}
+            {renderPasswordField("New Password", "newPassword", showNew, () =>
+              setShowNew(!showNew)
+            )}
+            {renderPasswordField(
+              "Confirm Password",
+              "confirmPassword",
+              showConfirm,
+              () => setShowConfirm(!showConfirm)
+            )}
+          </div>
+
+          {/* Submit Button */}
+          <div>
+            <Button
+              type="submit"
+              className="w-full text-lg font-DM-sans flex h-14 justify-center items-center gap-2 self-stretch rounded-xl bg-[#E9E9E9] text-[var(--color-basic-dark)] hover:bg-[#d4d3d3] transition-colors duration-200 cursor-pointer"
+            >
+              Update
+            </Button>
+          </div>
+
+          {/* Remember and Forgot */}
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-start gap-2">
+              <input type="checkbox" className="mt-2 cursor-pointer" />
+              <label className="text-lg text-basic-dark">
+                Remember Password
+              </label>
+            </div>
+            <p className="text-lg text-[#009DE8] cursor-pointer">
+              Forgot Password?
+            </p>
+          </div>
+        </form>
+      </div>
     </MiniWrapper>
   );
 };
