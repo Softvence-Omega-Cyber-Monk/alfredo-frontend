@@ -16,7 +16,7 @@ const initialState: AuthState = {
   isAuthenticated: isDev, // true only during development
   user: isDev
     ? {
-        name: "Dev User",
+        name: "Developer User",
         role: "admin",
       }
     : null,
