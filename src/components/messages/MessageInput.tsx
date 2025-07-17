@@ -1,11 +1,5 @@
 import { LuSend } from "react-icons/lu";
 import { FiPaperclip } from "react-icons/fi";
-interface MessageInputProps {
-  messageInput: string;
-  onMessageInputChange: (value: string) => void;
-  onSendMessage: () => void;
-}
-
 import {
   Popover,
   PopoverTrigger,
@@ -17,6 +11,12 @@ import { useState } from "react";
 import clsx from "clsx";
 import arrow from "@/assets/icons/arrowdown.svg";
 import PrimaryButton from "@/components/reusable/PrimaryButton";
+
+interface MessageInputProps {
+  messageInput: string;
+  onMessageInputChange: (value: string) => void;
+  onSendMessage: () => void;
+}
 
 const MessageInput: React.FC<MessageInputProps> = ({
   messageInput,
@@ -56,8 +56,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
                 className="relative overflow-hidden rounded-full transition-colors text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
               >
                 <p className="relative z-10">Send</p>
-                <FiPaperclip className="relative z-10 w-5 h-5" />
-
+                <LuSend className="relative z-10 w-5 h-5" />
                 <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
                   <img
                     src="/buttonHomeIcon.svg"
@@ -116,7 +115,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
                 </div>
                 <PrimaryButton
                   title="Send"
-                  textColor="w-full sm:text-sm md:text-base mt-4"
+                  textColor="w-full sm:text-sm md:text-base mt-4 text-white"
                   className=""
                 />
               </PopoverContent>
@@ -126,9 +125,8 @@ const MessageInput: React.FC<MessageInputProps> = ({
             onClick={() => alert("Emoji Picker Not Implemented")}
             className="relative overflow-hidden rounded-full transition-colors text-lg font-medium cursor-pointer px-6 py-2 bg-white border border-dark-3 text-dark-3 flex items-center justify-center gap-2.5"
           >
-            <LuSend className="relative z-10 w-5 h-5" />
+            <FiPaperclip className="relative z-10 w-5 h-5" />
             <p className="relative z-10">Attach</p>
-
             <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
               <img src="/buttonHomeWhite.svg" alt="icon" className="w-full" />
             </div>
