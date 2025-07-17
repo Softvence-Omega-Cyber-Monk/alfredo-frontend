@@ -58,7 +58,7 @@ const ChangePassword = () => {
 
   return (
     <MiniWrapper>
-      <div className="min-h-screen">
+      <div className="">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
           <div>
             <Button
