@@ -39,8 +39,8 @@ const Login = () => {
 
   return (
     <CommonWrapper>
-      <div className="flex items-center justify-center">
-        <div className="w-3/4 bg-white">
+      <div className="flex items-center justify-center mx-auto my-[64px] max-[767px]:mt-[40px]">
+        <div className="max-[767px]:w-full w-[65%] bg-white">
           <AuthenticateHeading title="Login now !" />
 
           <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-6">
