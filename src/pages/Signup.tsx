@@ -52,7 +52,7 @@ const Signup = () => {
 
   return (
     <CommonWrapper>
-      <div className="flex items-center justify-center mt-16 max-[767px]:mt-[40px]">
+      <div className="flex items-center justify-center mx-auto my-[64px] max-[767px]:mt-[40px]">
         <div className="w-[65%] max-[767px]:w-full bg-white">
           <AuthenticateHeading title="First time here? Sign up now!" />
 
