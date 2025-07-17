@@ -92,7 +92,7 @@ const AuthSection: React.FC<Props> = ({
         </PopoverTrigger>
       </div>
 
-      <PopoverContent className="bg-white text-dark-3 w-[190px] md:w-[240px] z-70 border-none rounded-xl p-4">
+      <PopoverContent className="bg-white text-dark-3 w-[190px] md:w-[240px] mt-2 mr-12 z-70 border-none rounded-xl p-4">
         {userMenuItems.map((item) => (
           <div
             key={item.path}
