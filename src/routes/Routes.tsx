@@ -21,7 +21,9 @@ import VerifyEmail from "@/pages/VerifyEmail";
 import ForgotPassword from "@/pages/ForgotPassword";
 import SetNewPassword from "@/pages/SetNewPassword";
 import SettingPassword from "@/pages/SettingPassword";
-import Messages from '../pages/Messages';
+import Messages from "../pages/Messages";
+import Dashboard from "@/pages/Dashboard";
+import MyProperties from "@/pages/MyProperties";
 
 const routes = createBrowserRouter([
   {
@@ -103,6 +105,14 @@ const routes = createBrowserRouter([
       {
         path: "/messages",
         element: <Messages />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/my-properties",
+        element: <MyProperties />,
       },
       {
         path: "/admin",
