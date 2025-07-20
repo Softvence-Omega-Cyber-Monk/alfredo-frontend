@@ -4,7 +4,29 @@ import check from "@/assets/icons/dashboardCheck.svg";
 import cross from "@/assets/icons/dashboardCross.svg";
 import PhotoUpload from "./PhotoUpload";
 
-const DashboardHomeDetails = () => {
+interface DashboardHomeDetailsProps {
+  homeName: string;
+  homeDescription: string;
+  areaDescription: string;
+  photos: File[];
+  availabilityType: "home" | "apartment" | null;
+  onDataChange: (updates: {
+    homeName?: string;
+    homeDescription?: string;
+    areaDescription?: string;
+    photos?: File[];
+    availabilityType?: "home" | "apartment";
+  }) => void;
+}
+
+const DashboardHomeDetails = ({
+  homeName,
+  homeDescription,
+  areaDescription,
+  photos,
+  availabilityType,
+  onDataChange,
+}: DashboardHomeDetailsProps) => {
   return (
     <div>
       <div>
@@ -18,6 +40,8 @@ const DashboardHomeDetails = () => {
 
         <Input
           name="text"
+          value={homeName}
+          onChange={(e) => onDataChange({ homeName: e.target.value })}
           placeholder="Type your home name"
           className="  px-4 py-3 h-auto items-center gap-2 text-sm rounded-lg border border-dark-3 bg-white/5 backdrop-blur-sm placeholder:text-gray-500 focus:outline-none focus:ring-transparent  mt-4"
         />
@@ -33,6 +57,8 @@ const DashboardHomeDetails = () => {
         </p>
 
         <Textarea
+          value={homeDescription}
+          onChange={(e) => onDataChange({ homeDescription: e.target.value })}
           placeholder="Describe it here"
           className="min-h-[100px] border-dark-3 focus:outline-none focus:ring-transparent  mt-4"
         />
@@ -49,6 +75,8 @@ const DashboardHomeDetails = () => {
         </p>
 
         <Textarea
+          value={areaDescription}
+          onChange={(e) => onDataChange({ areaDescription: e.target.value })}
           placeholder="Describe it here"
           className="min-h-[100px] border-dark-3 focus:outline-none focus:ring-transparent  mt-4"
         />
@@ -64,7 +92,10 @@ const DashboardHomeDetails = () => {
           kitchen, bedroom, and bathroom.
         </p>
 
-        <PhotoUpload/>
+        <PhotoUpload
+          photos={photos}
+          onPhotosChange={(newPhotos) => onDataChange({ photos: newPhotos })}
+        />
       </div>
 
       <div className="mt-10">
@@ -72,9 +103,20 @@ const DashboardHomeDetails = () => {
           Add your home's availability
         </h3>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 ">
-          <div className="p-6 flex flex-col gap-2.5 border border-[#BFD4F0] rounded-lg bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]">
+          <div
+            onClick={() => onDataChange({ availabilityType: "home" })}
+            className={`p-6 flex flex-col gap-2.5 border rounded-lg cursor-pointer transition-all ${
+              availabilityType === "home"
+                ? "border-[#BFD4F0] bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
+                : "border-[#BFD4F0] hover:bg-[#F4F7FC] hover:shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
+            }`}
+          >
             <div className="flex items-center gap-2 ">
-              <img src={check} className="w-5 h-5" alt="" />
+              <img
+                src={availabilityType === "home" ? check : cross}
+                className="w-5 h-5"
+                alt=""
+              />
               <p className="text-lg text-dark-3 font-normal">Home</p>
             </div>
             <p className="text-lg text-dark-3 font-normal">
@@ -82,9 +124,20 @@ const DashboardHomeDetails = () => {
             </p>
           </div>
 
-          <div className="p-6 flex flex-col gap-2.5 border border-[#BFD4F0] rounded-lg">
+          <div
+            onClick={() => onDataChange({ availabilityType: "apartment" })}
+            className={`p-6 flex flex-col gap-2.5 border rounded-lg cursor-pointer transition-all ${
+              availabilityType === "apartment"
+                ? "border-[#BFD4F0] bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
+                : "border-[#BFD4F0] hover:bg-[#F4F7FC] hover:shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
+            }`}
+          >
             <div className="flex items-center gap-2 ">
-              <img src={cross} className="w-5 h-5" alt="" />
+              <img
+                src={availabilityType === "apartment" ? check : cross}
+                className="w-5 h-5"
+                alt=""
+              />
               <p className="text-lg text-dark-3 font-normal">Apartment</p>
             </div>
             <p className="text-lg text-dark-3 font-regular">

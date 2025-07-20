@@ -1,15 +1,15 @@
-import { useNavigate } from "react-router-dom";
-import CommonCard from "../reusable/CommonCard";
 import cardImg from "@/assets/home/cardImg.jpg";
 import cardAvatar from "@/assets/home/cardAvatar.jpg";
+import { CommonCard } from "@/types/index";
 
-const propertyCards = [
+export const properties: CommonCard[] = [
   {
+    id: "1",
     image: cardImg,
     avatarImage: cardAvatar,
     rating: "4.9",
     ownerName: "Mr. Alfred",
-    location: "75835 Herta Walks, london",
+    location: "75835 Herat Walks, London",
     title: "2 Bedroom Apartment",
     price: 200.5,
     features: {
@@ -20,11 +20,12 @@ const propertyCards = [
     },
   },
   {
+    id: "2",
     image: cardImg,
     avatarImage: cardAvatar,
     rating: "4.9",
     ownerName: "Mr. Alfred",
-    location: "75835 Herta Walks, london",
+    location: "75835 Herat Walks, London",
     title: "2 Bedroom Apartment",
     price: 200.5,
     features: {
@@ -35,11 +36,12 @@ const propertyCards = [
     },
   },
   {
+    id: "3",
     image: cardImg,
     avatarImage: cardAvatar,
     rating: "4.9",
     ownerName: "Mr. Alfred",
-    location: "75835 Herta Walks, london",
+    location: "75835 Herta Walks, London",
     title: "2 Bedroom Apartment",
     price: 200.5,
     features: {
@@ -50,11 +52,12 @@ const propertyCards = [
     },
   },
   {
+    id: "4",
     image: cardImg,
     avatarImage: cardAvatar,
     rating: "4.9",
     ownerName: "Mr. Alfred",
-    location: "75835 Herta Walks, london",
+    location: "75835 Herta Walks, London",
     title: "2 Bedroom Apartment",
     price: 200.5,
     features: {
@@ -65,11 +68,12 @@ const propertyCards = [
     },
   },
   {
+    id: "5",
     image: cardImg,
     avatarImage: cardAvatar,
     rating: "4.9",
     ownerName: "Mr. Alfred",
-    location: "75835 Herta Walks, london",
+    location: "75835 Herta Walks, London",
     title: "2 Bedroom Apartment",
     price: 200.5,
     features: {
@@ -80,11 +84,12 @@ const propertyCards = [
     },
   },
   {
+    id: "6",
     image: cardImg,
     avatarImage: cardAvatar,
     rating: "4.9",
     ownerName: "Mr. Alfred",
-    location: "75835 Herta Walks, london",
+    location: "75835 Herta Walks, London",
     title: "2 Bedroom Apartment",
     price: 200.5,
     features: {
@@ -95,21 +100,3 @@ const propertyCards = [
     },
   },
 ];
-const PropertiesGrid = () => {
-    const navigate = useNavigate();
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-      {propertyCards.map((card, index) => (
-        <CommonCard
-          key={index}
-          {...card}
-          onViewDetails={() => {
-            navigate(`/home-details/${index}`);
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-
-export default PropertiesGrid;
