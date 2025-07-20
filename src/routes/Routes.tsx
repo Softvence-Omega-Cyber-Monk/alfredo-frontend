@@ -22,7 +22,9 @@ import ForgotPassword from "@/pages/ForgotPassword";
 import SetNewPassword from "@/pages/SetNewPassword";
 import SettingPassword from "@/pages/SettingPassword";
 import Messages from "../pages/Messages";
-import OnboardingPage from "@/pages/onboardingPage";
+import Dashboard from "@/pages/Dashboard";
+import MyProperties from "@/pages/MyProperties";
+import OnboardingPage from "@/pages/OnboardingPage";
 
 const routes = createBrowserRouter([
   {
@@ -104,6 +106,14 @@ const routes = createBrowserRouter([
       {
         path: "/messages",
         element: <Messages />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/my-properties",
+        element: <MyProperties />,
       },
       {
         path: "/onboarding",
