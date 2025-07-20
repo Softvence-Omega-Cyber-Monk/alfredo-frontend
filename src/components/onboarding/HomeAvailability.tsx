@@ -67,3 +67,4 @@ const HomeAvailability = () => {
 };
 
 export default HomeAvailability;
+

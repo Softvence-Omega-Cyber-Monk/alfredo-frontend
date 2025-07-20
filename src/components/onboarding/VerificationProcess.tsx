@@ -238,3 +238,4 @@ const VerificationProcess = () => {
 };
 
 export default VerificationProcess;
+

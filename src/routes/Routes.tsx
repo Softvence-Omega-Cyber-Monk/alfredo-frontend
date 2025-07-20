@@ -28,6 +28,8 @@ import OnboardingPage from "@/pages/OnboardingPage";
 import Places from "@/pages/Places";
 import PlaceDetails from "@/pages/PlaceDetails";
 import AddPlace from "@/pages/AddPlace";
+import OnboardingPage from "@/pages/OnboardingPage";
+
 
 const routes = createBrowserRouter([
   {
