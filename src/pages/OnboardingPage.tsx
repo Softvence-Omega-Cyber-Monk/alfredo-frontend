@@ -1,6 +1,6 @@
-
+import OnboardingWrapper from "@/common/OnboardingWrapper";
 import MultiStepForm from "@/components/onboarding/MultiStepForm";
-import OnboardingWrapper from '@/common/OnboardingWrapper';
+
 
 const OnboardingPage = () => {
   return (
