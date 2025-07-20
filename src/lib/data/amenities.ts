@@ -10,6 +10,18 @@ import trash from "@/assets/icons/trash.svg";
 import ac from "@/assets/icons/ac.svg";
 import tv from "@/assets/icons/tv.svg";
 import easy from "@/assets/icons/easy.svg";
+import countryside from "@/assets/icons/city.svg";
+import mountain from "@/assets/icons/mountain.svg";
+import village from "@/assets/icons/village.svg";
+import island from "@/assets/icons/island.svg";
+import river from "@/assets/icons/river.svg";
+import city from "@/assets/icons/city-2.svg";
+import lake from "@/assets/icons/lake.svg";
+import bike from "@/assets/icons/bike.svg";
+import car from "@/assets/icons/car.svg";
+import bus from "@/assets/icons/bus.svg";
+import train from "@/assets/icons/train.svg";
+import boat from "@/assets/icons/boat.svg";
 
 export interface Amenity {
   icon: string;
@@ -71,19 +83,59 @@ export const amenitiesData: Amenities = {
       icon: bicycle,
       title: "Bicycle",
     },
+    {
+      icon: bike,
+      title: "Bike",
+    },
+    {
+      icon: car,
+      title: "Car",
+    },
+    {
+      icon: bus,
+      title: "Bus",
+    },
+    {
+      icon: train,
+      title: "Train",
+    },
+    {
+      icon: boat,
+      title: "Boat",
+    }
   ],
   surrounding: [
     {
-      icon: Coastal,
+      icon: countryside,
       title: "Countryside",
     },
     {
-      icon: Coastal,
+      icon: mountain,
       title: "Mountain",
     },
     {
       icon: Coastal,
       title: "Coastal",
+    },
+    {
+      icon: lake,
+      title: "Lake",
+    },
+    {
+      icon: city,
+      title: "City",
+    },
+    {
+      icon: village,
+      title: "Village",
+    },
+    {
+      icon: river,
+      title: "River",
+    },
+    {
+      icon: island,
+      title: "Island",
     },
   ],
 };
