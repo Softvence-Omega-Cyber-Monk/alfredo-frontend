@@ -22,6 +22,19 @@ import car from "@/assets/icons/car.svg";
 import bus from "@/assets/icons/bus.svg";
 import train from "@/assets/icons/train.svg";
 import boat from "@/assets/icons/boat.svg";
+import computer from "@/assets/icons/computer.svg";
+import swimming from "@/assets/icons/Swimming.svg";
+import gym from "@/assets/icons/gym.svg";
+import roomHeater from "@/assets/icons/room-heater.svg";
+import parking from "@/assets/icons/parking.svg";
+import playground from "@/assets/icons/playground.svg";
+import garden from "@/assets/icons/garden2.svg";
+import terrace from "@/assets/icons/terrace.svg";
+import heatPump from "@/assets/icons/heat-pump.svg";
+import dishwasher from "@/assets/icons/dishwasher.svg";
+import elevator from "@/assets/icons/elevator.svg";
+import privatePool from "@/assets/icons/private-pool.svg";
+import bbq from "@/assets/icons/bbq.svg";
 
 export interface Amenity {
   icon: string;
@@ -57,11 +70,6 @@ export const amenitiesData: Amenities = {
       title: "WIFI",
     },
     {
-      icon: balcony,
-      title: "Balcony",
-    },
-
-    {
       icon: trash,
       title: "Waste Sorting",
     },
@@ -76,6 +84,64 @@ export const amenitiesData: Amenities = {
     {
       icon: easy,
       title: "Easily Accessible",
+    },
+    {
+      icon: balcony,
+      title: "Balcony",
+    },
+
+    {
+      icon: computer,
+      title: "Computer",
+    },
+    {
+      icon: swimming,
+      title: "Swimming Pool",
+    },
+    {
+      icon: gym,
+      title: "Gym Space",
+    },
+    {
+      icon: roomHeater,
+      title: "Room Heater",
+    },
+    {
+      icon: parking,
+      title: "Parking",
+    },
+    {
+      icon: playground,
+      title: "Playground",
+    },
+    {
+      icon: terrace,
+      title: "Terrace",
+    },
+    {
+      icon: garden,
+      title: "Garden",
+    },
+    {
+      icon: heatPump,
+      title: "Heat Pump",
+    },
+    {
+      icon: dishwasher,
+      title: "Dishwasher",
+    },
+
+    {
+      icon: elevator,
+      title: "Elevator",
+    },
+    {
+      icon: privatePool,
+      title: "Private Pool",
+    },
+    {
+      icon: bbq,
+      title: "BBQ",
     },
   ],
   transport: [
@@ -102,7 +168,7 @@ export const amenitiesData: Amenities = {
     {
       icon: boat,
       title: "Boat",
-    }
+    },
   ],
   surrounding: [
     {
