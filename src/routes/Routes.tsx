@@ -21,7 +21,8 @@ import VerifyEmail from "@/pages/VerifyEmail";
 import ForgotPassword from "@/pages/ForgotPassword";
 import SetNewPassword from "@/pages/SetNewPassword";
 import SettingPassword from "@/pages/SettingPassword";
-import Messages from '../pages/Messages';
+import Messages from "../pages/Messages";
+import OnboardingPage from "@/pages/onboardingPage";
 
 const routes = createBrowserRouter([
   {
@@ -103,6 +104,10 @@ const routes = createBrowserRouter([
       {
         path: "/messages",
         element: <Messages />,
+      },
+      {
+        path: "/onboarding",
+        element: <OnboardingPage />,
       },
       {
         path: "/admin",
