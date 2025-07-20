@@ -3,6 +3,7 @@ import { Textarea } from "../ui/textarea";
 import check from "@/assets/icons/dashboardCheck.svg";
 import cross from "@/assets/icons/dashboardCross.svg";
 import PhotoUpload from "./PhotoUpload";
+import DashboardCalendarRangePicker from "./DashboardCalendarRangePicker";
 
 interface DashboardHomeDetailsProps {
   homeName: string;
@@ -152,7 +153,9 @@ const DashboardHomeDetails = ({
           Select Your Available Dates
         </h3>
 
-        <div></div>
+        <div className="mt-6">
+          <DashboardCalendarRangePicker/>
+        </div>
       </div>
     </div>
   );
