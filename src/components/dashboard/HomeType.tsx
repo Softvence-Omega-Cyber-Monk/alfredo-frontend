@@ -3,7 +3,19 @@ import apartment from "@/assets/icons/open-door.svg";
 import residence from "@/assets/icons/building-three.svg";
 import casual from "@/assets/icons/city-one.svg";
 
-const HomeType = () => {
+interface HomeTypeProps {
+  homeType: "home" | "apartment" | null;
+  residenceType: "main" | "occasional" | null;
+  onHomeTypeChange: (homeType: "home" | "apartment") => void;
+  onResidenceTypeChange: (residenceType: "main" | "occasional") => void;
+}
+
+const HomeType = ({
+  homeType,
+  residenceType,
+  onHomeTypeChange,
+  onResidenceTypeChange,
+}: HomeTypeProps) => {
   return (
     <div>
       <div className="mt-10">
@@ -11,20 +23,50 @@ const HomeType = () => {
           What is your home like?
         </h2>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 ">
-          <div className="p-6 flex flex-col gap-2.5 border border-primary-blue rounded-lg bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]">
+          <div
+            onClick={() => onHomeTypeChange("home")}
+            className={`p-6 flex flex-col gap-2.5 border rounded-lg cursor-pointer transition-all ${
+              homeType === "home"
+                ? "border-primary-blue bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
+                : "border-[#EAF1FA] hover:bg-[#F4F7FC] hover:border-primary-blue"
+            }`}
+          >
             <div className="flex items-center gap-2 ">
               <img src={home} alt="" />
-              <p className="text-lg text-primary-blue font-medium">Home</p>
+              <p
+                className={`text-lg font-medium ${
+                  homeType === "home"
+                    ? "text-primary-blue"
+                    : "text-primary-blue"
+                }`}
+              >
+                Home
+              </p>
             </div>
             <p className="text-base text-dark-3 font-regular">
               Your home is an independent property.
             </p>
           </div>
 
-          <div className="p-6 flex flex-col gap-2.5 border border-[#EAF1FA] rounded-lg">
+          <div
+            onClick={() => onHomeTypeChange("apartment")}
+            className={`p-6 flex flex-col gap-2.5 border rounded-lg cursor-pointer transition-all ${
+              homeType === "apartment"
+                ? "border-primary-blue bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
+                : "border-[#EAF1FA] hover:bg-[#F4F7FC] hover:border-primary-blue"
+            }`}
+          >
             <div className="flex items-center gap-2 ">
               <img src={apartment} alt="" />
-              <p className="text-lg text-primary-blue font-medium">Apartment</p>
+              <p
+                className={`text-lg font-medium ${
+                  homeType === "apartment"
+                    ? "text-primary-blue"
+                    : "text-primary-blue"
+                }`}
+              >
+                Apartment
+              </p>
             </div>
             <p className="text-base text-dark-3 font-regular">
               our home is in a building shared by several apartments.
@@ -38,10 +80,23 @@ const HomeType = () => {
           Is it your main residence?
         </h2>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 ">
-          <div className="p-6 flex flex-col gap-2.5 border border-primary-blue rounded-lg bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]">
+          <div
+            onClick={() => onResidenceTypeChange("main")}
+            className={`p-6 flex flex-col gap-2.5 border rounded-lg cursor-pointer transition-all ${
+              residenceType === "main"
+                ? "border-primary-blue bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
+                : "border-[#EAF1FA] hover:bg-[#F4F7FC] hover:border-primary-blue"
+            }`}
+          >
             <div className="flex items-center gap-2 ">
               <img src={residence} alt="" />
-              <p className="text-lg text-primary-blue font-medium">
+              <p
+                className={`text-lg font-medium ${
+                  residenceType === "main"
+                    ? "text-primary-blue"
+                    : "text-primary-blue"
+                }`}
+              >
                 Yes, I live there all year round
               </p>
             </div>
@@ -50,10 +105,23 @@ const HomeType = () => {
             </p>
           </div>
 
-          <div className="p-6 flex flex-col gap-2.5 border border-[#EAF1FA] rounded-lg">
+          <div
+            onClick={() => onResidenceTypeChange("occasional")}
+            className={`p-6 flex flex-col gap-2.5 border rounded-lg cursor-pointer transition-all ${
+              residenceType === "occasional"
+                ? "border-primary-blue bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
+                : "border-[#EAF1FA] hover:bg-[#F4F7FC] hover:border-primary-blue"
+            }`}
+          >
             <div className="flex items-center gap-2 ">
               <img src={casual} alt="" />
-              <p className="text-lg text-primary-blue font-medium">
+              <p
+                className={`text-lg font-medium ${
+                  residenceType === "occasional"
+                    ? "text-primary-blue"
+                    : "text-primary-blue"
+                }`}
+              >
                 Nor I go there occasionally
               </p>
             </div>

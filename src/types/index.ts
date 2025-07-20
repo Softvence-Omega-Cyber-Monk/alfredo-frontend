@@ -1,22 +1,22 @@
 // Define a type for your user (example)
 export interface User {
-    id: string;
-    name: string;
-    email: string;
-  }
-  
-  // Define a type for your app's theme (example)
-  export type Theme = 'light' | 'dark';
-  
-  // Define a type for your app's routes (example)
-  export type Route = {
-    path: string;
-    component: React.ComponentType;
-    exact?: boolean;
-  };
+  id: string;
+  name: string;
+  email: string;
+}
 
-  // Contact page type 
-  export type FormData = {
+// Define a type for your app's theme (example)
+export type Theme = "light" | "dark";
+
+// Define a type for your app's routes (example)
+export type Route = {
+  path: string;
+  component: React.ComponentType;
+  exact?: boolean;
+};
+
+// Contact page type
+export type FormData = {
   firstName: string;
   lastName: string;
   email: string;
@@ -24,24 +24,24 @@ export interface User {
   message: string;
 };
 
-// Service plan card 
+// Service plan card
 export interface Plan {
-    title: string;
-    duration: string;
-    price: number;
-    originalPrice?: number;
-    badge?: string;
-    features: string[];
+  title: string;
+  duration: string;
+  price: number;
+  originalPrice?: number;
+  badge?: string;
+  features: string[];
 }
 
-// Plans page 
+// Plans page
 export interface MembershipStage {
   title: string;
   subtitle: string;
   completed: boolean;
 }
 
-// Bonus Progamme page 
+// Bonus Progamme page
 export interface Card {
   title: string;
   titleSub: string;
@@ -57,3 +57,26 @@ export interface InviteDataItem {
   points: string[];
 }
 // -------------------------
+
+
+// Card type
+export interface CardFeatures {
+  rooms?: number;
+  beds?: number;
+  baths?: number;
+  sqft?: number;
+}
+
+export interface CommonCard {
+  id: string;
+  image: string;
+  avatarImage: string;
+  rating: string;
+  ownerName: string;
+  location: string;
+  title: string;
+  price: number;
+  priceUnit?: string;
+  features: CardFeatures;
+  onViewDetails?: () => void;
+}
