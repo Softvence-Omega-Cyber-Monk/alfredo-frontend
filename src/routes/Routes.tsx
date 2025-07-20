@@ -24,6 +24,7 @@ import SettingPassword from "@/pages/SettingPassword";
 import Messages from "../pages/Messages";
 import Dashboard from "@/pages/Dashboard";
 import MyProperties from "@/pages/MyProperties";
+import OnboardingPage from "@/pages/OnboardingPage";
 import Places from "@/pages/Places";
 import PlaceDetails from "@/pages/PlaceDetails";
 import AddPlace from "@/pages/AddPlace";
