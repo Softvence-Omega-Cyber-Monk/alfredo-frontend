@@ -3,8 +3,6 @@ import Title from "./Shared/Title";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "../ui/textarea";
-import { ArrowLeft } from "lucide-react";
-import { FaArrowRight } from "react-icons/fa";
 
 const VerificationProcess = () => {
   return (
@@ -233,30 +231,6 @@ const VerificationProcess = () => {
             placeholder="Write something about yourself"
             className="min-h-[120px] border border-[#D2D2D2] focus:border-blue-500 focus:ring-blue-500"
           />
-        </div>
-
-        {/* Buttons */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6">
-          <Button className="w-full sm:w-[125px] h-[52px] px-6 py-2 text-[rgba(128,128,128,0.5)] font-inter text-[18px] font-semibold leading-[156%] border border-[#CAD2DB] rounded-[35px] cursor-pointer">
-            Cancel
-          </Button>
-
-          <div className="flex gap-4 w-full sm:w-auto justify-end">
-            <Button
-              variant="outline"
-              className="w-full sm:w-[125px] h-[52px] px-8 py-3 rounded-[35px] border border-[#BFD4F0] bg-[#FFFFFF] text-[#77B1EE] text-[18px] font-semibold leading-[156%] font-['Inter'] flex items-center justify-center gap-[10px] cursor-pointer"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              Back
-            </Button>
-            <Button
-              type="submit"
-              className="w-full sm:w-[125px] h-[52px] px-8 py-3 rounded-[35px] bg-[#3174CD] hover:bg-[#215ba8] text-white font-inter text-[18px] font-semibold leading-[156%] flex justify-center items-center  gap-[10px] cursor-pointer"
-            >
-              Continue
-              <FaArrowRight className="w-5 h-5" />
-            </Button>
-          </div>
         </div>
       </form>
     </div>
