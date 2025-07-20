@@ -1,14 +1,3 @@
-import React from "react";
-// import {
-//   Wifi,
-//   Tv,
-//   Car,
-//   Utensils,
-//   AirVent,
-//   Dumbbell,
-//   Bath,
-//   Coffee,
-// } from "lucide-react";
 import { MdRocketLaunch } from "react-icons/md";
 import { RiVipDiamondFill } from "react-icons/ri";
 import { FaCheck } from "react-icons/fa";
@@ -141,116 +130,12 @@ export const homeDetailsData: HomeDetailsType = {
         icon: washing,
         title: "Washing machine ",
       },
-      // {
-      //   icon: Utensils,
-      //   title: "Bathtub ",
-      // },
-      // {
-      //   icon: AirVent,
-      //   title: "WIFI ",
-      // },
-      // {
-      //   icon: Bath,
-      //   title: "LED TV ",
-      // },
-      // {
-      //   icon: Dumbbell,
-      //   title: "Air Conditioner ",
-      // },
-      // {
-      //   icon: Coffee,
-      //   title: "Waste sorting",
-      // },
-      // {
-      //   icon: Utensils,
-      //   title: "Balcony ",
-      // },
-      // {
-      //   icon: Utensils,
-      //   title: "Easily accessible",
-      // },
-      // {
-      //   icon: Utensils,
-      //   title: "Computer",
-      // },
-      // {
-      //   icon: Utensils,
-      //   title: "Swimming Pool ",
-      // },
-      // {
-      //   icon: Utensils,
-      //   title: "Gym Space ",
-      // },
-      // {
-      //   icon: Utensils,
-      //   title: "Room Heater ",
-      // },
-      // {
-      //   icon: Utensils,
-      //   title: "Parking ",
-      // },
-      // {
-      //   icon: Utensils,
-      //   title: "Play Ground ",
-      // },
-      // {
-      //   icon: Utensils,
-      //   title: "Terrace ",
-      // },
-      // {
-      //   icon: Utensils,
-      //   title: "Garden ",
-      // },
-      // {
-      //   icon: Utensils,
-      //   title: "Heat pump ",
-      // },
-      // {
-      //   icon: Utensils,
-      //   title: "Dishwasher ",
-      // },
-      // {
-      //   icon: Utensils,
-      //   title: "Elevator ",
-      // },
-      // {
-      //   icon: Utensils,
-      //   title: "Private Pool",
-      // },
-      // {
-      //   icon: Utensils,
-      //   title: "BBQ ",
-      // },
-      // {
-      //   icon: Utensils,
-      //   title: "Garden ",
-      // },
     ],
     transport: [
       {
         icon: bicycle,
         title: "Bicycle",
       },
-      // {
-      //   icon: Coffee,
-      //   title: "Car",
-      // },
-      // {
-      //   icon: Coffee,
-      //   title: "Bike",
-      // },
-      // {
-      //   icon: Coffee,
-      //   title: "Bus",
-      // },
-      // {
-      //   icon: Coffee,
-      //   title: "Boat",
-      // },
-      // {
-      //   icon: Coffee,
-      //   title: "Train",
-      // },
     ],
     surrounding: [
       {
@@ -261,30 +146,10 @@ export const homeDetailsData: HomeDetailsType = {
         icon: Coastal,
         title: "Mountain",
       },
-       {
+      {
         icon: Coastal,
         title: "Coastal",
       },
-      // {
-      //   icon: Coffee,
-      //   title: "Lake",
-      // },
-      //  {
-      //   icon: Coffee,
-      //   title: "City",
-      // },
-      // {
-      //   icon: Coffee,
-      //   title: "Village",
-      // },
-      //  {
-      //   icon: Coffee,
-      //   title: "River",
-      // },
-      // {
-      //   icon: Coffee,
-      //   title: "Island",
-      // },
     ],
   },
   owner: {
