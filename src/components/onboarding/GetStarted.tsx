@@ -1,7 +1,12 @@
 import { TbChecklist } from "react-icons/tb";
 import { Button } from "../ui/button";
 import Title from "./Shared/Title";
-import { FaArrowRight } from "react-icons/fa";
+import { useState } from "react";
+
+import map from "@/assets/icons/Location.svg";
+import mapUp from "@/assets/icons/dashboardMap.svg";
+import MapModal from "../dashboard/MapModal";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 const GetStarted = () => {
   return (
@@ -25,8 +30,8 @@ const GetStarted = () => {
       {/* Aprt-2 */}
       <div></div>
 
-      <div>
-        {/* Buttons */}
+      {/* <div>
+       
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6">
           <Button className="w-full sm:w-[125px] h-[52px] px-6 py-2 text-[rgba(128,128,128,0.5)] font-inter text-[18px] font-semibold leading-[156%] border border-[#CAD2DB] rounded-[35px] cursor-pointer">
             Cancel
@@ -37,12 +42,12 @@ const GetStarted = () => {
               type="submit"
               className="w-full sm:w-[246px] h-[52px] px-8 py-3 rounded-[35px] bg-[#3174CD] hover:bg-[#215ba8] text-white font-inter text-[18px] font-semibold leading-[156%] flex justify-center items-center  gap-[10px] cursor-pointer"
             >
-              Confirm Address
+              Continue Address
               <FaArrowRight className="w-5 h-5" />
             </Button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
