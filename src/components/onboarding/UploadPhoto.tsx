@@ -31,7 +31,7 @@ const UploadPhoto = () => {
           <p className="text-base text-dark-3 font-regular mt-3 ">
             Showcase your home from every angle by uploading at least 5
             high-quality photos — include key spaces like the living area,
-            kitchen, bedroom, and bathroom.
+            kitchen, bedroom.
           </p>
 
           <PhotoUpload />
