@@ -1,4 +1,4 @@
-import MiniWrapper from "@/common/MiniWrapper";
+import OnboardingWrapper from "@/common/OnboardingWrapper";
 import GetStarted from "@/components/onboarding/GetStarted";
 import HomeAvailability from "@/components/onboarding/HomeAvailability";
 import MultiStepForm from "@/components/onboarding/MultiStepForm";
@@ -7,13 +7,13 @@ import VerificationProcess from "@/components/onboarding/VerificationProcess";
 
 const OnboardingPage = () => {
   return (
-    <MiniWrapper>
+    <OnboardingWrapper>
       <MultiStepForm />
       <GetStarted />
       <VerificationProcess />
       <SelectType />
       <HomeAvailability />
-    </MiniWrapper>
+    </OnboardingWrapper>
   );
 };
 

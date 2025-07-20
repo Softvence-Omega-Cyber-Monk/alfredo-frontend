@@ -29,8 +29,8 @@ const VerifyEmail = () => {
 
   return (
     <CommonWrapper>
-      <div className="flex justify-center items-center mx-auto my-[64px]">
-        <div className="w-3/4 bg-white">
+      <div className="flex justify-center items-center mx-auto my-[64px] max-[767px]:mt-[40px]">
+        <div className="max-[767px]:w-full w-[65%]">
           <AuthenticateHeading title="Verify Your Email" />
           <p className="text-[18px] text-center text-basic-dark mt-4 mb-6">
             We've sent a verification code to your email: <br /> j****e@example.com
