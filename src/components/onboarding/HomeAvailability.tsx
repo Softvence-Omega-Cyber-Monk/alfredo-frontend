@@ -1,11 +1,10 @@
 import { TbChecklist } from "react-icons/tb";
 import { Button } from "../ui/button";
 import Title from "./Shared/Title";
-import CalendarRangePicker from "./CalendarRangePicker";
-import { ArrowLeft } from "lucide-react";
-import { FaArrowRight } from "react-icons/fa";
+
 import { RxCrossCircled } from "react-icons/rx";
 import { FcOk } from "react-icons/fc";
+import CalendarRangePicker from "./CalendarRangePicker";
 
 const HomeAvailability = () => {
   return (
@@ -62,24 +61,6 @@ const HomeAvailability = () => {
           Select Your Available Dates
         </h1>
         <CalendarRangePicker />
-      </div>
-      <div>
-        <div className="flex gap-4 w-full sm:w-auto justify-end">
-          <Button
-            variant="outline"
-            className="w-full sm:w-[125px] h-[52px] px-8 py-3 rounded-[35px] border border-[#BFD4F0] bg-[#FFFFFF] text-[#77B1EE] text-[18px] font-semibold leading-[156%] font-['Inter'] flex items-center justify-center gap-[10px] cursor-pointer"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            Back
-          </Button>
-          <Button
-            type="submit"
-            className="w-full sm:w-[125px] h-[52px] px-8 py-3 rounded-[35px] bg-[#3174CD] hover:bg-[#215ba8] text-white font-inter text-[18px] font-semibold leading-[156%] flex justify-center items-center  gap-[10px] cursor-pointer"
-          >
-            Finish
-            <FaArrowRight className="w-5 h-5" />
-          </Button>
-        </div>
       </div>
     </div>
   );
