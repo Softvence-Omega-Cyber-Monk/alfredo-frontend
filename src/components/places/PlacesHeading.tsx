@@ -1,7 +1,7 @@
 import { MoveRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const DashboardHeading = () => {
+const PlacesHeading = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 text-center lg:text-left items-center justify-center gap-4">
       <div>
@@ -15,10 +15,10 @@ const DashboardHeading = () => {
       </div>
       <div className="flex justify-center lg:justify-end">
         <Link
-          to="/my-properties"
+          to="/add-place"
           className="relative overflow-hidden rounded-full transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
         >
-          <p className="relative z-10">My Properties</p>
+          <p className="relative z-10">Add a Place</p>
           <MoveRight className="relative z-10 w-5 h-5" />
           <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
             <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
@@ -29,4 +29,4 @@ const DashboardHeading = () => {
   );
 };
 
-export default DashboardHeading;
+export default PlacesHeading;

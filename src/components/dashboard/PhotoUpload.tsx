@@ -1,11 +1,23 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import imgUpload from "@/assets/icons/imgUpload.svg";
 import photoCross from "@/assets/icons/photoCross.svg";
 
-const PhotoUpload = () => {
-  const [images, setImages] = useState<File[]>([]);
+interface PhotoUploadProps {
+  photos: File[];
+  onPhotosChange: (photos: File[]) => void;
+}
+
+const PhotoUpload = ({ photos, onPhotosChange }: PhotoUploadProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (photos.length === 0) {
+      setSelectedIndex(0);
+    } else if (selectedIndex >= photos.length) {
+      setSelectedIndex(Math.max(0, photos.length - 1));
+    }
+  }, [photos.length, selectedIndex]);
 
   const handleUploadClick = () => {
     fileInputRef.current?.click();
@@ -17,28 +29,25 @@ const PhotoUpload = () => {
       const newFiles = Array.from(selectedFiles).filter((file) =>
         ["image/jpeg", "image/png", "image/jpg"].includes(file.type)
       );
-      setImages((prev) => [...prev, ...newFiles]);
-      if (images.length === 0 && newFiles.length > 0) {
+      onPhotosChange([...photos, ...newFiles]);
+      if (photos.length === 0 && newFiles.length > 0) {
         setSelectedIndex(0); // Default preview if it's the first image
       }
     }
   };
 
   const removeImage = (indexToRemove: number) => {
-    setImages((prevImages) => {
-      const newImages = prevImages.filter((_, i) => i !== indexToRemove);
+    const newPhotos = photos.filter((_, i) => i !== indexToRemove);
+    onPhotosChange(newPhotos);
 
-      setSelectedIndex((prevSelected) => {
-        if (indexToRemove === prevSelected) {
-          return 0;
-        } else if (indexToRemove < prevSelected) {
-          return prevSelected - 1;
-        } else {
-          return prevSelected;
-        }
-      });
-
-      return newImages;
+    setSelectedIndex((prevSelected) => {
+      if (indexToRemove === prevSelected) {
+        return 0;
+      } else if (indexToRemove < prevSelected) {
+        return prevSelected - 1;
+      } else {
+        return prevSelected;
+      }
     });
   };
 
@@ -47,9 +56,9 @@ const PhotoUpload = () => {
       {/* Left Side Upload Area */}
       <div className="lg:col-span-5 space-y-4">
         {/* Uploaded Images List */}
-        {images.length > 0 && (
+        {photos.length > 0 && (
           <div className="space-y-4 max-h-[300px] overflow-y-auto pr-1">
-            {images.map((img, index) => (
+            {photos.map((img, index) => (
               <div
                 key={index}
                 onClick={() => setSelectedIndex(index)}
@@ -116,9 +125,9 @@ const PhotoUpload = () => {
 
       {/* Right Side Preview */}
       <div className="lg:col-span-7 min-h-[360px] bg-[#F8F8F8] rounded-2xl overflow-hidden flex items-center justify-center">
-        {images.length > 0 ? (
+        {photos.length > 0 ? (
           <img
-            src={URL.createObjectURL(images[selectedIndex])}
+            src={URL.createObjectURL(photos[selectedIndex])}
             alt="Preview"
             className="h-full w-full object-cover"
           />
