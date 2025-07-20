@@ -1,11 +1,11 @@
 import CommonWrapper from "@/common/CommonWrapper";
 import DashboardAmenities from "@/components/dashboard/DashboardAmenities";
-import DashboardHeading from "@/components/dashboard/DashboardHeading";
 import HomeType from "@/components/dashboard/HomeType";
 import PreviewHome from "@/components/dashboard/PreviewHome";
 import DashboardHomeDetails from "@/components/dashboard/DashboardHomeDetails";
 import { useState } from "react";
 import type { Amenity } from "@/lib/data/amenities";
+import AddPlaceHeading from "@/components/add-place/AddPlaceHeading";
 export interface DashboardData {
   // Location data
   location: {
@@ -36,7 +36,7 @@ export interface DashboardData {
   availabilityType: "home" | "apartment" | null;
 }
 
-const Dashboard = () => {
+const AddPlace = () => {
   const [dashboardData, setDashboardData] = useState<DashboardData>({
     location: null,
     destination: null,
@@ -71,7 +71,7 @@ const Dashboard = () => {
     <div className="">
       <CommonWrapper>
         <div className="p-6">
-          <DashboardHeading />
+          <AddPlaceHeading onSubmit={handleSubmitData} />
           <PreviewHome
             location={dashboardData.location}
             destination={dashboardData.destination}
@@ -108,20 +108,10 @@ const Dashboard = () => {
             availabilityType={dashboardData.availabilityType}
             onDataChange={handleDataUpdate}
           />
-
-          {/* Submit Button */}
-          <div className="mt-10 flex justify-end">
-            <button
-              onClick={handleSubmitData}
-              className="px-8 py-3 bg-primary-blue text-white rounded-lg hover:bg-blue-600 transition-colors"
-            >
-              Submit Property
-            </button>
-          </div>
         </div>
       </CommonWrapper>
     </div>
   );
 };
 
-export default Dashboard;
+export default AddPlace;

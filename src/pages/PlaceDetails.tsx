@@ -1,11 +1,12 @@
 import CommonWrapper from "@/common/CommonWrapper";
 import DashboardAmenities from "@/components/dashboard/DashboardAmenities";
-import DashboardHeading from "@/components/dashboard/DashboardHeading";
 import HomeType from "@/components/dashboard/HomeType";
 import PreviewHome from "@/components/dashboard/PreviewHome";
 import DashboardHomeDetails from "@/components/dashboard/DashboardHomeDetails";
 import { useState } from "react";
 import type { Amenity } from "@/lib/data/amenities";
+import PlaceDetailsHeading from "@/components/place-details/PlaceDetailsHeading";
+
 export interface DashboardData {
   // Location data
   location: {
@@ -36,7 +37,7 @@ export interface DashboardData {
   availabilityType: "home" | "apartment" | null;
 }
 
-const Dashboard = () => {
+const PlaceDetails = () => {
   const [dashboardData, setDashboardData] = useState<DashboardData>({
     location: null,
     destination: null,
@@ -71,7 +72,7 @@ const Dashboard = () => {
     <div className="">
       <CommonWrapper>
         <div className="p-6">
-          <DashboardHeading />
+         <PlaceDetailsHeading/>
           <PreviewHome
             location={dashboardData.location}
             destination={dashboardData.destination}
@@ -124,4 +125,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default PlaceDetails;
