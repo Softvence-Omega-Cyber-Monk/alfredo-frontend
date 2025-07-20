@@ -1,29 +1,15 @@
 import { MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
+import { CommonCard } from "@/types/index";
 
-interface PropertyFeatures {
-  rooms?: number;
-  beds?: number;
-  baths?: number;
-  sqft?: number;
-}
-
-interface CommonCardProps {
-  image: string;
-  avatarImage: string;
-  rating: string;
-  ownerName: string;
-  location: string;
-  title: string;
-  price: number;
-  priceUnit?: string;
-  features: PropertyFeatures;
-  onViewDetails?: () => void;
-}
-
-const PlacesCard: React.FC<CommonCardProps> = ({ image, location, title }) => {
+const PlacesCard: React.FC<CommonCard> = ({
+  id,
+  image,
+  location,
+  title,
+}) => {
   return (
-    <Link to={`/places/${title}`} className="p-3 rounded-3xl bg-[#F4F7FC]">
+    <Link to={`/places/${id}`} className="p-3 rounded-3xl bg-[#F4F7FC]">
       <div className="rounded-2xl overflow-hidden max-h-64">
         {/* Main Image */}
         <img src={image} alt={title} className="w-full h-full object-cover" />
