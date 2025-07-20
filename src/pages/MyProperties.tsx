@@ -1,5 +1,5 @@
 import CommonWrapper from "@/common/CommonWrapper";
-import PropertiesGrid from "@/components/dashboard/PropertiesGrid";
+import PropertiesGrid from "@/components/my-properties/PropertiesGrid";
 import PropertiesHeading from "@/components/my-properties/PropertiesHeading";
 
 

@@ -1,7 +1,11 @@
 import { MoveRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const PlacesHeading = () => {
+interface PlacesHeadingProps {
+  hasPlaces: boolean;
+}
+
+const PlacesHeading = ({ hasPlaces }: PlacesHeadingProps) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 text-center lg:text-left items-center justify-center gap-4">
       <div>
@@ -9,8 +13,9 @@ const PlacesHeading = () => {
           Hi JonDon,
         </h1>
         <p className="text-sm md:text-base text-dark-3 font-regular mt-3 max-w-[588px] mx-auto lg:mx-0">
-          You can preview how your home appears to others, make updates, and get
-          ready to welcome guests for a home exchange.
+          {hasPlaces
+            ? "You can preview how your home appears to others, make updates, and get ready to welcome guests for a home exchange."
+            : `You Haven't Listed Any Places Yet.`}
         </p>
       </div>
       <div className="flex justify-center lg:justify-end">

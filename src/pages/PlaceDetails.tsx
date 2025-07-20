@@ -18,7 +18,7 @@ export interface DashboardData {
     lng: number;
   } | null;
 
-  // Home type data
+  // Home type data 
   homeType: "home" | "apartment" | null;
   residenceType: "main" | "occasional" | null;
 
