@@ -67,7 +67,6 @@ const MultiStepForm = () => {
         type="button"
         onClick={() => setCurrentStep((prev) => prev - 1)}
         className={`${commonBtnClass} border border-[#BFD4F0] bg-white text-[#77B1EE] font-inter`}
-        disabled={currentStep === 1}
       >
         <ArrowLeft className="w-5 h-5" />
         Back
@@ -79,7 +78,6 @@ const MultiStepForm = () => {
         type="button"
         onClick={() => setCurrentStep((prev) => prev + 1)}
         className={`${commonBtnClass} bg-[#3174CD] hover:bg-[#215ba8] text-white`}
-        disabled={currentStep === steps.length}
       >
         Continue
         <FaArrowRight className="w-5 h-5" />
@@ -154,14 +152,11 @@ const MultiStepForm = () => {
                   </div>
                 </div>
 
-                {/* Dashed Line after icon except last */}
+                {/* Line after icon (not last item) */}
                 {index !== steps.length - 1 && (
-                  <div
-                    className="flex-1 h-[2px] ml-2 relative bg-[repeating-linear-gradient(to right, #ccc 0, #ccc 2px, transparent 2px, transparent 6px)]"
-                    aria-hidden="true"
-                  >
+                  <div className="flex-1 h-1 bg-gray-200 ml-2 relative">
                     <div
-                      className="absolute top-0 left-0 h-[2px] bg-[#3174CD] transition-all duration-500"
+                      className="absolute top-0 left-0 h-1 bg-[#3174CD] transition-all duration-500"
                       style={{
                         width:
                           currentStep > step.number
@@ -170,7 +165,7 @@ const MultiStepForm = () => {
                             ? "50%"
                             : "0%",
                       }}
-                    />
+                    ></div>
                   </div>
                 )}
               </div>
@@ -186,7 +181,7 @@ const MultiStepForm = () => {
             return (
               <div
                 key={step.number}
-                className="flex-1 min-w-[100px] text-center text-[13px] font-medium"
+                className="flex-1 min-w-[100px] text-center text-[13px] font-medium "
               >
                 <p
                   className={`${
@@ -211,144 +206,10 @@ const MultiStepForm = () => {
       {/* Step Content */}
       <div>{renderStepContent()}</div>
 
-      {/* Navigation Buttons */}
+      {/* Buttons */}
       {renderButtons()}
     </div>
   );
 };
 
 export default MultiStepForm;
-
-// import { useState } from "react";
-// import HomeAvailability from "./HomeAvailability";
-// import GetStarted from "./GetStarted";
-// import VerificationProcess from "./VerificationProcess";
-// import SelectType from "./SelectType";
-// import SelectAmenities from "./SelectAmenities";
-// import AboutYourHome from "./AboutYourHome";
-// import UploadPhoto from "./UploadPhoto";
-
-// const steps = [
-//   { number: 1, title: "Welcome", subtitle: "State" },
-//   { number: 2, title: "Travel", subtitle: "Verification" },
-//   { number: 3, title: "Select", subtitle: "Type" },
-//   { number: 4, title: "Select", subtitle: "Amenities" },
-//   { number: 5, title: "About", subtitle: "Your Home" },
-//   { number: 6, title: "Upload", subtitle: "Photo" },
-//   { number: 7, title: "Home’s", subtitle: "Availability" },
-// ];
-
-// const MultiStepForm = () => {
-//   const [currentStep, setCurrentStep] = useState(5); // current screen is Step 5 in image
-
-//   const renderStepContent = () => {
-//     switch (currentStep) {
-//       case 1:
-//         return (
-//           <div>
-//             <GetStarted />
-//           </div>
-//         );
-//       case 2:
-//         return (
-//           <div>
-//             <VerificationProcess />
-//           </div>
-//         );
-//       case 3:
-//         return (
-//           <div>
-//             <SelectType />
-//           </div>
-//         );
-//       case 4:
-//         return (
-//           <div>
-//             <SelectAmenities />
-//           </div>
-//         );
-//       case 5:
-//         return (
-//           <div>
-//             <AboutYourHome />
-//           </div>
-//         );
-//       case 6:
-//         return (
-//           <div>
-//             <UploadPhoto />
-//           </div>
-//         );
-//       case 7:
-//         return (
-//           <div>
-//             <HomeAvailability />
-//           </div>
-//         );
-//       default:
-//         return (
-//           <div className="mt-10 text-lg font-medium text-gray-500">
-//             Step {currentStep}: Content goes here...
-//           </div>
-//         );
-//     }
-//   };
-
-//   return (
-//     <div className="w-full mx-auto p-6">
-//       {/* Stepper */}
-//       <div className="flex items-center justify-between mb-10">
-//         {steps.map((step, index) => (
-//           <div key={step.number} className="flex-1 text-center">
-//             <div
-//               className={`mx-auto w-10 h-10 flex items-center justify-center rounded-full text-white font-bold mb-1 ${
-//                 currentStep === step.number
-//                   ? "bg-blue-600"
-//                   : currentStep > step.number
-//                   ? "bg-blue-400"
-//                   : "bg-gray-300"
-//               }`}
-//             >
-//               {step.number}
-//             </div>
-//             <div className="text-xs leading-tight text-gray-600">
-//               <div className="font-semibold">{step.title}</div>
-//               <div className="text-[11px]">{step.subtitle}</div>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-
-//       {/* Step Content */}
-//       {renderStepContent()}
-
-//       {/* Navigation */}
-//       <div className="mt-10 flex justify-between">
-//         <button
-//           disabled={currentStep === 1}
-//           onClick={() => setCurrentStep((prev) => prev - 1)}
-//           className={`px-4 py-2 rounded-[35px] text-gray-500 ${
-//             currentStep === 1
-//               ? "w-full sm:w-[125px] h-[52px] px-6 py-2 text-[rgba(128,128,128,0.5)] font-inter text-[18px] font-semibold leading-[156%] border border-[#CAD2DB]  cursor-pointer"
-//               : "bg-blue-500 hover:bg-blue-600"
-//           }`}
-//         >
-//           Cancel
-//         </button>
-//         <button
-//           disabled={currentStep === steps.length}
-//           onClick={() => setCurrentStep((prev) => prev + 1)}
-//           className={`px-4 py-2 rounded-[35px] text-white ${
-//             currentStep === steps.length
-//               ? "bg-gray-300"
-//               : "bg-blue-500 hover:bg-blue-600"
-//           }`}
-//         >
-//           Confirm Address
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default MultiStepForm;
