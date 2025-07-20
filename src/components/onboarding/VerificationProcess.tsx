@@ -6,13 +6,13 @@ import { Textarea } from "../ui/textarea";
 
 const VerificationProcess = () => {
   return (
-    <div className="w-full  md:py-10 space-y-6 ">
+    <div className="w-full py-6 md:py-10 space-y-6 ">
       {/* Header */}
       <div className="flex flex-col lg:flex-row justify-between items-center mb-10 w-full gap-4">
         <div className="w-full lg:w-auto flex-1">
           <Title title="Welcome back, Savannah!" />
         </div>
-        <div className="w-full lg:w-auto flex justify-end">
+          <div className="w-full lg:w-auto flex justify-center md:justify-end">
           <Button
             variant="secondary"
             className="flex items-center gap-2 px-5 py-3 rounded-lg border border-[#CAD2DB] text-[#3174CD] text-base font-medium hover:bg-gray-100"
