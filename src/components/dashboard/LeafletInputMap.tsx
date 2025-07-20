@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -14,10 +14,11 @@ import L from "leaflet";
 const SearchControl = () => {
   const map = useMap();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const provider = new OpenStreetMapProvider();
 
-    const searchControl = new GeoSearchControl({
+    // Fix for missing constructor typing
+    const searchControl = new (GeoSearchControl as any)({
       provider,
       style: "bar",
       autoComplete: true,
@@ -27,7 +28,11 @@ const SearchControl = () => {
     });
 
     map.addControl(searchControl);
-    return () => map.removeControl(searchControl);
+
+    // Correct cleanup function
+    return () => {
+      map.removeControl(searchControl);
+    };
   }, [map]);
 
   return null;
