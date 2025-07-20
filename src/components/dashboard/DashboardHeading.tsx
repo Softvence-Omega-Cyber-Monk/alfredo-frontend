@@ -1,7 +1,11 @@
 import { MoveRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const DashboardHeading = () => {
+interface DashboardHeadingProps {
+  onSubmit: () => void;
+}
+
+const DashboardHeading = ({ onSubmit }: DashboardHeadingProps) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 text-center lg:text-left items-center justify-center gap-4">
       <div>
@@ -13,7 +17,16 @@ const DashboardHeading = () => {
           ready to welcome guests for a home exchange.
         </p>
       </div>
-      <div className="flex justify-center lg:justify-end">
+      <div className="flex justify-center gap-4 lg:justify-end">
+        <button
+          onClick={onSubmit}
+          className="relative overflow-hidden rounded-full transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
+        >
+          <p className="relative z-10">Submit</p>
+          <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
+            <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
+          </div>
+        </button>
         <Link
           to="/my-properties"
           className="relative overflow-hidden rounded-full transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"

@@ -71,7 +71,7 @@ const Dashboard = () => {
     <div className="">
       <CommonWrapper>
         <div className="p-6">
-          <DashboardHeading />
+          <DashboardHeading onSubmit={handleSubmitData}/>
           <PreviewHome
             location={dashboardData.location}
             destination={dashboardData.destination}
@@ -108,16 +108,6 @@ const Dashboard = () => {
             availabilityType={dashboardData.availabilityType}
             onDataChange={handleDataUpdate}
           />
-
-          {/* Submit Button */}
-          <div className="mt-10 flex justify-end">
-            <button
-              onClick={handleSubmitData}
-              className="px-8 py-3 bg-primary-blue text-white rounded-lg hover:bg-blue-600 transition-colors"
-            >
-              Submit Property
-            </button>
-          </div>
         </div>
       </CommonWrapper>
     </div>
