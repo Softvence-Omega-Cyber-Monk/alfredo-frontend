@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import AuthenticateHeading from "@/components/reusable/AuthenticateHeading";
 import CommonWrapper from "@/common/CommonWrapper";
-import SocialAuthButton from "@/components/reusable/SocialAuthButton";
+// import SocialAuthButton from "@/components/reusable/SocialAuthButton";
 import AuthButton from "@/components/reusable/AuthButton";
 
 // ✅ Zod Schema (with fixed mobile validation)
