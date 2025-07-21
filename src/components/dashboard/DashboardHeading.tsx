@@ -20,7 +20,7 @@ const DashboardHeading = ({ onSubmit }: DashboardHeadingProps) => {
       <div className="flex justify-center gap-4 lg:justify-end">
         <button
           onClick={onSubmit}
-          className="relative overflow-hidden rounded-full transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
+          className="relative overflow-hidden rounded-full hover:brightness-80 transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
         >
           <p className="relative z-10">Submit</p>
           <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
@@ -29,7 +29,7 @@ const DashboardHeading = ({ onSubmit }: DashboardHeadingProps) => {
         </button>
         <Link
           to="/my-properties"
-          className="relative overflow-hidden rounded-full transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
+          className="relative overflow-hidden rounded-full hover:brightness-80 transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
         >
           <p className="relative z-10">My Properties</p>
           <MoveRight className="relative z-10 w-5 h-5" />
