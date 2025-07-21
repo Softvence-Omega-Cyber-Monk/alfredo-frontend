@@ -14,7 +14,7 @@ const SearchFilter = () => {
     >
       <div className="bg-white rounded-lg lg:rounded-full lg:px-10 lg:py-6">
         {/* Grid Container */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 divide-y sm:divide-y-0 sm:divide-x divide-[#BFD4F0] p-4">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-5 divide-y sm:divide-y-0 sm:divide-x divide-[#BFD4F0] p-4">
           {/* Location */}
           <div className="w-full pt-4 sm:pt-0 sm:px-4 first:pt-0">
             <label
@@ -78,11 +78,20 @@ const SearchFilter = () => {
             >
               Check-in Date
             </label>
-            <div className="flex items-center gap-2 rounded-lg border-none focus-within:border-none text-dark-2 placeholder:text-dark-2 text-base placeholder:text-base">
+            <div className="flex items-center gap-2 rounded-xl border-none focus-within:border-none text-dark-2 placeholder:text-dark-2 text-base placeholder:text-base">
               <FaCalendarAlt className="text-primary-blue w-4 h-4 md:w-5 md:h-5" />
               <input
                 id="homeDate"
                 type="date"
+                style={{
+                  appearance: "none",
+                  WebkitAppearance: "none",
+                  MozAppearance: "none",
+                  backgroundImage: "url('path/to/your/custom-icon.png')",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "right 10px center",
+                  paddingRight: "30px",
+                }}
                 placeholder="Select date"
                 className="outline-none w-full text-sm md:text-base bg-transparent cursor-pointer"
               />
@@ -90,7 +99,7 @@ const SearchFilter = () => {
           </div>
 
           {/* Search Button */}
-          <div className="w-full pt-4 sm:pt-0 sm:px-4 sm:col-span-2 lg:col-span-1 flex items-end">
+          <div className="w-full pt-4 mt-4 sm:pt-0 sm:px-4 sm:col-span-2 lg:col-span-1 flex items-end">
             <PrimaryButton
               title="Search"
               textColor="text-white w-full text-md lg:text-lg "
