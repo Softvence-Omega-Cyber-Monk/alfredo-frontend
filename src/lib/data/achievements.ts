@@ -1,12 +1,7 @@
-import rocketIcon from "@/assets/icons/rocket.svg";
 import bag from "@/assets/icons/bag.svg";
 import crown from "@/assets/icons/crown.svg";
 import sprout from "@/assets/icons/sprout.svg";
 import diamond from "@/assets/icons/diamond.svg";
-import starBlue from "@/assets/icons/starBlue.svg";
-import starPurple from "@/assets/icons/starPurple.svg";
-import starRed from "@/assets/icons/starRed.svg";
-import starGreen from "@/assets/icons/starGreen.svg";
 import trophy from "@/assets/icons/trophy.svg";
 import cardsHeart from "@/assets/icons/cardsHeart.svg";
 import ratingStar from "@/assets/icons/ratingStar.svg";
@@ -14,20 +9,22 @@ import goldenHost from "@/assets/achievements/goldenHost.png";
 import checkMarkGreen from "@/assets/icons/checkmaekBgGreen.svg";
 import verified from "@/assets/achievements/blueVerify.png";
 import userIconBlue from "@/assets/icons/users3.svg";
-import users from "@/assets/icons/users.svg";
-
-import userWhite from "@/assets/icons/user2.svg";
-import pencil from "@/assets/icons/pencil.svg";
-import crown2 from "@/assets/icons/crown2.svg";
 import diamond2 from "@/assets/icons/diamondSharp.svg";
-
-
-
-
-
-
-
-
+import seasons from "@/assets/icons/exchange-alt.svg";
+import autumn from "@/assets/achievements/seasons-based/autumn traveler.png";
+import winter from "@/assets/achievements/seasons-based/winter traveler.png";
+import spring from "@/assets/achievements/seasons-based/spring traveler.png";
+import summer from "@/assets/achievements/seasons-based/summer traveler.png";
+import explorer from "@/assets/achievements/seasons-based/explorer.png";
+import sustainability from "@/assets/achievements/sustainability/ecofriendly.png";
+import premimumTraveler from "@/assets/achievements/loyalty/PremiumTraveler (2 years).png";
+import twoyears from "@/assets/achievements/loyalty/supporter (2 years).png";
+import oneyears from "@/assets/achievements/loyalty/traveler (1 year).png";
+import earlyAdopter from "@/assets/achievements/loyalty/early adopter.png";
+import duo from "@/assets/achievements/referrals/duo.png";
+import lotsOfFriends from "@/assets/achievements/referrals/lots of friends.png";
+import pureCharisma from "@/assets/achievements/referrals/pure charisma.png";
+import diamondVipa from "@/assets/achievements/referrals/vip.png";
 
 
 const achievementsData = [
@@ -42,9 +39,10 @@ const achievementsData = [
         description: "Subscribe until 30/09!",
         borderColor: "#E6CEFF",
         bgColor: "#F6EDFF",
-        icon: rocketIcon,
+        icon: earlyAdopter,
         titleColor: "#5837A4",
         descriptionColor: "#9333EA",
+        cardType: "iconOnly" as const,
       },
     ],
   },
@@ -81,47 +79,6 @@ const achievementsData = [
     achievementsTypeIcon: cardsHeart,
     achievements: [
       {
-        id: 1,
-        description: "  Year Active",
-        borderColor: "#C5DFFF",
-        bgColor: "#E3EFFE",
-        descriptionColor: "#2563EB",
-        cardType: "bgImage" as const,
-        bgImage: starBlue,
-        bgTitle: "1",
-      },
-      {
-        id: 2,
-        description: "  Years Active",
-        borderColor: "#E1D8FF",
-        bgColor: "#F5F3FF",
-        descriptionColor: "#8260F8",
-        cardType: "bgImage" as const,
-        bgImage: starPurple,
-        bgTitle: "2",
-      },
-      {
-        id: 3,
-        description: "  Years Active",
-        borderColor: "#FFD3D3",
-        bgColor: "#FEE9E9",
-        descriptionColor: "#EB2525",
-        cardType: "bgImage" as const,
-        bgImage: starRed,
-        bgTitle: "4",
-      },
-      {
-        id: 4,
-        description: "  Years Active",
-        borderColor: "#BDFFDB",
-        bgColor: "#E3FFF0",
-        descriptionColor: " #00C458",
-        cardType: "bgImage" as const,
-        bgImage: starGreen,
-        bgTitle: "4",
-      },
-
-      {
         id: 5,
         title: "Top Supporter",
         description: "4+ Years Active",
@@ -130,6 +87,41 @@ const achievementsData = [
         icon: trophy,
         titleColor: "#5837A4",
         descriptionColor: "#9333EA",
+      },
+
+      {
+        id: 2,
+        title: "Premium Traveler",
+        description: "Received 100 reviews as a host",
+         borderColor: "#FFEC9D",
+        bgColor: "#FEF7D9",
+        icon: premimumTraveler,
+        titleColor: "#78350F",
+        descriptionColor: "#D97706",
+        cardType: "iconOnly" as const,
+      },
+      {
+        id: 2,
+        title: "One Year Traveler",
+        description: "1 year active",
+        borderColor: "#C5DFFF",
+        bgColor: "#E3EFFE",
+        descriptionColor: "#2563EB",
+        icon: oneyears,
+        titleColor: "#063F5B",
+
+        cardType: "iconOnly" as const,
+      },
+      {
+        id: 2,
+        title: "Two Year Traveler",
+        description: "2 years active",
+        borderColor: "#E1D8FF",
+        bgColor: "#F5F3FF",
+        descriptionColor: "#8260F8",
+        icon: twoyears,
+        titleColor: "#5837A4",
+        cardType: "iconOnly" as const,
       },
     ],
   },
@@ -181,20 +173,20 @@ const achievementsData = [
     ],
   },
   {
-    id: 3,
+    id: 6,
     achievementsType: "Referrals",
     achievementsTypeIcon: userIconBlue,
     achievements: [
-      
       {
         id: 1,
         title: "Due",
         description: "Bring 1 person through referral",
         borderColor: "#C4ECFF",
         bgColor: "#E4F6FF",
-        icon: userWhite,
+        icon: duo,
         titleColor: "#063F5B",
         descriptionColor: "#33BDFF",
+        cardType: "iconOnly" as const,
       },
       {
         id: 2,
@@ -202,9 +194,10 @@ const achievementsData = [
         description: "Bring 3 people through referral",
         borderColor: "#FFC5DF",
         bgColor: "#FDEDF6",
-        icon: users,
+        icon: lotsOfFriends,
         titleColor: "#DB2777",
         descriptionColor: "#DB2777",
+        cardType: "iconOnly" as const,
       },
 
       {
@@ -213,9 +206,10 @@ const achievementsData = [
         description: "Bring 10 people through referral",
         borderColor: "#E6CEFF",
         bgColor: "#F6EDFF",
-        icon: pencil,
+        icon: pureCharisma,
         titleColor: "#5837A4",
         descriptionColor: "#9333EA",
+        cardType: "iconOnly" as const,
       },
       {
         id: 4,
@@ -223,9 +217,10 @@ const achievementsData = [
         description: "Bring 50 people through referral",
         borderColor: "#FFEC9D",
         bgColor: "#FEF7D9",
-        icon: crown2,
+        icon: diamondVipa,
         titleColor: "#78350F",
         descriptionColor: "#D97706",
+        cardType: "iconOnly" as const,
       },
       {
         id: 5,
@@ -236,6 +231,88 @@ const achievementsData = [
         icon: diamond2,
         titleColor: "#2C2C2C",
         descriptionColor: "#505050",
+        
+      },
+    ],
+  },
+  {
+    id: 7,
+    achievementsType: "Season-based",
+    achievementsTypeIcon: seasons,
+    achievements: [
+      {
+        id: 1,
+        title: "Explorer",
+        description: "Travel in all seasons at least once!",
+        borderColor: "#FFEAA2",
+        bgColor: "#FFF9E6",
+        icon: explorer,
+        titleColor: "#78350F",
+        descriptionColor: "#E8BB20",
+        cardType: "iconOnly" as const,
+      },
+      {
+        id: 2,
+        title: "Autumn Traveler",
+        description: "Travel in autumn at least once!",
+        borderColor: "#FFE0BC",
+        bgColor: "#FFF4E6",
+        icon: autumn,
+        titleColor: "#78350F",
+        descriptionColor: "#FF8800",
+        cardType: "iconOnly" as const,
+      },
+      {
+        id: 3,
+        title: "Winter Traveler",
+        description: "1 exchange completed during winter.",
+        borderColor: "#E8E8E8",
+        bgColor: "#F3F3F3",
+        icon: winter,
+        titleColor: "#666666",
+        descriptionColor: "#666666",
+        cardType: "iconOnly" as const,
+      },
+      {
+        id: 4,
+        title: "Spring Traveler",
+        description: "1 exchange completed during spring.",
+        borderColor: "#FFE0BC",
+        bgColor: "#FFF4E6",
+        icon: spring,
+        titleColor: "#78350F",
+        descriptionColor: "#FF8800",
+        cardType: "iconOnly" as const,
+      },
+      {
+        id: 5,
+        title: "Summer Traveler",
+        description: "1 exchange completed during summer.",
+        borderColor: "#EBF8FF",
+        bgColor: "#EBF8FF",
+        icon: summer,
+        titleColor: "#032A4B",
+        descriptionColor: "#227FBB",
+        cardType: "iconOnly" as const,
+      },
+    ],
+  },
+  {
+    id: 8,
+    achievementsType: "Sustainability",
+    achievementsTypeIcon: sustainability,
+    achievements: [
+      {
+        id: 1,
+        title: "Eco-Conscious Host",
+        description:
+          "Add a house with solar panels, heat pump or other eco-friendly systems.",
+        borderColor: "#9BFF70",
+        bgColor: "#EBFFE3",
+        icon: sustainability,
+        titleColor: "#1D6100",
+        descriptionColor: "#4DC619",
+        cardType: "iconOnly" as const,
       },
     ],
   },
