@@ -12,6 +12,46 @@ import AboutYourHome from "./AboutYourHome";
 import UploadPhoto from "./UploadPhoto";
 import HomeAvailability from "./HomeAvailability";
 
+import { AddPlaceData } from "@/types";
+import { Amenity } from "@/lib/data/amenities";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+
+export type AgeGroup = "18–30" | "30–50" | "50–65" | "65+";
+export type Gender = "Male" | "Female" | "Not Specified";
+export type Role = "Worker" | "Retired" | "Student" | "Unemployed";
+export type TravelType =
+  | "Business"
+  | "Leisure"
+  | "Adventure"
+  | "Family"
+  | "Solo"
+  | "Cultural";
+export type DestinationType =
+  | "Big Cities"
+  | "Small Cities"
+  | "Seaside"
+  | "Mountain";
+export type TravelGroup =
+  | "By Myself"
+  | "With Family"
+  | "With a Partner"
+  | "With Friends";
+export type TravelWithPets = "Business trips" | "Leisure trips" | "Both";
+
+interface OnboardingData extends AddPlaceData {
+  personalInformation: {
+    age: AgeGroup;
+    gender: Gender;
+    role: Role;
+    travelType: TravelType[]; // max 2
+    favoriteDestinations: DestinationType[];
+    travelGroup: TravelGroup;
+    travelWithPets: TravelWithPets;
+    notes: string;
+  };
+}
+
 const steps = [
   { number: 1, title: "Welcome", subtitle: "State" },
   { number: 2, title: "Travel", subtitle: "Verification" },
@@ -23,24 +63,127 @@ const steps = [
 ];
 
 const MultiStepForm = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [addPlaceData, setAddPlaceData] = useState<OnboardingData>({
+    location: null,
+    destination: null,
+    homeType: null,
+    residenceType: null,
+    selectedAmenities: {
+      main: [],
+      transport: [],
+      surrounding: [],
+    },
+    homeName: "",
+    homeDescription: "",
+    areaDescription: "",
+    photos: [],
+    availabilityType: null,
+    availabilityDates: {
+      start: null,
+      end: null,
+    },
+    personalInformation: {
+      age: "18–30",
+      gender: "Not Specified",
+      role: "Worker",
+      travelType: [],
+      favoriteDestinations: [],
+      travelGroup: "By Myself",
+      travelWithPets: "Business trips",
+      notes: "",
+    },
+  });
+  const handleDataUpdate = (updates: Partial<OnboardingData>) => {
+    setAddPlaceData((prev) => ({ ...prev, ...updates }));
+  };
+
+  const handleSubmitData = async () => {
+    try {
+      console.log("Onboarding Data to send to backend:", addPlaceData);
+      toast.success("Onboarding successful!");
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error submitting property:", error);
+      toast.error("Error submitting property. Please try again.");
+    }
+  };
 
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
-        return <GetStarted />;
+        return (
+          <GetStarted
+            location={addPlaceData.location}
+            destination={addPlaceData.destination}
+            onLocationChange={(location: { lat: number; lng: number } | null) =>
+              handleDataUpdate({ location })
+            }
+            onDestinationChange={(
+              destination: { lat: number; lng: number } | null
+            ) => handleDataUpdate({ destination })}
+          />
+        );
       case 2:
-        return <VerificationProcess />;
+        return <VerificationProcess
+      personalInformation={addPlaceData.personalInformation}
+      onDataChange={(personalInformation) =>
+        handleDataUpdate({ personalInformation })
+      }
+    />;
       case 3:
-        return <SelectType />;
+        return (
+          <SelectType
+            homeType={addPlaceData.homeType}
+            residenceType={addPlaceData.residenceType}
+            onHomeTypeChange={(homeType: "home" | "apartment") =>
+              handleDataUpdate({ homeType })
+            }
+            onResidenceTypeChange={(residenceType: "main" | "occasional") =>
+              handleDataUpdate({ residenceType })
+            }
+          />
+        );
       case 4:
-        return <SelectAmenities />;
+        return (
+          <SelectAmenities
+            selectedAmenities={addPlaceData.selectedAmenities}
+            onAmenitiesChange={(selectedAmenities: {
+              main: Amenity[];
+              transport: Amenity[];
+              surrounding: Amenity[];
+            }) => handleDataUpdate({ selectedAmenities })}
+          />
+        );
       case 5:
-        return <AboutYourHome />;
+        return (
+          <AboutYourHome
+            homeName={addPlaceData.homeName}
+            homeDescription={addPlaceData.homeDescription}
+            areaDescription={addPlaceData.areaDescription}
+            availabilityType={addPlaceData.availabilityType}
+            onDataChange={handleDataUpdate}
+          />
+        );
       case 6:
-        return <UploadPhoto />;
+        return (
+          <UploadPhoto
+            photos={addPlaceData.photos}
+            onDataChange={handleDataUpdate}
+          />
+        );
       case 7:
-        return <HomeAvailability />;
+        return (
+          <HomeAvailability
+            onDataChange={handleDataUpdate}
+            availabilityType={addPlaceData.availabilityType}
+            availabilityDates={addPlaceData.availabilityDates}
+            onAvailabilityChange={(availabilityDates) =>
+              handleDataUpdate({ availabilityDates })
+            }
+          />
+        );
       default:
         return <div className="text-center">Invalid step</div>;
     }
@@ -87,10 +230,11 @@ const MultiStepForm = () => {
 
     const finishBtn = (
       <button
-        type="submit"
+        onClick={handleSubmitData}
+        type="button"
         className="relative overflow-hidden rounded-full transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5 w-full md:w-auto"
       >
-        <p className="relative z-10">Continue</p>
+        <p className="relative z-10">Finish</p>
         <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
           <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
         </div>
