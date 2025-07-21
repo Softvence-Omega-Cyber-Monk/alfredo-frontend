@@ -1,12 +1,30 @@
 import { TbChecklist } from "react-icons/tb";
 import { Button } from "../ui/button";
 import Title from "./Shared/Title";
-
-import { RxCrossCircled } from "react-icons/rx";
-import { FcOk } from "react-icons/fc";
+import check from "@/assets/icons/dashboardCheck.svg";
+import cross from "@/assets/icons/dashboardCross.svg";
 import CalendarRangePicker from "./CalendarRangePicker";
 
-const HomeAvailability = () => {
+interface HomeAvailabilityProps {
+  availabilityType: "home" | "apartment" | null;
+  availabilityDates: {
+    start: Date | null;
+    end: Date | null;
+  };
+  onAvailabilityChange: (dates: {
+    start: Date | null;
+    end: Date | null;
+  }) => void;
+
+  onDataChange: (updates: { availabilityType?: "home" | "apartment" }) => void;
+}
+
+const HomeAvailability = ({
+  availabilityType,
+  availabilityDates,
+  onAvailabilityChange,
+  onDataChange,
+}: HomeAvailabilityProps) => {
   return (
     <div className="w-full py-6 md:py-10 space-y-6 ">
       {/* Header */}
@@ -25,31 +43,52 @@ const HomeAvailability = () => {
         </div>
       </div>
       <hr className="text-[#EAF1FA]" />
-      {/* Aprt-2 */}
+      {/* 33 */}
       <div>
         <div className="mt-10">
           <h3 className="text-lg text-primary-blue font-semibold ">
             Add your home's availability
           </h3>
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 ">
-            <div className="p-6 flex flex-col gap-2.5 border border-[#BFD4F0] rounded-lg bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]">
+            <div
+              onClick={() => onDataChange({ availabilityType: "home" })}
+              className={`p-6 flex flex-col gap-2.5 border rounded-lg cursor-pointer transition-all ${
+                availabilityType === "home"
+                  ? "border-[#BFD4F0] bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
+                  : "border-[#BFD4F0] hover:bg-[#F4F7FC] hover:shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
+              }`}
+            >
               <div className="flex items-center gap-2 ">
-                <FcOk className="w-5 h-5" />
+                <img
+                  src={availabilityType === "home" ? check : cross}
+                  className="w-5 h-5"
+                  alt=""
+                />
                 <p className="text-lg text-dark-3 font-normal">Home</p>
               </div>
               <p className="text-lg text-dark-3 font-normal">
-                Let others know you're flexible and open to all kinds of home
-                exchange opportunities.
+                Your home is an independent property.
               </p>
             </div>
 
-            <div className="p-6 flex flex-col gap-2.5 border border-[#BFD4F0] rounded-lg">
+            <div
+              onClick={() => onDataChange({ availabilityType: "apartment" })}
+              className={`p-6 flex flex-col gap-2.5 border rounded-lg cursor-pointer transition-all ${
+                availabilityType === "apartment"
+                  ? "border-[#BFD4F0] bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
+                  : "border-[#BFD4F0] hover:bg-[#F4F7FC] hover:shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
+              }`}
+            >
               <div className="flex items-center gap-2 ">
-                <RxCrossCircled className="w-5 h-5 text-[#E33A4B]" />
-                <p className="text-lg text-dark-3 font-normal">Unavailable</p>
+                <img
+                  src={availabilityType === "apartment" ? check : cross}
+                  className="w-5 h-5"
+                  alt=""
+                />
+                <p className="text-lg text-dark-3 font-normal">Apartment</p>
               </div>
               <p className="text-lg text-dark-3 font-regular">
-                This home is not available for exchange at the moment..
+                our home is in a building shared by several apartments.
               </p>
             </div>
           </div>
@@ -60,7 +99,8 @@ const HomeAvailability = () => {
         <h1 className="text-[#3174CD] font-dmSans text-[18px] font-semibold leading-[27px]">
           Select Your Available Dates
         </h1>
-        <CalendarRangePicker />
+        <CalendarRangePicker availabilityDates={availabilityDates}
+            onAvailabilityChange={onAvailabilityChange} />
       </div>
     </div>
   );

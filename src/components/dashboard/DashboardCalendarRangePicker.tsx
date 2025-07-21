@@ -14,28 +14,36 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 const weekDays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 
-const DashboardCalendarRangePicker = () => {
-  const [currentMonth] = useState(new Date());
-  const [monthOffset, setMonthOffset] = useState(0);
-  const [selectedRange, setSelectedRange] = useState<{
+const DashboardCalendarRangePicker = ({
+  availabilityDates,
+  onAvailabilityChange,
+}: {
+  availabilityDates: { start: Date | null; end: Date | null };
+  onAvailabilityChange: (dates: {
     start: Date | null;
     end: Date | null;
-  }>({
-    start: null,
-    end: null,
-  });
+  }) => void;
+}) => {
+  const [currentMonth] = useState(new Date());
+  const [monthOffset, setMonthOffset] = useState(0);
 
   const handleDayClick = (day: Date) => {
-    if (!selectedRange.start || (selectedRange.start && selectedRange.end)) {
-      setSelectedRange({ start: day, end: null });
-    } else if (selectedRange.start && !selectedRange.end) {
-      if (day < selectedRange.start) {
-        setSelectedRange({ start: day, end: selectedRange.start });
+    if (
+      !availabilityDates.start ||
+      (availabilityDates.start && availabilityDates.end)
+    ) {
+      onAvailabilityChange({ start: day, end: null });
+    } else if (availabilityDates.start && !availabilityDates.end) {
+      if (day < availabilityDates.start) {
+        onAvailabilityChange({ start: day, end: availabilityDates.start });
       } else {
-        setSelectedRange({ ...selectedRange, end: day });
+        onAvailabilityChange({ start: availabilityDates.start, end: day });
       }
     }
   };
+
+console.log("Selected Range:", availabilityDates);
+
 
   const renderCalendar = (offset: number) => {
     const monthDate = addMonths(currentMonth, monthOffset + offset);
@@ -91,15 +99,16 @@ const DashboardCalendarRangePicker = () => {
           ))}
           {days.map((day) => {
             const isSelected =
-              (selectedRange.start && isSameDay(day, selectedRange.start)) ||
-              (selectedRange.end && isSameDay(day, selectedRange.end));
+              (availabilityDates.start &&
+                isSameDay(day, availabilityDates.start)) ||
+              (availabilityDates.end && isSameDay(day, availabilityDates.end));
 
             const isInRange =
-              selectedRange.start &&
-              selectedRange.end &&
+              availabilityDates.start &&
+              availabilityDates.end &&
               isWithinInterval(day, {
-                start: selectedRange.start,
-                end: selectedRange.end,
+                start: availabilityDates.start,
+                end: availabilityDates.end,
               });
 
             return (

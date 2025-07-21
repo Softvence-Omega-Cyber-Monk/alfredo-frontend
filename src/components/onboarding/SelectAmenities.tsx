@@ -3,8 +3,56 @@ import { Button } from "../ui/button";
 import Title from "./Shared/Title";
 import { amenitiesData } from "@/lib/data/amenities";
 import type { Amenity } from "@/lib/data/amenities"; // Import the Amenity type
+interface AmenitiesProps {
+  selectedAmenities: {
+    main: Amenity[];
+    transport: Amenity[];
+    surrounding: Amenity[];
+  };
+  onAmenitiesChange: (selectedAmenities: {
+    main: Amenity[];
+    transport: Amenity[];
+    surrounding: Amenity[];
+  }) => void;
+}
+const SelectAmenities = ({
+  selectedAmenities,
+  onAmenitiesChange,
+}: AmenitiesProps) => {
+  const toggleAmenity = (
+    category: keyof typeof selectedAmenities,
+    amenity: Amenity
+  ) => {
+    const currentAmenities = selectedAmenities[category];
+    const isSelected = currentAmenities.some(
+      (item) => item.title === amenity.title && item.icon === amenity.icon
+    );
 
-const SelectAmenities = () => {
+    let newAmenities;
+    if (isSelected) {
+      // Remove amenity
+      newAmenities = currentAmenities.filter(
+        (item) => !(item.title === amenity.title && item.icon === amenity.icon)
+      );
+    } else {
+      // Add amenity
+      newAmenities = [...currentAmenities, amenity];
+    }
+
+    onAmenitiesChange({
+      ...selectedAmenities,
+      [category]: newAmenities,
+    });
+  };
+
+  const isAmenitySelected = (
+    category: keyof typeof selectedAmenities,
+    amenity: Amenity
+  ) => {
+    return selectedAmenities[category].some(
+      (item) => item.title === amenity.title && item.icon === amenity.icon
+    );
+  };
   return (
     <div className="w-full py-6 md:py-10 space-y-6 ">
       {/* Header */}
@@ -12,7 +60,7 @@ const SelectAmenities = () => {
         <div className="w-full lg:w-auto flex-1">
           <Title title="Select Amenities" />
         </div>
-         <div className="w-full lg:w-auto flex justify-center md:justify-end">
+        <div className="w-full lg:w-auto flex justify-center md:justify-end">
           <Button
             variant="secondary"
             className="flex items-center gap-2 px-5 py-3 rounded-lg border border-[#CAD2DB] text-[#3174CD] text-base font-medium hover:bg-gray-100"
@@ -23,7 +71,6 @@ const SelectAmenities = () => {
         </div>
       </div>
       <hr className="text-[#EAF1FA]" />
-      {/* Aprt-2 */}
       <div>
         <div className="mt-8">
           {/* Category Loop */}
@@ -35,21 +82,37 @@ const SelectAmenities = () => {
                 </h2>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-                  {items.map((amenity: Amenity, index: number) => (
-                    <div
-                      key={index}
-                      className="flex flex-col items-center justify-center p-6 border border-[#EAF1FA] rounded-xl hover:bg-[#F4F7FC] hover:shadow-[0_0_24px_0_rgba(49,116,205,0.25)] hover:border-primary-blue transition-colors duration-200"
-                    >
-                      <img
-                        src={amenity.icon}
-                        alt={amenity.title}
-                        className="w-6 h-6 mb-1"
-                      />
-                      <p className="text-base font-regular text-center text-dark-2">
-                        {amenity.title}
-                      </p>
-                    </div>
-                  ))}
+                  {items.map((amenity: Amenity, index: number) => {
+                    const isSelected = isAmenitySelected(
+                      category as keyof typeof selectedAmenities,
+                      amenity
+                    );
+                    return (
+                      <div
+                        key={index}
+                        onClick={() =>
+                          toggleAmenity(
+                            category as keyof typeof selectedAmenities,
+                            amenity
+                          )
+                        }
+                        className={`flex flex-col items-center justify-center p-6 border rounded-xl cursor-pointer transition-all duration-200 ${
+                          isSelected
+                            ? "bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)] border-primary-blue"
+                            : "border-[#EAF1FA] hover:bg-[#F4F7FC] hover:shadow-[0_0_24px_0_rgba(49,116,205,0.25)] hover:border-primary-blue"
+                        }`}
+                      >
+                        <img
+                          src={amenity.icon}
+                          alt={amenity.title}
+                          className="w-6 h-6 mb-1"
+                        />
+                        <p className="text-base font-regular text-center text-dark-2">
+                          {amenity.title}
+                        </p>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )

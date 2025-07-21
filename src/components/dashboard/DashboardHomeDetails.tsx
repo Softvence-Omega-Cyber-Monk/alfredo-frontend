@@ -11,6 +11,14 @@ interface DashboardHomeDetailsProps {
   areaDescription: string;
   photos: File[];
   availabilityType: "home" | "apartment" | null;
+  availabilityDates: {
+    start: Date | null;
+    end: Date | null;
+  };
+  onAvailabilityChange: (dates: {
+    start: Date | null;
+    end: Date | null;
+  }) => void;
   onDataChange: (updates: {
     homeName?: string;
     homeDescription?: string;
@@ -26,6 +34,8 @@ const DashboardHomeDetails = ({
   areaDescription,
   photos,
   availabilityType,
+  availabilityDates,
+  onAvailabilityChange,
   onDataChange,
 }: DashboardHomeDetailsProps) => {
   return (
@@ -154,7 +164,10 @@ const DashboardHomeDetails = ({
         </h3>
 
         <div className="mt-6">
-          <DashboardCalendarRangePicker/>
+          <DashboardCalendarRangePicker
+            availabilityDates={availabilityDates}
+            onAvailabilityChange={onAvailabilityChange}
+          />
         </div>
       </div>
     </div>

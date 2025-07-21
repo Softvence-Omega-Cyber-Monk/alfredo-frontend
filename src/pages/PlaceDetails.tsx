@@ -7,38 +7,10 @@ import { useState } from "react";
 import type { Amenity } from "@/lib/data/amenities";
 import PlaceDetailsHeading from "@/components/place-details/PlaceDetailsHeading";
 
-export interface DashboardData {
-  // Location data
-  location: {
-    lat: number;
-    lng: number;
-  } | null;
-  destination: {
-    lat: number;
-    lng: number;
-  } | null;
-
-  // Home type data 
-  homeType: "home" | "apartment" | null;
-  residenceType: "main" | "occasional" | null;
-
-  // Amenities data
-  selectedAmenities: {
-    main: Amenity[];
-    transport: Amenity[];
-    surrounding: Amenity[];
-  };
-
-  // Home details data
-  homeName: string;
-  homeDescription: string;
-  areaDescription: string;
-  photos: File[];
-  availabilityType: "home" | "apartment" | null;
-}
+import { AddPlaceData } from "@/types";
 
 const PlaceDetails = () => {
-  const [dashboardData, setDashboardData] = useState<DashboardData>({
+  const [dashboardData, setDashboardData] = useState<AddPlaceData>({
     location: null,
     destination: null,
     homeType: null,
@@ -53,9 +25,13 @@ const PlaceDetails = () => {
     areaDescription: "",
     photos: [],
     availabilityType: null,
+    availabilityDates: {
+      start: null,
+      end: null,
+    },
   });
 
-  const handleDataUpdate = (updates: Partial<DashboardData>) => {
+  const handleDataUpdate = (updates: Partial<AddPlaceData>) => {
     setDashboardData((prev) => ({ ...prev, ...updates }));
   };
 
@@ -72,7 +48,7 @@ const PlaceDetails = () => {
     <div className="">
       <CommonWrapper>
         <div className="p-6">
-         <PlaceDetailsHeading/>
+          <PlaceDetailsHeading />
           <PreviewHome
             location={dashboardData.location}
             destination={dashboardData.destination}
@@ -108,6 +84,10 @@ const PlaceDetails = () => {
             photos={dashboardData.photos}
             availabilityType={dashboardData.availabilityType}
             onDataChange={handleDataUpdate}
+            availabilityDates={dashboardData.availabilityDates}
+            onAvailabilityChange={(availabilityDates) =>
+              handleDataUpdate({ availabilityDates })
+            }
           />
 
           {/* Submit Button */}
