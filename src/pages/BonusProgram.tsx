@@ -173,7 +173,7 @@ const BonusProgram: FC = () => {
           <AchievementGrid />
         </div>
         {/* Terms & Conditions Section */}
-        <div className="my-[140px] max-[767px]:my-[80px] ">
+        <div className="my-[100px] max-[767px]:my-[70px] ">
           <div className="border-b border-[#BFD4F0] pb-3 mb-6">
             <h2 className="font-semibold text-[20px] text-primary-blue leading-[130%]">
               Terms and Conditions
