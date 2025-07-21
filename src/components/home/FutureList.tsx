@@ -28,10 +28,7 @@ const FutureList = () => {
           ))}
         </div>
         <div className="mt-8 flex justify-center">
-          <PrimaryButton
-            title="Explore All"
-            onClick={() => navigate("/properties")}
-          />
+          <PrimaryButton title="Explore All" onClick={() => navigate("/")} />
         </div>
       </CommonWrapper>
     </div>

@@ -18,10 +18,10 @@ const Testimonial = () => {
         <div className="group mt-10 flex flex-col lg:flex-row items-center lg:items-start gap-6 justify-center">
           {/* First card */}
           <div
-            className="flex flex-col gap-3 w-full sm:w-[350px] lg:w-[384px] 
+            className="flex flex-col gap-3 w-full sm:w-[350px] lg:w-[384px]
             bg-[url(/src/assets/Rectangle3.svg)] bg-cover bg-no-repeat px-5 py-5 
-            rounded-3xl text-basic-dark transform origin-bottom transition-transform duration-300
-            -rotate-3 max-[767px]:-rotate-0 md:group-hover:rotate-0"
+            rounded-3xl text-basic-dark transform origin-right transition-transform duration-300
+            lg:-rotate-3 group-hover:rotate-0"
           >
             <p>
               HomeExchange transformed our family vacations! We've stayed in
@@ -81,8 +81,8 @@ const Testimonial = () => {
           <div
             className="flex flex-col gap-3 w-full sm:w-[350px] lg:w-[384px] 
             bg-[url(/src/assets/Rectangle3.svg)] bg-cover bg-no-repeat px-5 py-5 
-            rounded-3xl text-basic-dark transform origin-bottom transition-transform duration-300
-            rotate-3 max-[767px]:rotate-0 md:group-hover:rotate-0"
+            rounded-3xl text-basic-dark transform origin-left transition-transform duration-300
+            lg:rotate-3 group-hover:rotate-0"
           >
             <p>
               HomeExchange transformed our family vacations! We've stayed in
