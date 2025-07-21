@@ -8,13 +8,13 @@ const OnboardingPage = () => {
 
   return (
     <div
-      className="py-16 min-h-screen bg-bottom bg-no-repeat bg-contain"
+      className=" min-h-screen bg-bottom bg-no-repeat bg-contain"
       style={background}
     >
-      <div className=" bg-white/60">
+      <div className=" bg-white/60 py-16">
         <OnboardingWrapper>
-        <MultiStepForm />
-      </OnboardingWrapper>
+          <MultiStepForm />
+        </OnboardingWrapper>
       </div>
     </div>
   );
