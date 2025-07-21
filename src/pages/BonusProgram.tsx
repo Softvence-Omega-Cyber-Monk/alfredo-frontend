@@ -11,6 +11,7 @@ import Subscribe from "@/components/reusable/Subscribe";
 import AccordionComponent from "@/components/reusable/AccordionComponent";
 import { bonus } from "@/lib/AccordionData/accordionData";
 import ReusableButton from "@/components/reusable/ReusableButton";
+import AchievementGrid from "@/components/plans/AchievementGrid";
 
 const BonusProgram: FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -148,7 +149,7 @@ const BonusProgram: FC = () => {
         </div>
 
         {/* Social Section */}
-        <div className="flex flex-row items-center justify-center gap-[24px] mt-[50px]  mb-[140px] max-[767px]:mt-[20px] max-[767px]:mb-[80px] text-center">
+        <div className="flex flex-row items-center justify-center gap-[24px] mt-[50px]  mb-[120px] max-[767px]:mt-[20px] max-[767px]:mb-[80px] text-center">
           <h3 className="text-lg md:text-[24px] text-basic-dark">Share via:</h3>
           <ul className="flex flex-row items-center gap-[15px] justify-center sm:mt-0">
             <li>
@@ -168,9 +169,11 @@ const BonusProgram: FC = () => {
             </li>
           </ul>
         </div>
-
+        <div className="">
+          <AchievementGrid />
+        </div>
         {/* Terms & Conditions Section */}
-        <div className="mb-[140px] max-[767px]:mb-[80px]">
+        <div className="my-[140px] max-[767px]:my-[80px] ">
           <div className="border-b border-[#BFD4F0] pb-3 mb-6">
             <h2 className="font-semibold text-[20px] text-primary-blue leading-[130%]">
               Terms and Conditions
