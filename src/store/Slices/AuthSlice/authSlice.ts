@@ -1,22 +1,41 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface AuthState {
-  user: { role: string } | null;
+interface User {
+  name: string;
+  role: string;
 }
 
+interface AuthState {
+  isAuthenticated: boolean;
+  user: User | null;
+}
+
+const isDev = true;; // true if running in dev mode
+
 const initialState: AuthState = {
-  user: { role: "user" },
+  isAuthenticated: isDev, // true only during development
+  user: isDev
+    ? {
+        name: "Developer User",
+        role: "admin",
+      }
+    : null,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    login: (state, action: PayloadAction<User>) => {
+      state.user = action.payload;
+      state.isAuthenticated = true;
+    },
     logout: (state) => {
       state.user = null;
+      state.isAuthenticated = false;
     },
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { login, logout } = authSlice.actions;
 export default authSlice.reducer;

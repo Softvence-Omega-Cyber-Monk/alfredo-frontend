@@ -20,6 +20,16 @@ import OTP from "@/pages/OTP";
 import VerifyEmail from "@/pages/VerifyEmail";
 import ForgotPassword from "@/pages/ForgotPassword";
 import SetNewPassword from "@/pages/SetNewPassword";
+import SettingPassword from "@/pages/SettingPassword";
+import Messages from "../pages/Messages";
+import Dashboard from "@/pages/Dashboard";
+import MyProperties from "@/pages/MyProperties";
+import OnboardingPage from "@/pages/OnboardingPage";
+import Places from "@/pages/Places";
+import PlaceDetails from "@/pages/PlaceDetails";
+import AddPlace from "@/pages/AddPlace";
+
+
 
 const routes = createBrowserRouter([
   {
@@ -83,10 +93,6 @@ const routes = createBrowserRouter([
         element: <SetNewPassword />,
       },
       {
-        path: "/signup",
-        element: <Signup />,
-      },
-      {
         path: "/chat",
         element: <Chat />,
       },
@@ -97,6 +103,38 @@ const routes = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/setting-password",
+        element: <SettingPassword />,
+      },
+      {
+        path: "/messages",
+        element: <Messages />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/my-properties",
+        element: <MyProperties />,
+      },
+      {
+        path: "/places",
+        element: <Places />,
+      },
+      {
+        path: "/places/:id",
+        element: <PlaceDetails />,
+      },
+      {
+        path: "/add-place",
+        element: <AddPlace />,
+      },
+      {
+        path: "/onboarding",
+        element: <OnboardingPage />,
       },
       {
         path: "/admin",

@@ -1,10 +1,34 @@
-import { FaMapMarkerAlt, FaUser, FaHome, FaCalendarAlt } from "react-icons/fa";
+import { useState } from "react";
+import { format } from "date-fns";
+
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+
 import PrimaryButton from "../reusable/PrimaryButton";
+import map from "@/assets/icons/Location.svg";
+import user from "@/assets/icons/userRounded.svg";
+import home from "@/assets/icons/homeType.svg";
+import calendar from "@/assets/icons/Calendar.svg";
 
 const SearchFilter = () => {
+  const [date, setDate] = useState<Date>();
+
   return (
     <div
-      className="w-full max-w-5xl mx-auto shadow-none rounded-lg lg:rounded-full px-5 py-4 md:px-6 md:py-5 bg-transparent"
+      className="w-full max-w-[1066px] mx-auto px-[26px] py-5 sm:px-4 md:px-6 bg-transparent rounded-xl lg:rounded-full"
       style={{
         backgroundImage: `url("/footerBg.svg")`,
         backgroundSize: "cover",
@@ -12,97 +36,108 @@ const SearchFilter = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="bg-white rounded-lg lg:rounded-full lg:px-10 lg:py-6">
-        {/* Grid Container */}
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-5 divide-y sm:divide-y-0 sm:divide-x divide-[#BFD4F0] p-4">
-          {/* Location */}
-          <div className="w-full pt-4 sm:pt-0 sm:px-4 first:pt-0">
+      <div className="bg-white rounded-xl lg:rounded-full lg:px-10 lg:py-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 divide-y lg:divide-y-0 lg:divide-x divide-[#BFD4F0] p-4">
+          <div className="w-full sm:px-4">
             <label
               htmlFor="location"
-              className="block text-sm text-dark-3 mb-2"
+              className="block text-sm text-dark-3 mb-1"
             >
-              Location
+              Where you go?
             </label>
-            <div className="flex items-center gap-2 rounded-lg border-none focus-within:border-none text-dark-2 placeholder:text-dark-2 text-base placeholder:text-base">
-              <FaMapMarkerAlt className="text-primary-blue w-4 h-4 md:w-5 md:h-5" />
-              <input
+            <div className="flex items-center gap-1 text-dark-2 text-base">
+              <img src={map} alt="map icon" className="w-4 h-4 md:w-5 md:h-5" />
+              <Input
                 id="location"
-                type="text"
-                placeholder="Where to go?"
-                className="outline-none w-full text-sm md:text-base bg-transparent"
+                placeholder="Place in Greece"
+                className="outline-none w-full text-sm md:text-base bg-transparent border-none focus:border-none focus:ring-0 focus:ring-transparent shadow-none p-0 placeholder:text-base text-dark-2 placeholder:text-dark-2 cursor-pointer"
               />
             </div>
           </div>
 
-          {/* People */}
-          <div className="w-full pt-4 sm:pt-0 sm:px-4">
-            <label htmlFor="people" className="block text-sm text-dark-3 mb-2">
+          <div className="w-full sm:px-4">
+            <label htmlFor="people" className="block text-sm text-dark-3 mb-1">
               Guests
             </label>
-            <div className="flex items-center gap-2 rounded-lg border-none focus-within:border-none text-dark-2 placeholder:text-dark-2 text-base placeholder:text-base">
-              <FaUser className="text-primary-blue w-4 h-4 md:w-5 md:h-5" />
-              <input
+            <div className="flex items-center gap-1 text-dark-2 text-base">
+              <img
+                src={user}
+                alt="user icon"
+                className="w-4 h-4 md:w-5 md:h-5"
+              />
+              <Input
                 id="people"
                 type="number"
                 min={1}
-                placeholder="Number of people"
-                className="outline-none w-full text-sm md:text-base bg-transparent"
+                placeholder="Select Here"
+                className="outline-none w-full text-sm md:text-base bg-transparent border-none focus:border-none focus:ring-0 focus:ring-transparent shadow-none p-0 placeholder:text-base text-dark-2 placeholder:text-dark-2 cursor-pointer"
               />
             </div>
           </div>
 
-          {/* Type */}
-          <div className="w-full pt-4 sm:pt-0 sm:px-4">
+          <div className="w-full sm:px-4">
             <label htmlFor="type" className="block text-sm text-dark-3 mb-2">
               Property Type
             </label>
-            <div className="flex items-center gap-2 rounded-lg border-none focus-within:border-none text-dark-2 placeholder:text-dark-2 text-base placeholder:text-base">
-              <FaHome className="text-primary-blue w-4 h-4 md:w-5 md:h-5" />
-              <select
-                id="type"
-                className="outline-none w-full text-sm md:text-base bg-transparent cursor-pointer"
-              >
-                <option value="">Home</option>
-                <option value="apartment">Apartment</option>
-                <option value="villa">Villa</option>
-                <option value="cabin">Cabin</option>
-              </select>
+            <div className="flex items-center gap-2 text-dark-2 text-base">
+              <img
+                src={home}
+                alt="home icon"
+                className="w-4 h-4 md:w-5 md:h-5"
+              />
+              <Select>
+                <SelectTrigger className="outline-none w-full text-sm md:text-base bg-transparent border-none focus:border-none focus:ring-0 focus:ring-transparent shadow-none p-0 placeholder:text-base">
+                  <SelectValue placeholder="Home" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border-primary-border-color">
+                  <SelectItem value="home">Home</SelectItem>
+                  <SelectItem value="apartment">Apartment</SelectItem>
+                  <SelectItem value="villa">Villa</SelectItem>
+                  <SelectItem value="cabin">Cabin</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
-          {/* Date */}
-          <div className="w-full pt-4 sm:pt-0 sm:px-4">
+          <div className="w-full sm:px-4">
             <label
               htmlFor="homeDate"
               className="block text-sm text-dark-3 mb-2"
             >
               Check-in Date
             </label>
-            <div className="flex items-center gap-2 rounded-xl border-none focus-within:border-none text-dark-2 placeholder:text-dark-2 text-base placeholder:text-base">
-              <FaCalendarAlt className="text-primary-blue w-4 h-4 md:w-5 md:h-5" />
-              <input
-                id="homeDate"
-                type="date"
-                style={{
-                  appearance: "none",
-                  WebkitAppearance: "none",
-                  MozAppearance: "none",
-                  backgroundImage: "url('path/to/your/custom-icon.png')",
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "right 10px center",
-                  paddingRight: "30px",
-                }}
-                placeholder="Select date"
-                className="outline-none w-full text-sm md:text-base bg-transparent cursor-pointer"
+            <div className="flex items-center gap-2 text-dark-2 text-base">
+              <img
+                src={calendar}
+                alt="calendar icon"
+                className="w-4 h-7 md:w-5 md:h-7"
               />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    data-empty={!date}
+                    className="data-[empty=true]:text-muted-foreground justify-start text-left font-normal col-span-3 outline-none w-full text-sm md:text-base bg-transparent border-none focus:border-none focus:ring-0 focus:ring-transparent shadow-none p-0 placeholder:text-base"
+                  >
+                    {date ? format(date, "PP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0 bg-white border-primary-border-color">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
 
-          {/* Search Button */}
-          <div className="w-full pt-4 mt-4 sm:pt-0 sm:px-4 sm:col-span-2 lg:col-span-1 flex items-end">
+          <div className="w-full lg:pl-6 sm:col-span-2 md:mt-6 lg:mt-0 lg:col-span-1 flex items-center justify-end">
             <PrimaryButton
               title="Search"
-              textColor="text-white w-full text-md lg:text-lg "
+              textColor="text-white w-full text-sm md:text-base lg:text-lg"
               bgColor="bg-primary-blue"
               borderColor=""
               bgImage="/buttonHomeIcon.svg"
