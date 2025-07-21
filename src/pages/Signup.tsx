@@ -70,7 +70,9 @@ const Signup = () => {
                   className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
                 />
                 {errors.firstName && (
-                  <p className="text-red-500 text-sm mt-1">{errors.firstName.message}</p>
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.firstName.message}
+                  </p>
                 )}
               </div>
 
@@ -85,7 +87,9 @@ const Signup = () => {
                   className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
                 />
                 {errors.lastName && (
-                  <p className="text-red-500 text-sm mt-1">{errors.lastName.message}</p>
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.lastName.message}
+                  </p>
                 )}
               </div>
             </div>
@@ -103,7 +107,9 @@ const Signup = () => {
                   className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
                 />
                 {errors.email && (
-                  <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
 
@@ -121,7 +127,9 @@ const Signup = () => {
                     [-moz-appearance:textfield]"
                 />
                 {errors.mobile && (
-                  <p className="text-red-500 text-sm mt-1">{errors.mobile.message}</p>
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.mobile.message}
+                  </p>
                 )}
               </div>
             </div>
@@ -139,7 +147,9 @@ const Signup = () => {
                   className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
                 />
                 {errors.password && (
-                  <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
 
@@ -195,10 +205,10 @@ const Signup = () => {
 
           {/* OR + Social */}
           <div>
-            <p className="text-[18px] font-semibold text-basic-dark text-center mt-[64px] mb-[32px]">
+            {/* <p className="text-[18px] font-semibold text-basic-dark text-center mt-[64px] mb-[32px]">
               Or Sign Up With
             </p>
-            <SocialAuthButton />
+            <SocialAuthButton /> */}
 
             <p className="text-[18px] text-basic-dark text-center mt-[64px]">
               Already have an account?{" "}
