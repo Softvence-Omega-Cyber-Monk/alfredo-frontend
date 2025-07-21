@@ -6,39 +6,11 @@ import DashboardHomeDetails from "@/components/dashboard/DashboardHomeDetails";
 import { useState } from "react";
 import type { Amenity } from "@/lib/data/amenities";
 import AddPlaceHeading from "@/components/add-place/AddPlaceHeading";
-export interface DashboardData {
-  // Location data
-  location: {
-    lat: number;
-    lng: number;
-  } | null;
-  destination: {
-    lat: number;
-    lng: number;
-  } | null;
-
-  // Home type data
-  homeType: "home" | "apartment" | null;
-  residenceType: "main" | "occasional" | null;
-
-  // Amenities data
-  selectedAmenities: {
-    main: Amenity[];
-    transport: Amenity[];
-    surrounding: Amenity[];
-  };
-
-  // Home details data
-  homeName: string;
-  homeDescription: string;
-  areaDescription: string;
-  photos: File[];
-  availabilityType: "home" | "apartment" | null;
-}
+import { AddPlaceData } from "@/types";
 
 const AddPlace = () => {
-  const [dashboardData, setDashboardData] = useState<DashboardData>({
-    location: null,
+  const [dashboardData, setDashboardData] = useState<AddPlaceData>({
+   location: null,
     destination: null,
     homeType: null,
     residenceType: null,
@@ -52,9 +24,12 @@ const AddPlace = () => {
     areaDescription: "",
     photos: [],
     availabilityType: null,
+    availabilityDates: {
+      start: null,
+      end: null,
+    },
   });
-
-  const handleDataUpdate = (updates: Partial<DashboardData>) => {
+  const handleDataUpdate = (updates: Partial<AddPlaceData>) => {
     setDashboardData((prev) => ({ ...prev, ...updates }));
   };
 
@@ -107,6 +82,10 @@ const AddPlace = () => {
             photos={dashboardData.photos}
             availabilityType={dashboardData.availabilityType}
             onDataChange={handleDataUpdate}
+            availabilityDates={dashboardData.availabilityDates}
+            onAvailabilityChange={(availabilityDates) =>
+              handleDataUpdate({ availabilityDates })
+            }
           />
         </div>
       </CommonWrapper>

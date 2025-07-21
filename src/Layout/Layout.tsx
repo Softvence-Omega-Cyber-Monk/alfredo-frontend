@@ -6,12 +6,7 @@ const Layout: React.FC = () => {
   const location = useLocation();
 
   // List of exact paths where Footer should be hidden
-  const hideFooterPaths = [
-    "/profile",
-    "/setting-password",
-    "/messages",
-    "/onboarding",
-  ];
+  const hideFooterPaths = ["/profile", "/setting-password", "/messages","/onboarding"];
 
   const shouldHideFooter = hideFooterPaths.includes(location.pathname);
 
