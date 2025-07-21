@@ -10,7 +10,7 @@ const HomeDetails = () => {
   return (
     <div className="mt-6 md:mt-10">
       <CommonWrapper>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">achievementsData
           <div className="lg:col-span-9 space-y-8">
             <HomeDetailsTabs data={homeDetailsData} />
           </div>
