@@ -138,7 +138,7 @@ const SearchFilter = () => {
             <PrimaryButton
               title="Search"
               textColor="text-white w-full text-sm md:text-base lg:text-lg"
-              bgColor="bg-primary-blue"
+              bgColor="bg-primary-blue hover:brightness-80"
               borderColor=""
               bgImage="/buttonHomeIcon.svg"
             />

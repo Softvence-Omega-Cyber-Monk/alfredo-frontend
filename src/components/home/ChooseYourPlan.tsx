@@ -26,7 +26,7 @@ const ChooseYourPlan = () => {
           <PrimaryButton
             title="Base"
             textColor="text-primary-blue"
-            bgColor="bg-white"
+            bgColor="bg-white hover:bg-primary-blue hover:text-white"
             borderColor="border border-primary-blue"
             bgImage="/buttonHomeWhite.svg"
             className="w-full sm:w-auto px-8 py-2 text-base md:text-lg rounded-full"
@@ -34,7 +34,7 @@ const ChooseYourPlan = () => {
           <PrimaryButton
             title="Premium"
             textColor="text-white"
-            bgColor="bg-primary-blue"
+            bgColor="bg-primary-blue hover:brightness-80"
             borderColor=""
             className="w-full sm:w-auto px-8 py-2 text-base md:text-lg rounded-full"
           />
