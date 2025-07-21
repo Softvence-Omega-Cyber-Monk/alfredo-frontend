@@ -38,3 +38,8 @@
     }
   }
 }
+
+.my-hide-date-icon::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
