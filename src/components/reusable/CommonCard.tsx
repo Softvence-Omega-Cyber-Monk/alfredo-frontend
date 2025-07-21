@@ -7,26 +7,9 @@ import {
 } from "lucide-react";
 import PrimaryButton from "./PrimaryButton";
 import cardStar from "@/assets/home/star.svg";
+import { CommonCard as CommonCardProps } from "@/types/index";
 
-interface PropertyFeatures {
-  rooms?: number;
-  beds?: number;
-  baths?: number;
-  sqft?: number;
-}
 
-interface CommonCardProps {
-  image: string;
-  avatarImage: string;
-  rating: string;
-  ownerName: string;
-  location: string;
-  title: string;
-  price: number;
-  priceUnit?: string;
-  features: PropertyFeatures;
-  onViewDetails?: () => void;
-}
 
 const CommonCard: React.FC<CommonCardProps> = ({
   image,

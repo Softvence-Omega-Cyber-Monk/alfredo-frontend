@@ -6,12 +6,10 @@ import Amenities from "./Amenities";
 import Map from "./Map";
 import Testimonial from "@/components/reusable/Testimonial";
 import AccordionComponent from "../reusable/AccordionComponent";
+import { HomeDetailsType } from "@/lib/data/homeDetails.ts";
+import { bonus } from "@/lib/AccordionData/accordionData";
 
-interface HomeDetailsTabsProps {
-  data: any; // Replace with proper type from your data file
-}
-
-const HomeDetailsTabs: React.FC<HomeDetailsTabsProps> = ({ data }) => {
+const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
   const tabsData = [
     {
       id: "Photos",
@@ -25,7 +23,7 @@ const HomeDetailsTabs: React.FC<HomeDetailsTabsProps> = ({ data }) => {
           />
           <Amenities amenities={data.amenities} />
           <Map location={data.location} />
-          <AccordionComponent />
+          <AccordionComponent items={bonus} />
           <Testimonial />
         </div>
       ),
@@ -53,7 +51,7 @@ const HomeDetailsTabs: React.FC<HomeDetailsTabsProps> = ({ data }) => {
     {
       id: "FAQ",
       label: "FAQ",
-      content: <AccordionComponent />,
+      content: <AccordionComponent items={bonus} />,
     },
     {
       id: "Reviews",
@@ -83,7 +81,7 @@ const HomeDetailsTabs: React.FC<HomeDetailsTabsProps> = ({ data }) => {
         </TabsList>
 
         <div className="mt-6 md:mt-10">
-          <HomeTitle title={data.title} />
+          <HomeTitle title={data.title} features={data.features} />
         </div>
 
         {tabsData.map((tab) => (
