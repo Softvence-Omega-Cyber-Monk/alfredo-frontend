@@ -3,16 +3,91 @@ import Title from "./Shared/Title";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "../ui/textarea";
+import { ChangeEvent } from "react";
 
-const VerificationProcess = () => {
+export type AgeGroup = "18–30" | "30–50" | "50–65" | "65+";
+export type Gender = "Male" | "Female" | "Not Specified";
+export type Role = "Worker" | "Retired" | "Student" | "Unemployed";
+export type TravelType =
+  | "Business"
+  | "Leisure"
+  | "Adventure"
+  | "Family"
+  | "Solo"
+  | "Cultural";
+export type DestinationType =
+  | "Big Cities"
+  | "Small Cities"
+  | "Seaside"
+  | "Mountain";
+export type TravelGroup =
+  | "By Myself"
+  | "With Family"
+  | "With a Partner"
+  | "With Friends";
+export type TravelWithPets = "Business trips" | "Leisure trips" | "Both";
+
+interface VerificationProps {
+  personalInformation: {
+    age: AgeGroup;
+    gender: Gender;
+    role: Role;
+    travelType: TravelType[];
+    favoriteDestinations: DestinationType[];
+    travelGroup: TravelGroup;
+    travelWithPets: TravelWithPets;
+    notes: string;
+  };
+  onDataChange: (
+    personalInformation: VerificationProps["personalInformation"]
+  ) => void;
+}
+
+const VerificationProcess = ({
+  personalInformation,
+  onDataChange,
+}: VerificationProps) => {
+  const handleChange = <
+    K extends keyof VerificationProps["personalInformation"]
+  >(
+    key: K,
+    value: VerificationProps["personalInformation"][K]
+  ) => {
+    onDataChange({
+      ...personalInformation,
+      [key]: value,
+    });
+  };
+
+  const handleCheckboxChange = (
+    key: "travelType" | "favoriteDestinations",
+    value: TravelType | DestinationType
+  ) => {
+    const currentArray = personalInformation[key];
+    const isSelected = currentArray.includes(value as never);
+    const updatedArray = isSelected
+      ? currentArray.filter((v) => v !== value)
+      : [...currentArray, value];
+
+    if (key === "travelType" && updatedArray.length > 2) return;
+
+    onDataChange({
+      ...personalInformation,
+      [key]: updatedArray as (typeof personalInformation)[typeof key],
+    });
+  };
+
+  const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    handleChange("notes", e.target.value);
+  };
+
   return (
     <div className="w-full py-6 md:py-10 space-y-6 ">
-      {/* Header */}
       <div className="flex flex-col lg:flex-row justify-between items-center mb-10 w-full gap-4">
         <div className="w-full lg:w-auto flex-1">
           <Title title="Welcome back, Savannah!" />
         </div>
-          <div className="w-full lg:w-auto flex justify-center md:justify-end">
+        <div className="w-full lg:w-auto flex justify-center md:justify-end">
           <Button
             variant="secondary"
             className="flex items-center gap-2 px-5 py-3 rounded-lg border border-[#CAD2DB] text-[#3174CD] text-base font-medium hover:bg-gray-100"
@@ -24,15 +99,12 @@ const VerificationProcess = () => {
       </div>
       <hr className="text-[#EAF1FA]" />
 
-      {/* Form Section */}
       <form className="space-y-8 font-sans">
-        {/* Age & Gender */}
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Age */}
           <div>
             <Label className="block text-lg text-[#3174CD] mb-2">Age: </Label>
             <div className="flex flex-wrap gap-4">
-              {["18–30", "30–50", "50–65", "65+"].map((age) => (
+              {(["18–30", "30–50", "50–65", "65+"] as AgeGroup[]).map((age) => (
                 <label
                   key={age}
                   className="flex items-center gap-2 cursor-pointer text-base text-[#808080]"
@@ -41,7 +113,8 @@ const VerificationProcess = () => {
                     type="radio"
                     name="ageGroup"
                     value={age}
-                    defaultChecked={age === "18–30"}
+                    checked={personalInformation.age === age}
+                    onChange={() => handleChange("age", age)}
                     className="w-4 h-4 accent-blue-500"
                   />
                   {age}
@@ -50,13 +123,12 @@ const VerificationProcess = () => {
             </div>
           </div>
 
-          {/* Gender */}
           <div>
             <Label className="block text-lg text-[#3174CD] mb-2">
               Gender:{" "}
             </Label>
             <div className="flex flex-wrap gap-4">
-              {["Male", "Female", "Not Specified"].map((g) => (
+              {(["Male", "Female", "Not Specified"] as Gender[]).map((g) => (
                 <label
                   key={g}
                   className="flex items-center gap-2 cursor-pointer text-base text-[#808080]"
@@ -65,7 +137,8 @@ const VerificationProcess = () => {
                     type="radio"
                     name="gender"
                     value={g}
-                    defaultChecked={g === "Male"}
+                    checked={personalInformation.gender === g}
+                    onChange={() => handleChange("gender", g)}
                     className="w-4 h-4 accent-blue-500"
                   />
                   {g}
@@ -75,31 +148,31 @@ const VerificationProcess = () => {
           </div>
         </div>
 
-        {/* Role & Travel */}
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Role */}
           <div>
             <Label className="block text-lg text-[#3174CD] mb-2">I am a:</Label>
             <div className="flex flex-wrap gap-4">
-              {["Worker", "Retired", "Student", "Unemployed"].map((role) => (
-                <label
-                  key={role}
-                  className="flex items-center gap-2 cursor-pointer text-base text-[#808080]"
-                >
-                  <input
-                    type="radio"
-                    name="role"
-                    value={role}
-                    defaultChecked={role === "Worker"}
-                    className="w-4 h-4 accent-blue-500"
-                  />
-                  {role}
-                </label>
-              ))}
+              {(["Worker", "Retired", "Student", "Unemployed"] as Role[]).map(
+                (role) => (
+                  <label
+                    key={role}
+                    className="flex items-center gap-2 cursor-pointer text-base text-[#808080]"
+                  >
+                    <input
+                      type="radio"
+                      name="role"
+                      value={role}
+                      checked={personalInformation.role === role}
+                      onChange={() => handleChange("role", role)}
+                      className="w-4 h-4 accent-blue-500"
+                    />
+                    {role}
+                  </label>
+                )
+              )}
             </div>
           </div>
 
-          {/* Travel Group */}
           <div>
             <Label className="block text-lg text-[#808080] mb-2">
               Your Travel Type
@@ -108,33 +181,36 @@ const VerificationProcess = () => {
               </span>
             </Label>
             <div className="flex flex-wrap gap-4">
-              {[
-                "Business",
-                "Leisure",
-                "Adventure",
-                "Family",
-                "Solo",
-                "Cultural",
-              ].map((dest) => (
+              {(
+                [
+                  "Business",
+                  "Leisure",
+                  "Adventure",
+                  "Family",
+                  "Solo",
+                  "Cultural",
+                ] as TravelType[]
+              ).map((type) => (
                 <label
-                  key={dest}
+                  key={type}
                   className="flex items-center gap-2 text-base text-[#808080]"
                 >
                   <input
                     type="checkbox"
-                    defaultChecked={dest === "Big Cities"}
+                    checked={personalInformation.travelType.includes(
+                      type as TravelType
+                    )}
+                    onChange={() => handleCheckboxChange("travelType", type)}
                     className="w-5 h-5 accent-blue-500"
                   />
-                  {dest}
+                  {type}
                 </label>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Destination & Travel Reason */}
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Favourite Destinations */}
           <div>
             <Label className="block text-lg text-[#3174CD] mb-2">
               Favourite destinations
@@ -143,36 +219,47 @@ const VerificationProcess = () => {
               </span>
             </Label>
             <div className="flex flex-wrap gap-4">
-              {["Big Cities", "Small Cities", "Seaside", "Mountain"].map(
-                (dest) => (
-                  <label
-                    key={dest}
-                    className="flex items-center gap-2 text-base text-[#808080]"
-                  >
-                    <input
-                      type="checkbox"
-                      defaultChecked={dest === "Big Cities"}
-                      className="w-5 h-5 accent-blue-500"
-                    />
-                    {dest}
-                  </label>
-                )
-              )}
+              {(
+                [
+                  "Big Cities",
+                  "Small Cities",
+                  "Seaside",
+                  "Mountain",
+                ] as DestinationType[]
+              ).map((dest) => (
+                <label
+                  key={dest}
+                  className="flex items-center gap-2 text-base text-[#808080]"
+                >
+                  <input
+                    type="checkbox"
+                    checked={personalInformation.favoriteDestinations.includes(
+                      dest as DestinationType
+                    )}
+                    onChange={() =>
+                      handleCheckboxChange("favoriteDestinations", dest)
+                    }
+                    className="w-5 h-5 accent-blue-500"
+                  />
+                  {dest}
+                </label>
+              ))}
             </div>
           </div>
 
-          {/* Travel Purpose */}
           <div>
             <Label className="block text-lg text-[#808080] mb-2">
               Who Do You Usually Travel With? (Select one)
             </Label>
             <div className="flex flex-wrap gap-4">
-              {[
-                "By Myself",
-                "With Family",
-                "With a Partner",
-                "With Friends",
-              ].map((group) => (
+              {(
+                [
+                  "By Myself",
+                  "With Family",
+                  "With a Partner",
+                  "With Friends",
+                ] as TravelGroup[]
+              ).map((group) => (
                 <label
                   key={group}
                   className="flex items-center gap-2 cursor-pointer text-base text-[#808080]"
@@ -181,7 +268,8 @@ const VerificationProcess = () => {
                     type="radio"
                     name="travelGroup"
                     value={group}
-                    defaultChecked={group === "Family"}
+                    checked={personalInformation.travelGroup === group}
+                    onChange={() => handleChange("travelGroup", group)}
                     className="w-4 h-4 accent-blue-500"
                   />
                   {group}
@@ -191,9 +279,7 @@ const VerificationProcess = () => {
           </div>
         </div>
 
-        {/* Travel Reason */}
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Travel Purpose */}
           <div>
             <Label className="block text-lg text-[#808080] mb-2">
               Do You Travel With Pets?
@@ -201,18 +287,20 @@ const VerificationProcess = () => {
                 (Select one)
               </span>
             </Label>
-
             <div className="flex flex-wrap gap-4">
-              {["Business trips", "Leisure trips", "Both"].map((group) => (
+              {(
+                ["Business trips", "Leisure trips", "Both"] as TravelWithPets[]
+              ).map((group) => (
                 <label
                   key={group}
                   className="flex items-center gap-2 cursor-pointer text-base text-[#808080]"
                 >
                   <input
                     type="radio"
-                    name="travelGroup"
+                    name="travelWithPets"
                     value={group}
-                    defaultChecked={group === "Family"}
+                    checked={personalInformation.travelWithPets === group}
+                    onChange={() => handleChange("travelWithPets", group)}
                     className="w-4 h-4 accent-blue-500"
                   />
                   {group}
@@ -222,12 +310,13 @@ const VerificationProcess = () => {
           </div>
         </div>
 
-        {/* Notes */}
         <div>
           <Label className="block text-lg text-[#3174CD] mb-2">
             Notes on yourself
           </Label>
           <Textarea
+            value={personalInformation.notes}
+            onChange={handleInputChange}
             placeholder="Write something about yourself"
             className="min-h-[120px] border border-[#D2D2D2] focus:border-blue-500 focus:ring-blue-500"
           />
@@ -238,4 +327,3 @@ const VerificationProcess = () => {
 };
 
 export default VerificationProcess;
-

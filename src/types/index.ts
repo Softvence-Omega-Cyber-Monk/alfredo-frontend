@@ -1,3 +1,5 @@
+import { Amenity } from "@/lib/data/amenities";
+
 // Define a type for your user (example)
 export interface User {
   id: string;
@@ -58,7 +60,6 @@ export interface InviteDataItem {
 }
 // -------------------------
 
-
 // Card type
 export interface CardFeatures {
   rooms?: number;
@@ -79,4 +80,35 @@ export interface CommonCard {
   priceUnit?: string;
   features: CardFeatures;
   onViewDetails?: () => void;
+}
+
+// Dashboard data types
+export interface AddPlaceData {
+  location: {
+    lat: number;
+    lng: number;
+  } | null;
+  destination: {
+    lat: number;
+    lng: number;
+  } | null;
+
+  homeType: "home" | "apartment" | null;
+  residenceType: "main" | "occasional" | null;
+
+  selectedAmenities: {
+    main: Amenity[];
+    transport: Amenity[];
+    surrounding: Amenity[];
+  };
+
+  homeName: string;
+  homeDescription: string;
+  areaDescription: string;
+  photos: File[];
+  availabilityType: "home" | "apartment" | null;
+  availabilityDates: {
+    start: Date | null;
+    end: Date | null;
+  };
 }
