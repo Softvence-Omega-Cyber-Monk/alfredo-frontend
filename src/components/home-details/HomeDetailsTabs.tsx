@@ -4,7 +4,6 @@ import Photos from "./Photos";
 import Description from "./Description";
 import Amenities from "./Amenities";
 import Map from "./Map";
-import Testimonial from "@/components/reusable/Testimonial";
 import AccordionComponent from "../reusable/AccordionComponent";
 import { HomeDetailsType } from "@/lib/data/homeDetails.ts";
 import { bonus } from "@/lib/AccordionData/accordionData";
@@ -22,9 +21,10 @@ const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
             description={data.description}
           />
           <Amenities amenities={data.amenities} />
-          <Map location={data.location} />
+          <div className="mb-6 md:mb-20">
+           <Map location={data.location} />
+         </div>
           <AccordionComponent items={bonus} />
-          <Testimonial />
         </div>
       ),
     },
@@ -56,7 +56,17 @@ const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
     {
       id: "Reviews",
       label: "Reviews",
-      content: <Testimonial />,
+      content: <>
+      <Photos photos={data.photos} />
+          <Description
+            dates={{ from: data.dates.from, to: data.dates.to }}
+            description={data.description}
+          />
+          <Amenities amenities={data.amenities} />
+         <div className="mb-6 md:mb-20">
+           <Map location={data.location} />
+         </div>
+          <AccordionComponent items={bonus} /></>
     },
   ];
 
