@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Popover,
   PopoverContent,
@@ -9,7 +9,6 @@ import PrimaryButton from "@/components/reusable/PrimaryButton";
 import UserAvatar from "@/ui/UserAvatar";
 import clsx from "clsx";
 import { userMenuItems } from "@/config/navigationConfig";
-import messageIcon from "@/assets/icons/message-multiple-02.svg";
 import arrow from "@/assets/icons/arrowdown.svg";
 import logoutIcon from "@/assets/icons/logout.svg";
 import logoutHover from "@/assets/icons/logoutHover.svg";
@@ -70,12 +69,7 @@ const AuthSection: React.FC<Props> = ({
     <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
       <div className="bg-white rounded-2xl p-2 flex items-center gap-2 md:gap-3 cursor-pointer">
         <LanguageSwitcher />
-        <Link
-          to="/messages"
-          className="p-2 md:p-2.5 rounded-full bg-white shadow-[0_0_10px_0_#B9D7FF]"
-        >
-          <img src={messageIcon} className="w-4 h-4 md:w-6 md:h-6" alt="" />
-        </Link>
+        
         <PopoverTrigger>
           <div className="flex items-center gap-2 md:gap-3">
             <UserAvatar userName={user?.name || "Guest"} />

@@ -21,10 +21,10 @@ const LanguageSwitcher = () => {
       {/* Earth Icon Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+        className="p-2 rounded-full hover:bg-gray-100 transition-colors bg-white shadow-[0_0_10px_0_#B9D7FF]"
         aria-label="Change language"
       >
-        <FaEarthAmericas className="text-lg text-primary-blue" />
+        <FaEarthAmericas className="text-xl text-primary-blue" />
       </button>
 
       {/* Popover */}
