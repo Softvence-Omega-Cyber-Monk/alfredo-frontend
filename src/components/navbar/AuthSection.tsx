@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from "react-router-dom";
 import {
   Popover,
   PopoverContent,
@@ -15,6 +15,7 @@ import logoutIcon from "@/assets/icons/logout.svg";
 import logoutHover from "@/assets/icons/logoutHover.svg";
 import { useAppDispatch } from "@/hooks/useRedux";
 import { logout } from "@/store/Slices/AuthSlice/authSlice";
+import LanguageSwitcher from "../LanguageSwitcher";
 
 interface User {
   name: string;
@@ -68,7 +69,11 @@ const AuthSection: React.FC<Props> = ({
   return (
     <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
       <div className="bg-white rounded-2xl p-2 flex items-center gap-2 md:gap-3 cursor-pointer">
-        <Link to="/messages" className="p-2 md:p-2.5 rounded-full bg-white shadow-[0_0_10px_0_#B9D7FF]">
+        <LanguageSwitcher />
+        <Link
+          to="/messages"
+          className="p-2 md:p-2.5 rounded-full bg-white shadow-[0_0_10px_0_#B9D7FF]"
+        >
           <img src={messageIcon} className="w-4 h-4 md:w-6 md:h-6" alt="" />
         </Link>
         <PopoverTrigger>

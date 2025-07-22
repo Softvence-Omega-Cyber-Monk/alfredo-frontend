@@ -22,9 +22,11 @@ import map from "@/assets/icons/Location.svg";
 import user from "@/assets/icons/userRounded.svg";
 import home from "@/assets/icons/homeType.svg";
 import calendar from "@/assets/icons/Calendar.svg";
+import { useTranslation } from "react-i18next";
 
 const SearchFilter = () => {
   const [date, setDate] = useState<Date>();
+  const { t } = useTranslation();
 
   return (
     <div
@@ -43,7 +45,7 @@ const SearchFilter = () => {
               htmlFor="location"
               className="block text-sm text-dark-3 mb-1"
             >
-              Where you go?
+              {t("search.placeholder")}
             </label>
             <div className="flex items-center gap-1 text-dark-2 text-base">
               <img src={map} alt="map icon" className="w-4 h-4 md:w-5 md:h-5" />
