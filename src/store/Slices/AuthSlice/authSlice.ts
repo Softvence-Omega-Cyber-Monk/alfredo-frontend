@@ -10,7 +10,7 @@ interface AuthState {
   user: User | null;
 }
 
-const isDev = true;; // true if running in dev mode
+const isDev = true; // true if running in dev mode
 
 const initialState: AuthState = {
   isAuthenticated: isDev, // true only during development
