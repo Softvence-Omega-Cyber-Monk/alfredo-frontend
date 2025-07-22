@@ -7,7 +7,6 @@ import Logo from "../components/navbar/Logo";
 import DesktopNavLinks from "../components/navbar/DesktopNavLinks";
 import AuthSection from "../components/navbar/AuthSection";
 import MobileMenu from "../components/navbar/MobileMenu";
-
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
