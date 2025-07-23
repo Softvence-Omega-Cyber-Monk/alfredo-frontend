@@ -15,7 +15,7 @@ const resources = {
         "Exchange your home with travelers from around the world — safe, easy, and flexible.",
 
       // SearchFilter translations
-      "search.placeholder": "Where you go?",
+      "search.placeholder": "Where to?",
 
       // Existing translations
       welcome: "Welcome",

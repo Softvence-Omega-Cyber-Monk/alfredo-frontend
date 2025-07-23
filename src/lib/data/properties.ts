@@ -9,7 +9,7 @@ export const properties: CommonCard[] = [
     avatarImage: cardAvatar,
     rating: "4.9",
     ownerName: "Mr. Alfred",
-    location: "75835 Herat Walks, London",
+    location: "758/2 Athens, Greece",
     title: "2 Bedroom Apartment",
     price: 200.5,
     features: {
@@ -25,7 +25,7 @@ export const properties: CommonCard[] = [
     avatarImage: cardAvatar,
     rating: "4.9",
     ownerName: "Mr. Alfred",
-    location: "75835 Herat Walks, London",
+    location: "58/7 Santorini, Greece",
     title: "2 Bedroom Apartment",
     price: 200.5,
     features: {
@@ -41,7 +41,7 @@ export const properties: CommonCard[] = [
     avatarImage: cardAvatar,
     rating: "4.9",
     ownerName: "Mr. Alfred",
-    location: "75835 Herta Walks, London",
+    location: "758/2 Athens, Greece",
     title: "2 Bedroom Apartment",
     price: 200.5,
     features: {
@@ -57,7 +57,7 @@ export const properties: CommonCard[] = [
     avatarImage: cardAvatar,
     rating: "4.9",
     ownerName: "Mr. Alfred",
-    location: "75835 Herta Walks, London",
+    location: "86/4 Thessaloniki, Greece",
     title: "2 Bedroom Apartment",
     price: 200.5,
     features: {
@@ -73,7 +73,7 @@ export const properties: CommonCard[] = [
     avatarImage: cardAvatar,
     rating: "4.9",
     ownerName: "Mr. Alfred",
-    location: "75835 Herta Walks, London",
+    location: "75/9 Paros, Greece",
     title: "2 Bedroom Apartment",
     price: 200.5,
     features: {
@@ -89,7 +89,7 @@ export const properties: CommonCard[] = [
     avatarImage: cardAvatar,
     rating: "4.9",
     ownerName: "Mr. Alfred",
-    location: "75835 Herta Walks, London",
+    location: "758/2 Athens, Greece",
     title: "2 Bedroom Apartment",
     price: 200.5,
     features: {

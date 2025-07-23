@@ -8,7 +8,7 @@ import bg1 from "@/assets/home/htwBg1.svg";
 import bg2 from "@/assets/home/htwBg2.svg";
 import bg3 from "@/assets/home/htwBg3.svg";
 
-import HowItWorksCard from './HowItWorksCard';
+import HowItWorksCard from "./HowItWorksCard";
 
 const cardsData = [
   {
@@ -16,7 +16,7 @@ const cardsData = [
     backgroundImage: bg1,
     title: "Choose a plan",
     description:
-      "Find homes that match your criteria and connect with like-minded travelers.",
+      "Create your personal account and start with the plan you prefer (Base 1yr or Premium 2yr)",
     backgroundColor: "#FFF2F0",
     titleColor: "#E82F1A",
   },
@@ -32,9 +32,9 @@ const cardsData = [
   {
     mainImage: img3,
     backgroundImage: bg3,
-    title: "EEnjoy Your Stay",
+    title: "Enjoy Your Stay",
     description:
-      "Find homes that match your criteria and connect with like-minded travelers.",
+      "Finalize the exchange terms on the platform and get ready for the travel!.",
     backgroundColor: "#FFF8E6",
     titleColor: "##FFBA00",
   },
