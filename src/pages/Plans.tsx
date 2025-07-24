@@ -6,7 +6,6 @@ import ServicePlan from "@/components/reusable/ServicePlan";
 import Subscribe from "@/components/reusable/Subscribe";
 import { bonus } from "@/lib/AccordionData/accordionData";
 import { FC } from "react";
-import AchievementGrid from "../components/plans/AchievementGrid";
 
 const Plans: FC = () => {
   return (
@@ -25,9 +24,6 @@ const Plans: FC = () => {
           <ServicePlan />
         </div>
 
-        <div className="mt-20">
-          <AchievementGrid />
-        </div>
 
         <div className="lg:w-3/4 md:w-3/4 w-full mx-auto mt-[140px] max-sm:mt-[70px]">
           <AccordionComponent items={bonus} />

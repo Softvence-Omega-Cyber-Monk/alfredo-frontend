@@ -5,39 +5,11 @@ import HomeType from "@/components/dashboard/HomeType";
 import PreviewHome from "@/components/dashboard/PreviewHome";
 import DashboardHomeDetails from "@/components/dashboard/DashboardHomeDetails";
 import { useState } from "react";
-import type { Amenity } from "@/lib/data/amenities";
-export interface DashboardData {
-  // Location data
-  location: {
-    lat: number;
-    lng: number;
-  } | null;
-  destination: {
-    lat: number;
-    lng: number;
-  } | null;
-
-  // Home type data
-  homeType: "home" | "apartment" | null;
-  residenceType: "main" | "occasional" | null;
-
-  // Amenities data
-  selectedAmenities: {
-    main: Amenity[];
-    transport: Amenity[];
-    surrounding: Amenity[];
-  };
-
-  // Home details data
-  homeName: string;
-  homeDescription: string;
-  areaDescription: string;
-  photos: File[];
-  availabilityType: "home" | "apartment" | null;
-}
+import { AddPlaceData } from "@/types/index";
+import { Amenity } from "@/lib/data/amenities";
 
 const Dashboard = () => {
-  const [dashboardData, setDashboardData] = useState<DashboardData>({
+  const [dashboardData, setDashboardData] = useState<AddPlaceData>({
     location: null,
     destination: null,
     homeType: null,
@@ -52,9 +24,13 @@ const Dashboard = () => {
     areaDescription: "",
     photos: [],
     availabilityType: null,
+    availabilityDates: {
+      start: null,
+      end: null,
+    },
   });
 
-  const handleDataUpdate = (updates: Partial<DashboardData>) => {
+  const handleDataUpdate = (updates: Partial<AddPlaceData>) => {
     setDashboardData((prev) => ({ ...prev, ...updates }));
   };
 
@@ -71,7 +47,7 @@ const Dashboard = () => {
     <div className="">
       <CommonWrapper>
         <div className="p-6">
-          <DashboardHeading onSubmit={handleSubmitData}/>
+          <DashboardHeading onSubmit={handleSubmitData} />
           <PreviewHome
             location={dashboardData.location}
             destination={dashboardData.destination}
@@ -107,6 +83,10 @@ const Dashboard = () => {
             photos={dashboardData.photos}
             availabilityType={dashboardData.availabilityType}
             onDataChange={handleDataUpdate}
+            availabilityDates={dashboardData.availabilityDates}
+            onAvailabilityChange={(availabilityDates) =>
+              handleDataUpdate({ availabilityDates })
+            }
           />
         </div>
       </CommonWrapper>

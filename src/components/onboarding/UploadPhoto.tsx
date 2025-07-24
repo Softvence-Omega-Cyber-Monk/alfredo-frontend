@@ -1,12 +1,14 @@
-import { useState } from "react";
 import { TbChecklist } from "react-icons/tb";
 import { Button } from "../ui/button";
 import Title from "./Shared/Title";
 import PhotoUpload from "../dashboard/PhotoUpload";
 
-const UploadPhoto = () => {
-  const [photos, setPhotos] = useState<File[]>([]);
+interface UploadPhotoProps {
+  photos: File[];
+  onDataChange: (updates: { photos?: File[] }) => void;
+}
 
+const UploadPhoto = ({ photos, onDataChange }: UploadPhotoProps) => {
   return (
     <div className="w-full py-6 md:py-10 space-y-6">
       {/* Header */}
@@ -32,14 +34,16 @@ const UploadPhoto = () => {
         <h3 className="text-lg text-primary-blue font-semibold ">
           Add at least 5 pictures
         </h3>
-        <p className="text-base text-dark-3 font-regular mt-3">
+        <p className="text-base text-dark-3 font-regular mt-3 ">
           Showcase your home from every angle by uploading at least 5
           high-quality photos — include key spaces like the living area,
-          kitchen, bedroom.
+          kitchen, bedroom, and bathroom.
         </p>
 
-        {/* ✅ Pass Props */}
-        <PhotoUpload photos={photos} onPhotosChange={setPhotos} />
+        <PhotoUpload
+          photos={photos}
+          onPhotosChange={(newPhotos) => onDataChange({ photos: newPhotos })}
+        />
       </div>
     </div>
   );
