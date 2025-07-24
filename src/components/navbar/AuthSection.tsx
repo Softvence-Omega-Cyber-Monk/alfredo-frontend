@@ -15,6 +15,7 @@ import logoutHover from "@/assets/icons/logoutHover.svg";
 import { useAppDispatch } from "@/hooks/useRedux";
 import { logout } from "@/store/Slices/AuthSlice/authSlice";
 import LanguageSwitcher from "../LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 interface User {
   name: string;
@@ -37,6 +38,8 @@ const AuthSection: React.FC<Props> = ({
   const [hoveredLogout, setHoveredLogout] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const { t } = useTranslation("navigation");
 
   const handleLogout = () => {
     dispatch(logout());
@@ -69,14 +72,14 @@ const AuthSection: React.FC<Props> = ({
     <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
       <div className="bg-white rounded-2xl p-2 flex items-center gap-2 md:gap-3 cursor-pointer">
         <LanguageSwitcher />
-        
+
         <PopoverTrigger>
           <div className="flex items-center gap-2 md:gap-3">
             <UserAvatar userName={user?.name || "Guest"} />
 
-            <p className="text-primary-blue font-medium text-sm sm:text-base md:text-lg">
+            {/* <p className="text-primary-blue font-medium text-sm sm:text-base md:text-lg">
               {user?.name.split(" ")[0]}
-            </p>
+            </p> */}
             <div className="p-1 md:p-2">
               <img
                 src={arrow}
@@ -118,7 +121,7 @@ const AuthSection: React.FC<Props> = ({
                 hoveredItem === item.path ? "text-dark-2" : "text-dark-3"
               )}
             >
-              {item.title}
+              {t(item.title)}
             </span>
           </div>
         ))}
@@ -139,7 +142,7 @@ const AuthSection: React.FC<Props> = ({
               hoveredLogout ? "text-[#E33A4B]" : "text-dark-3"
             )}
           >
-            Logout
+            {t("navigation.logout")}
           </span>
         </div>
       </PopoverContent>

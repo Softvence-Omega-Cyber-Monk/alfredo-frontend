@@ -1,5 +1,4 @@
 import CommonWrapper from "@/common/CommonWrapper";
-import testimonailPerson from "@/assets/testimonailPerson.jpg";
 import youngLady from "@/assets/testimonial/review-young-lady.jpg";
 import oldLady from "@/assets/testimonial/review-old-lady.jpg";
 import youngMan from "@/assets/testimonial//review-young-man.jpg";

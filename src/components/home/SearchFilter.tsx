@@ -27,7 +27,7 @@ import { DateRange } from "react-day-picker";
 
 const SearchFilter = () => {
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("banner");
 
   return (
     <div
@@ -60,7 +60,7 @@ const SearchFilter = () => {
 
           <div className="w-full p-4 lg:col-span-2 px-4 lg:px-2 border-r-1">
             <label htmlFor="people" className="block text-sm text-dark-3 mb-1">
-              Guests
+              {t("search.guest")}
             </label>
             <div className="flex items-center gap-1 text-dark-2 text-base">
               <img
@@ -74,7 +74,7 @@ const SearchFilter = () => {
                 inputMode="numeric" // Shows numeric keyboard on mobile
                 pattern="[0-9]*" // Restricts input to numbers
                 min={1}
-                placeholder="Guest no."
+                placeholder={t("search.selectHere")}
                 className="outline-none w-full text-sm md:text-base bg-transparent border-none focus:border-none focus:ring-0 focus:ring-transparent shadow-none p-0 placeholder:text-base text-dark-2 placeholder:text-dark-2 cursor-pointer"
                 onKeyPress={(e) => {
                   // Prevent non-numeric characters
@@ -88,7 +88,7 @@ const SearchFilter = () => {
 
           <div className="w-full p-4 lg:col-span-2 px-4 lg:px-2 border-r-1">
             <label htmlFor="type" className="block text-sm text-dark-3 mb-2">
-              Property Type
+              {t("search.propertyType")}
             </label>
             <div className="flex items-center gap-2 text-dark-2 text-base">
               <img
@@ -98,13 +98,15 @@ const SearchFilter = () => {
               />
               <Select>
                 <SelectTrigger className="outline-none w-full text-sm md:text-base bg-transparent border-none focus:border-none focus:ring-0 focus:ring-transparent shadow-none p-0 placeholder:text-base">
-                  <SelectValue placeholder="Home" />
+                  <SelectValue placeholder={t("search.home")} />
                 </SelectTrigger>
                 <SelectContent className="bg-white border-primary-border-color">
-                  <SelectItem value="home">Home</SelectItem>
-                  <SelectItem value="apartment">Apartment</SelectItem>
-                  <SelectItem value="boat">Boat</SelectItem>
-                  <SelectItem value="van">Van</SelectItem>
+                  <SelectItem value="home">{t("search.home")}</SelectItem>
+                  <SelectItem value="apartment">
+                    {t("search.apartment")}
+                  </SelectItem>
+                  <SelectItem value="boat">{t("search.boat")}</SelectItem>
+                  <SelectItem value="van">{t("search.van")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -115,7 +117,7 @@ const SearchFilter = () => {
               htmlFor="homeDate"
               className="block text-sm text-dark-3 mb-2"
             >
-              Dates
+              {t("search.dates")}
             </label>
             <div className="flex items-center gap-2 text-dark-2 text-base">
               <img
@@ -140,7 +142,7 @@ const SearchFilter = () => {
                         format(dateRange.from, "LLL dd, y")
                       )
                     ) : (
-                      <span>Pick a date range</span>
+                      <span>{t("search.pickADateRange")}</span>
                     )}
                   </Button>
                 </PopoverTrigger>
@@ -192,7 +194,7 @@ const SearchFilter = () => {
 
           <div className="w-full lg:col-span-2 lg:pl-8 sm:col-span-2 my-6  md:my-0 flex items-center justify-end">
             <PrimaryButton
-              title="Search"
+              title={t("search.search")}
               textColor="text-white w-full text-sm md:text-base text-center lg:text-lg"
               bgColor="bg-primary-blue hover:brightness-80"
               borderColor=""
