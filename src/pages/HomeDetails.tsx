@@ -2,6 +2,7 @@ import CommonWrapper from "@/common/CommonWrapper";
 import HomeDetailsTabs from "../components/home-details/HomeDetailsTabs";
 import { homeDetailsData } from "@/lib/data/homeDetails";
 import OwnerInfo from "@/components/home-details/OwnerInfo";
+import Testimonial from "@/components/reusable/Testimonial";
 
 const HomeDetails = () => {
   const { owner, callToAction } = homeDetailsData;
@@ -27,6 +28,7 @@ const HomeDetails = () => {
             />
           </div>
         </div>
+          <Testimonial />
       </CommonWrapper>
     </div>
   );

@@ -9,8 +9,6 @@ import PrimaryButton from "./PrimaryButton";
 import cardStar from "@/assets/home/star.svg";
 import { CommonCard as CommonCardProps } from "@/types/index";
 
-
-
 const CommonCard: React.FC<CommonCardProps> = ({
   image,
   avatarImage,
@@ -112,7 +110,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
       <PrimaryButton
         title="View Details"
         textColor="text-primary-blue"
-        bgColor="bg-[#F4F7FC] w-full"
+        bgColor="bg-[#F4F7FC] w-full hover:bg-primary-blue hover:text-white"
         borderColor="border-2 border-primary-blue"
         bgImage="/cardButtonHome.svg"
         onClick={onViewDetails}
