@@ -5,6 +5,7 @@ import ReusableButton from "@/components/reusable/ReusableButton";
 import Subscribe from "@/components/reusable/Subscribe";
 import { FormData } from "@/types";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 const Contact = () => {
   const {
@@ -16,15 +17,19 @@ const Contact = () => {
   const onSubmit = (data: FormData) => {
     console.log("Form Data:", data);
   };
+  const { t } = useTranslation("contact");
 
   return (
     <div>
       <CommonWrapper>
         {/* top heading section */}
         <div className="my-[64px] max-[767px]:my-[32px]">
-          <ClientHeading headingText="Contact" spanText="us" />
+          <ClientHeading
+            headingText={t("contact.title")}
+            spanText={t("contact.highlight")}
+          />
           <p className="text-[24px] not-italic font-normal text-center text-basic-dark max-[767px]:text-[18px] max-[767px]:leading-[28px]">
-            Questions? We're here to help.
+            {t("contact.subtitle")}
           </p>
         </div>
 
@@ -37,7 +42,8 @@ const Contact = () => {
                 We are here to help you:
               </h4>
               <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-[16px] leading-[26px]">
-                Our experts are available to answer any questions you might have. We’ve got the answers.
+                Our experts are available to answer any questions you might
+                have. We’ve got the answers.
               </p>
             </div>
             <div className="space-y-[16px] max-[767px]:space-y-[10px]">
@@ -45,7 +51,8 @@ const Contact = () => {
                 Current Office:
               </h4>
               <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-[16px] leading-[26px]">
-                123 Green Hill Avenue, Lakeview Heights, Central District, Maplewood County, United States of America
+                123 Green Hill Avenue, Lakeview Heights, Central District,
+                Maplewood County, United States of America
               </p>
             </div>
             <div className="space-y-[16px] max-[767px]:space-y-[10px]">
@@ -75,10 +82,14 @@ const Contact = () => {
                     type="text"
                     placeholder="First Name*"
                     className="w-full border border-primary-border-color py-3 px-3 rounded-[25px] text-[16px]"
-                    {...register("firstName", { required: "First name is required" })}
+                    {...register("firstName", {
+                      required: "First name is required",
+                    })}
                   />
                   {errors.firstName && (
-                    <p className="text-red-600 text-sm mt-1">{errors.firstName.message}</p>
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.firstName.message}
+                    </p>
                   )}
                 </div>
                 <div className="w-full lg:w-1/2">
@@ -86,10 +97,14 @@ const Contact = () => {
                     type="text"
                     placeholder="Last Name*"
                     className="w-full border border-primary-border-color py-3 px-3 rounded-[25px] text-[16px]"
-                    {...register("lastName", { required: "Last name is required" })}
+                    {...register("lastName", {
+                      required: "Last name is required",
+                    })}
                   />
                   {errors.lastName && (
-                    <p className="text-red-600 text-sm mt-1">{errors.lastName.message}</p>
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.lastName.message}
+                    </p>
                   )}
                 </div>
               </div>
@@ -110,7 +125,9 @@ const Contact = () => {
                     })}
                   />
                   {errors.email && (
-                    <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.email.message}
+                    </p>
                   )}
                 </div>
                 <div className="w-full lg:w-1/2">
@@ -127,7 +144,9 @@ const Contact = () => {
                     })}
                   />
                   {errors.phone && (
-                    <p className="text-red-600 text-sm mt-1">{errors.phone.message}</p>
+                    <p className="text-red-600 text-sm mt-1">
+                      {errors.phone.message}
+                    </p>
                   )}
                 </div>
               </div>
@@ -141,7 +160,9 @@ const Contact = () => {
                   {...register("message", { required: "Message is required" })}
                 ></textarea>
                 {errors.message && (
-                  <p className="text-red-600 text-sm mt-1">{errors.message.message}</p>
+                  <p className="text-red-600 text-sm mt-1">
+                    {errors.message.message}
+                  </p>
                 )}
               </div>
 
@@ -152,7 +173,6 @@ const Contact = () => {
               >
                 Book Now
               </ReusableButton>
-
             </form>
           </div>
         </div>
