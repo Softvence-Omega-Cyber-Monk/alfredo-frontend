@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="relative ">
-
       <div className="absolute bottom-0 right-0 flex -z-5 opacity-80 items-center justify-center">
         <img src="/homeIcon.svg" className="w-full" alt="" />
       </div>
@@ -34,7 +33,7 @@ const Footer = () => {
                 <img src="/logo.svg" alt="" />
               </div>
               <p className="text-dark-2 lg:text-xl leading-relaxed lg:max-w-md pr-6">
-                "HomeExchange transformed our family vacations! We've stayed in
+                "Vacanza transformed our family vacations! We've stayed in
                 amazing places without breaking the bank."
               </p>
             </div>
@@ -75,7 +74,10 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/bonus-program" className="font-regular lg:text-xl ">
+                  <Link
+                    to="/bonus-program"
+                    className="font-regular lg:text-xl "
+                  >
                     Bonus Programs
                   </Link>
                 </li>

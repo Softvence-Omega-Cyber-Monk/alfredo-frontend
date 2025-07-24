@@ -22,9 +22,12 @@ import map from "@/assets/icons/Location.svg";
 import user from "@/assets/icons/userRounded.svg";
 import home from "@/assets/icons/homeType.svg";
 import calendar from "@/assets/icons/Calendar.svg";
+import { useTranslation } from "react-i18next";
+import { DateRange } from "react-day-picker";
 
 const SearchFilter = () => {
-  const [date, setDate] = useState<Date>();
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const { t } = useTranslation("banner");
 
   return (
     <div
@@ -37,13 +40,13 @@ const SearchFilter = () => {
       }}
     >
       <div className="bg-white rounded-xl lg:rounded-full lg:px-10 lg:py-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 divide-y lg:divide-y-0 lg:divide-x divide-[#BFD4F0] p-4">
-          <div className="w-full sm:px-4">
+        <div className="lg:grid grid-cols-1 lg:grid-cols-12 gap-3 divide-y lg:divide-y-0  divide-[#BFD4F0]">
+          <div className="w-full p-4 lg:col-span-3 sm:px-4 border-r-1">
             <label
               htmlFor="location"
               className="block text-sm text-dark-3 mb-1"
             >
-              Where you go?
+              {t("search.placeholder")}
             </label>
             <div className="flex items-center gap-1 text-dark-2 text-base">
               <img src={map} alt="map icon" className="w-4 h-4 md:w-5 md:h-5" />
@@ -55,9 +58,9 @@ const SearchFilter = () => {
             </div>
           </div>
 
-          <div className="w-full sm:px-4">
+          <div className="w-full p-4 lg:col-span-2 px-4 lg:px-2 border-r-1">
             <label htmlFor="people" className="block text-sm text-dark-3 mb-1">
-              Guests
+              {t("search.guest")}
             </label>
             <div className="flex items-center gap-1 text-dark-2 text-base">
               <img
@@ -67,17 +70,25 @@ const SearchFilter = () => {
               />
               <Input
                 id="people"
-                type="number"
+                type="text" // Use text type to avoid spinners
+                inputMode="numeric" // Shows numeric keyboard on mobile
+                pattern="[0-9]*" // Restricts input to numbers
                 min={1}
-                placeholder="Select Here"
+                placeholder={t("search.selectHere")}
                 className="outline-none w-full text-sm md:text-base bg-transparent border-none focus:border-none focus:ring-0 focus:ring-transparent shadow-none p-0 placeholder:text-base text-dark-2 placeholder:text-dark-2 cursor-pointer"
+                onKeyPress={(e) => {
+                  // Prevent non-numeric characters
+                  if (!/[0-9]/.test(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
               />
             </div>
           </div>
 
-          <div className="w-full sm:px-4">
+          <div className="w-full p-4 lg:col-span-2 px-4 lg:px-2 border-r-1">
             <label htmlFor="type" className="block text-sm text-dark-3 mb-2">
-              Property Type
+              {t("search.propertyType")}
             </label>
             <div className="flex items-center gap-2 text-dark-2 text-base">
               <img
@@ -87,24 +98,26 @@ const SearchFilter = () => {
               />
               <Select>
                 <SelectTrigger className="outline-none w-full text-sm md:text-base bg-transparent border-none focus:border-none focus:ring-0 focus:ring-transparent shadow-none p-0 placeholder:text-base">
-                  <SelectValue placeholder="Home" />
+                  <SelectValue placeholder={t("search.home")} />
                 </SelectTrigger>
                 <SelectContent className="bg-white border-primary-border-color">
-                  <SelectItem value="home">Home</SelectItem>
-                  <SelectItem value="apartment">Apartment</SelectItem>
-                  <SelectItem value="villa">Villa</SelectItem>
-                  <SelectItem value="cabin">Cabin</SelectItem>
+                  <SelectItem value="home">{t("search.home")}</SelectItem>
+                  <SelectItem value="apartment">
+                    {t("search.apartment")}
+                  </SelectItem>
+                  <SelectItem value="boat">{t("search.boat")}</SelectItem>
+                  <SelectItem value="van">{t("search.van")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
 
-          <div className="w-full sm:px-4">
+          <div className="w-full p-4 px-4 lg:px-2  lg:col-span-3 col-span-2 border-r-1">
             <label
               htmlFor="homeDate"
               className="block text-sm text-dark-3 mb-2"
             >
-              Check-in Date
+              {t("search.dates")}
             </label>
             <div className="flex items-center gap-2 text-dark-2 text-base">
               <img
@@ -116,28 +129,73 @@ const SearchFilter = () => {
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
-                    data-empty={!date}
-                    className="data-[empty=true]:text-muted-foreground justify-start text-left font-normal col-span-3 outline-none w-full text-sm md:text-base bg-transparent border-none focus:border-none focus:ring-0 focus:ring-transparent shadow-none p-0 placeholder:text-base"
+                    data-empty={!dateRange?.from}
+                    className="data-[empty=true]:text-muted-foreground justify-start text-left font-normal col-span-3 outline-none w-full text-sm bg-transparent border-none focus:border-none focus:ring-0 focus:ring-transparent shadow-none p-0 placeholder:text-base"
                   >
-                    {date ? format(date, "PP") : <span>Pick a date</span>}
+                    {dateRange?.from ? (
+                      dateRange.to ? (
+                        <>
+                          {format(dateRange.from, "LLL dd, y")} -{" "}
+                          {format(dateRange.to, "LLL dd, y")}
+                        </>
+                      ) : (
+                        format(dateRange.from, "LLL dd, y")
+                      )
+                    ) : (
+                      <span>{t("search.pickADateRange")}</span>
+                    )}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0 bg-white border-primary-border-color">
                   <Calendar
-                    mode="single"
-                    selected={date}
-                    onSelect={setDate}
-                    initialFocus
+                    mode="range"
+                    selected={dateRange}
+                    onSelect={setDateRange}
+                    numberOfMonths={1}
+                    className="[--rdp-accent-color:#3174cd] [--rdp-background-color:theme(colors.blue.200)]"
+                    classNames={{
+                      day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
+                      day_range_start:
+                        "!bg-primary-blue/80 !text-white rounded-l-full",
+                      day_range_end:
+                        "!bg-primary-blue/80 !text-white rounded-r-full",
+                      day_range_middle: "!bg-blue-200 !text-blue-800",
+                      day_selected:
+                        "!bg-primary-blue/80 !text-white hover:!bg-blue-700 focus:!bg-blue-700",
+                      day_today: "bg-gray-100 border border-gray-300",
+                      day_outside: "text-gray-400 opacity-50",
+                    }}
+                    modifiersStyles={{
+                      selected: {
+                        backgroundColor: "var(--rdp-accent-color)",
+                        color: "white",
+                      },
+                      range_start: {
+                        backgroundColor: "var(--rdp-accent-color)",
+                        color: "white",
+                        borderRadius: "9999px 9999px",
+                      },
+                      range_end: {
+                        backgroundColor: "var(--rdp-accent-color)",
+                        color: "white",
+                        borderRadius: " 9999px 9999px ",
+                      },
+                      range_middle: {
+                        backgroundColor: "var(--rdp-background-color)",
+                        color: "var(--rdp-accent-color)",
+                        borderRadius: " 9999px 9999px ",
+                      },
+                    }}
                   />
                 </PopoverContent>
               </Popover>
             </div>
           </div>
 
-          <div className="w-full lg:pl-6 sm:col-span-2 md:mt-6 lg:mt-0 lg:col-span-1 flex items-center justify-end">
+          <div className="w-full lg:col-span-2 lg:pl-8 sm:col-span-2 my-6  md:my-0 flex items-center justify-end">
             <PrimaryButton
-              title="Search"
-              textColor="text-white w-full text-sm md:text-base lg:text-lg"
+              title={t("search.search")}
+              textColor="text-white w-full text-sm md:text-base text-center lg:text-lg"
               bgColor="bg-primary-blue hover:brightness-80"
               borderColor=""
               bgImage="/buttonHomeIcon.svg"

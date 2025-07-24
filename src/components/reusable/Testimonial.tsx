@@ -1,5 +1,7 @@
 import CommonWrapper from "@/common/CommonWrapper";
-import testimonailPerson from "@/assets/testimonailPerson.jpg";
+import youngLady from "@/assets/testimonial/review-young-lady.jpg";
+import oldLady from "@/assets/testimonial/review-old-lady.jpg";
+import youngMan from "@/assets/testimonial//review-young-man.jpg";
 import comma from "@/assets/comma.svg";
 import ClientHeading from "./ClientHeading";
 
@@ -31,13 +33,13 @@ const Testimonial = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3 my-2">
                 <img
-                  src={testimonailPerson}
+                  src={youngLady}
                   alt="Client"
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div className="flex flex-col">
-                  <h1 className="text-black font-bold">Mr. Alfredo</h1>
-                  <p>Software Engineer</p>
+                  <h1 className="text-black font-bold">Cassey Flower</h1>
+                  <p>Business Analyst</p>
                 </div>
               </div>
               <div className="flex items-center">
@@ -61,12 +63,12 @@ const Testimonial = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3 my-2">
                 <img
-                  src={testimonailPerson}
+                  src={youngMan}
                   alt="Client"
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div className="flex flex-col">
-                  <h1 className="text-black font-bold">Mr. Alfredo</h1>
+                  <h1 className="text-black font-bold">Jonathan Dews</h1>
                   <p>Software Engineer</p>
                 </div>
               </div>
@@ -92,13 +94,13 @@ const Testimonial = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3 my-2">
                 <img
-                  src={testimonailPerson}
+                  src={oldLady}
                   alt="Client"
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div className="flex flex-col">
-                  <h1 className="text-black font-bold">Mr. Alfredo</h1>
-                  <p>Software Engineer</p>
+                  <h1 className="text-black font-bold">Mertha Lime</h1>
+                  <p>CTO</p>
                 </div>
               </div>
               <div className="flex items-center">
