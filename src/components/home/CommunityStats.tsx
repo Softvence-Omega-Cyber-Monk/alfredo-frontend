@@ -1,18 +1,17 @@
 import CommonWrapper from "@/common/CommonWrapper";
 import youngMan from "@/assets/man-young.jpg";
 import oldMan from "@/assets/man-old.jpg";
-import youngLady from "@/assets/young.jpg";
-import oldLady from "@/assets/old.jpg";
-import oldLady2 from "@/assets/oldLady2.jpg";
 import oldLady3 from "@/assets/oldLady3.jpg";
 import youngLady2 from "@/assets/youngLady2.jpg";
+import { useTranslation } from "react-i18next";
 
 const CommunityStats = () => {
+  const { t } = useTranslation("joinCommunity");
   return (
     <div className="border-b-3 border-[#EAF1FA] py-8 md:py-12 lg:py-16">
       <CommonWrapper>
         <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 text-center text-dark-3 font-medium text-lg md:text-xl lg:text-2xl">
-          <p>Join our community of</p>
+          <p>{t("community.first")}</p>
           <div className="flex items-center gap-2 md:gap-10">
             {/* <img
               src={communityStatsImage}
@@ -45,7 +44,7 @@ const CommunityStats = () => {
               6,500 +
             </h1>
           </div>
-          <p>Happy Exchangers!</p>
+          <p>{t("community.last")}</p>
         </div>
       </CommonWrapper>
     </div>
