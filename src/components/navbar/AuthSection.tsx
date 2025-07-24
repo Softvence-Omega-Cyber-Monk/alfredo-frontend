@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import {
   Popover,
   PopoverContent,
@@ -9,12 +9,13 @@ import PrimaryButton from "@/components/reusable/PrimaryButton";
 import UserAvatar from "@/ui/UserAvatar";
 import clsx from "clsx";
 import { userMenuItems } from "@/config/navigationConfig";
-import messageIcon from "@/assets/icons/message-multiple-02.svg";
 import arrow from "@/assets/icons/arrowdown.svg";
 import logoutIcon from "@/assets/icons/logout.svg";
 import logoutHover from "@/assets/icons/logoutHover.svg";
 import { useAppDispatch } from "@/hooks/useRedux";
 import { logout } from "@/store/Slices/AuthSlice/authSlice";
+import LanguageSwitcher from "../LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 interface User {
   name: string;
@@ -37,6 +38,8 @@ const AuthSection: React.FC<Props> = ({
   const [hoveredLogout, setHoveredLogout] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const { t } = useTranslation("navigation");
 
   const handleLogout = () => {
     dispatch(logout());
@@ -68,16 +71,15 @@ const AuthSection: React.FC<Props> = ({
   return (
     <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
       <div className="bg-white rounded-2xl p-2 flex items-center gap-2 md:gap-3 cursor-pointer">
-        <Link to="/messages" className="p-2 md:p-2.5 rounded-full bg-white shadow-[0_0_10px_0_#B9D7FF]">
-          <img src={messageIcon} className="w-4 h-4 md:w-6 md:h-6" alt="" />
-        </Link>
+        <LanguageSwitcher />
+
         <PopoverTrigger>
           <div className="flex items-center gap-2 md:gap-3">
             <UserAvatar userName={user?.name || "Guest"} />
 
-            <p className="text-primary-blue font-medium text-sm sm:text-base md:text-lg">
+            {/* <p className="text-primary-blue font-medium text-sm sm:text-base md:text-lg">
               {user?.name.split(" ")[0]}
-            </p>
+            </p> */}
             <div className="p-1 md:p-2">
               <img
                 src={arrow}
@@ -119,7 +121,7 @@ const AuthSection: React.FC<Props> = ({
                 hoveredItem === item.path ? "text-dark-2" : "text-dark-3"
               )}
             >
-              {item.title}
+              {t(item.title)}
             </span>
           </div>
         ))}
@@ -140,7 +142,7 @@ const AuthSection: React.FC<Props> = ({
               hoveredLogout ? "text-[#E33A4B]" : "text-dark-3"
             )}
           >
-            Logout
+            {t("navigation.logout")}
           </span>
         </div>
       </PopoverContent>

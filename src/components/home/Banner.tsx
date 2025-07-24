@@ -1,7 +1,9 @@
 import CommonWrapper from "@/common/CommonWrapper";
 import SearchFilter from "./SearchFilter";
+import { useTranslation } from "react-i18next";
 
 const Banner = () => {
+  const { t } = useTranslation("banner");
   return (
     <div
       className="w-full bg-bottom bg-repeat-x  flex flex-col items-center justify-center relative"
@@ -14,14 +16,13 @@ const Banner = () => {
         <div className="flex flex-col items-center justify-center gap-4 py-8 md:py-[80px] lg:py-[140px]">
           <div className="text-center font-normal text-dark-3 px-4 md:px-6">
             <h1 className="capitalize text-4xl md:text-5xl lg:text-[80px] max-w-[700px] mx-auto leading-[1.2]">
-              Find your perfect home{" "}
+              {t("banner.title")}{" "}
               <span className="font-Grand-Hotel text-primary-blue">
-                exchange partner
+                {t("banner.highlight")}
               </span>
             </h1>
             <p className="text-base md:text-lg lg:text-xl font-medium mt-3 md:mt-4 lg:mt-6">
-              Exchange your home with travelers from around the world — safe,
-              easy, and flexible.
+              {t("banner.subtitle")}
             </p>
           </div>
           <div className="mt-6 md:mt-8 lg:mt-10 w-full">

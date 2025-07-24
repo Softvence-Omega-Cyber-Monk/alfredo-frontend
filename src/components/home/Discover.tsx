@@ -9,8 +9,8 @@ const Discover = () => {
       <CommonWrapper>
         <ClientHeading headingText="Discover with" spanText="vacanza" />
         <p className="text-lg md:text-xl lg:text-2xl text-dark-3 py-6 font-regular text-center max-w-4xl mx-auto mb-10">
-          Watch our introductory video to learn more about how HomeExchange
-          works and the amazing experiences awaiting you.
+          Watch our introductory video to learn more about how Vacanza works and
+          the amazing experiences awaiting you.
         </p>
 
         <div className="mt-9 relative md:px-20 lg:px-20">
@@ -26,7 +26,11 @@ const Discover = () => {
 
           {/* Play Button with Blur Background */}
           <div className="absolute -bottom-8 md:-bottom-10 lg:-bottom-12 left-1/2 transform -translate-x-1/2 p-4  md:p-6 rounded-full bg-black/20 backdrop-blur-xl z-10">
-            <img src={playBtn} alt="Play" className=" w-8 h-8 md:w-10 md:h-10 lg:w-16 lg:h-16" />
+            <img
+              src={playBtn}
+              alt="Play"
+              className=" w-8 h-8 md:w-10 md:h-10 lg:w-16 lg:h-16"
+            />
           </div>
         </div>
       </CommonWrapper>

@@ -1,0 +1,21 @@
+{
+  "banner": {
+    "title": "Find your perfect home",
+    "highlight": "exchange partner",
+    "subtitle": "Exchange your home with travelers from around the world — safe, easy, and flexible."
+  },
+  "search": {
+    "placeholder": "Where to?",
+    "guest": "Guest",
+    "selectHere": "Select Here",
+    "propertyType": "Property Type",
+    "dates": "Dates",
+    "pickADateRange": "Pick a date range",
+    "search": "Search",
+    "home": "Home",
+    "apartment": "Apartment",
+    "room": "Room",
+    "boat": "Boat",
+    "van": "Van"
+  }
+}

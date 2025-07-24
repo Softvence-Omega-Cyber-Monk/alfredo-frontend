@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 interface AccordionItem {
   title: string;
@@ -17,10 +18,14 @@ const AccordionComponent: React.FC<AccordionProps> = ({
   const [openIndexes, setOpenIndexes] = useState<number[]>([]);
   const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  const { t } = useTranslation("faq");
+
   const toggleIndex = (index: number) => {
     if (allowMultipleOpen) {
       setOpenIndexes((prev) =>
-        prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+        prev.includes(index)
+          ? prev.filter((i) => i !== index)
+          : [...prev, index]
       );
     } else {
       setOpenIndexes(openIndexes[0] === index ? [] : [index]);
@@ -48,7 +53,7 @@ const AccordionComponent: React.FC<AccordionProps> = ({
                 }`}
               >
                 <span>{index + 1}.</span>
-                <span>{item.title}</span>
+                <span>{t(item.title)}</span>
               </div>
 
               {/* Inline SVG Arrow */}
@@ -80,7 +85,7 @@ const AccordionComponent: React.FC<AccordionProps> = ({
               }}
               className="overflow-hidden transition-all duration-400 ease-in-out text-basic-dark text-[18px] leading-relaxed pt-4 max-[767px]:text-sm max-[767px]:leading-[1.6rem]"
             >
-              <p>{item.content}</p>
+              <p>{t(item.content)}</p>
             </div>
           </div>
         );
