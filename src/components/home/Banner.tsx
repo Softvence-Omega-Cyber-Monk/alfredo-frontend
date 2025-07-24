@@ -3,7 +3,7 @@ import SearchFilter from "./SearchFilter";
 import { useTranslation } from "react-i18next";
 
 const Banner = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("banner");
   return (
     <div
       className="w-full bg-bottom bg-repeat-x  flex flex-col items-center justify-center relative"
