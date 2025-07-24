@@ -1,112 +1,127 @@
 export const bonus = [
-    {
-      title: "What is home exchange?",
-      content:
-        "Home exchange is a travel option where two parties agree to swap homes for a set period of time, allowing both to enjoy affordable, comfortable stays while exploring new destinations.",
-    },
-    {
-      title: "Is home exchange safe?",
-      content:
-        "Yes! Our platform is built on trust. All members are verified, and we encourage detailed profiles, reviews, and direct communication to ensure safe and positive experiences.",
-    },
-    {
-      title: "Do I need to exchange homes at the same time?",
-      content:
-        "Not necessarily. We support both simultaneous and non-simultaneous exchanges, giving you and your exchange partner more flexibility.",
-    },
-    {
-      title: "Can I list my home even if I’m not ready to travel?",
-      content:
-        "Absolutely! You can list your home, explore other listings, and connect with members at your own pace. There’s no obligation to exchange right away.",
-    },
-    {
-      title: "How do I find a suitable exchange partner?",
-      content:
-        "Use our search filters to find homes that match your preferences. You can then message members, ask questions, and arrange an exchange once you’re both comfortable.",
-    },
-  ];
+  {
+    title: "faq.firstFaq.title",
+    content: "faq.firstFaq.content",
+  },
+  {
+    title: "faq.secondFaq.title",
+    content: "faq.secondFaq.content",
+  },
+  {
+    title: "faq.thirdFaq.title",
+    content: "faq.thirdFaq.content",
+  },
+  {
+    title: "faq.fourthFaq.title",
+    content: "faq.fourthFaq.content",
+  },
+  {
+    title: "faq.fifthFaq.title",
+    content: "faq.fifthFaq.content",
+  },
+  {
+    title: "faq.sixthFaq.title",
+    content: "faq.sixthFaq.content",
+  },
+  {
+    title: "faq.seventhFaq.title",
+    content: "faq.seventhFaq.content",
+  },
+  {
+    title: "faq.eighthFaq.title",
+    content: "faq.eighthFaq.content",
+  },
+  {
+    title: "faq.ninthFaq.title",
+    content: "faq.ninthFaq.content",
+  },
+  {
+    title: "faq.tenthFaq.title",
+    content: "faq.tenthFaq.content",
+  },
+  {
+    title: "faq.eleventhFaq.title",
+    content: "faq.eleventhFaq.content",
+  },
+  {
+    title: "faq.twelfthFaq.title",
+    content: "faq.twelfthFaq.content",
+  },
+  {
+    title: "faq.thirteenthFaq.title",
+    content: "faq.thirteenthFaq.content",
+  },
+  {
+    title: "faq.fourteenthFaq.title",
+    content: "faq.fourteenthFaq.content",
+  },
+];
 
-  export const aboutProfile = [
-    {
-      title: "If I join with a basic account, can I upgrade later to Premium?",
-      content:
-        "Home exchange is a travel option where two parties agree to swap homes for a set period of time, allowing both to enjoy affordable, comfortable stays while exploring new destinations.",
-    },
-    {
-      title: "Can I hide my data if I want to?",
-      content:
-        "Yes! Our platform is built on trust. All members are verified, and we encourage detailed profiles, reviews, and direct communication to ensure safe and positive experiences.",
-    },
-    {
-      title: "How do I collect badges and what is their function?",
-      content:
-        "Not necessarily. We support both simultaneous and non-simultaneous exchanges, giving you and your exchange partner more flexibility.",
-    },
-    {
-      title: "Where can I see all the requirements for the badges?",
-      content:
-        "Absolutely! You can list your home, explore other listings, and connect with members at your own pace. There’s no obligation to exchange right away.",
-    },
-    {
-      title: "How do I get the “verified” badge?",
-      content:
-        "Use our search filters to find homes that match your preferences. You can then message members, ask questions, and arrange an exchange once you’re both comfortable.",
-    },
-  ];
+export const aboutProfile = [
+  {
+    title: "profile.firstFaq.title",
+    content: "profile.firstFaq.content",
+  },
+  {
+    title: "profile.secondFaq.title",
+    content: "profile.secondFaq.content",
+  },
+  {
+    title: "profile.thirdFaq.title",
+    content: "profile.thirdFaq.content",
+  },
+  {
+    title: "profile.fourthFaq.title",
+    content: "profile.fourthFaq.content",
+  },
+  {
+    title: "profile.fifthFaq.title",
+    content: "profile.fifthFaq.content",
+  },
+];
 
 export const aboutProperties = [
-    {
-      title: "How can I search for properties?",
-      content:
-        "Home exchange is a travel option where two parties agree to swap homes for a set period of time, allowing both to enjoy affordable, comfortable stays while exploring new destinations.",
-    },
-    {
-      title: "Why did my property get deleted?",
-      content:
-        "Yes! Our platform is built on trust. All members are verified, and we encourage detailed profiles, reviews, and direct communication to ensure safe and positive experiences.",
-    },
-    {
-      title: "Do I need to exchange homes at the same time?",
-      content:
-        "Not necessarily. We support both simultaneous and non-simultaneous exchanges, giving you and your exchange partner more flexibility.",
-    },
-    {
-      title: "Can I list my home even if I’m not ready to travel?",
-      content:
-        "Absolutely! You can list your home, explore other listings, and connect with members at your own pace. There’s no obligation to exchange right away.",
-    },
-    {
-      title: "How do I find a suitable exchange partner?",
-      content:
-        "Use our search filters to find homes that match your preferences. You can then message members, ask questions, and arrange an exchange once you’re both comfortable.",
-    },
-  ];
+  {
+    title: "properties.firstFaq.title",
+    content: "properties.firstFaq.content",
+  },
+  {
+    title: "properties.secondFaq.title",
+    content: "properties.secondFaq.content",
+  },
+  {
+    title: "properties.thirdFaq.title",
+    content: "properties.thirdFaq.content",
+  },
+  {
+    title: "properties.fourthFaq.title",
+    content: "properties.fourthFaq.content",
+  },
+  {
+    title: "properties.fifthFaq.title",
+    content: "properties.fifthFaq.content",
+  },
+];
 
 export const aboutPrgram = [
-    {
-      title: "What kind of bonus programs do you offer?",
-      content:
-        "Home exchange is a travel option where two parties agree to swap homes for a set period of time, allowing both to enjoy affordable, comfortable stays while exploring new destinations.",
-    },
-    {
-      title: "How do you know that the people who join are invited by me?",
-      content:
-        "Yes! Our platform is built on trust. All members are verified, and we encourage detailed profiles, reviews, and direct communication to ensure safe and positive experiences.",
-    },
-    {
-      title: "What do “surprise destination” and “luxury destination mean”?",
-      content:
-        "Not necessarily. We support both simultaneous and non-simultaneous exchanges, giving you and your exchange partner more flexibility.",
-    },
-    {
-      title: "Do I have to be registered as a Premium user to get the bonuses?",
-      content:
-        "Absolutely! You can list your home, explore other listings, and connect with members at your own pace. There’s no obligation to exchange right away.",
-    },
-    {
-      title: "Where can I find additional for transportation, insurance etc?",
-      content:
-        "Use our search filters to find homes that match your preferences. You can then message members, ask questions, and arrange an exchange once you’re both comfortable.",
-    },
-  ];
-
+  {
+    title: "program.firstFaq.title",
+    content: "program.firstFaq.content",
+  },
+  {
+    title: "program.secondFaq.title",
+    content: "program.secondFaq.content",
+  },
+  {
+    title: "program.thirdFaq.title",
+    content: "program.thirdFaq.content",
+  },
+  {
+    title: "program.fourthFaq.title",
+    content: "program.fourthFaq.content",
+  },
+  {
+    title: "program.fifthFaq.title",
+    content: "program.fifthFaq.content",
+  },
+];
