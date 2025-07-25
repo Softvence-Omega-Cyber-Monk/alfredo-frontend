@@ -11,6 +11,11 @@
       "copy": "Copy",
       "share": "Share vai:"
     },
+    "liveChat": {
+      "title": "Live Chat Support",
+      "button": "Start a conversation",
+      "subtitle": "Need help? Start a live chat with our team and get quick, real-time support whenever you need it."
+    },
     "achivement": {
       "title": "Achievement",
       "highlight": "Badges",
