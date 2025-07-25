@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import icn from "@/assets/icons/arrowDownBlack.svg";
+import { useTranslation } from "react-i18next";
 
 interface Achievement {
   id: number;
@@ -45,6 +46,7 @@ const AchievementAccordion: React.FC<AccordionProps> = ({
       setOpenIndexes(openIndexes[0] === index ? [] : [index]);
     }
   };
+  const { t } = useTranslation("bonus");
 
   return (
     <div className="w-full flex flex-col gap-8 max-[767px]:gap-5 p-4 lg:p-6 bg-[#FBFBFB] rounded-[32px]">
@@ -69,7 +71,8 @@ const AchievementAccordion: React.FC<AccordionProps> = ({
                   className="w-7 h-7"
                   alt=""
                 />
-                <p>{item.achievementsType}</p>
+                {t(item.achievementsType)}
+                {/* <p>{item.achievementsType}</p> */}
               </div>
               <div className="p-2 rounded-lg">
                 <img
@@ -132,14 +135,16 @@ const AchievementAccordion: React.FC<AccordionProps> = ({
                               className="text-[20px] font-semibold"
                               style={{ color: titleColor }}
                             >
-                              {title}
+                              {t(title!)}
+                              {/* {title} */}
                             </h3>
                           </div>
                           <p
                             className="text-base font-normal"
                             style={{ color: descriptionColor }}
                           >
-                            {description}
+                            {t(description)}
+                            {/* {description} */}
                           </p>
                         </div>
                       );
@@ -169,14 +174,17 @@ const AchievementAccordion: React.FC<AccordionProps> = ({
                               className="text-[20px] font-semibold"
                               style={{ color: titleColor }}
                             >
-                              {title}
+                              {t(title!)}
+
+                              {/* {title} */}
                             </h3>
                           </div>
                           <p
                             className="text-base font-normal"
                             style={{ color: descriptionColor }}
                           >
-                            {description}
+                            {t(description)}
+                            {/* {description} */}
                           </p>
                         </div>
                       );
@@ -205,14 +213,16 @@ const AchievementAccordion: React.FC<AccordionProps> = ({
                             className="text-[20px] font-semibold"
                             style={{ color: titleColor }}
                           >
-                            {title}
+                            {t(title!)}
+                            {/* {title} */}
                           </h3>
                         </div>
                         <p
                           className="text-base font-normal"
                           style={{ color: descriptionColor }}
                         >
-                          {description}
+                          {t(description)}
+                          {/* {description} */}
                         </p>
                       </div>
                     );

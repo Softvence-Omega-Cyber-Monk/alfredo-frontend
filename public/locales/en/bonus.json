@@ -1,0 +1,356 @@
+{
+  "bonus": {
+    "title": "Invite Friends.",
+    "title1": "Earn Travel",
+    "highlight": "Bonuses",
+    "subtitle": "Share your referral link and earn rewards when your friends join.",
+    "subtitle1": " and complete their first vacanza.",
+    "referralLink": {
+      "title": "Your Unique Referral Link",
+      "subtitle": "Share this link with your friends to start earning.",
+      "copy": "Copy",
+      "share": "Share vai:"
+    },
+    "achivement": {
+      "title": "Achievement",
+      "highlight": "Badges",
+      "subtitle": "Unlock badges by completing activities and milestones .",
+
+      "card1": {
+        "cardtitle1": "Promotional",
+        "firstBonus": {
+          "title": "Early Adopter",
+          "content": "Subscribe until 30/09!"
+        }
+      },
+      "card2": {
+        "cardtitle2": "Loyality",
+        "firstBonus": {
+          "title": "Traveler",
+          "content": "Purchased the base plan."
+        },
+        "secondBonus": {
+          "title": "Premium Traveler",
+          "content": "Purchased the Premium Plan."
+        }
+      },
+      "card3": {
+        "cardtitle3": "Loyalty (Years Active)",
+        "firstBonus": {
+          "title": "Top Supporter",
+          "content": "4+ Years Active"
+        },
+        "secondBonus": {
+          "title": "Premium Traveler",
+          "content": "Received 100 reviews as a host."
+        },
+        "thirdBonus": {
+          "title": "One Year Traveler",
+          "content": "2 years active"
+        },
+        "fourthBonus": {
+          "title": "Supporter",
+          "content": "1 year active"
+        }
+      },
+
+      "card4": {
+        "cardtitle4": "REVIEWS",
+        "firstBonus": {
+          "title": "Golden Host",
+          "content": "Received 100 reviews as a host."
+        },
+        "secondBonus": {
+          "title": "Golden Host",
+          "content": "Received 100 reviews as a host."
+        }
+      },
+      "card5": {
+        "cardtitle5": "VERIFICATION",
+        "firstBonus": {
+          "title": "Verified",
+          "content": "Verified user profile 100%"
+        }
+      },
+      "card6": {
+        "cardtitle6": "REFERRALS",
+        "firstBonus": {
+          "title": "Duo",
+          "content": "Bring 1 person through referral."
+        },
+        "secondBonus": {
+          "title": "Lots Of Friends",
+          "content": "Bring 3 people through referral."
+        },
+        "thirdBonus": {
+          "title": "Pure Charisma",
+          "content": "Bring 10 people through referral"
+        },
+        "fourthBonus": {
+          "title": "VIP",
+          "content": "Bring 50 people through referral"
+        },
+        "fiveBonus": {
+          "title": "Diamond VIP",
+          "content": "Bring 200 people (coming soon)"
+        }
+      },
+      "card7": {
+        "cardtitle7": "EXCHANGES COMPLETED",
+        "firstBonus": {
+          "title": "The First Trade",
+          "content": "1 exchange completed"
+        },
+        "secondBonus": {
+          "title": "​​Experienced",
+          "content": "20 exchanges completed"
+        },
+        "thirdBonus": {
+          "title": "Veteran",
+          "content": "100+ exchanges completed."
+        }
+      },
+      "card8": {
+        "cardtitle8": "LISTED PLACES",
+        "firstBonus": {
+          "title": "Philoxenia",
+          "content": "Added a house (also room, boat, or van).-"
+        },
+        "secondBonus": {
+          "title": "It’s My Town!",
+          "content": "Added 3 houses (also room, boat, or van)."
+        },
+        "thirdBonus": {
+          "title": "Empire",
+          "content": "Added 10+ houses (also room, boat, or van)."
+        }
+      },
+      "card9": {
+        "cardtitle9": "SEASON-BASED",
+        "firstBonus": {
+          "title": "Explorer",
+          "content": "Travel in all seasons at least once!"
+        },
+        "secondBonus": {
+          "title": "Autumn Traveler",
+          "content": "1 exchange completed during winter.."
+        },
+        "thirdBonus": {
+          "title": "Autumn Expert Traveler",
+          "content": "10 exchanges completed during autumn."
+        },
+        "fourthBonus": {
+          "title": "Winter Traveler",
+          "content": "1 exchange completed during winter.."
+        },
+        "fifthBonus": {
+          "title": "Winter Expert Traveler",
+          "content": "10 exchanges completed during winter."
+        },
+
+        "sixthBonus": {
+          "title": "Spring Traveler",
+          "content": "1 exchange completed during spring."
+        },
+        "seventhBonus": {
+          "title": "Spring Expert Traveler",
+          "content": "1 exchange completed during spring."
+        },
+        "eighthBonus": {
+          "title": "Summer Traveler",
+          "content": "1 exchange completed during summer."
+        },
+        "ninthBonus": {
+          "title": "Summer Expert Traveler",
+          "content": "1 exchange completed during summer."
+        }
+      },
+      "card10": {
+        "cardtitle10": "SUSTAINABILITY",
+        "firstBonus": {
+          "title": "Eco-Conscious Host ",
+          "content": "Add a house with solar panels, heat pump or other eco-friendly systems."
+        }
+      },
+      "card11": {
+        "cardtitle11": "REGION-BASED",
+        "firstBonus": {
+          "title": "Attica",
+          "content": "1 exchange completed in Attica."
+        },
+        "secondBonus": {
+          "title": "Attica Expert",
+          "content": "10 exchanges completed in Attica."
+        },
+        "thirdBonus": {
+          "title": "Central Greece",
+          "content": "1 exchange completed in Central Greece."
+        },
+        "fourthBonus": {
+          "title": "Central Greece Expert",
+          "content": "10 exchanges completed in Central Greece."
+        },
+        "fifthBonus": {
+          "title": "Sporades",
+          "content": "1 exchange completed in Sporades."
+        },
+        "sixthBonus": {
+          "title": "Sporades Expert",
+          "content": "10 exchanges completed in Sporades."
+        },
+        "seventhBonus": {
+          "title": "Thrace",
+          "content": "1 exchange completed in Thrace."
+        },
+        "eighthBonus": {
+          "title": "Thrace Expert",
+          "content": "10 exchanges completed in Thrace."
+        },
+        "ninthBonus": {
+          "title": "Ionian",
+          "content": "1 exchange completed in Ionian."
+        },
+        "tenthBonus": {
+          "title": "Ionian Expert",
+          "content": "10 exchanges completed in Ionian."
+        },
+        "eleventhBonus": {
+          "title": "Saronic",
+          "content": "1 exchange completed in Saronic."
+        },
+        "twelfthBonus": {
+          "title": "Saronic Expert",
+          "content": "10 exchanges completed in Saronic."
+        },
+        "thirteenthBonus": {
+          "title": "Crete",
+          "content": "1 exchange completed in Crete."
+        },
+        "fourteenthBonus": {
+          "title": "Crete Expert",
+          "content": "10 exchanges completed in Crete."
+        },
+        "fifteenthBonus": {
+          "title": "Epirus",
+          "content": "1 exchange completed in Epirus."
+        },
+        "sixteenthBonus": {
+          "title": "Epirus Expert",
+          "content": "10 exchanges completed in Epirus."
+        },
+        "seventeenthBonus": {
+          "title": "Cyclades",
+          "content": "1 exchange completed in Cyclades."
+        },
+        "eighteenthBonus": {
+          "title": "Cyclades Expert",
+          "content": "10 exchanges completed in Cyclades."
+        },
+        "nineteenthBonus": {
+          "title": "Dodecanese",
+          "content": "1 exchange completed in Dodecanese."
+        },
+        "twentiethBonus": {
+          "title": "Dodecanese Expert",
+          "content": "10 exchanges completed in Dodecanese."
+        },
+        "twentyFirstBonus": {
+          "title": "Greece Trotter",
+          "content": "Travel to all the Greece areas once!"
+        },
+        "twentySecondBonus": {
+          "title": "Peloponnese",
+          "content": "1 exchange completed in Peloponnese."
+        },
+        "twentyThirdBonus": {
+          "title": "Peloponnese Expert",
+          "content": "10 exchanges completed in Peloponnese."
+        },
+        "twentyFourthBonus": {
+          "title": "North Aegean",
+          "content": "1 exchange completed in North Aegean."
+        },
+        "twentyFifthBonus": {
+          "title": "North Aegean Expert",
+          "content": "10 exchanges completed in North Aegean."
+        },
+        "twentySixthBonus": {
+          "title": "Macedonia",
+          "content": "1 exchange completed in Macedonia."
+        },
+        "twentySeventhBonus": {
+          "title": "Macedonia Expert",
+          "content": "10 exchanges completed in Macedonia."
+        }
+      },
+
+      "card12": {
+        "cardtitle12": "DISCOUNT USAGE",
+        "firstBonus": {
+          "title": "Every Euro Counts! ",
+          "content": "Used 10 discount codes to save on transportation (premium only)."
+        }
+      }
+    },
+
+    "terms": {
+      "title": "Terms and Conditions",
+      "firstBonus": {
+        "content": "The referral bonus is granted only when the referred friend signs up through your unique referral link."
+      },
+      "secondBonus": {
+        "content": "Your friend must be a new member of Vacanza."
+      },
+      "thirdBonus": {
+        "content": "There is no limit to the number of friends you can refer."
+      },
+      "fourthBonus": {
+        "content": "Vacanza reserves the right to modify or cancel the referral program at any time."
+      },
+      "fifthBonus": {
+        "content": "Any fraudulent activity will result in the suspension of accounts and removal of bonuses."
+      }
+    },
+
+    "firstBonus": {
+      "title": "12",
+      "content": "Total referrals",
+      "content1": "made."
+    },
+    "secondBonus": {
+      "title": "48",
+      "content": "Total bonuses",
+      "content1": "earned."
+    },
+    "thirdBonus": {
+      "title": "38",
+      "content": "Pending",
+      "content1": "bonuses."
+    }
+  },
+
+  "invite": {
+    "title": "About my profile",
+    "firstBonus": {
+      "title": "Invite 1 Person",
+      "content": "DUO badge.",
+      "content1": "20% Coupon off Another year Subscription."
+    },
+    "secondBonus": {
+      "title": "Invite 3 Persons",
+      "content": "LOTS OF FRIENDS badge.",
+      "content1": "20% Coupon off Another year Subscription."
+    },
+    "thirdBonus": {
+      "title": "Invite 10 Persons",
+      "content": "FREE plane or ferry ticket to surprise destination, offered by Vacanza!.",
+      "content1": "PURE CHARISMA badge."
+    },
+    "fourthBonus": {
+      "title": "Invite 50 Persons",
+      "content": "FREE plane or ferry ticket to luxury destination + car included, offered by Vacanza! .",
+      "content1": "VIP badge.",
+      "content2": "50% off Another year Subscription"
+    }
+  }
+}
