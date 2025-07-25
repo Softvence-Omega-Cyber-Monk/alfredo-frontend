@@ -52,7 +52,7 @@ const SearchFilter = () => {
               <img src={map} alt="map icon" className="w-4 h-4 md:w-5 md:h-5" />
               <Input
                 id="location"
-                placeholder="Place in Greece"
+                placeholder={t("search.placeInGreece")}
                 className="outline-none w-full text-sm md:text-base bg-transparent border-none focus:border-none focus:ring-0 focus:ring-transparent shadow-none p-0 placeholder:text-base text-dark-2 placeholder:text-dark-2 cursor-pointer"
               />
             </div>
