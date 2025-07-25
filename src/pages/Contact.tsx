@@ -46,23 +46,6 @@ const Contact = () => {
                 have. We’ve got the answers.
               </p>
             </div>
-            <div className="space-y-[16px] max-[767px]:space-y-[10px]">
-              <h4 className="text-[24px] font-semibold text-primary-blue max-[767px]:text-[20px]">
-                Current Office:
-              </h4>
-              <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-[16px] leading-[26px]">
-                123 Green Hill Avenue, Lakeview Heights, Central District,
-                Maplewood County, United States of America
-              </p>
-            </div>
-            <div className="space-y-[16px] max-[767px]:space-y-[10px]">
-              <h4 className="text-[24px] font-semibold text-primary-blue max-[767px]:text-[20px]">
-                Office Hours
-              </h4>
-              <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-[16px] leading-[26px]">
-                Sunday – Friday (10:00Am - 07:00Pm)
-              </p>
-            </div>
           </div>
 
           {/* contact form */}
