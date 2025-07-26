@@ -1,6 +1,6 @@
 import ClientHeading from "../reusable/ClientHeading";
 import CommonWrapper from "@/common/CommonWrapper";
-import img from "@/assets/home/wcuImg.jpg";
+import img from "@/assets/why-choose-us-banner.jpg";
 import time from "@/assets/home/time.png";
 import home from "@/assets/home/home.png";
 import lock from "@/assets/home/lock.svg";
