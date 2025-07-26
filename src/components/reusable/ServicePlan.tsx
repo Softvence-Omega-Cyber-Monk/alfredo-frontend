@@ -122,29 +122,29 @@ const ServicePlan: FC = () => {
           <Dialog.Overlay className="fixed inset-0 bg-black/40 z-40" />
           <Dialog.Content className="fixed z-50 top-1/2 left-1/2 w-full max-w-[692px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-8 shadow-xl space-y-8">
             <Dialog.Title className="text-[40px] font-DM-sans text-center text-[#3174CD]">
-              Checkout Information
+              {t("ourplan.form.title1")}
             </Dialog.Title>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="w-full flex flex-col space-y-2">
                   <label className="text-sm text-[#808080] font-DM-sans">
-                    First Name*
+                    {t("ourplan.form.name1")}
                   </label>
                   <input
                     type="text"
-                    placeholder="Enter your first name"
+                    placeholder={t("ourplan.form.name1p")}
                     className="px-4 py-3 border rounded-full border-[#808080]"
                     required
                   />
                 </div>
                 <div className="w-full flex flex-col space-y-2">
                   <label className="text-sm text-[#808080] font-DM-sans">
-                    Last Name*
+                    {t("ourplan.form.name2")}
                   </label>
                   <input
                     type="text"
-                    placeholder="Enter your last name"
+                    placeholder={t("ourplan.form.name2p")}
                     className="px-4 py-3 border rounded-full border-[#808080]"
                     required
                   />
@@ -154,22 +154,22 @@ const ServicePlan: FC = () => {
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="w-full flex flex-col space-y-2">
                   <label className="text-sm text-[#808080] font-DM-sans">
-                    Telephone*
+                    {t("ourplan.form.phone")}
                   </label>
                   <input
                     type="tel"
-                    placeholder="e.g., +1234567890"
+                    placeholder="+1234567890"
                     className="px-4 py-3 border rounded-full border-[#808080]"
                     required
                   />
                 </div>
                 <div className="w-full flex flex-col space-y-2">
                   <label className="text-sm text-[#808080] font-DM-sans">
-                    Email*
+                    {t("ourplan.form.email")}
                   </label>
                   <input
                     type="email"
-                    placeholder="e.g., your.email@example.com"
+                    placeholder={t("ourplan.form.emailp")}
                     className="px-4 py-3 border rounded-full border-[#808080]"
                     required
                   />
@@ -178,11 +178,11 @@ const ServicePlan: FC = () => {
 
               <div className="w-full flex flex-col space-y-2">
                 <label className="text-sm text-[#808080] font-DM-sans">
-                  City*
+                  {t("ourplan.form.city")}
                 </label>
                 <input
                   type="text"
-                  placeholder="Enter your city"
+                  placeholder={t("ourplan.form.cityp")}
                   className="px-4 py-3 border rounded-full border-[#808080]"
                   required
                 />
@@ -191,7 +191,7 @@ const ServicePlan: FC = () => {
               {/* Payment Method */}
               <div className="w-full flex flex-col space-y-2">
                 <label className="text-sm text-[#808080] font-DM-sans">
-                  Payment Method*
+                  {t("ourplan.form.payment")}
                 </label>
                 <label className="cursor-pointer border border-[#808080] px-4 py-3 rounded-full flex justify-between items-center hover:bg-[#f0f0f0] transition">
                   <div className="flex items-center gap-2 text-[#3174CD] font-medium">
@@ -203,7 +203,7 @@ const ServicePlan: FC = () => {
                       onChange={() => setPaymentMethod("stripe")}
                       className="w-4 h-4 accent-[#3174CD] cursor-pointer"
                     />
-                    Stripe Pay
+                    {t("ourplan.form.stripe")}
                   </div>
                   <FaCcStripe className="text-[#635bff] text-2xl" />
                 </label>
@@ -214,7 +214,7 @@ const ServicePlan: FC = () => {
                   type="submit"
                   className="w-full h-[52px] flex justify-center items-center gap-[45px] rounded-[35px] bg-[#3174CD] text-white text-lg hover:bg-[#2a65b5] transition cursor-pointer"
                 >
-                  Save
+                  {t("ourplan.form.button")}
                 </Button>
               </Dialog.Close>
             </form>

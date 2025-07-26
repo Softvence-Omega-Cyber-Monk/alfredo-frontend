@@ -63,6 +63,21 @@
       }
     },
 
+    "form": {
+      "title1": "Checkout Information",
+      "name1": "First Name*",
+      "name1p": "Enter your first name",
+      "name2": "Last Name*",
+      "name2p": "Enter your last name",
+      "phone": "Telephone*",
+      "email": " Email*",
+      "emailp": "Enter email",
+      "city": "City*",
+      "cityp": "Enter your city*",
+      "payment": " Payment Method*",
+      "stripe": " Stripe Pay",
+      "button": " Save"
+    },
     "startjourney": {
       "title1": "Start Your Journey with",
       "highlite": "Vacanza",
