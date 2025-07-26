@@ -1,0 +1,76 @@
+{
+  "ourplan": {
+    "title": "our",
+    "highlight": "plans",
+    "subtitle1": "Flexible membership options designed to fit every traveler’s needs—",
+    "subtitle2": "whether you exchange once a year or every month",
+    "plancard1": {
+      "title1": "Traveler",
+      "title2": "Premium Traveler",
+      "subtitle1": "Billed annually.",
+      "badge": "1 Year Subscription",
+      "button": "Choose Plan",
+      "tk": "eur",
+      "firstFaq": {
+        "content": "TRAVELER badge"
+      },
+      "secondFaq": {
+        "content": "Enter the community"
+      },
+      "thirdFaq": {
+        "content": "Search for houses"
+      },
+      "fourthFaq": {
+        "content": "Send requests to your favourite ones"
+      },
+      "fifthFaq": {
+        "content": "Unlimited free exchanges during the subscription"
+      },
+      "sixthFaq": {
+        "content": "Badge EARLY ADOPTER (Until 30/09)"
+      }
+    },
+    "plancard2": {
+      "title1": "Traveler",
+      "title2": "Premium Traveler",
+      "subtitle1": "Billed annually.",
+      "badge": "2 Year Subscription",
+      "button": "Choose Plan",
+      "tk": "eur",
+      "firstFaq": {
+        "content": "PREMIUM TRAVELER badge"
+      },
+      "secondFaq": {
+        "content": "Enter the community"
+      },
+      "thirdFaq": {
+        "content": "Search for houses"
+      },
+      "fourthFaq": {
+        "content": "Search for houses and send request to your favourite ones"
+      },
+      "fifthFaq": {
+        "content": "Unlimited free exchanges during the subscription"
+      },
+      "sixthFaq": {
+        "content": "Priority Assistance"
+      },
+      "sevenFaq": {
+        "content": "Discounts on Planes, ferries and cars"
+      },
+      "eightFaq": {
+        "content": "Badge EARLY ADOPTER (Until 30/09)"
+      }
+    },
+
+    "startjourney": {
+      "title1": "Start Your Journey with",
+      "highlite": "Vacanza",
+      "subtitle1": "Join a global community and unlock unforgettable home exchange experiences—safely, simply, and affordably.",
+      "contact": "Contact Us",
+      "address": "75835 Herta Walks, London",
+      "titleinput": "Subscribe For Instant Updates",
+      "button": "Subscribe"
+    }
+  }
+}
