@@ -26,7 +26,7 @@ const Conversation = () => {
 
       {/* Button Section */}
       <div className="max-[767px]:mt-4 max-[767px]:w-full">
-        <button className="bg-white border border-primary-blue text-primary-blue w-[251px] h-[50px] rounded-full max-[767px]:w-full max-[767px]:h-[45px] max-[767px]:text-sm">
+        <button className="bg-white border hover:bg-primary-blue border-primary-blue text-primary-blue hover:text-white cursor-pointer w-[251px] h-[50px] rounded-full max-[767px]:w-full max-[767px]:h-[45px] max-[767px]:text-sm">
           {t("btnText")}
         </button>
       </div>

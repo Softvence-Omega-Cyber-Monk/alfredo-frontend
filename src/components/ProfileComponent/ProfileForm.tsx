@@ -369,7 +369,75 @@ const ProfileForm = () => {
         </div>
 
         {/* Checkboxes – Preferences */}
-        <div className="space-y-4">
+        <div className="space-y-2">
+          {/* Travel Preferences */}
+          <div className=" rounded-3xl mt-16 space-y-4 sm:h-60 h-auto">
+            <h1 className="text-[var(--color-basic-dark)] font-bold text-lg sm:text-xl font-DM-sans ">
+              Travel Preferences
+            </h1>
+
+            {/* Travel Type */}
+            <div>
+              <Label className="text-[var(--color-basic-dark)] text-base sm:text-lg font-DM-sans font-normal">
+                I travel mostly (select up to 2 options):
+              </Label>
+              <div className="flex flex-wrap gap-3 sm:gap-4 mt-2">
+                {[
+                  "Business",
+                  "Leisure",
+                  "Adventure",
+                  "Family",
+                  "Solo",
+                  "Cultural",
+                ].map((opt) => (
+                  <label
+                    key={opt}
+                    className="flex items-center gap-2 text-sm sm:text-base text-[var(--color-basic-dark)]"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={formData.travelPreferences.includes(opt)}
+                      onChange={(e) =>
+                        handleCheckboxChange(
+                          "travelPreferences",
+                          opt,
+                          e.target.checked
+                        )
+                      }
+                      className="w-5 h-5 rounded-[6px] border border-[#009DE8] bg-[#009DE8] cursor-pointer"
+                    />
+                    {opt}
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* With Pets */}
+            {/* With Pets */}
+            <div>
+              <Label className="text-[var(--color-basic-dark)] text-base sm:text-lg font-DM-sans font-normal">
+                Do you travel with pets?
+              </Label>
+              <div className="flex flex-wrap gap-3 mt-2">
+                {["Yes", "No"].map((opt) => (
+                  <label
+                    key={opt}
+                    className="flex items-center gap-2 text-sm sm:text-base text-[var(--color-basic-dark)]"
+                  >
+                    <input
+                      type="radio"
+                      name="withPets"
+                      value={opt}
+                      checked={formData.withPets === opt}
+                      onChange={() => handleRadioChange("withPets", opt)}
+                      className="w-4 h-4 accent-[var(--Info-I-600,#009DE8)] cursor-pointer"
+                    />
+                    {opt}
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
           <div>
             <Label className="text-[#808080] text-lg">
               Favourite Destinations{" "}
@@ -440,75 +508,6 @@ const ProfileForm = () => {
             placeholder="Write something about yourself"
             className="min-h-[100px] border-[#D2D2D2]"
           />
-        </div>
-
-        {/* Travel Preferences */}
-        <div className="p-4 sm:p-6 rounded-3xl bg-[#F9F9F9] space-y-4 sm:h-60 h-auto">
-          <h1 className="text-[var(--color-basic-dark)] text-lg sm:text-xl font-DM-sans font-normal">
-            Travel Preferences
-          </h1>
-
-          {/* Travel Type */}
-          <div>
-            <Label className="text-[var(--color-basic-dark)] text-base sm:text-lg font-DM-sans font-normal">
-              I travel mostly (select up to 2 options):
-            </Label>
-            <div className="flex flex-wrap gap-3 sm:gap-4 mt-2">
-              {[
-                "Business",
-                "Leisure",
-                "Adventure",
-                "Family",
-                "Solo",
-                "Cultural",
-              ].map((opt) => (
-                <label
-                  key={opt}
-                  className="flex items-center gap-2 text-sm sm:text-base text-[var(--color-basic-dark)]"
-                >
-                  <input
-                    type="checkbox"
-                    checked={formData.travelPreferences.includes(opt)}
-                    onChange={(e) =>
-                      handleCheckboxChange(
-                        "travelPreferences",
-                        opt,
-                        e.target.checked
-                      )
-                    }
-                    className="w-5 h-5 rounded-[6px] border border-[#009DE8] bg-[#009DE8] cursor-pointer"
-                  />
-                  {opt}
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* With Pets */}
-          {/* With Pets */}
-          <div>
-            <Label className="text-[var(--color-basic-dark)] text-base sm:text-lg font-DM-sans font-normal">
-              Do you travel with pets?
-            </Label>
-            <div className="flex flex-wrap gap-3 mt-2">
-              {["Yes", "No"].map((opt) => (
-                <label
-                  key={opt}
-                  className="flex items-center gap-2 text-sm sm:text-base text-[var(--color-basic-dark)]"
-                >
-                  <input
-                    type="radio"
-                    name="withPets"
-                    value={opt}
-                    checked={formData.withPets === opt}
-                    onChange={() => handleRadioChange("withPets", opt)}
-                    className="w-4 h-4 accent-[var(--Info-I-600,#009DE8)] cursor-pointer"
-                  />
-                  {opt}
-                </label>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* Status & Submit */}
