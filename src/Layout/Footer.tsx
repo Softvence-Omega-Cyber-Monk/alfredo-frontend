@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import facebook from "../assets/footer/fb.svg";
 import instagram from "../assets/footer/instagram.svg";
 import linkedin from "../assets/footer/linkedin.svg";
@@ -5,6 +6,7 @@ import linkedin from "../assets/footer/linkedin.svg";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+  const { t } = useTranslation("footer");
   return (
     <footer className="relative ">
       <div className="absolute bottom-0 right-0 flex -z-5 opacity-80 items-center justify-center">
@@ -33,20 +35,19 @@ const Footer = () => {
                 <img src="/logo.svg" alt="" />
               </div>
               <p className="text-dark-2 lg:text-xl leading-relaxed lg:max-w-md pr-6">
-                "Vacanza transformed our family vacations! We've stayed in
-                amazing places without breaking the bank."
+                "{t("description")}"
               </p>
             </div>
 
             {/* Second Column - Quick Links */}
             <div>
               <h3 className="text-lg lg:text-xl text-primary-blue font-semibold mb-2 md:mb-4">
-                Pages
+                {t("pages")}
               </h3>
               <ul className="space-y-3">
                 <li>
                   <Link to="/" className="font-regular lg:text-xl">
-                    Home
+                    {t("home")}
                   </Link>
                 </li>
                 <li>
@@ -56,7 +57,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link to="/articles" className="font-regular lg:text-xl">
-                    Article
+                    {t("article")}
                   </Link>
                 </li>
               </ul>
@@ -65,12 +66,12 @@ const Footer = () => {
             {/* Third Column - Services */}
             <div>
               <h3 className="text-lg lg:text-xl text-primary-blue font-semibold mb-2 md:mb-4">
-                Pages
+                {t("pages")}
               </h3>
               <ul className="space-y-3">
                 <li>
                   <Link to="/contact" className="font-regular lg:text-xl ">
-                    Contact Us
+                    {t("contactUs")}
                   </Link>
                 </li>
                 <li>
@@ -78,12 +79,12 @@ const Footer = () => {
                     to="/bonus-program"
                     className="font-regular lg:text-xl "
                   >
-                    Bonus Programs
+                    {t("bonusProgram")}
                   </Link>
                 </li>
                 <li>
                   <Link to="/plans" className="font-regular lg:text-xl ">
-                    Plans
+                    {t("plans")}
                   </Link>
                 </li>
               </ul>
@@ -92,7 +93,7 @@ const Footer = () => {
             {/* Fourth Column - Newsletter */}
             <div>
               <h3 className="text-lg lg:text-xl text-primary-blue font-semibold mb-2 md:mb-4">
-                Social Media
+                {t("socialMedia")}
               </h3>
               <ul className="space-y-3">
                 <li>
@@ -130,7 +131,7 @@ const Footer = () => {
       {/* Footer Bottom Section */}
       <div className="relative text-center py-6 md:py-8 lg:py-10 text-dark-2 font-normal text-base">
         <div className="absolute inset-0 -z-10 backdrop-blur-[50px] bg-gradient-to-b from-white via-[rgba(255,255,255,0.5)] via-50%  to-[rgba(49,116,205,0.3)]"></div>
-        <p>Copyright WP Estate. All Rights Reserved.</p>
+        <p>{t("copyright")}</p>
       </div>
     </footer>
   );

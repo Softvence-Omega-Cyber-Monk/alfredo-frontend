@@ -4,10 +4,13 @@ import {
   BedDouble,
   Bath,
   SquareArrowOutUpRight,
+  Building,
+  User,
 } from "lucide-react";
 import PrimaryButton from "./PrimaryButton";
 import cardStar from "@/assets/home/star.svg";
 import { CommonCard as CommonCardProps } from "@/types/index";
+import { useTranslation } from "react-i18next";
 
 const CommonCard: React.FC<CommonCardProps> = ({
   image,
@@ -19,6 +22,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
   features,
   onViewDetails,
 }) => {
+  const { t } = useTranslation("futureList");
   return (
     <div className="p-3 rounded-3xl bg-[#F4F7FC]">
       <div className="rounded-2xl overflow-hidden max-h-64 relative">
@@ -68,7 +72,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
         </h3> */}
 
         {/* Features */}
-        <div className="my-4 flex items-center justify-between">
+        <div className="my-4 grid grid-cols-3 gap-3">
           {features.rooms !== undefined && (
             <div className="flex flex-col justify-center text-center items-center gap-1">
               <House className="text-primary-blue w-5 h-5" />
@@ -93,11 +97,27 @@ const CommonCard: React.FC<CommonCardProps> = ({
               </p>
             </div>
           )}
-          {features.sqft !== undefined && (
+          {features.sqm !== undefined && (
             <div className="flex flex-col justify-center text-center items-center gap-1">
               <SquareArrowOutUpRight className="text-primary-blue w-5 h-5" />
               <p className="text-dark-3 font-regular text-sm">
-                {features.sqft} sqf
+                {features.sqm} sqm
+              </p>
+            </div>
+          )}
+          {features.floor !== undefined && (
+            <div className="flex flex-col justify-center text-center items-center gap-1">
+              <Building className="text-primary-blue w-5 h-5" />
+              <p className="text-dark-3 font-regular text-sm">
+                {features.floor} floor
+              </p>
+            </div>
+          )}
+          {features.floor !== undefined && (
+            <div className="flex flex-col justify-center text-center items-center gap-1">
+              <User className="text-primary-blue w-5 h-5" />
+              <p className="text-dark-3 font-regular text-sm">
+                {features.maxPeople} max people
               </p>
             </div>
           )}
@@ -106,7 +126,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
 
       {/* Action Button */}
       <PrimaryButton
-        title="View Details"
+        title={t("viewDetails")}
         textColor="text-primary-blue"
         bgColor="bg-[#F4F7FC] w-full hover:bg-primary-blue hover:text-white"
         borderColor="border-2 border-primary-blue"

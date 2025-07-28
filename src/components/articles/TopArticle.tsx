@@ -1,6 +1,8 @@
 import articleImage from "@/assets/articleImg.png";
 import testimonailPerson from "@/assets/testimonailPerson.jpg";
+import { useTranslation } from "react-i18next";
 const TopArticle = () => {
+  const { t } = useTranslation("articles");
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 relative">
       <div className="absolute top-6 left-6">
@@ -17,16 +19,10 @@ const TopArticle = () => {
             Last Update: 20-June-2024
           </p>
           <h2 className="text-2xl lg:text-[32px] font-medium mb-4 text-primary-blue line-clamp-2">
-            Vacanza 101: How to travel without paying for accommodation
+            {t("articles.showcaseArticle.title")}
           </h2>
           <p className="text-xl lg:text-2xl font-normal mb-3 line-clamp-8">
-            Vacanza is the first greek platform that brings to Greece
-            exclusively the home exchange model. It has been proved to be very
-            successful in other countries of Europe mainly for traveling without
-            paying for accommodation, but also for forming bonds with new
-            people. It is an alternative to the ordinary booking sites in which
-            you pay your money for accommodation, and you don't know the other
-            person and the current situation of the house before traveling.
+            {t("articles.showcaseArticle.description")}
           </p>
         </div>
         <div className="flex items-center gap-4">
@@ -37,7 +33,7 @@ const TopArticle = () => {
           />
           <div className="flex flex-col gap-1">
             <h3 className="text-[20px] font-bold text-primary-blue">
-              Mr. Jhon Don
+              Abraham Sulivann
             </h3>
             <p className="text-sm font-normal">Manager of IT</p>
           </div>
