@@ -65,7 +65,9 @@ export interface CardFeatures {
   rooms?: number;
   beds?: number;
   baths?: number;
-  sqft?: number;
+  sqm?: number;
+  floor?: number;
+  maxPeople?: number;
 }
 
 export interface CommonCard {

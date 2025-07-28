@@ -39,28 +39,10 @@ const Contact = () => {
           <div className="w-full lg:w-1/2 space-y-[32px] max-[767px]:space-y-[24px]">
             <div className="space-y-[16px] max-[767px]:space-y-[10px]">
               <h4 className="text-[24px] font-semibold text-primary-blue max-[767px]:text-[20px]">
-                We are here to help you:
+                {t("contact.help")}
               </h4>
               <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-[16px] leading-[26px]">
-                Our experts are available to answer any questions you might
-                have. We’ve got the answers.
-              </p>
-            </div>
-            <div className="space-y-[16px] max-[767px]:space-y-[10px]">
-              <h4 className="text-[24px] font-semibold text-primary-blue max-[767px]:text-[20px]">
-                Current Office:
-              </h4>
-              <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-[16px] leading-[26px]">
-                123 Green Hill Avenue, Lakeview Heights, Central District,
-                Maplewood County, United States of America
-              </p>
-            </div>
-            <div className="space-y-[16px] max-[767px]:space-y-[10px]">
-              <h4 className="text-[24px] font-semibold text-primary-blue max-[767px]:text-[20px]">
-                Office Hours
-              </h4>
-              <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-[16px] leading-[26px]">
-                Sunday – Friday (10:00Am - 07:00Pm)
+                {t("contact.helpDesc")}
               </p>
             </div>
           </div>
@@ -72,7 +54,7 @@ const Contact = () => {
               className="bg-primary-gray-bg border border-primary-border-color rounded-[40px] p-10 space-y-4 max-[767px]:p-6"
             >
               <h3 className="text-primary-blue font-semibold text-[24px] mb-4 max-[767px]:text-[20px]">
-                Directly mail us.
+                {t("contact.mail")}
               </h3>
 
               {/* First & Last Name */}
@@ -80,7 +62,7 @@ const Contact = () => {
                 <div className="w-full lg:w-1/2 mb-4 lg:mb-0">
                   <input
                     type="text"
-                    placeholder="First Name*"
+                    placeholder={t("contact.firstName")}
                     className="w-full border border-primary-border-color py-3 px-3 rounded-[25px] text-[16px]"
                     {...register("firstName", {
                       required: "First name is required",
@@ -95,7 +77,7 @@ const Contact = () => {
                 <div className="w-full lg:w-1/2">
                   <input
                     type="text"
-                    placeholder="Last Name*"
+                    placeholder={t("contact.lastName")}
                     className="w-full border border-primary-border-color py-3 px-3 rounded-[25px] text-[16px]"
                     {...register("lastName", {
                       required: "Last name is required",
@@ -114,7 +96,7 @@ const Contact = () => {
                 <div className="w-full lg:w-1/2 mb-4 lg:mb-0">
                   <input
                     type="email"
-                    placeholder="Enter email here*"
+                    placeholder={t("contact.enterEmail")}
                     className="w-full border border-primary-border-color py-3 px-3 rounded-[25px] text-[16px]"
                     {...register("email", {
                       required: "Email is required",
@@ -133,7 +115,7 @@ const Contact = () => {
                 <div className="w-full lg:w-1/2">
                   <input
                     type="tel"
-                    placeholder="Phone Number*"
+                    placeholder={t("contact.phone")}
                     className="w-full border border-primary-border-color py-3 px-3 rounded-[25px] text-[16px]"
                     {...register("phone", {
                       required: "Phone number is required",
@@ -154,7 +136,7 @@ const Contact = () => {
               {/* Message */}
               <div>
                 <textarea
-                  placeholder="Write a message*"
+                  placeholder={t("contact.writeMessage")}
                   rows={4}
                   className="w-full border border-primary-border-color py-3 px-3 rounded-[25px] resize-none text-[16px]"
                   {...register("message", { required: "Message is required" })}
@@ -171,7 +153,7 @@ const Contact = () => {
                 type="submit"
                 className="text-[18px] md:text-[24px] w-full font-semibold py-6 px-6 rounded-full"
               >
-                Book Now
+                {t("contact.bookNow")}
               </ReusableButton>
             </form>
           </div>
