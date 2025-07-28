@@ -5,6 +5,7 @@ import home from "@/assets/icons/Home.svg";
 import apartment from "@/assets/icons/open-door.svg";
 import residence from "@/assets/icons/building-three.svg";
 import casual from "@/assets/icons/city-one.svg";
+import { useTranslation } from "react-i18next";
 interface HomeTypeProps {
   homeType: "home" | "apartment" | null;
   residenceType: "main" | "occasional" | null;
@@ -17,19 +18,21 @@ const SelectType = ({
   onHomeTypeChange,
   onResidenceTypeChange,
 }: HomeTypeProps) => {
+  const { t } = useTranslation("onboarding");
+
   return (
     <div className="w-full py-6 md:py-10 space-y-6 ">
       {/* Header */}
       <div className="flex flex-col lg:flex-row justify-between items-center mb-10 w-full gap-4">
         <div className="w-full lg:w-auto flex-1">
-          <Title title="Select Type" />
+          <Title title={t("onboarding.part3.headTitle")} />
         </div>
         <div className="w-full lg:w-auto flex justify-center md:justify-end">
           <Button
             variant="secondary"
             className="flex items-center gap-2 px-5 py-3 rounded-lg border border-[#CAD2DB] text-[#3174CD] text-base font-medium hover:bg-gray-100"
           >
-            Save Draft
+            {t("onboarding.part3.headButton")}
             <TbChecklist className="w-5 h-5" />
           </Button>
         </div>
@@ -39,7 +42,7 @@ const SelectType = ({
       <div>
         <div className="mt-10">
           <h2 className="text-2xl text-primary-blue font-semibold">
-            What is your home like?
+            {t("onboarding.part3.title1")}
           </h2>
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 ">
             <div
@@ -59,11 +62,11 @@ const SelectType = ({
                       : "text-primary-blue"
                   }`}
                 >
-                  Home
+                  {t("onboarding.part3.card1.miniTitle1")}
                 </p>
               </div>
               <p className="text-base text-dark-3 font-regular">
-                Your home is an independent property.
+                {t("onboarding.part3.card1.subtitle1")}
               </p>
             </div>
 
@@ -84,11 +87,11 @@ const SelectType = ({
                       : "text-primary-blue"
                   }`}
                 >
-                  Apartment
+                  {t("onboarding.part3.card1.miniTitle2")}
                 </p>
               </div>
               <p className="text-base text-dark-3 font-regular">
-                our home is in a building shared by several apartments.
+                {t("onboarding.part3.card1.subtitle2")}
               </p>
             </div>
           </div>
@@ -96,7 +99,7 @@ const SelectType = ({
 
         <div className="mt-10">
           <h2 className="text-2xl text-primary-blue font-semibold">
-            Is it your main residence?
+            {t("onboarding.part3.title2")}
           </h2>
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 ">
             <div
@@ -116,11 +119,12 @@ const SelectType = ({
                       : "text-primary-blue"
                   }`}
                 >
-                  Yes, I live there all year round
+                  {t("onboarding.part3.card2.miniTitle1")}
                 </p>
               </div>
               <p className="text-base text-dark-3 font-regular">
-                Your home is an independent property.
+                {t("onboarding.part3.card2.subtitle1")}Your home is an
+                independent property.
               </p>
             </div>
 
@@ -141,11 +145,13 @@ const SelectType = ({
                       : "text-primary-blue"
                   }`}
                 >
-                  Nor I go there occasionally
+                  {t("onboarding.part3.card2.miniTitle2")} Nor I go there
+                  occasionally
                 </p>
               </div>
               <p className="text-base text-dark-3 font-regular">
-                Your home is in a building shared by several apartments.
+                {t("onboarding.part3.card2.subtitle2")}Your home is in a
+                building shared by several apartments.
               </p>
             </div>
           </div>
