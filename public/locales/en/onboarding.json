@@ -11,6 +11,8 @@
       "subtitle1": "Add your property details, photos, and pricing to start attracting guests.",
       "bigtitle2": "Introduce yourself.",
       "subtitle2": "Share a bit about who you are to build trust with potential guests.",
+      "bigtitle3": "Become a member for 59 EUR",
+      "subtitle3": " Unlock full platform benefits and connect with a global community..",
 
       "minititle1": "Where is your home?",
       "minisubtitle1": "Tell guests where your home is located so they can plan their stay with confidence.",
@@ -75,6 +77,7 @@
       },
 
       "TravelWithPet": {
+        "title": "Do You Travel With Pets?",
         "business": "Business trips",
         "leasure": "Leasure trips",
         "both": "both"
@@ -90,14 +93,14 @@
       "headTitle": "Select Type",
       "headButton": "Save Draft",
 
-      "title2": "Is it your main residence?",
+      "title1": "What is your home like?",
       "card1": {
         "miniTitle1": "Home",
         "subtitle1": "Your home is an independent property.",
         "miniTitle2": "Apartment",
         "subtitle2": "our home is in a building shared by several apartments."
       },
-
+      "title2": "Is it your main residence?",
       "card2": {
         "miniTitle1": "Yes, I live there all year round",
         "subtitle1": "Your home is an independent property.",

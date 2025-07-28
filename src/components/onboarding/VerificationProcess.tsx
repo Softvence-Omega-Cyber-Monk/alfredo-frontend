@@ -1,9 +1,12 @@
+"use client";
+
 import { TbChecklist } from "react-icons/tb";
 import Title from "./Shared/Title";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "../ui/textarea";
 import { ChangeEvent } from "react";
+import { useTranslation } from "react-i18next";
 
 export type AgeGroup = "18–30" | "30–50" | "50–65" | "65+";
 export type Gender = "Male" | "Female" | "Not Specified";
@@ -47,6 +50,8 @@ const VerificationProcess = ({
   personalInformation,
   onDataChange,
 }: VerificationProps) => {
+  const { t } = useTranslation("onboarding");
+
   const handleChange = <
     K extends keyof VerificationProps["personalInformation"]
   >(
@@ -81,28 +86,68 @@ const VerificationProcess = ({
     handleChange("notes", e.target.value);
   };
 
+  const genderOptions = [
+    { value: "Male", key: "male" },
+    { value: "Female", key: "female" },
+    { value: "Not Specified", key: "notSpecified" },
+  ];
+
+  const roleOptions = ["Worker", "Retired", "Student", "Unemployed"] as Role[];
+  const travelTypeOptions = [
+    "Business",
+    "Leisure",
+    "Adventure",
+    "Family",
+    "Solo",
+    "Cultural",
+  ] as TravelType[];
+
+  const destinationOptions: { value: DestinationType; key: string }[] = [
+    { value: "Big Cities", key: "bigCities" },
+    { value: "Small Cities", key: "smallCities" },
+    { value: "Seaside", key: "seaSide" },
+    { value: "Mountain", key: "mountains" },
+  ];
+
+  const travelGroupOptions: { value: TravelGroup; key: string }[] = [
+    { value: "By Myself", key: "byMyself" },
+    { value: "With Family", key: "family" },
+    { value: "With a Partner", key: "withPartner" },
+    { value: "With Friends", key: "withFrends" },
+  ];
+
+  const petOptions: { value: TravelWithPets; key: string }[] = [
+    { value: "Business trips", key: "business" },
+    { value: "Leisure trips", key: "leasure" },
+    { value: "Both", key: "both" },
+  ];
+
   return (
-    <div className="w-full py-6 md:py-10 space-y-6 ">
+    <div className="w-full py-6 md:py-10 space-y-6">
       <div className="flex flex-col lg:flex-row justify-between items-center mb-10 w-full gap-4">
         <div className="w-full lg:w-auto flex-1">
-          <Title title="Welcome back, Savannah!" />
+          <Title title={t("onboarding.part2.headTitle")} />
         </div>
         <div className="w-full lg:w-auto flex justify-center md:justify-end">
           <Button
             variant="secondary"
             className="flex items-center gap-2 px-5 py-3 rounded-lg border border-[#CAD2DB] text-[#3174CD] text-base font-medium hover:bg-gray-100"
           >
-            Save Draft
+            {t("onboarding.part2.headButton")}
             <TbChecklist className="w-5 h-5" />
           </Button>
         </div>
       </div>
+
       <hr className="text-[#EAF1FA]" />
 
       <form className="space-y-8 font-sans">
+        {/* Age and Gender */}
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <Label className="block text-lg text-[#3174CD] mb-2">Age: </Label>
+            <Label className="block text-lg text-[#3174CD] mb-2">
+              {t("onboarding.part2.age")}
+            </Label>
             <div className="flex flex-wrap gap-4">
               {(["18–30", "30–50", "50–65", "65+"] as AgeGroup[]).map((age) => (
                 <label
@@ -125,199 +170,177 @@ const VerificationProcess = ({
 
           <div>
             <Label className="block text-lg text-[#3174CD] mb-2">
-              Gender:{" "}
+              {t("onboarding.part2.gender.title")}
             </Label>
             <div className="flex flex-wrap gap-4">
-              {(["Male", "Female", "Not Specified"] as Gender[]).map((g) => (
+              {genderOptions.map((g) => (
                 <label
-                  key={g}
+                  key={g.key}
                   className="flex items-center gap-2 cursor-pointer text-base text-[#808080]"
                 >
                   <input
                     type="radio"
                     name="gender"
-                    value={g}
-                    checked={personalInformation.gender === g}
-                    onChange={() => handleChange("gender", g)}
+                    value={g.value}
+                    checked={personalInformation.gender === g.value}
+                    onChange={() => handleChange("gender", g.value as Gender)}
                     className="w-4 h-4 accent-blue-500"
                   />
-                  {g}
+                  {t(`onboarding.part2.gender.${g.key}`)}
                 </label>
               ))}
             </div>
           </div>
         </div>
 
+        {/* Role and Travel Type */}
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <Label className="block text-lg text-[#3174CD] mb-2">I am a:</Label>
+            <Label className="block text-lg text-[#3174CD] mb-2">
+              {t("onboarding.part2.iAmA.title")}
+            </Label>
             <div className="flex flex-wrap gap-4">
-              {(["Worker", "Retired", "Student", "Unemployed"] as Role[]).map(
-                (role) => (
-                  <label
-                    key={role}
-                    className="flex items-center gap-2 cursor-pointer text-base text-[#808080]"
-                  >
-                    <input
-                      type="radio"
-                      name="role"
-                      value={role}
-                      checked={personalInformation.role === role}
-                      onChange={() => handleChange("role", role)}
-                      className="w-4 h-4 accent-blue-500"
-                    />
-                    {role}
-                  </label>
-                )
-              )}
+              {roleOptions.map((role) => (
+                <label
+                  key={role}
+                  className="flex items-center gap-2 cursor-pointer text-base text-[#808080]"
+                >
+                  <input
+                    type="radio"
+                    name="role"
+                    value={role}
+                    checked={personalInformation.role === role}
+                    onChange={() => handleChange("role", role)}
+                    className="w-4 h-4 accent-blue-500"
+                  />
+                  {t(`onboarding.part2.iAmA.${role.toLowerCase()}`)}
+                </label>
+              ))}
             </div>
           </div>
 
           <div>
-            <Label className="block text-lg text-[#808080] mb-2">
-              Your Travel Type
+            <Label className="block text-lg text-[#3174CD] mb-2">
+              {t("onboarding.part2.travelType.title")}
               <span className="text-sm text-muted-foreground">
-                (Select up to 2 options)
+                {t("onboarding.part2.travelType.subTitle")}
               </span>
             </Label>
             <div className="flex flex-wrap gap-4">
-              {(
-                [
-                  "Business",
-                  "Leisure",
-                  "Adventure",
-                  "Family",
-                  "Solo",
-                  "Cultural",
-                ] as TravelType[]
-              ).map((type) => (
+              {travelTypeOptions.map((type) => (
                 <label
                   key={type}
                   className="flex items-center gap-2 text-base text-[#808080]"
                 >
                   <input
                     type="checkbox"
-                    checked={personalInformation.travelType.includes(
-                      type as TravelType
-                    )}
+                    checked={personalInformation.travelType.includes(type)}
                     onChange={() => handleCheckboxChange("travelType", type)}
                     className="w-5 h-5 accent-blue-500"
                   />
-                  {type}
+                  {t(`onboarding.part2.travelType.${type.toLowerCase()}`)}
                 </label>
               ))}
             </div>
           </div>
         </div>
 
+        {/* Favorite Destinations & Travel Group */}
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <Label className="block text-lg text-[#3174CD] mb-2">
-              Favourite destinations
-              <span className="text-sm text-muted-foreground">
-                (select all that apply):
-              </span>
+              {t("onboarding.part2.favoriteDestinations.title")}
             </Label>
             <div className="flex flex-wrap gap-4">
-              {(
-                [
-                  "Big Cities",
-                  "Small Cities",
-                  "Seaside",
-                  "Mountain",
-                ] as DestinationType[]
-              ).map((dest) => (
+              {destinationOptions.map((dest) => (
                 <label
-                  key={dest}
+                  key={dest.value}
                   className="flex items-center gap-2 text-base text-[#808080]"
                 >
                   <input
                     type="checkbox"
                     checked={personalInformation.favoriteDestinations.includes(
-                      dest as DestinationType
+                      dest.value
                     )}
                     onChange={() =>
-                      handleCheckboxChange("favoriteDestinations", dest)
+                      handleCheckboxChange("favoriteDestinations", dest.value)
                     }
                     className="w-5 h-5 accent-blue-500"
                   />
-                  {dest}
+                  {t(`onboarding.part2.favoriteDestinations.${dest.key}`)}
                 </label>
               ))}
             </div>
           </div>
 
           <div>
-            <Label className="block text-lg text-[#808080] mb-2">
-              Who Do You Usually Travel With? (Select one)
+            <Label className="block text-lg text-[#3174CD] mb-2">
+              {t("onboarding.part2.iMostlyTravelWith.title")}
             </Label>
             <div className="flex flex-wrap gap-4">
-              {(
-                [
-                  "By Myself",
-                  "With Family",
-                  "With a Partner",
-                  "With Friends",
-                ] as TravelGroup[]
-              ).map((group) => (
+              {travelGroupOptions.map((group) => (
                 <label
-                  key={group}
+                  key={group.key}
                   className="flex items-center gap-2 cursor-pointer text-base text-[#808080]"
                 >
                   <input
                     type="radio"
                     name="travelGroup"
-                    value={group}
-                    checked={personalInformation.travelGroup === group}
-                    onChange={() => handleChange("travelGroup", group)}
+                    value={group.value}
+                    checked={personalInformation.travelGroup === group.value}
+                    onChange={() =>
+                      handleChange("travelGroup", group.value as TravelGroup)
+                    }
                     className="w-4 h-4 accent-blue-500"
                   />
-                  {group}
+                  {t(`onboarding.part2.iMostlyTravelWith.${group.key}`)}
                 </label>
               ))}
             </div>
           </div>
         </div>
 
+        {/* Travel With Pets */}
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <Label className="block text-lg text-[#808080] mb-2">
-              Do You Travel With Pets?
-              <span className="text-sm text-muted-foreground">
-                (Select one)
-              </span>
+            <Label className="block text-lg text-[#3174CD] mb-2">
+              {t("onboarding.part2.TravelWithPet.title")}
             </Label>
             <div className="flex flex-wrap gap-4">
-              {(
-                ["Business trips", "Leisure trips", "Both"] as TravelWithPets[]
-              ).map((group) => (
+              {petOptions.map((pet) => (
                 <label
-                  key={group}
+                  key={pet.key}
                   className="flex items-center gap-2 cursor-pointer text-base text-[#808080]"
                 >
                   <input
                     type="radio"
                     name="travelWithPets"
-                    value={group}
-                    checked={personalInformation.travelWithPets === group}
-                    onChange={() => handleChange("travelWithPets", group)}
+                    value={pet.value}
+                    checked={personalInformation.travelWithPets === pet.value}
+                    onChange={() =>
+                      handleChange(
+                        "travelWithPets",
+                        pet.value as TravelWithPets
+                      )
+                    }
                     className="w-4 h-4 accent-blue-500"
                   />
-                  {group}
+                  {t(`onboarding.part2.TravelWithPet.${pet.key}`)}
                 </label>
               ))}
             </div>
           </div>
         </div>
 
+        {/* Notes */}
         <div>
           <Label className="block text-lg text-[#3174CD] mb-2">
-            Notes on yourself
+            {t("onboarding.part2.notesOnYourself.title")}
           </Label>
           <Textarea
             value={personalInformation.notes}
             onChange={handleInputChange}
-            placeholder="Write something about yourself"
+            placeholder={t("onboarding.part2.notesOnYourself.placeHolder")}
             className="min-h-[120px] border border-[#D2D2D2] focus:border-blue-500 focus:ring-blue-500"
           />
         </div>

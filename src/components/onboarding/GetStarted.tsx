@@ -7,6 +7,7 @@ import map from "@/assets/icons/Location.svg";
 import mapUp from "@/assets/icons/dashboardMap.svg";
 import MapModal from "../dashboard/MapModal";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
+import { useTranslation } from "react-i18next";
 
 interface GetStartedProps {
   location: { lat: number; lng: number } | null;
@@ -56,19 +57,20 @@ const GetStarted = ({
     ? `Lat: ${destination.lat.toFixed(5)}, Lng: ${destination.lng.toFixed(5)}`
     : "";
 
+  const { t } = useTranslation("onboarding");
   return (
     <div className="w-full py-6 md:py-10 space-y-6 ">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-10 w-full gap-4">
         <div className="w-full  flex-1">
-          <Title title="Get started with Vacanza." />
+          <Title title={t("onboarding.part1.headTitle")} />
         </div>
         <div className=" flex justify-end">
           <Button
             variant="secondary"
             className="flex items-center gap-2 px-5 py-3 rounded-lg border border-[#CAD2DB] text-[#3174CD] text-base font-medium hover:bg-gray-100"
           >
-            Save Draft
+            {t("onboarding.part1.headButton")}
             <TbChecklist className="w-5 h-5" />
           </Button>
         </div>
@@ -82,31 +84,28 @@ const GetStarted = ({
             <div className="flex flex-col items-start gap-[26px] p-6 md:p-10 flex-1 rounded-[24px] bg-[#F4F7FC] ">
               <div>
                 <h3 className="text-xl md:text-2xl text-primary-blue font-semibold mt-3">
-                  1. Create your home listing
+                  1. {t("onboarding.part1.bigtitle1")}
                 </h3>
                 <p className="text-base md:text-lg text-dark-3 font-regular mt-3 max-w-md">
-                  Add your property details, photos, and pricing to start
-                  attracting guests.
+                  {t("onboarding.part1.subtitle1")}
                 </p>
               </div>
 
               <div>
                 <h3 className="text-xl md:text-2xl text-primary-blue font-semibold mt-3">
-                  2. Introduce yourself.
+                  2. {t("onboarding.part1.bigtitle2")}
                 </h3>
                 <p className="text-base md:text-lg text-dark-3 font-regular mt-3 max-w-md">
-                  Share a bit about who you are to build trust with potential
-                  guests.
+                  {t("onboarding.part1.subtitle2")}
                 </p>
               </div>
 
               <div>
                 <h3 className="text-xl md:text-2xl text-primary-blue font-semibold mt-3">
-                  3. Become a member for 59 EUR
+                  3. {t("onboarding.part1.bigtitle3")}
                 </h3>
                 <p className="text-base md:text-lg text-dark-3 font-regular mt-3 max-w-md">
-                  Unlock full platform benefits and connect with a global
-                  community..
+                  {t("onboarding.part1.subtitle3")}
                 </p>
               </div>
             </div>
@@ -119,11 +118,10 @@ const GetStarted = ({
               <div className="space-y-4">
                 <div>
                   <h3 className="text-lg text-primary-blue font-semibold">
-                    Where is your home?
+                    {t("onboarding.part1.minititle1")}
                   </h3>
                   <p className="text-base text-dark-3 font-regular mt-3 max-w-md">
-                    Tell guests where your home is located so they can plan
-                    their stay with confidence.
+                    {t("onboarding.part1.minisubtitle1")}
                   </p>
 
                   <div
@@ -141,7 +139,7 @@ const GetStarted = ({
                       value={locationDisplayValue}
                       onClick={openLocationMap}
                       readOnly
-                      placeholder="Select from Google Map"
+                      placeholder={t("onboarding.part1.location1")}
                       className="w-full pl-10 pr-10  py-4 border border-dark-3 text-dark-3 rounded-lg cursor-pointer focus:outline-none"
                     />
 
@@ -161,11 +159,10 @@ const GetStarted = ({
 
                 <div>
                   <h3 className="text-lg text-primary-blue font-semibold">
-                    Where would you like to go?
+                    {t("onboarding.part1.minititle2")}
                   </h3>
                   <p className="text-base text-dark-3 font-regular mt-3 max-w-md">
-                    Choose your destination and start planning your next
-                    adventure with Vacanza.
+                    {t("onboarding.part1.minisubtitle2")}
                   </p>
 
                   <div
@@ -183,7 +180,7 @@ const GetStarted = ({
                       value={destinationDisplayValue}
                       onClick={openDestinationMap}
                       readOnly
-                      placeholder="Select from Google Map"
+                      placeholder={t("onboarding.part1.location2")}
                       className="w-full pl-10 pr-10  py-4 border border-dark-3 text-dark-3 rounded-lg cursor-pointer focus:outline-none"
                     />
 
@@ -203,7 +200,7 @@ const GetStarted = ({
                     {" "}
                     <AiOutlineExclamationCircle />
                   </span>{" "}
-                  You'll be able to modify this information later
+                  {t("onboarding.part1.note")}
                 </p>
               </div>
 
