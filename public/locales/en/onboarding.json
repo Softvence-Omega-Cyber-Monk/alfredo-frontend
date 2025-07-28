@@ -1,6 +1,23 @@
 {
   "onboarding": {
-    "title": "Multi Step",
+    "step1": "Welcome ",
+    "step1s": "State",
+    "step2": "Travel ",
+    "step2s": "Verification",
+    "step3": "Select",
+    "step3s": "Type",
+    "step4": "Select",
+    "step4s": "Amenities",
+    "step5": "About",
+    "step5s": "Your Home",
+    "step6": "Upload",
+    "step6s": "Photo",
+    "step7": "Home’s",
+    "step7s": "Availability",
+    "stepButton1": "Cancel",
+    "stepButton2": "Back",
+    "stepButton3": "Continue",
+    "stepButton4": "Finish",
 
     "part1": {
       "step": "Welcome State",
