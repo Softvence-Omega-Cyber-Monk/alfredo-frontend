@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import Title from "./Shared/Title";
 import { amenitiesData } from "@/lib/data/amenities";
 import type { Amenity } from "@/lib/data/amenities"; // Import the Amenity type
+import { useTranslation } from "react-i18next";
 interface AmenitiesProps {
   selectedAmenities: {
     main: Amenity[];
@@ -53,6 +54,7 @@ const SelectAmenities = ({
       (item) => item.title === amenity.title && item.icon === amenity.icon
     );
   };
+  const { t } = useTranslation("dashboard");
   return (
     <div className="w-full py-6 md:py-10 space-y-6 ">
       {/* Header */}
@@ -78,7 +80,7 @@ const SelectAmenities = ({
             ([category, items]: [string, Amenity[]]) => (
               <div key={category} className="mb-8">
                 <h2 className="text-xl font-semibold text-primary-blue capitalize mb-4">
-                  {category}
+                  {t(category)}
                 </h2>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
@@ -108,7 +110,7 @@ const SelectAmenities = ({
                           className="w-6 h-6 mb-1"
                         />
                         <p className="text-base font-regular text-center text-dark-2">
-                          {amenity.title}
+                          {t(amenity.title)}
                         </p>
                       </div>
                     );

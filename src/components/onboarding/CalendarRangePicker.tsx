@@ -11,6 +11,7 @@ import {
 import clsx from "clsx";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const weekDays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 
@@ -129,12 +130,14 @@ const CalendarRangePicker = ({
       </div>
     );
   };
+  const { t } = useTranslation("onboarding");
 
   return (
     <div className="w-full mx-auto p-6 rounded-2xl shadow-sm bg-white">
       <div className="flex items-center justify-between mb-4 bg-blue-50 px-4 py-2 rounded-md text-blue-600">
         <span className="flex items-center gap-2">
-          Start date <HiOutlineArrowNarrowRight /> End date
+          {t("onboarding.part7.date1")} <HiOutlineArrowNarrowRight />{" "}
+          {t("onboarding.part7.date2")}
         </span>
       </div>
 

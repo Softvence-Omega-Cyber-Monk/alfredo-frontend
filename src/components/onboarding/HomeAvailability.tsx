@@ -4,6 +4,7 @@ import Title from "./Shared/Title";
 import check from "@/assets/icons/dashboardCheck.svg";
 import cross from "@/assets/icons/dashboardCross.svg";
 import CalendarRangePicker from "./CalendarRangePicker";
+import { useTranslation } from "react-i18next";
 
 interface HomeAvailabilityProps {
   availabilityType: "home" | "apartment" | null;
@@ -25,19 +26,20 @@ const HomeAvailability = ({
   onAvailabilityChange,
   onDataChange,
 }: HomeAvailabilityProps) => {
+  const { t } = useTranslation("onboarding");
   return (
     <div className="w-full py-6 md:py-10 space-y-6 ">
       {/* Header */}
       <div className="flex flex-col lg:flex-row justify-between items-center mb-10 w-full gap-4">
         <div className="w-full lg:w-auto flex-1">
-          <Title title="Add your home's availability" />
+          <Title title={t("onboarding.part7.headTitle")} />
         </div>
         <div className="w-full lg:w-auto flex justify-center md:justify-end">
           <Button
             variant="secondary"
             className="flex items-center gap-2 px-5 py-3 rounded-lg border border-[#CAD2DB] text-[#3174CD] text-base font-medium hover:bg-gray-100"
           >
-            Save Draft
+            {t("onboarding.part7.headButton")}
             <TbChecklist className="w-5 h-5" />
           </Button>
         </div>
@@ -47,7 +49,7 @@ const HomeAvailability = ({
       <div>
         <div className="mt-10">
           <h3 className="text-lg text-primary-blue font-semibold ">
-            Add your home's availability
+            {t("onboarding.part7.titleAvailability")}
           </h3>
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 ">
             <div
@@ -64,10 +66,12 @@ const HomeAvailability = ({
                   className="w-5 h-5"
                   alt=""
                 />
-                <p className="text-lg text-dark-3 font-normal">Home</p>
+                <p className="text-lg text-dark-3 font-normal">
+                  {t("onboarding.part7.miniTitle1")}
+                </p>
               </div>
               <p className="text-lg text-dark-3 font-normal">
-                Your home is an independent property.
+                {t("onboarding.part7.subtitle1")}
               </p>
             </div>
 
@@ -85,10 +89,12 @@ const HomeAvailability = ({
                   className="w-5 h-5"
                   alt=""
                 />
-                <p className="text-lg text-dark-3 font-normal">Apartment</p>
+                <p className="text-lg text-dark-3 font-normal">
+                  {t("onboarding.part7.miniTitle2")}
+                </p>
               </div>
               <p className="text-lg text-dark-3 font-regular">
-                our home is in a building shared by several apartments.
+                {t("onboarding.part7.subtitle2")}
               </p>
             </div>
           </div>
@@ -97,10 +103,12 @@ const HomeAvailability = ({
       {/*  */}
       <div className=" space-y-6">
         <h1 className="text-[#3174CD] font-dmSans text-[18px] font-semibold leading-[27px]">
-          Select Your Available Dates
+          {t("onboarding.part7.titleDate")}
         </h1>
-        <CalendarRangePicker availabilityDates={availabilityDates}
-            onAvailabilityChange={onAvailabilityChange} />
+        <CalendarRangePicker
+          availabilityDates={availabilityDates}
+          onAvailabilityChange={onAvailabilityChange}
+        />
       </div>
     </div>
   );
