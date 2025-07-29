@@ -1,0 +1,46 @@
+{
+  "settings": {
+    "password": {
+      "title": "ΚΩΔΙΚΟΣ",
+      "changePassword": "Αλλαγή Κωδικού",
+      "oldPassword": "Παλιός Κωδικός",
+      "newPassword": "Νέος Κωδικός",
+      "confirmPassword": "Επιβεβαίωση Κωδικού",
+      "update": "ΕΝΗΜΕΡΩΣΗ",
+      "rememberPassword": "Απομνημόνευση κωδικού",
+      "forgotPassword": "Ξέχασες τον κωδικό;"
+    },
+    "notification": {
+      "title": "ΕΙΔΟΠΟΙΗΣΕΙΣ",
+      "subtitle": "Ρυθμίσεις Ειδοποιήσεων",
+      "messaging": "Μηνύματα",
+      "someoneTextsMe": "Όταν έχω μηνύματα",
+      "iForgot": "Όταν έχω ξεχάσει να απαντήσω",
+      "forFiveMinutes": "Για 5 λεπτά",
+      "forFifteenMinutes": "Για 15 λεπτά",
+      "forThirtyMinutes": "Για 30 λεπτά",
+      "friendOrReferral": "Φίλοι",
+      "iHaveAFriendRequest": "Όταν έχω αίτημα φιλίας",
+      "someoneAccepts": "Όταν κάποιος αποδέχεται το αίτημα φιλίας",
+      "someoneInvited": "Κάποιος που προσκάλεσα από τον σύνδεσμο, εγγράφεται στην πλατφόρμα",
+      "propertyUpdates": "Ενημερώσεις Ακινήτου",
+      "someoneAddMyHouse": "Όταν κάποιος προσθέτει το ακίνητο στα αγαπημένα",
+      "iNeedToUpdate": "Όταν πρέπει να ενημερώσω το ημερολόγιο",
+      "reminders": "Υπενθυμίσεις",
+      "iForgotToRespondToExchange": "Ξέχασα να απαντήσω σε ένα μήνυμα για ανταλλαγή (μετά από 12 ώρες)",
+      "anExchangeHasBeenResponded": "Μια ανταλλαγή έχει απαντηθεί (απορριφθεί/εγκριθεί)",
+      "update": "ΕΝΗΜΕΡΩΣΗ"
+    },
+    "language": {
+      "title": "ΓΛΩΣΣΑ",
+      "subtitle": "Ρυθμίσεις γλώσσας",
+      "english": "Αγγλικά",
+      "greek": "Ελληνικά"
+    },
+    "payment": {
+      "title": "ΠΛΗΡΩΜΗ",
+      "subtitle": "Ρυθμίσεις Πληρωμής",
+      "addNewCard": "Πρόσθεσε Νέα Κάρτα"
+    }
+  }
+}

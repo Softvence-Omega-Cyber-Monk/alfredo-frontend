@@ -1,18 +1,21 @@
 import { useState } from "react";
 import MiniWrapper from "@/common/MiniWrapper";
 import { Button } from "../ui/button";
+import { useTranslation } from "react-i18next";
 
-const languages = ["English", "Greek"];
+const languages = ["English", "settings.language.greek"];
 
 const Language = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("English");
+
+  const { t } = useTranslation("settings");
 
   return (
     <MiniWrapper>
       <div className="space-y-8">
         <div>
           <Button className="w-full text-2xl font-DM-sans flex h-14 justify-center items-center gap-2 self-stretch rounded-xl bg-[var(--Primary-P-25,#F4F7FC)] text-[var(--color-primary-blue)] hover:bg-[#e1e9f5] transition-colors duration-200 cursor-pointer">
-            Language Settings
+            {t("settings.language.subtitle")}
           </Button>
         </div>
 
@@ -31,7 +34,7 @@ const Language = () => {
                       : "bg-[#FBFBFB] text-[#3174CD]"
                   }`}
                 >
-                  {lang}
+                  {t(lang)}
                   <label className="relative w-5 h-5">
                     <input
                       type="checkbox"

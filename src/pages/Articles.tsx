@@ -3,9 +3,12 @@ import { useState } from "react";
 import TopArticle from "../components/articles/TopArticle";
 import ArticleGrid from "../components/articles/ArticleGrid";
 import Testimonial from "@/components/reusable/Testimonial";
+import { useTranslation } from "react-i18next";
 
 const Articles = () => {
   const [activeTab, setActiveTab] = useState(0);
+
+  const { t } = useTranslation("articles");
 
   const tabs = [
     {
@@ -74,13 +77,13 @@ const Articles = () => {
       <CommonWrapper>
         <div>
           <h1 className="font-Grand-Hotel text-[96px] ml-4 text-primary-blue text-center">
-            Articles
+            {t("articles.title")}
           </h1>
-          <p className="mx-auto text-center text-basic-dark">
+          {/* <p className="mx-auto text-center text-basic-dark">
             Explore our most frequently asked questions to understand how
             Vacanza works, how to get started, and how we ensure a safe and
             trusted travel experience for all our members.
-          </p>
+          </p> */}
         </div>
 
         {/* tab component  */}
