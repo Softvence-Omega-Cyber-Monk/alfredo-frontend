@@ -4,14 +4,17 @@ import ChangePassword from "./ChangePassword";
 import Notification from "./Notification";
 import Language from "./Language";
 import Payment from "./Payment";
+import { useTranslation } from "react-i18next";
 
 const ProfileTab = () => {
   const [activeTab, setActiveTab] = useState(0);
 
+  const { t } = useTranslation("settings");
+
   const tabs = [
     {
       id: 0,
-      label: "Password",
+      label: t("settings.password.title"),
       content: (
         <>
           <ChangePassword />
@@ -20,7 +23,7 @@ const ProfileTab = () => {
     },
     {
       id: 1,
-      label: "Notification",
+      label: t("settings.notification.title"),
       content: (
         <>
           <Notification />
@@ -29,7 +32,7 @@ const ProfileTab = () => {
     },
     {
       id: 2,
-      label: "Language",
+      label: t("settings.language.title"),
       content: (
         <>
           <Language />
@@ -38,7 +41,7 @@ const ProfileTab = () => {
     },
     {
       id: 3,
-      label: "Payment",
+      label: t("settings.payment.title"),
       content: (
         <>
           <Payment />
