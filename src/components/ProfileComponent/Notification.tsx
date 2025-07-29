@@ -2,8 +2,10 @@ import MiniWrapper from "@/common/MiniWrapper";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import Switch from "react-switch";
+import { useTranslation } from "react-i18next";
 
 const Notification = () => {
+  const { t } = useTranslation("settings"); // Use the "settings" namespace for translations
   const [messageDelay, setMessageDelay] = useState("15 minutes");
 
   // Individual switch states
@@ -32,7 +34,7 @@ const Notification = () => {
       <div className="space-y-8">
         <div>
           <Button className="w-full text-2xl font-DM-sans flex h-14 justify-center items-center gap-2 self-stretch rounded-xl bg-[var(--Primary-P-25,#F4F7FC)] text-[var(--color-primary-blue)] hover:bg-[#e1e9f5] transition-colors duration-200 cursor-pointer">
-            Notification Settings
+            {t("settings.notification.subtitle")}
           </Button>
         </div>
 
@@ -40,11 +42,11 @@ const Notification = () => {
           {/* Messaging */}
           <div className="mx-auto bg-[#FBFBFB] p-4 rounded-xl shadow space-y-6 text-sm">
             <h2 className="text-lg text-blue-600 font-DM-sans mb-2">
-              Messaging
+              {t("settings.notification.messaging")}
             </h2>
             <div className="flex justify-between items-center ">
               <span className="text-[#505050] text-lg font-DM-sans">
-                Someone texts me
+                {t("settings.notification.someoneTextsMe")}
               </span>
               <Switch
                 onChange={handleSwitchChange("someoneTextsMe")}
@@ -59,16 +61,22 @@ const Notification = () => {
             </div>
             <div className="flex justify-between items-center ">
               <span className="text-[#505050] text-lg font-DM-sans">
-                I forgot to respond to messages
+                {t("settings.notification.iForgot")}
               </span>
               <select
                 value={messageDelay}
                 onChange={(e) => setMessageDelay(e.target.value)}
                 className="flex items-start gap-2 px-3 py-[6px] w-40 h-9 rounded border border-[#BFD4F0] bg-white text-base"
               >
-                <option value="5 minutes">For 5 minutes</option>
-                <option value="15 minutes">For 15 minutes</option>
-                <option value="30 minutes">For 30 minutes</option>
+                <option value="5 minutes">
+                  {t("settings.notification.forFiveMinutes")}
+                </option>
+                <option value="15 minutes">
+                  {t("settings.notification.forFifteenMinutes")}
+                </option>
+                <option value="30 minutes">
+                  {t("settings.notification.forThirtyMinutes")}
+                </option>
               </select>
             </div>
           </div>
@@ -76,11 +84,11 @@ const Notification = () => {
           {/* Friend/Referral */}
           <div className="mx-auto bg-[#FBFBFB] p-4 rounded-xl shadow space-y-6 text-sm">
             <h2 className="text-lg text-blue-600 font-DM-sans mb-2">
-              Friend/Referral
+              {t("settings.notification.friendOrReferral")}
             </h2>
             <div className="flex justify-between items-center ">
               <span className="text-[#505050] text-lg font-DM-sans">
-                I have a friend request
+                {t("settings.notification.iHaveAFriendRequest")}
               </span>
               <Switch
                 onChange={handleSwitchChange("friendRequest")}
@@ -95,7 +103,7 @@ const Notification = () => {
             </div>
             <div className="flex justify-between items-center ">
               <span className="text-[#505050] text-lg font-DM-sans">
-                Someone accepts my friend requests
+                {t("settings.notification.someoneAccepts")}
               </span>
               <Switch
                 onChange={handleSwitchChange("friendAccepted")}
@@ -110,7 +118,7 @@ const Notification = () => {
             </div>
             <div className="flex justify-between items-center ">
               <span className="text-[#505050] text-lg font-DM-sans">
-                Someone that I invited as a referral joined the platform
+                {t("settings.notification.someoneInvited")}
               </span>
               <Switch
                 onChange={handleSwitchChange("referralJoined")}
@@ -128,11 +136,11 @@ const Notification = () => {
           {/* Property Updates */}
           <div className="mx-auto bg-[#FBFBFB] p-4 rounded-xl shadow space-y-6 text-sm">
             <h2 className="text-lg text-blue-600 font-DM-sans mb-2">
-              Property Updates
+              {t("settings.notification.propertyUpdates")}
             </h2>
             <div className="flex justify-between items-center ">
               <span className="text-[#505050] text-lg font-DM-sans">
-                Someone adds my house to favourites
+                {t("settings.notification.someoneAddMyHouse")}
               </span>
               <Switch
                 onChange={handleSwitchChange("houseFavourited")}
@@ -147,7 +155,7 @@ const Notification = () => {
             </div>
             <div className="flex justify-between items-center ">
               <span className="text-[#505050] text-lg font-DM-sans">
-                I need to update the calendars for my properties
+                {t("settings.notification.iNeedToUpdate")}
               </span>
               <Switch
                 onChange={handleSwitchChange("updateCalendar")}
@@ -165,11 +173,11 @@ const Notification = () => {
           {/* Reminders */}
           <div className="mx-auto bg-[#FBFBFB] p-4 rounded-xl shadow space-y-6 text-sm">
             <h2 className="text-lg text-blue-600 font-DM-sans mb-2">
-              Reminders
+              {t("settings.notification.reminders")}
             </h2>
             <div className="flex justify-between items-center ">
               <span className="text-[#505050] text-lg font-DM-sans">
-                I forgot to respond to an exchange request (after 12h)
+                {t("settings.notification.iForgotToRespondToExchange")}
               </span>
               <Switch
                 onChange={handleSwitchChange("forgotExchange")}
@@ -184,7 +192,7 @@ const Notification = () => {
             </div>
             <div className="flex justify-between items-center ">
               <span className="text-[#505050] text-lg font-DM-sans">
-                An exchange has been responded to (rejected/approved)
+                {t("settings.notification.anExchangeHasBeenResponded")}
               </span>
               <Switch
                 onChange={handleSwitchChange("exchangeResponded")}
@@ -202,7 +210,7 @@ const Notification = () => {
 
         <div>
           <Button className="w-full text-lg font-DM-sans flex h-14 justify-center items-center gap-2 self-stretch rounded-xl bg-[#E9E9E9] text-[var(--color-basic-dark)] hover:bg-[#d4d3d3] transition-colors duration-200 cursor-pointer">
-            Update
+            {t("settings.notification.update")}
           </Button>
         </div>
       </div>
