@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import { useForm } from "react-hook-form";
 import { LuEyeOff } from "react-icons/lu";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 interface PasswordFormInputs {
   oldPassword: string;
@@ -17,6 +18,8 @@ const ChangePassword = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<PasswordFormInputs>();
+
+  const { t } = useTranslation("settings");
 
   const [showOld, setShowOld] = useState(false);
   const [showNew, setShowNew] = useState(false);
@@ -65,20 +68,26 @@ const ChangePassword = () => {
               type="button"
               className="w-full text-2xl font-DM-sans flex h-14 justify-center items-center gap-2 self-stretch rounded-xl bg-[var(--Primary-P-25,#F4F7FC)] text-[var(--color-primary-blue)] hover:bg-[#e1e9f5] transition-colors duration-200 cursor-pointer"
             >
-              Change Password
+              {t("settings.password.changePassword")}
             </Button>
           </div>
 
           {/* Password Fields */}
           <div className="space-y-8">
-            {renderPasswordField("Old Password", "oldPassword", showOld, () =>
-              setShowOld(!showOld)
-            )}
-            {renderPasswordField("New Password", "newPassword", showNew, () =>
-              setShowNew(!showNew)
+            {renderPasswordField(
+              t("settings.password.oldPassword"),
+              "oldPassword",
+              showOld,
+              () => setShowOld(!showOld)
             )}
             {renderPasswordField(
-              "Confirm Password",
+              t("settings.password.newPassword"),
+              "newPassword",
+              showNew,
+              () => setShowNew(!showNew)
+            )}
+            {renderPasswordField(
+              t("settings.password.confirmPassword"),
               "confirmPassword",
               showConfirm,
               () => setShowConfirm(!showConfirm)
@@ -91,7 +100,7 @@ const ChangePassword = () => {
               type="submit"
               className="w-full text-lg font-DM-sans flex h-14 justify-center items-center gap-2 self-stretch rounded-xl bg-[#E9E9E9] text-[var(--color-basic-dark)] hover:bg-[#d4d3d3] transition-colors duration-200 cursor-pointer"
             >
-              Update
+              {t("settings.password.update")}
             </Button>
           </div>
 
@@ -100,11 +109,11 @@ const ChangePassword = () => {
             <div className="flex items-start gap-2">
               <input type="checkbox" className="mt-2 cursor-pointer" />
               <label className="text-lg text-basic-dark">
-                Remember Password
+                {t("settings.password.rememberPassword")}
               </label>
             </div>
             <p className="text-lg text-[#009DE8] cursor-pointer">
-              Forgot Password?
+              {t("settings.password.forgotPassword")}
             </p>
           </div>
         </form>
@@ -114,126 +123,3 @@ const ChangePassword = () => {
 };
 
 export default ChangePassword;
-
-// import MiniWrapper from "@/common/MiniWrapper";
-// import { Button } from "../ui/button";
-// import { useForm } from "react-hook-form";
-
-// interface PasswordFormInputs {
-//   oldPassword: string;
-//   newPassword: string;
-//   confirmPassword: string;
-// }
-
-// const ChangePassword = () => {
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors },
-//   } = useForm<PasswordFormInputs>();
-
-//   const onSubmit = (data: PasswordFormInputs) => {
-//     console.log("Submitted Data:", data);
-//   };
-
-//   return (
-//     <MiniWrapper>
-//       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-//         <div>
-//           <Button
-//             type="button"
-//             className="w-full text-2xl font-DM-sans flex h-14 justify-center items-center gap-2 self-stretch rounded-xl bg-[var(--Primary-P-25,#F4F7FC)] text-[var(--color-primary-blue)] hover:bg-[#e1e9f5] transition-colors duration-200 cursor-pointer"
-//           >
-//             Change Password
-//           </Button>
-//         </div>
-
-//         {/* Old & Confirm Password */}
-//         <div className="space-y-8">
-//           <div className="w-full">
-//             <label className="text-[18px] font-semibold text-basic-dark">
-//               Old Password
-//             </label>
-//             <input
-//               type="password"
-//               placeholder="Enter old password"
-//               {...register("oldPassword", {
-//                 required: "Old password is required",
-//               })}
-//               className="w-full px-4 py-3 mt-2 border border-[#808080] rounded-[8px] focus:ring-1 focus:ring-primary-blue"
-//             />
-//             {errors.oldPassword && (
-//               <p className="text-red-500 text-sm mt-1">
-//                 {errors.oldPassword.message}
-//               </p>
-//             )}
-//           </div>
-
-//           <div className="w-full">
-//             <label className="text-[18px] font-semibold text-basic-dark">
-//               New Password
-//             </label>
-//             <input
-//               type="password"
-//               placeholder="Enter new password"
-//               {...register("newPassword", {
-//                 required: "New password is required",
-//               })}
-//               className="w-full px-4 py-3 mt-2 border border-[#808080] rounded-[8px] focus:ring-1 focus:ring-primary-blue"
-//             />
-//             {errors.newPassword && (
-//               <p className="text-red-500 text-sm mt-1">
-//                 {errors.newPassword.message}
-//               </p>
-//             )}
-//           </div>
-//           {/* Confirm Password */}
-//           <div className="w-full">
-//             <label className="text-[18px] font-semibold text-basic-dark">
-//               Confirm Password
-//             </label>
-//             <input
-//               defaultValue="**************"
-//               type="password"
-//               placeholder="Confirm new password"
-//               {...register("confirmPassword", {
-//                 required: "Please confirm your password",
-//               })}
-//               className="w-full px-4 py-3 mt-2 border border-[#808080] rounded-[8px] focus:ring-1 focus:ring-primary-blue"
-//             />
-//             {errors.confirmPassword && (
-//               <p className="text-red-500 text-sm mt-1">
-//                 {errors.confirmPassword.message}
-//               </p>
-//             )}
-//           </div>
-//         </div>
-
-//         {/* Submit Button */}
-//         <div>
-//           <Button
-//             type="submit"
-//             className="w-full text-lg font-DM-sans flex h-14 justify-center items-center gap-2 self-stretch rounded-xl bg-[#E9E9E9] text-[var(--color-basic-dark)] hover:bg-[#d4d3d3] transition-colors duration-200 cursor-pointer"
-//           >
-//             Update
-//           </Button>
-//         </div>
-
-//         {/* Remember and Forgot */}
-//         <div className="flex items-center justify-between gap-2">
-//           <div className="flex items-start gap-2">
-//             <input type="checkbox" className="mt-2 cursor-pointer" />
-//             <label className="text-lg text-basic-dark ">
-//               Remember Password
-//             </label>
-//           </div>
-//           <p className="text-lg text-[#009DE8]  cursor-pointer">
-//             Forgot Password?
-//           </p>
-//         </div>
-//       </form>
-//     </MiniWrapper>
-//   );
-// };
-
-// export default ChangePassword;

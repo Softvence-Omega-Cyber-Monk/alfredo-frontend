@@ -1,0 +1,75 @@
+{
+  "profile": {
+    "title": "Προφίλ",
+    "firstName": "Όνομα",
+    "lastName": "Επώνυμο",
+    "phone": "Τηλέφωνο (Whatsapp)",
+    "dob": "Ημερομηνία Γέννησης",
+    "email": "Email",
+    "identificationType": {
+      "label": "Τύπος Ταυτότητας",
+      "nid": "Δελτίο Ταυτότητας",
+      "passport": "Διαβατήριο",
+      "birthCertificate": "Πιστοποιητικό Γέννησης"
+    },
+    "number": "Νούμερο",
+    "numberPlaceholder": "Εισάγετε τον αριθμό ταυτότητας",
+    "age": "Ηλικία",
+    "gender": {
+      "title": "Φύλο",
+      "male": "Αρσενικό",
+      "female": "Θηλυκό",
+      "notSpecified": "Δεν διευκρινίζεται"
+    },
+    "iAmA": {
+      "title": "Είμαι",
+      "worker": "Υπάλληλος",
+      "retired": "Συνταξιούχος",
+      "student": "Φοιτητής",
+      "unemployed": "Άνεργος"
+    },
+    "iMostlyTravelWith": {
+      "title": "Κυρίως ταξιδεύω μαζί με",
+      "byMyself": "Μόνος μου",
+      "family": "Οικογένεια",
+      "friends": "Φίλους",
+      "couples": "Ζευγάρι"
+    },
+    "travelPreferences": {
+      "title": "Προτιμήσεις Ταξιδιού",
+      "subTitle": "Ταξιδεύω κυρίως (διάλεξε έως 2 επιλογές)",
+      "business": "Επιχειρηματικά",
+      "leisure": "Χαλάρωση",
+      "adventure": "Περιπέτεια",
+      "family": "Οικογένεια",
+      "solo": "Μόνος",
+      "cultural": "Πολιτισμός"
+    },
+    "doYouTravelWithPets": {
+      "title": "Ταξιδεύετε με κατοικίδια;",
+      "yes": "Ναι",
+      "no": "Όχι"
+    },
+    "favoriteDestinations": {
+      "title": "Αγαπημένοι προορισμοί (διάλεξε όσους ισχύουν)",
+      "bigCities": "Μεγάλες πόλεις",
+      "smallCities": "Μικρές πόλεις",
+      "seaside": "Κοντά στην θάλασσα",
+      "mountains": "Βουνό"
+    },
+    "iTravelFor": {
+      "title": "Ταξιδεύω για (διάλεξε όσους ισχύουν)",
+      "relaxation": "Χαλάρωση",
+      "adventure": "Περιπέτεια",
+      "work": "Εργασία"
+    },
+    "notesOnYourself": {
+      "title": "Σημειώσεις για εσένα",
+      "placeHolder": "Γράψε κάτι για τον εαυτό σου"
+    },
+    "accountVerificationStatus": "Κατάσταση επαλήθευσης λογαριασμού",
+    "verified": "Επαληθευμένος",
+    "notVerified": "Δεν έχει επαληθευτεί",
+    "saveChanges": "Αποθήκευση αλλαγών"
+  }
+}
