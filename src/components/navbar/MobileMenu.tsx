@@ -1,4 +1,3 @@
-// MobileMenu.tsx
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -30,6 +29,7 @@ const MobileMenu: React.FC<Props> = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation("navigation"); // ✅ move above any return
 
   const handleLogout = () => {
     dispatch(logout());
@@ -38,7 +38,7 @@ const MobileMenu: React.FC<Props> = ({
   };
 
   if (!isOpen) return null;
-  const { t } = useTranslation("navigation");
+
   return (
     <div className="lg:hidden">
       <div
