@@ -67,11 +67,11 @@ const HomeAvailability = ({
                   alt=""
                 />
                 <p className="text-lg text-dark-3 font-normal">
-                  {t("onboarding.part7.miniTitle1")}
+                  {t("onboarding.part7.availabilityCard.miniTitle1")}
                 </p>
               </div>
               <p className="text-lg text-dark-3 font-normal">
-                {t("onboarding.part7.subtitle1")}
+                {t("onboarding.part7.availabilityCard.subtitle1")}
               </p>
             </div>
 
@@ -90,11 +90,11 @@ const HomeAvailability = ({
                   alt=""
                 />
                 <p className="text-lg text-dark-3 font-normal">
-                  {t("onboarding.part7.miniTitle2")}
+                  {t("onboarding.part7.availabilityCard.miniTitle2")}
                 </p>
               </div>
               <p className="text-lg text-dark-3 font-regular">
-                {t("onboarding.part7.subtitle2")}
+                {t("onboarding.part7.availabilityCard.subtitle2")}
               </p>
             </div>
           </div>
