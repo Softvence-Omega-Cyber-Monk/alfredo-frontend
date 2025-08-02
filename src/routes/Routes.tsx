@@ -81,7 +81,7 @@ const routes = createBrowserRouter([
         element: <OTP />,
       },
       {
-        path: "/verify-email",
+        path: "/verify-otp/:userId",
         element: <VerifyEmail />,
       },
       {
@@ -89,7 +89,7 @@ const routes = createBrowserRouter([
         element: <ForgotPassword />,
       },
       {
-        path: "/set-new-password",
+        path: "/reset-password",
         element: <SetNewPassword />,
       },
       {

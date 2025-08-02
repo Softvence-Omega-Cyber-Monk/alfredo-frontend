@@ -4,10 +4,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import AuthenticateHeading from "@/components/reusable/AuthenticateHeading";
 import CommonWrapper from "@/common/CommonWrapper";
-// import SocialAuthButton from "@/components/reusable/SocialAuthButton";
 import AuthButton from "@/components/reusable/AuthButton";
+import { LuEyeOff } from "react-icons/lu";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { sendOtp, signupUser } from "@/store/Slices/AuthSlice/authSlice";
+import { AppDispatch, RootState } from "@/store/store";
 
-// ✅ Zod Schema (with fixed mobile validation)
+// ✅ Validation Schema
 const signupSchema = z
   .object({
     firstName: z.string().min(2, "First name must be at least 2 characters"),
@@ -19,8 +24,7 @@ const signupSchema = z
       .regex(/^\d+$/, "Mobile number must contain only digits"),
     password: z
       .string()
-      .min(8, "Password must be at least 8 characters")
-      .regex(/[A-Z]/, "Must contain an uppercase letter")
+      .min(6, "Password must be at least 6 characters")
       .regex(/[0-9]/, "Must contain a number"),
     confirmPassword: z.string(),
     agreeToTerms: z.literal(true, {
@@ -35,6 +39,10 @@ const signupSchema = z
 type SignupFormInputs = z.infer<typeof signupSchema>;
 
 const Signup = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const { loading, error } = useSelector((state: RootState) => state.auth);
+
   const {
     register,
     handleSubmit,
@@ -43,11 +51,34 @@ const Signup = () => {
     resolver: zodResolver(signupSchema),
   });
 
-  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const onSubmit = (data: SignupFormInputs) => {
-    console.log("Signup Data:", data);
-    navigate("/login");
+  const onSubmit = async (data: SignupFormInputs) => {
+    // Register the user
+    const resultAction = await dispatch(
+      signupUser({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        password: data.password,
+      })
+    );
+
+    if (signupUser.fulfilled.match(resultAction)) {
+      const userId = resultAction.payload.userId;
+      // Send OTP
+      const otpAction = await dispatch(sendOtp({ userId, method: "email" }));
+      if (sendOtp.fulfilled.match(otpAction)) {
+        console.log("OTP sent successfully:", otpAction.payload.message);
+        // Navigate to verify OTP page with userId in URL
+        navigate(`/verify-otp/${userId}`);
+      } else {
+        console.error("OTP sending failed:", otpAction.payload);
+      }
+    } else {
+      console.error("Signup failed:", resultAction.payload);
+    }
   };
 
   return (
@@ -136,16 +167,30 @@ const Signup = () => {
 
             {/* Password Fields */}
             <div className="flex flex-col md:flex-row gap-6">
+              {/* Password */}
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
                   Password
                 </label>
-                <input
-                  type="password"
-                  placeholder="12345667890"
-                  {...register("password")}
-                  className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
-                />
+                <div className="relative mt-2">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="********"
+                    {...register("password")}
+                    className="w-full px-4 py-3 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue pr-12"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                  >
+                    {showPassword ? (
+                      <LuEyeOff size={20} />
+                    ) : (
+                      <MdOutlineRemoveRedEye size={20} />
+                    )}
+                  </button>
+                </div>
                 {errors.password && (
                   <p className="text-red-500 text-sm mt-1">
                     {errors.password.message}
@@ -153,16 +198,30 @@ const Signup = () => {
                 )}
               </div>
 
+              {/* Confirm Password */}
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
                   Confirm Password
                 </label>
-                <input
-                  type="password"
-                  placeholder="12345667890"
-                  {...register("confirmPassword")}
-                  className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
-                />
+                <div className="relative mt-2">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="********"
+                    {...register("confirmPassword")}
+                    className="w-full px-4 py-3 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue pr-12"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                  >
+                    {showConfirmPassword ? (
+                      <LuEyeOff size={20} />
+                    ) : (
+                      <MdOutlineRemoveRedEye size={20} />
+                    )}
+                  </button>
+                </div>
                 {errors.confirmPassword && (
                   <p className="text-red-500 text-sm mt-1">
                     {errors.confirmPassword.message}
@@ -199,27 +258,25 @@ const Signup = () => {
               </p>
             )}
 
+            {error && <p className="text-red-500 text-center">{error}</p>}
+
             {/* Submit Button */}
-            <AuthButton title="Sign Up" onClick={handleSubmit(onSubmit)} />
+            <AuthButton
+              title={loading ? "Signing up..." : "Sign Up"}
+              onClick={handleSubmit(onSubmit)}
+            />
           </form>
 
-          {/* OR + Social */}
-          <div>
-            {/* <p className="text-[18px] font-semibold text-basic-dark text-center mt-[64px] mb-[32px]">
-              Or Sign Up With
-            </p>
-            <SocialAuthButton /> */}
-
-            <p className="text-[18px] text-basic-dark text-center mt-[64px]">
-              Already have an account?{" "}
-              <Link
-                to="/login"
-                className="text-primary-blue hover:border-b border-primary-blue duration-200"
-              >
-                Log In
-              </Link>
-            </p>
-          </div>
+          {/* Already have account */}
+          <p className="text-[18px] text-basic-dark text-center mt-[64px]">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-primary-blue hover:border-b border-primary-blue duration-200"
+            >
+              Log In
+            </Link>
+          </p>
         </div>
       </div>
     </CommonWrapper>
