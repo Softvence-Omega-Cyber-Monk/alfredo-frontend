@@ -7,8 +7,10 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { LuEyeOff } from "react-icons/lu";
 import CommonWrapper from "@/common/CommonWrapper";
 import AuthenticateHeading from "@/components/reusable/AuthenticateHeading";
-// import SocialAuthButton from "@/components/reusable/SocialAuthButton";
 import AuthButton from "@/components/reusable/AuthButton";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "@/store/Slices/AuthSlice/authSlice";
+import { AppDispatch, RootState } from "@/store/store";
 
 // ✅ Login schema
 const loginSchema = z.object({
@@ -22,6 +24,10 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => setShowPassword((prev) => !prev);
 
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const { loading, error } = useSelector((state: RootState) => state.auth);
+
   const {
     register,
     handleSubmit,
@@ -30,11 +36,14 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const navigate = useNavigate();
+  const onSubmit = async (data: LoginFormInputs) => {
+    const res = await dispatch(loginUser(data));
 
-  const onSubmit = (data: LoginFormInputs) => {
-    console.log("Login Data:", data);
-    navigate("/");
+    if (loginUser.fulfilled.match(res)) {
+      navigate("/"); // ✅ Successful login
+    } else {
+      console.error("Login failed:", res.payload);
+    }
   };
 
   return (
@@ -107,16 +116,16 @@ const Login = () => {
               </Link>
             </div>
 
+            {error && <p className="text-red-500 text-center">{error}</p>}
+
             {/* Submit Button */}
-            <AuthButton title="Log In" onClick={handleSubmit(onSubmit)} />
+            <AuthButton
+              title={loading ? "Logging in..." : "Log In"}
+              onClick={handleSubmit(onSubmit)}
+            />
           </form>
 
-          {/* Divider and Social */}
           <div>
-            {/* <p className="text-[18px] font-semibold text-basic-dark text-center mt-[64px] mb-[32px]">
-              Or Continue With
-            </p>
-            <SocialAuthButton /> */}
             <p className="text-[18px] text-basic-dark text-center mt-[64px]">
               Don’t have an account?{" "}
               <Link
