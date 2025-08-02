@@ -6,6 +6,9 @@ import AuthenticateHeading from "@/components/reusable/AuthenticateHeading";
 import CommonWrapper from "@/common/CommonWrapper";
 // import SocialAuthButton from "@/components/reusable/SocialAuthButton";
 import AuthButton from "@/components/reusable/AuthButton";
+import { LuEyeOff } from "react-icons/lu";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { useState } from "react";
 
 // ✅ Zod Schema (with fixed mobile validation)
 const signupSchema = z
@@ -49,6 +52,9 @@ const Signup = () => {
     console.log("Signup Data:", data);
     navigate("/login");
   };
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
     <CommonWrapper>
@@ -136,16 +142,30 @@ const Signup = () => {
 
             {/* Password Fields */}
             <div className="flex flex-col md:flex-row gap-6">
+              {/* Password */}
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
                   Password
                 </label>
-                <input
-                  type="password"
-                  placeholder="12345667890"
-                  {...register("password")}
-                  className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
-                />
+                <div className="relative mt-2">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="12345667890"
+                    {...register("password")}
+                    className="w-full px-4 py-3 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue pr-12"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                  >
+                    {showPassword ? (
+                      <LuEyeOff size={20} />
+                    ) : (
+                      <MdOutlineRemoveRedEye size={20} />
+                    )}
+                  </button>
+                </div>
                 {errors.password && (
                   <p className="text-red-500 text-sm mt-1">
                     {errors.password.message}
@@ -153,16 +173,30 @@ const Signup = () => {
                 )}
               </div>
 
+              {/* Confirm Password */}
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
                   Confirm Password
                 </label>
-                <input
-                  type="password"
-                  placeholder="12345667890"
-                  {...register("confirmPassword")}
-                  className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
-                />
+                <div className="relative mt-2">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="12345667890"
+                    {...register("confirmPassword")}
+                    className="w-full px-4 py-3 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue pr-12"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                  >
+                    {showConfirmPassword ? (
+                      <LuEyeOff size={20} />
+                    ) : (
+                      <MdOutlineRemoveRedEye size={20} />
+                    )}
+                  </button>
+                </div>
                 {errors.confirmPassword && (
                   <p className="text-red-500 text-sm mt-1">
                     {errors.confirmPassword.message}
