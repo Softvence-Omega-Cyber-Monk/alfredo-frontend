@@ -5,8 +5,10 @@ import CommonWrapper from "@/common/CommonWrapper";
 import AuthenticateHeading from "@/components/reusable/AuthenticateHeading";
 import { Link } from "react-router-dom";
 import AuthButton from "@/components/reusable/AuthButton";
+import { useDispatch, useSelector } from "react-redux";
+import { forgotPassword } from "@/store/Slices/AuthSlice/authSlice";
+import { AppDispatch, RootState } from "@/store/store";
 
-// ✅ Zod schema
 const verifySchema = z.object({
   email: z.string().email("Invalid email address"),
 });
@@ -14,16 +16,23 @@ const verifySchema = z.object({
 type VerifyFormInputs = z.infer<typeof verifySchema>;
 
 const ForgotPassword = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { loading, error, successMessage } = useSelector((state: RootState) => state.auth);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<VerifyFormInputs>({
     resolver: zodResolver(verifySchema),
   });
 
-  const onSubmit = (data: VerifyFormInputs) => {
-    console.log("Verify Email Data:", data);
+  const onSubmit = async (data: VerifyFormInputs) => {
+    const res = await dispatch(forgotPassword({ email: data.email }));
+    if (forgotPassword.fulfilled.match(res)) {
+      reset();
+    }
   };
 
   return (
@@ -49,14 +58,18 @@ const ForgotPassword = () => {
                 className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
               />
               {errors.email && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.email.message}
-                </p>
+                <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
               )}
             </div>
 
+            {error && <p className="text-red-500 text-center">{error}</p>}
+            {successMessage && <p className="text-green-500 text-center">{successMessage}</p>}
+
             {/* Submit Button */}
-            <AuthButton onClick={handleSubmit(onSubmit)} title="Send Reset Link" />
+            <AuthButton
+              onClick={handleSubmit(onSubmit)}
+              title={loading ? "Sending..." : "Send Reset Link"}
+            />
           </form>
 
           {/* Support Link */}
