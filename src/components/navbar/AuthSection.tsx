@@ -17,14 +17,12 @@ import { logout } from "@/store/Slices/AuthSlice/authSlice";
 import LanguageSwitcher from "../LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 
-interface User {
-  name: string;
-  role: string;
-}
+
+import type { User as AuthUser } from "@/store/Slices/AuthSlice/authSlice";
 
 interface Props {
   isAuthenticated: boolean;
-  user: User | null;
+  user: AuthUser | null;
   setMobileMenuOpen: (state: boolean) => void;
 }
 
@@ -75,7 +73,7 @@ const AuthSection: React.FC<Props> = ({
 
         <PopoverTrigger>
           <div className="flex items-center gap-2 md:gap-3">
-            <UserAvatar userName={user?.name || "Guest"} />
+            <UserAvatar userName={user ? `${user.firstName}` : "Guest"} />
 
             {/* <p className="text-primary-blue font-medium text-sm sm:text-base md:text-lg">
               {user?.name.split(" ")[0]}
