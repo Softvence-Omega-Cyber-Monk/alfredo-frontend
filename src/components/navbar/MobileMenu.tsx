@@ -6,17 +6,13 @@ import clsx from "clsx";
 import { logout } from "@/store/Slices/AuthSlice/authSlice";
 import { useAppDispatch } from "@/hooks/useRedux";
 import { useTranslation } from "react-i18next";
-
-interface User {
-  name: string;
-  role: string;
-}
+import type { User as AuthUser } from "@/store/Slices/AuthSlice/authSlice";
 
 interface Props {
   isOpen: boolean;
   setIsOpen: (val: boolean) => void;
   isAuthenticated: boolean;
-  user: User | null;
+  user: AuthUser | null;
   currentPath: string;
 }
 
