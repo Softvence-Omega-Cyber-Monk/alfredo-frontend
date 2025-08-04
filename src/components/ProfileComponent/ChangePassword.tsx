@@ -5,6 +5,10 @@ import { useForm } from "react-hook-form";
 import { LuEyeOff } from "react-icons/lu";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import { changePassword } from "@/store/Slices/AuthSlice/authSlice";
+import { toast } from "sonner";
 
 interface PasswordFormInputs {
   oldPassword: string;
@@ -17,16 +21,39 @@ const ChangePassword = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<PasswordFormInputs>();
 
   const { t } = useTranslation("settings");
+  const dispatch = useAppDispatch();
+  const { loading, error, successMessage } = useAppSelector(
+    (state) => state.auth
+  );
 
   const [showOld, setShowOld] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
   const onSubmit = (data: PasswordFormInputs) => {
-    console.log("Submitted Data:", data);
+    if (data.newPassword !== data.confirmPassword) {
+      alert("New password and confirm password do not match");
+      return;
+    }
+
+    dispatch(
+      changePassword({
+        oldPassword: data.oldPassword,
+        newPassword: data.newPassword,
+      })
+    )
+      .unwrap()
+      .then(() => {
+        toast.success("Password changed successfully!");
+        reset();
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
   };
 
   const renderPasswordField = (
@@ -61,63 +88,69 @@ const ChangePassword = () => {
 
   return (
     <MiniWrapper>
-      <div className="">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-          <div>
-            <Button
-              type="button"
-              className="w-full text-2xl font-DM-sans flex h-14 justify-center items-center gap-2 self-stretch rounded-xl bg-[var(--Primary-P-25,#F4F7FC)] text-[var(--color-primary-blue)] hover:bg-[#e1e9f5] transition-colors duration-200 cursor-pointer"
-            >
-              {t("settings.password.changePassword")}
-            </Button>
-          </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+        <div>
+          <Button
+            type="button"
+            className="w-full text-2xl font-DM-sans flex h-14 justify-center items-center gap-2 self-stretch rounded-xl bg-[var(--Primary-P-25,#F4F7FC)] text-[var(--color-primary-blue)]"
+          >
+            {t("settings.password.changePassword")}
+          </Button>
+        </div>
 
-          {/* Password Fields */}
-          <div className="space-y-8">
-            {renderPasswordField(
-              t("settings.password.oldPassword"),
-              "oldPassword",
-              showOld,
-              () => setShowOld(!showOld)
-            )}
-            {renderPasswordField(
-              t("settings.password.newPassword"),
-              "newPassword",
-              showNew,
-              () => setShowNew(!showNew)
-            )}
-            {renderPasswordField(
-              t("settings.password.confirmPassword"),
-              "confirmPassword",
-              showConfirm,
-              () => setShowConfirm(!showConfirm)
-            )}
-          </div>
+        {/* Password Fields */}
+        <div className="space-y-8">
+          {renderPasswordField(
+            t("settings.password.oldPassword"),
+            "oldPassword",
+            showOld,
+            () => setShowOld(!showOld)
+          )}
+          {renderPasswordField(
+            t("settings.password.newPassword"),
+            "newPassword",
+            showNew,
+            () => setShowNew(!showNew)
+          )}
+          {renderPasswordField(
+            t("settings.password.confirmPassword"),
+            "confirmPassword",
+            showConfirm,
+            () => setShowConfirm(!showConfirm)
+          )}
+        </div>
 
-          {/* Submit Button */}
-          <div>
-            <Button
-              type="submit"
-              className="w-full text-lg font-DM-sans flex h-14 justify-center items-center gap-2 self-stretch rounded-xl bg-[#E9E9E9] text-[var(--color-basic-dark)] hover:bg-[#d4d3d3] transition-colors duration-200 cursor-pointer"
-            >
-              {t("settings.password.update")}
-            </Button>
-          </div>
+        {/* Submit Button */}
+        <div>
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full text-lg font-DM-sans flex h-14 justify-center items-center gap-2 self-stretch rounded-xl bg-[#E9E9E9] text-[var(--color-basic-dark)]"
+          >
+            {loading ? "Updating..." : t("settings.password.update")}
+          </Button>
+        </div>
 
-          {/* Remember and Forgot */}
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-start gap-2">
-              <input type="checkbox" className="mt-2 cursor-pointer" />
-              <label className="text-lg text-basic-dark">
-                {t("settings.password.rememberPassword")}
-              </label>
-            </div>
-            <p className="text-lg text-[#009DE8] cursor-pointer">
-              {t("settings.password.forgotPassword")}
-            </p>
+        {/* Remember and Forgot */}
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-start gap-2">
+            <input type="checkbox" className="mt-2 cursor-pointer" />
+            <label className="text-lg text-basic-dark">
+              {t("settings.password.rememberPassword")}
+            </label>
           </div>
-        </form>
-      </div>
+          <Link
+            to="/forgot-password"
+            className="text-lg text-[#009DE8] cursor-pointer"
+          >
+            {t("settings.password.forgotPassword")}
+          </Link>
+        </div>
+
+        {/* Error / Success Messages */}
+        {error && <p className="text-red-500">{error}</p>}
+        {successMessage && <p className="text-green-500">{successMessage}</p>}
+      </form>
     </MiniWrapper>
   );
 };

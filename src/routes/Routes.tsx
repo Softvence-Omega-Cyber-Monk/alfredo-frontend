@@ -105,7 +105,7 @@ const routes = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "/setting-password",
+        path: "/settings",
         element: <SettingPassword />,
       },
       {
