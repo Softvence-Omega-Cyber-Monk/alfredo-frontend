@@ -1,14 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MiniWrapper from "@/common/MiniWrapper";
 import { Button } from "../ui/button";
 import { useTranslation } from "react-i18next";
 
-const languages = ["English", "settings.language.greek"];
-
 const Language = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState("English");
+  const { t, i18n } = useTranslation("settings");
+  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
 
-  const { t } = useTranslation("settings");
+  const languages = [
+    { code: "en", name: "English" },
+    { code: "el", name: t("settings.language.greek") }, // Or hardcode "Ελληνικά"
+  ];
+
+  // Update selectedLanguage if i18n changes externally
+  useEffect(() => {
+    const handleLanguageChange = () => setSelectedLanguage(i18n.language);
+    i18n.on("languageChanged", handleLanguageChange);
+    return () => {
+      i18n.off("languageChanged", handleLanguageChange);
+    };
+  }, [i18n]);
+
+  const changeLanguage = (lng: string) => {
+    if (lng !== i18n.language) {
+      i18n.changeLanguage(lng).then(() => {
+        localStorage.setItem("i18nextLng", lng); // Persist in localStorage
+      });
+    }
+    setSelectedLanguage(lng);
+  };
 
   return (
     <MiniWrapper>
@@ -19,22 +39,22 @@ const Language = () => {
           </Button>
         </div>
 
-        <div className=" space-y-80">
+        <div className="space-y-80">
           {/* Language options */}
           <div className="space-y-3">
             {languages.map((lang) => {
-              const isSelected = selectedLanguage === lang;
+              const isSelected = selectedLanguage === lang.code;
               return (
                 <Button
-                  key={lang}
-                  onClick={() => setSelectedLanguage(lang)}
+                  key={lang.code}
+                  onClick={() => changeLanguage(lang.code)}
                   className={`w-full flex h-14 justify-between items-center rounded-xl px-4 cursor-pointer transition-colors duration-200 ${
                     isSelected
                       ? "bg-[#3174CD] text-white"
                       : "bg-[#FBFBFB] text-[#3174CD]"
                   }`}
                 >
-                  {t(lang)}
+                  {lang.name}
                   <label className="relative w-5 h-5">
                     <input
                       type="checkbox"
@@ -55,13 +75,6 @@ const Language = () => {
                 </Button>
               );
             })}
-          </div>
-
-          {/* Save button */}
-          <div>
-            <Button className="w-full text-lg font-DM-sans flex h-14 justify-center items-center gap-2 self-stretch rounded-xl bg-[#E9E9E9] text-[var(--color-basic-dark)] hover:bg-[#d4d3d3] transition-colors duration-200 cursor-pointer">
-              Save
-            </Button>
           </div>
         </div>
       </div>
