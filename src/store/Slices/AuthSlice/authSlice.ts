@@ -121,7 +121,7 @@ export const verifyOtp = createAsyncThunk<
   AuthResponse, // Updated return type
   { userId: string; otp: string }, // Payload type
   { rejectValue: string }
->("auth/verifyOtp", async ({ userId, otp }, { rejectWithValue }) => {
+>("auth/verify-otp", async ({ userId, otp }, { rejectWithValue }) => {
   try {
     const { data } = await api.post("/auth/verify-otp", { userId, otp });
 
@@ -172,7 +172,7 @@ export const forgotPassword = createAsyncThunk<
   string,
   { email: string },
   { rejectValue: string }
->("auth/forgotPassword", async ({ email }, { rejectWithValue }) => {
+>("auth/forgot-password", async ({ email }, { rejectWithValue }) => {
   try {
     const { data } = await api.post<{ message: string }>(
       "/auth/forgot-password",
@@ -193,20 +193,59 @@ export const resetPassword = createAsyncThunk<
   string,
   { token: string; newPassword: string },
   { rejectValue: string }
->("auth/resetPassword", async ({ token, newPassword }, { rejectWithValue }) => {
-  try {
-    const { data } = await api.post<{ message: string }>(
-      "/auth/reset-password",
-      { token, newPassword }
-    );
-    return data.message;
-  } catch (err) {
-    const error = err as AxiosError<ApiError>;
-    return rejectWithValue(
-      error.response?.data?.message || "Reset password failed"
-    );
+>(
+  "auth/reset-password",
+  async ({ token, newPassword }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.post<{ message: string }>(
+        "/auth/reset-password",
+        { token, newPassword }
+      );
+      return data.message;
+    } catch (err) {
+      const error = err as AxiosError<ApiError>;
+      return rejectWithValue(
+        error.response?.data?.message || "Reset password failed"
+      );
+    }
   }
-});
+);
+
+// Change Password
+export const changePassword = createAsyncThunk<
+  string,
+  { oldPassword: string; newPassword: string },
+  { rejectValue: string; state: { auth: AuthState } }
+>(
+  "auth/change-password",
+  async ({ oldPassword, newPassword }, { rejectWithValue, getState }) => {
+    const token = getState().auth.token;
+    if (!token) {
+      return rejectWithValue("User not authenticated");
+    }
+
+    try {
+      const { data } = await api.patch<{ message: string }>(
+        "/auth/change-password",
+        {
+          currentPassword: oldPassword, // backend expects "currentPassword"
+          newPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // ✅ send token
+          },
+        }
+      );
+      return data.message;
+    } catch (err) {
+      const error = err as AxiosError<ApiError>;
+      return rejectWithValue(
+        error.response?.data?.message || "Change password failed"
+      );
+    }
+  }
+);
 
 // ========== Slice ==========
 const authSlice = createSlice({

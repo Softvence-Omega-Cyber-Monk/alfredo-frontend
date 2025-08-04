@@ -57,6 +57,6 @@ export const userMenuItems = [
     icon: settings,
     hoverIcon: settingsHover,
     title: "navigation.settings",
-    path: "/setting-password",
+    path: "/settings",
   },
 ];
