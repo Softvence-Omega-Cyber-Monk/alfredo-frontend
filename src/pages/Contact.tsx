@@ -30,7 +30,7 @@ const Contact = () => {
 
     dispatch(createContact(contactPayload))
       .unwrap()
-      .then((res) => {
+      .then(() => {
         toast.success("Message sent successfully!");
       })
       .catch((err) => {
