@@ -16,6 +16,7 @@ const Contact = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormData>();
 
   const dispatch = useDispatch<AppDispatch>();
@@ -32,6 +33,7 @@ const Contact = () => {
       .unwrap()
       .then(() => {
         toast.success("Message sent successfully!");
+        reset();
       })
       .catch((err) => {
         toast.error("Error sending message", err);
