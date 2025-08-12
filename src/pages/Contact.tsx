@@ -3,9 +3,13 @@ import ClientHeading from "@/components/reusable/ClientHeading";
 import Conversation from "@/components/reusable/Conversation";
 import ReusableButton from "@/components/reusable/ReusableButton";
 import Subscribe from "@/components/reusable/Subscribe";
+import { createContact } from "@/store/Slices/ContactSlice/contactSclice";
+import { AppDispatch } from "@/store/store";
 import { FormData } from "@/types";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 
 const Contact = () => {
   const {
@@ -14,8 +18,24 @@ const Contact = () => {
     formState: { errors },
   } = useForm<FormData>();
 
+  const dispatch = useDispatch<AppDispatch>();
+
   const onSubmit = (data: FormData) => {
-    console.log("Form Data:", data);
+    const contactPayload = {
+      name: `${data.firstName} ${data.lastName}`,
+      email: data.email,
+      phoneNumber: data.phone,
+      opinion: data.message, // assuming "message" field maps to "opinion"
+    };
+
+    dispatch(createContact(contactPayload))
+      .unwrap()
+      .then((res) => {
+        toast.success("Message sent successfully!");
+      })
+      .catch((err) => {
+        toast.error("Error sending message", err);
+      });
   };
   const { t } = useTranslation("contact");
 
