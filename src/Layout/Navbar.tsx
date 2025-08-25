@@ -27,7 +27,6 @@ const Navbar: React.FC = () => {
                 user={user}
                 setMobileMenuOpen={setIsOpen}
               />
-
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"

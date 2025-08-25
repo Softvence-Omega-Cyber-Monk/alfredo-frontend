@@ -54,7 +54,7 @@ const VerifyEmail = () => {
     const res = await dispatch(verifyOtp({ userId, otp: data.otp }));
 
     if (verifyOtp.fulfilled.match(res)) {
-      navigate("/onboarding"); // ✅ After verification
+      navigate("/login");
     }
   };
 
@@ -93,7 +93,9 @@ const VerifyEmail = () => {
                 className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue text-center"
               />
               {errors.otp && (
-                <p className="text-red-500 text-sm mt-1">{errors.otp.message}</p>
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.otp.message}
+                </p>
               )}
             </div>
 
@@ -109,13 +111,17 @@ const VerifyEmail = () => {
             <div className="text-[18px] flex items-center justify-center gap-2 font-semibold text-primary-blue">
               <img src={time} alt="" />
               <span>
-                {counter > 0 ? `00:${counter.toString().padStart(2, "0")}` : "00:00"}
+                {counter > 0
+                  ? `00:${counter.toString().padStart(2, "0")}`
+                  : "00:00"}
               </span>
             </div>
 
             <button
               className={`${
-                canResend ? "text-primary-blue hover:border-b border-primary-blue" : "text-gray-400 cursor-not-allowed"
+                canResend
+                  ? "text-primary-blue hover:border-b border-primary-blue"
+                  : "text-gray-400 cursor-not-allowed"
               } duration-200`}
               onClick={canResend ? handleResend : undefined}
               disabled={!canResend}

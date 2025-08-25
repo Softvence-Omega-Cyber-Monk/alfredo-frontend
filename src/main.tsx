@@ -18,7 +18,16 @@ createRoot(document.getElementById("root")!).render(
       <I18nextProvider i18n={i18n}>
         <Suspense fallback={<div>Loading...</div>}>
           <RouterProvider router={routes} />
-          <Toaster richColors position="top-right" />
+          <Toaster
+            toastOptions={{
+              style: {
+                background: "#153661f1",
+                border: "#2C68B8",
+                color: "white",
+              },
+            }}
+            position="top-right"
+          />
         </Suspense>
       </I18nextProvider>
     </Provider>

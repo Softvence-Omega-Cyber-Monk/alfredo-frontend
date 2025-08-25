@@ -39,10 +39,20 @@ const Login = () => {
   const onSubmit = async (data: LoginFormInputs) => {
     const res = await dispatch(loginUser(data));
 
+    // if (loginUser.fulfilled.match(res)) {
+    //   navigate("/dashboard");
+    // } else {
+    //   console.error("Login failed:", res.payload);
+    // }
+
     if (loginUser.fulfilled.match(res)) {
-      navigate("/"); // ✅ Successful login
-    } else {
-      console.error("Login failed:", res.payload);
+      const user = res.payload.user;
+
+      if (!user.hasOnboarded) {
+        navigate("/onboarding");
+      } else {
+        navigate("/dashboard");
+      }
     }
   };
 
