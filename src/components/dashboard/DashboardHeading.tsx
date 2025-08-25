@@ -19,25 +19,51 @@ const DashboardHeading = ({ onSubmit }: DashboardHeadingProps) => {
         </p>
       </div>
       <div className="flex justify-center gap-4 lg:justify-end">
-        <button
-          onClick={onSubmit}
-          className="relative overflow-hidden rounded-full hover:brightness-80 transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
-        >
-          <p className="relative z-10">{t("dashboard.button1")}</p>
-          <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
-            <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
-          </div>
-        </button>
-        <Link
-          to="/my-properties"
-          className="relative overflow-hidden rounded-full hover:brightness-80 transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
-        >
-          <p className="relative z-10">{t("dashboard.button2")}</p>
-          <MoveRight className="relative z-10 w-5 h-5" />
-          <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
-            <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
-          </div>
-        </Link>
+        <div className="lg:flex flex-col gap-3">
+          <button
+            onClick={onSubmit}
+            className="relative overflow-hidden rounded-full hover:brightness-80 transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
+          >
+            <p className="relative z-10">{t("dashboard.button1")}</p>
+            <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
+              <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
+            </div>
+          </button>
+          {/* favorite places button  */}
+          <Link
+            to="/my-properties"
+            className="relative overflow-hidden rounded-full hover:brightness-80 transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
+          >
+            <p className="relative z-10">{t("dashboard.button2")}</p>
+            {/* <MoveRight className="relative z-10 w-5 h-5" /> */}
+            <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
+              <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
+            </div>
+          </Link>
+        </div>
+        <div className="lg:flex flex-col gap-3">
+          {/* my places button  */}
+          <Link
+            to="/my-properties"
+            className="relative overflow-hidden rounded-full hover:brightness-80 transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
+          >
+            <p className="relative z-10">{t("dashboard.button4")}</p>
+            <MoveRight className="relative z-10 w-5 h-5" />
+            <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
+              <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
+            </div>
+          </Link>
+          {/* friends button  */}
+          <button
+            onClick={onSubmit}
+            className="relative overflow-hidden rounded-full hover:brightness-80 transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
+          >
+            <p className="relative z-10">{t("dashboard.button3")}</p>
+            <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
+              <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   );

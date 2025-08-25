@@ -1,4 +1,4 @@
-import { Mail, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import PrimaryButton from "../reusable/PrimaryButton";
 
 interface Badge {
@@ -34,8 +34,8 @@ const OwnerInfo = ({
   owner,
   callToAction,
   isPremiumMember = false,
-//   onSubscribeClick,
-}: OwnerInfoProps) => {
+}: //   onSubscribeClick,
+OwnerInfoProps) => {
   return (
     <div className="relative p-6 border border-[#F4F7FC] rounded-lg md:rounded-3xl bg-white">
       {!isPremiumMember && (
@@ -69,10 +69,10 @@ const OwnerInfo = ({
       />
       <div className="flex flex-col gap-4 pt-4 pb-6 border-b border-[#F4F7FC]">
         <h3 className="text-lg text-dark-2 font-semibold">{owner.name}</h3>
-        <div className="flex items-center gap-1.5 text-dark-3 text-base">
+        {/* <div className="flex items-center gap-1.5 text-dark-3 text-base">
           <Mail className="w-5 h-5 text-primary-blue" />
           <p>{owner.email}</p>
-        </div>
+        </div> */}
         <div className="flex items-start justify-start gap-1.5 text-dark-3 text-base">
           <MapPin className="w-5 h-5 text-primary-blue" />
           <p>{owner.location}</p>

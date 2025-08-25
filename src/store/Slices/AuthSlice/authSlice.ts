@@ -9,6 +9,7 @@ export interface User {
   lastName: string;
   role: string;
   email: string;
+  hasOnboarded: boolean;
 }
 export interface RegisterResponse {
   status: string; // e.g. "pending"
@@ -21,7 +22,7 @@ interface AuthState {
   token: string | null;
   loading: boolean;
   error: string | null;
-  successMessage?: string | null; // ✅ added
+  successMessage?: string | null;
 }
 
 interface AuthResponse {
@@ -48,6 +49,31 @@ const api = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
+//Signup User
+
+export const signupUser = createAsyncThunk<
+  RegisterResponse, // updated return type
+  {
+    firstName: string;
+    lastName: string;
+    email: string;
+    mobile: string;
+    password: string;
+  },
+  { rejectValue: string }
+>("auth/register", async (newUser, { rejectWithValue }) => {
+  try {
+    const { data } = await api.post<RegisterResponse>(
+      "/auth/register",
+      newUser
+    );
+    return data;
+  } catch (err) {
+    const error = err as AxiosError<ApiError>;
+    return rejectWithValue(error.response?.data?.message || "Signup failed");
+  }
+});
+
 // Login User
 export const loginUser = createAsyncThunk<
   AuthResponse,
@@ -64,6 +90,7 @@ export const loginUser = createAsyncThunk<
         lastName: data.user.fullName.split(" ").slice(1).join(" "),
         email: data.user.email,
         role: data.user.role,
+        hasOnboarded: data.user.hasOnboarded,
       },
       token: data.accessToken,
     };
@@ -72,25 +99,6 @@ export const loginUser = createAsyncThunk<
   } catch (err) {
     const error = err as AxiosError<ApiError>;
     return rejectWithValue(error.response?.data?.message || "Login failed");
-  }
-});
-
-//Signup User
-
-export const signupUser = createAsyncThunk<
-  RegisterResponse, // updated return type
-  { firstName: string; lastName: string; email: string; password: string },
-  { rejectValue: string }
->("auth/register", async (newUser, { rejectWithValue }) => {
-  try {
-    const { data } = await api.post<RegisterResponse>(
-      "/auth/register",
-      newUser
-    );
-    return data;
-  } catch (err) {
-    const error = err as AxiosError<ApiError>;
-    return rejectWithValue(error.response?.data?.message || "Signup failed");
   }
 });
 
@@ -132,6 +140,7 @@ export const verifyOtp = createAsyncThunk<
         lastName: data.user.fullName.split(" ").slice(1).join(" "),
         email: data.user.email,
         role: data.user.role,
+        hasOnboarded: data.user.hasOnboarded,
       },
       token: data.accessToken,
     };
@@ -233,7 +242,7 @@ export const changePassword = createAsyncThunk<
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`, // ✅ send token
+            Authorization: `Bearer ${token}`,
           },
         }
       );
