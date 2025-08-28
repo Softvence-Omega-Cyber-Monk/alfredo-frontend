@@ -17,10 +17,12 @@ import { Amenity } from "@/lib/data/amenities";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { useAppDispatch } from "@/hooks/useRedux";
+import { postOnboarding } from "@/store/Slices/OnboardingSlice/OnboardSlice";
 
-export type AgeGroup = "18–30" | "30–50" | "50–65" | "65+";
-export type Gender = "Male" | "Female" | "Not Specified";
-export type Role = "Worker" | "Retired" | "Student" | "Unemployed";
+export type AgeGroup = "AGE_18_30" | "AGE_30_50" | "AGE_50_65" | "AGE_65_PLUS";
+export type Gender = "MALE" | "FEMALE" | "NOT_SPECIFIED";
+export type Role = "WORKER" | "RETIRED" | "STUDENT" | "UNEMPLOYED";
 export type TravelType =
   | "Business"
   | "Leisure"
@@ -33,12 +35,14 @@ export type DestinationType =
   | "Small Cities"
   | "Seaside"
   | "Mountain";
-export type TravelGroup =
-  | "By Myself"
-  | "With Family"
-  | "With a Partner"
-  | "With Friends";
-export type TravelWithPets = "Business trips" | "Leisure trips" | "Both";
+export type TravelGroup = "BY_MYSELF" | "FAMILY" | "COUPLE" | "FRIENDS";
+export type TravelWithPets = boolean;
+export type HomeApartmentType = "HOME" | "APARTMENT";
+
+// const propertyTypeLabels: Record<string, string> = {
+//   home: "Home",
+//   apartment: "Apartment",
+// };
 
 interface OnboardingData extends AddPlaceData {
   personalInformation: {
@@ -49,6 +53,7 @@ interface OnboardingData extends AddPlaceData {
     favoriteDestinations: DestinationType[];
     travelGroup: TravelGroup;
     travelWithPets: TravelWithPets;
+    maxPeople: number | null;
     notes: string;
   };
 }
@@ -66,12 +71,19 @@ const steps = [
 const MultiStepForm = () => {
   const { t } = useTranslation("onboarding");
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const [addPlaceData, setAddPlaceData] = useState<OnboardingData>({
+  const [addPlaceData, setAddPlaceData] = useState<
+    OnboardingData & {
+      homeAddress?: string;
+      destinationAddress?: string;
+    }
+  >({
     location: null,
     destination: null,
     homeType: null,
-    residenceType: null,
+    residenceType: true,
     selectedAmenities: {
       main: [],
       transport: [],
@@ -87,13 +99,14 @@ const MultiStepForm = () => {
       end: null,
     },
     personalInformation: {
-      age: "18–30",
-      gender: "Not Specified",
-      role: "Worker",
+      age: "AGE_18_30",
+      gender: "NOT_SPECIFIED",
+      role: "RETIRED",
       travelType: [],
       favoriteDestinations: [],
-      travelGroup: "By Myself",
-      travelWithPets: "Business trips",
+      travelGroup: "FRIENDS",
+      travelWithPets: true,
+      maxPeople: null,
       notes: "",
     },
   });
@@ -103,12 +116,91 @@ const MultiStepForm = () => {
 
   const handleSubmitData = async () => {
     try {
-      console.log("Onboarding Data to send to backend:", addPlaceData);
-      toast.success("Onboarding successful!");
-      navigate("/dashboard");
+      console.log("Starting form submission...");
+      const user = localStorage.getItem("user");
+      console.log("Raw user from localStorage:", user); // What does this log?
+
+      const parsedUser = user ? JSON.parse(user) : null;
+      console.log("Parsed user object:", parsedUser); // What does this log?
+      console.log("User ID to be sent:", parsedUser?.id); // What does this log?
+      const userId = parsedUser?.id;
+
+      if (!userId) {
+        toast.error("User not found. Please log in again.");
+        navigate("/login"); // Redirect to login
+        return; // Exit the function early
+      }
+      const formData = new FormData();
+
+      const payload = {
+        // userId: parsedUser ? parsedUser?.id : null,
+        // location: addPlaceData.location,
+        // destinationCoords: addPlaceData.destination,
+
+        // first step (location)
+        homeAddress: addPlaceData.homeAddress,
+        destination: addPlaceData.destinationAddress,
+
+        //next step (personal info)
+        ageRange: addPlaceData.personalInformation.age,
+        gender: addPlaceData.personalInformation.gender,
+        employmentStatus: addPlaceData.personalInformation.role,
+        travelType: addPlaceData.personalInformation.travelType,
+        favoriteDestinations:
+          addPlaceData.personalInformation.favoriteDestinations,
+        travelMostlyWith: addPlaceData.personalInformation.travelGroup,
+        isTravelWithPets: addPlaceData.personalInformation.travelWithPets,
+        maxPeople: addPlaceData.personalInformation.maxPeople || 1,
+        notes: addPlaceData.personalInformation.notes,
+
+        //next step (property type)
+        propertyType: addPlaceData.homeType,
+        isMainResidence: addPlaceData.residenceType,
+
+        //next step (amenities)
+        amenities: addPlaceData.selectedAmenities.main.map((i) => i.id),
+        transports: addPlaceData.selectedAmenities.transport.map((i) => i.id),
+        surroundings: addPlaceData.selectedAmenities.surrounding.map(
+          (i) => i.id
+        ),
+
+        //next step (home details)
+        homeName: addPlaceData.homeName,
+        homeDescription: addPlaceData.homeDescription,
+        aboutNeighborhood: addPlaceData.areaDescription,
+
+        //next step (upload images)
+        homeImages: addPlaceData.photos,
+
+        //next step (availability)
+        availabilityStartDate: addPlaceData.availabilityDates.start
+          ? new Date(addPlaceData.availabilityDates.start).toISOString()
+          : null,
+        availabilityEndDate: addPlaceData.availabilityDates.end
+          ? new Date(addPlaceData.availabilityDates.end).toISOString()
+          : null,
+      };
+      // console.log("Onboarding Data to send to backend:", addPlaceData);
+      formData.append("data", JSON.stringify(payload));
+      addPlaceData.photos.forEach((file) => {
+        formData.append("homeImages", file);
+      });
+      console.log("Payload:", payload);
+      const result = await dispatch(postOnboarding(formData));
+      if (postOnboarding.fulfilled.match(result)) {
+        toast.success("Onboarding successful!");
+        navigate("/dashboard");
+      } else {
+        // result.error will contain the rejected value from the thunk
+        console.error("Submission failed with error:", result.error);
+        toast.error(
+          "Error submitting property. " + (result.error.message || "")
+        );
+      }
     } catch (error) {
-      console.error("Error submitting property:", error);
-      toast.error("Error submitting property. Please try again.");
+      // This catches sync errors in handleSubmitData itself
+      console.error("Unexpected error in handleSubmitData:", error);
+      toast.error("An unexpected error occurred.");
     }
   };
 
@@ -125,6 +217,12 @@ const MultiStepForm = () => {
             onDestinationChange={(
               destination: { lat: number; lng: number } | null
             ) => handleDataUpdate({ destination })}
+            onLocationAddressChange={(address) =>
+              handleDataUpdate({ homeAddress: address })
+            }
+            onDestinationAddressChange={(address) =>
+              handleDataUpdate({ destinationAddress: address })
+            }
           />
         );
       case 2:
@@ -141,10 +239,12 @@ const MultiStepForm = () => {
           <SelectType
             homeType={addPlaceData.homeType}
             residenceType={addPlaceData.residenceType}
-            onHomeTypeChange={(homeType: "home" | "apartment") =>
-              handleDataUpdate({ homeType })
+            onHomeTypeChange={(homeType: HomeApartmentType) =>
+              handleDataUpdate({
+                homeType,
+              })
             }
-            onResidenceTypeChange={(residenceType: "main" | "occasional") =>
+            onResidenceTypeChange={(residenceType: boolean) =>
               handleDataUpdate({ residenceType })
             }
           />
