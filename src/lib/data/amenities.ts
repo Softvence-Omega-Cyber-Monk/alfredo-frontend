@@ -37,6 +37,7 @@ import privatePool from "@/assets/icons/private-pool.svg";
 import bbq from "@/assets/icons/bbq.svg";
 
 export interface Amenity {
+  id: string;
   icon: string;
   title: string;
 }
@@ -50,156 +51,193 @@ export interface Amenities {
 export const amenitiesData: Amenities = {
   main: [
     {
+      id: "1",
       icon: fridge,
       title: "dashboard.part3.main.title1",
     },
     {
+      id: "1",
       icon: Microwave,
       title: "dashboard.part3.main.title2",
     },
     {
+      id: "1",
       icon: washing,
       title: "dashboard.part3.main.title3",
     },
     {
+      id: "1",
       icon: bathtub,
       title: "dashboard.part3.main.title4",
     },
     {
+      id: "1",
       icon: wifi,
       title: "dashboard.part3.main.title5",
     },
     {
+      id: "1",
       icon: trash,
       title: "dashboard.part3.main.title6",
     },
     {
+      id: "1",
       icon: ac,
       title: "dashboard.part3.main.title7",
     },
     {
+      id: "1",
       icon: tv,
       title: "dashboard.part3.main.title8",
     },
     {
+      id: "1",
       icon: easy,
       title: "dashboard.part3.main.title9",
     },
     {
+      id: "1",
       icon: balcony,
       title: "dashboard.part3.main.title10",
     },
 
     {
+      id: "1",
       icon: computer,
       title: "dashboard.part3.main.title11",
     },
     {
+      id: "1",
       icon: swimming,
       title: "dashboard.part3.main.title12",
     },
     {
+      id: "1",
       icon: gym,
       title: "dashboard.part3.main.title13",
     },
     {
+      id: "1",
       icon: roomHeater,
       title: "dashboard.part3.main.title14",
     },
     {
+      id: "1",
       icon: parking,
       title: "dashboard.part3.main.title15",
     },
     {
+      id: "1",
       icon: playground,
       title: "dashboard.part3.main.title16",
     },
     {
+      id: "1",
       icon: terrace,
       title: "dashboard.part3.main.title17",
     },
     {
+      id: "1",
       icon: garden,
       title: "dashboard.part3.main.title18",
     },
     {
+      id: "1",
       icon: heatPump,
       title: "dashboard.part3.main.title19",
     },
     {
+      id: "1",
       icon: dishwasher,
       title: "dashboard.part3.main.title20",
     },
 
     {
+      id: "1",
       icon: elevator,
       title: "dashboard.part3.main.title21",
     },
     {
+      id: "1",
       icon: privatePool,
       title: "dashboard.part3.main.title22",
     },
     {
+      id: "1",
       icon: bbq,
       title: "dashboard.part3.main.title23",
     },
   ],
   transport: [
     {
+      id: "1",
       icon: bicycle,
       title: "dashboard.part3.transport.title1",
     },
     {
+      id: "1",
       icon: bike,
       title: "dashboard.part3.transport.title2",
     },
     {
+      id: "1",
       icon: car,
       title: "dashboard.part3.transport.title3",
     },
     {
+      id: "1",
       icon: bus,
       title: "dashboard.part3.transport.title4",
     },
     {
+      id: "1",
       icon: train,
       title: "dashboard.part3.transport.title5",
     },
     {
+      id: "1",
       icon: boat,
       title: "dashboard.part3.transport.title6",
     },
   ],
   surrounding: [
     {
+      id: "1",
       icon: countryside,
       title: "dashboard.part3.surrounding.title1",
     },
     {
+      id: "1",
       icon: mountain,
       title: "dashboard.part3.surrounding.title2",
     },
     {
+      id: "1",
       icon: Coastal,
       title: "dashboard.part3.surrounding.title3",
     },
     {
+      id: "1",
       icon: lake,
       title: "dashboard.part3.surrounding.title4",
     },
     {
+      id: "1",
       icon: city,
       title: "dashboard.part3.surrounding.title5",
     },
     {
+      id: "1",
       icon: village,
       title: "dashboard.part3.surrounding.title6",
     },
     {
+      id: "1",
       icon: river,
       title: "dashboard.part3.surrounding.title7",
     },
     {
+      id: "1",
       icon: island,
       title: "dashboard.part3.surrounding.title8",
     },
@@ -244,7 +282,8 @@ export const amenitiesData: Amenities = {
 // import privatePool from "@/assets/icons/private-pool.svg";
 // import bbq from "@/assets/icons/bbq.svg";
 
-// export interface Amenity {
+// ex
+// id: "1",port interface Amenity {
 //   icon: string;
 //   title: string;
 // }

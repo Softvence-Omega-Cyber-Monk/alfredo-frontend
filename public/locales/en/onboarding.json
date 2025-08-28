@@ -95,9 +95,8 @@
 
       "TravelWithPet": {
         "title": "Do You Travel With Pets?",
-        "business": "Business trips",
-        "leasure": "Leasure trips",
-        "both": "both"
+        "yes": "Yes",
+        "no": "No"
       },
       "notesOnYourself": {
         "title": "Notes on yourself",

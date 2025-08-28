@@ -17,6 +17,8 @@ interface GetStartedProps {
   onDestinationChange: (
     destination: { lat: number; lng: number } | null
   ) => void;
+  onLocationAddressChange: (address: string) => void;
+  onDestinationAddressChange: (address: string) => void;
 }
 
 const GetStarted = ({
@@ -24,6 +26,8 @@ const GetStarted = ({
   destination,
   onLocationChange,
   onDestinationChange,
+  onLocationAddressChange,
+  onDestinationAddressChange,
 }: GetStartedProps) => {
   const [showMap, setShowMap] = useState(false);
   const [mapType, setMapType] = useState<"location" | "destination">(
@@ -38,20 +42,26 @@ const GetStarted = ({
     (async () => {
       if (location && !locationAddress) {
         const addr = await reverseGeocode(location.lat, location.lng);
-        if (active && addr) setLocationAddress(addr);
+        if (active && addr) {
+          setLocationAddress(addr);
+          onLocationAddressChange(addr);
+        }
       }
     })();
     return () => {
       active = false;
     };
-  }, [location]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [location]);
 
   useEffect(() => {
     let active = true;
     (async () => {
       if (destination && !destinationAddress) {
         const addr = await reverseGeocode(destination.lat, destination.lng);
-        if (active && addr) setDestinationAddress(addr);
+        if (active && addr) {
+          setDestinationAddress(addr);
+          onDestinationAddressChange(addr);
+        }
       }
     })();
     return () => {
@@ -67,11 +77,13 @@ const GetStarted = ({
         addr || `Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}`
       );
       onLocationChange(coords);
+      if (addr) onLocationAddressChange(addr);
     } else {
       setDestinationAddress(
         addr || `Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}`
       );
       onDestinationChange(coords);
+      if (addr) onDestinationAddressChange(addr);
     }
     setShowMap(false);
   };

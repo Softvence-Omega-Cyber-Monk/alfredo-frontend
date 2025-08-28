@@ -1,9 +1,18 @@
 import { TbChecklist } from "react-icons/tb";
 import { Button } from "../ui/button";
 import Title from "./Shared/Title";
-import { amenitiesData } from "@/lib/data/amenities";
+// import { amenitiesData } from "@/lib/data/amenities";
 import type { Amenity } from "@/lib/data/amenities"; // Import the Amenity type
 import { useTranslation } from "react-i18next";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import { useEffect } from "react";
+import {
+  fetchMainAmenities,
+  fetchSurroundingAmenities,
+  fetchTransportAmenities,
+  AmenityItem as ApiAmenity, // added
+} from "@/store/Slices/OnboardingSlice/AmenitySlice";
+
 interface AmenitiesProps {
   selectedAmenities: {
     main: Amenity[];
@@ -16,28 +25,41 @@ interface AmenitiesProps {
     surrounding: Amenity[];
   }) => void;
 }
+
 const SelectAmenities = ({
   selectedAmenities,
   onAmenitiesChange,
 }: AmenitiesProps) => {
+  const dispatch = useAppDispatch();
+
+  const { main, transport, surrounding, loading, error } = useAppSelector(
+    (state) => state.amenities
+  );
+
+  useEffect(() => {
+    dispatch(fetchMainAmenities());
+    dispatch(fetchTransportAmenities());
+    dispatch(fetchSurroundingAmenities());
+  }, [dispatch]);
+
+  // Updated toggle based on id, preserve style logic
   const toggleAmenity = (
     category: keyof typeof selectedAmenities,
-    amenity: Amenity
+    amenity: ApiAmenity
   ) => {
     const currentAmenities = selectedAmenities[category];
     const isSelected = currentAmenities.some(
-      (item) => item.title === amenity.title && item.icon === amenity.icon
+      (item) => (item as any).id === amenity.id
     );
 
     let newAmenities;
     if (isSelected) {
-      // Remove amenity
       newAmenities = currentAmenities.filter(
-        (item) => !(item.title === amenity.title && item.icon === amenity.icon)
+        (item) => (item as any).id !== amenity.id
       );
     } else {
-      // Add amenity
-      newAmenities = [...currentAmenities, amenity];
+      // cast to Amenity for compatibility
+      newAmenities = [...currentAmenities, amenity as unknown as Amenity];
     }
 
     onAmenitiesChange({
@@ -48,13 +70,18 @@ const SelectAmenities = ({
 
   const isAmenitySelected = (
     category: keyof typeof selectedAmenities,
-    amenity: Amenity
+    amenity: ApiAmenity
   ) => {
     return selectedAmenities[category].some(
-      (item) => item.title === amenity.title && item.icon === amenity.icon
+      (item) => (item as any).id === amenity.id
     );
   };
+
   const { t } = useTranslation("dashboard");
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+
   return (
     <div className="w-full py-6 md:py-10 space-y-6 ">
       {/* Header */}
@@ -76,22 +103,22 @@ const SelectAmenities = ({
       <div>
         <div className="mt-8">
           {/* Category Loop */}
-          {Object.entries(amenitiesData).map(
-            ([category, items]: [string, Amenity[]]) => (
+          {Object.entries({ main, transport, surrounding }).map(
+            ([category, items]: [string, ApiAmenity[]]) => (
               <div key={category} className="mb-8">
                 <h2 className="text-xl font-semibold text-primary-blue capitalize mb-4">
                   {t(category)}
                 </h2>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-                  {items.map((amenity: Amenity, index: number) => {
+                  {items.map((amenity) => {
                     const isSelected = isAmenitySelected(
                       category as keyof typeof selectedAmenities,
                       amenity
                     );
                     return (
                       <div
-                        key={index}
+                        key={amenity.id}
                         onClick={() =>
                           toggleAmenity(
                             category as keyof typeof selectedAmenities,
@@ -106,11 +133,11 @@ const SelectAmenities = ({
                       >
                         <img
                           src={amenity.icon}
-                          alt={amenity.title}
-                          className="w-6 h-6 mb-1"
+                          alt={amenity.name}
+                          className="w-6 h-6 mb-1 mx-auto" // ensure centering
                         />
                         <p className="text-base font-regular text-center text-dark-2">
-                          {t(amenity.title)}
+                          {t(amenity.name)}
                         </p>
                       </div>
                     );
