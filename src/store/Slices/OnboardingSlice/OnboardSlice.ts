@@ -43,19 +43,20 @@ const initialState: OnboardingState = {
   error: null,
 };
 
+const token = localStorage.getItem("token");
+
+const config = {
+  headers: {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "multipart/form-data", // important
+  },
+};
+
 //  POST: submit onboarding data
 export const postOnboarding = createAsyncThunk(
   "onboarding/postOnboarding",
   async (payload: FormData, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
-
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data", // important
-        },
-      };
       console.log("Sending request to:", `${baseURL}/onboarding`);
       const response = await axios.post(
         `${baseURL}/onboarding`,
@@ -74,7 +75,7 @@ export const getOnboarding = createAsyncThunk(
   "onboarding/getOnboarding",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${baseURL}/onboarding`);
+      const response = await axios.get(`${baseURL}/onboarding/user`, config);
       return response.data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data || "Error fetching onboarding");

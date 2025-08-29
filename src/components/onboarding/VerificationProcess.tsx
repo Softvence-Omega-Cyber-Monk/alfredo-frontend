@@ -92,7 +92,7 @@ const VerificationProcess = ({
 
   const genderOptions = [
     { value: "MALE", key: "male" },
-    { value: "FEMALE ", key: "female" },
+    { value: "FEMALE", key: "female" },
     { value: "Not_Specified", key: "notSpecified" },
   ];
 
