@@ -33,7 +33,7 @@ interface OnboardingState {
   data: OnboardingPayload | null;
   list: OnboardingPayload[];
   loading: boolean;
-  error: string | null;
+  error: string | { statusCode: number; message: string } | null;
 }
 
 const initialState: OnboardingState = {
