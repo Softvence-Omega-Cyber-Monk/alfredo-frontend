@@ -46,7 +46,7 @@ const PlaceDetails = () => {
 
   return (
     <div>
-      <h1>Hi</h1>
+      <h1>Place Details</h1>
     </div>
     // <div className="">
     //   <CommonWrapper>
