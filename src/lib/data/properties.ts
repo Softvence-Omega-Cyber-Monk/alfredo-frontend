@@ -2,7 +2,7 @@ import cardImg from "@/assets/home/cardImg.jpg";
 import cardAvatar from "@/assets/home/cardAvatar.jpg";
 import { CommonCard } from "@/types/index";
 
-export const properties: CommonCard[] = [
+export const propertiess: CommonCard[] = [
   {
     id: "1",
     image: cardImg,
@@ -16,7 +16,7 @@ export const properties: CommonCard[] = [
       rooms: 14,
       beds: 14,
       baths: 2,
-      sqm: 250,
+      sqft: 250,
       floor: 2,
       maxPeople: 5,
     },
@@ -34,7 +34,7 @@ export const properties: CommonCard[] = [
       rooms: 14,
       beds: 14,
       baths: 2,
-      sqm: 250,
+      sqft: 250,
       floor: 2,
       maxPeople: 5,
     },
@@ -52,7 +52,7 @@ export const properties: CommonCard[] = [
       rooms: 14,
       beds: 14,
       baths: 2,
-      sqm: 250,
+      sqft: 250,
       floor: 2,
       maxPeople: 5,
     },
@@ -70,7 +70,7 @@ export const properties: CommonCard[] = [
       rooms: 14,
       beds: 14,
       baths: 2,
-      sqm: 250,
+      sqft: 250,
       floor: 2,
       maxPeople: 5,
     },
@@ -88,7 +88,7 @@ export const properties: CommonCard[] = [
       rooms: 14,
       beds: 14,
       baths: 2,
-      sqm: 250,
+      sqft: 250,
       floor: 2,
       maxPeople: 5,
     },
@@ -106,7 +106,7 @@ export const properties: CommonCard[] = [
       rooms: 14,
       beds: 14,
       baths: 2,
-      sqm: 250,
+      sqft: 250,
       floor: 2,
       maxPeople: 5,
     },
