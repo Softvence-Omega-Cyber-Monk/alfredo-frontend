@@ -13,14 +13,14 @@ const FutureList = () => {
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
-  const { myProperties } = useAppSelector((state) => state.property);
-  console.log("properties", myProperties);
+  const { allProperties } = useAppSelector((state) => state.property);
+  console.log("properties", allProperties);
 
   useEffect(() => {
     dispatch(fetchAllProperties());
   }, [dispatch]);
 
-  console.log("myProperties", myProperties);
+  console.log("myProperties", allProperties);
 
   const { t } = useTranslation("futureList");
 
@@ -33,7 +33,7 @@ const FutureList = () => {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-          {myProperties.map((card) => (
+          {allProperties.map((card) => (
             <CommonCard
               key={card.id}
               id={card.id}
