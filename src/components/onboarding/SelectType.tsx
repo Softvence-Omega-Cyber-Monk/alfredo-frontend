@@ -7,10 +7,10 @@ import residence from "@/assets/icons/building-three.svg";
 import casual from "@/assets/icons/city-one.svg";
 import { useTranslation } from "react-i18next";
 interface HomeTypeProps {
-  homeType: "home" | "apartment" | null;
-  residenceType: "main" | "occasional" | null;
-  onHomeTypeChange: (homeType: "home" | "apartment") => void;
-  onResidenceTypeChange: (residenceType: "main" | "occasional") => void;
+  homeType: "HOME" | "APARTMENT" | null;
+  residenceType: boolean | null;
+  onHomeTypeChange: (homeType: "HOME" | "APARTMENT") => void;
+  onResidenceTypeChange: (residenceType: boolean) => void;
 }
 const SelectType = ({
   homeType,
@@ -46,9 +46,9 @@ const SelectType = ({
           </h2>
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 ">
             <div
-              onClick={() => onHomeTypeChange("home")}
+              onClick={() => onHomeTypeChange("HOME")}
               className={`p-6 flex flex-col gap-2.5 border rounded-lg cursor-pointer transition-all ${
-                homeType === "home"
+                homeType === "HOME"
                   ? "border-primary-blue bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
                   : "border-[#EAF1FA] hover:bg-[#F4F7FC] hover:border-primary-blue"
               }`}
@@ -57,7 +57,7 @@ const SelectType = ({
                 <img src={home} alt="" />
                 <p
                   className={`text-lg font-medium ${
-                    homeType === "home"
+                    homeType === "HOME"
                       ? "text-primary-blue"
                       : "text-primary-blue"
                   }`}
@@ -71,9 +71,9 @@ const SelectType = ({
             </div>
 
             <div
-              onClick={() => onHomeTypeChange("apartment")}
+              onClick={() => onHomeTypeChange("APARTMENT")}
               className={`p-6 flex flex-col gap-2.5 border rounded-lg cursor-pointer transition-all ${
-                homeType === "apartment"
+                homeType === "APARTMENT"
                   ? "border-primary-blue bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
                   : "border-[#EAF1FA] hover:bg-[#F4F7FC] hover:border-primary-blue"
               }`}
@@ -82,7 +82,7 @@ const SelectType = ({
                 <img src={apartment} alt="" />
                 <p
                   className={`text-lg font-medium ${
-                    homeType === "apartment"
+                    homeType === "APARTMENT"
                       ? "text-primary-blue"
                       : "text-primary-blue"
                   }`}
@@ -103,9 +103,9 @@ const SelectType = ({
           </h2>
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 ">
             <div
-              onClick={() => onResidenceTypeChange("main")}
+              onClick={() => onResidenceTypeChange(true)}
               className={`p-6 flex flex-col gap-2.5 border rounded-lg cursor-pointer transition-all ${
-                residenceType === "main"
+                residenceType === true
                   ? "border-primary-blue bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
                   : "border-[#EAF1FA] hover:bg-[#F4F7FC] hover:border-primary-blue"
               }`}
@@ -114,7 +114,7 @@ const SelectType = ({
                 <img src={residence} alt="" />
                 <p
                   className={`text-lg font-medium ${
-                    residenceType === "main"
+                    residenceType === true
                       ? "text-primary-blue"
                       : "text-primary-blue"
                   }`}
@@ -129,9 +129,9 @@ const SelectType = ({
             </div>
 
             <div
-              onClick={() => onResidenceTypeChange("occasional")}
+              onClick={() => onResidenceTypeChange(false)}
               className={`p-6 flex flex-col gap-2.5 border rounded-lg cursor-pointer transition-all ${
-                residenceType === "occasional"
+                residenceType === false
                   ? "border-primary-blue bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
                   : "border-[#EAF1FA] hover:bg-[#F4F7FC] hover:border-primary-blue"
               }`}
@@ -140,7 +140,7 @@ const SelectType = ({
                 <img src={casual} alt="" />
                 <p
                   className={`text-lg font-medium ${
-                    residenceType === "occasional"
+                    residenceType === false
                       ? "text-primary-blue"
                       : "text-primary-blue"
                   }`}

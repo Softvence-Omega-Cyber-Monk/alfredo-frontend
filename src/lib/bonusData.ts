@@ -1,6 +1,6 @@
 import made from "../assets/bonus/made.png";
-import earn from "../assets/bonus/earn.png";
-import bonus from "../assets/bonus/bonus.png";
+// import earn from "../assets/bonus/earn.png";
+// import bonus from "../assets/bonus/bonus.png";
 import { Card, InviteDataItem } from "@/types";
 
 export const cardData: Card[] = [
@@ -12,26 +12,6 @@ export const cardData: Card[] = [
     borderColor: "#E7D4FF",
     color: "#8260F8",
     img: made,
-  },
-  {
-    title: "bonus.secondBonus.content",
-    titleSub: "bonus.secondBonus.content1",
-    amount: 48,
-    currency: "USD",
-    bgColor: "#FFF2F4",
-    borderColor: "#FFDBE1",
-    color: "#FF2C49",
-    img: earn,
-  },
-  {
-    title: "bonus.thirdBonus.content",
-    titleSub: "bonus.thirdBonus.content1",
-    amount: 34,
-    currency: "USD",
-    bgColor: "#FFF6E6",
-    borderColor: "#FFEDC4",
-    color: "#FFAA00",
-    img: bonus,
   },
 ];
 

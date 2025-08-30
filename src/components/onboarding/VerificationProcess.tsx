@@ -8,9 +8,9 @@ import { Textarea } from "../ui/textarea";
 import { ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 
-export type AgeGroup = "18–30" | "30–50" | "50–65" | "65+";
-export type Gender = "Male" | "Female" | "Not Specified";
-export type Role = "Worker" | "Retired" | "Student" | "Unemployed";
+export type AgeGroup = "AGE_18_30" | "AGE_30_50" | "AGE_50_65" | "AGE_65_PLUS";
+export type Gender = "MALE" | "FEMALE" | "NOT_SPECIFIED";
+export type Role = "WORKER" | "RETIRED" | "STUDENT" | "UNEMPLOYED";
 export type TravelType =
   | "Business"
   | "Leisure"
@@ -23,12 +23,15 @@ export type DestinationType =
   | "Small Cities"
   | "Seaside"
   | "Mountain";
-export type TravelGroup =
-  | "By Myself"
-  | "With Family"
-  | "With a Partner"
-  | "With Friends";
-export type TravelWithPets = "Business trips" | "Leisure trips" | "Both";
+export type TravelGroup = "BY_MYSELF" | "FAMILY" | "COUPLE" | "FRIENDS";
+export type TravelWithPets = boolean;
+
+export const AgeGroupLabels: Record<AgeGroup, string> = {
+  AGE_18_30: "18–30",
+  AGE_30_50: "30–50",
+  AGE_50_65: "50–65",
+  AGE_65_PLUS: "65+",
+};
 
 interface VerificationProps {
   personalInformation: {
@@ -39,6 +42,7 @@ interface VerificationProps {
     favoriteDestinations: DestinationType[];
     travelGroup: TravelGroup;
     travelWithPets: TravelWithPets;
+    maxPeople: number | null;
     notes: string;
   };
   onDataChange: (
@@ -87,12 +91,12 @@ const VerificationProcess = ({
   };
 
   const genderOptions = [
-    { value: "Male", key: "male" },
-    { value: "Female", key: "female" },
-    { value: "Not Specified", key: "notSpecified" },
+    { value: "MALE", key: "male" },
+    { value: "FEMALE", key: "female" },
+    { value: "Not_Specified", key: "notSpecified" },
   ];
 
-  const roleOptions = ["Worker", "Retired", "Student", "Unemployed"] as Role[];
+  const roleOptions = ["WORKER", "RETIRED", "STUDENT", "UNEMPLOYED"] as Role[];
   const travelTypeOptions = [
     "Business",
     "Leisure",
@@ -110,17 +114,22 @@ const VerificationProcess = ({
   ];
 
   const travelGroupOptions: { value: TravelGroup; key: string }[] = [
-    { value: "By Myself", key: "byMyself" },
-    { value: "With Family", key: "family" },
-    { value: "With a Partner", key: "withPartner" },
-    { value: "With Friends", key: "withFrends" },
+    { value: "BY_MYSELF", key: "byMyself" },
+    { value: "FAMILY", key: "family" },
+    { value: "COUPLE", key: "withPartner" },
+    { value: "FRIENDS", key: "withFrends" },
   ];
 
   const petOptions: { value: TravelWithPets; key: string }[] = [
-    { value: "Business trips", key: "business" },
-    { value: "Leisure trips", key: "leasure" },
-    { value: "Both", key: "both" },
+    { value: true, key: "yes" },
+    { value: false, key: "no" },
   ];
+
+  const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
+    // Convert the string input to a number, use 1 as a fallback if conversion fails
+    const value = parseInt(e.target.value, 10) || 1;
+    handleChange("maxPeople", value);
+  };
 
   return (
     <div className="w-full py-6 md:py-10 space-y-6">
@@ -149,20 +158,20 @@ const VerificationProcess = ({
               {t("onboarding.part2.age")}
             </Label>
             <div className="flex flex-wrap gap-4">
-              {(["18–30", "30–50", "50–65", "65+"] as AgeGroup[]).map((age) => (
+              {(Object.keys(AgeGroupLabels) as AgeGroup[]).map((ageKey) => (
                 <label
-                  key={age}
+                  key={ageKey}
                   className="flex items-center gap-2 cursor-pointer text-base text-[#808080]"
                 >
                   <input
                     type="radio"
                     name="ageGroup"
-                    value={age}
-                    checked={personalInformation.age === age}
-                    onChange={() => handleChange("age", age)}
+                    value={ageKey}
+                    checked={personalInformation.age === ageKey}
+                    onChange={() => handleChange("age", ageKey)}
                     className="w-4 h-4 accent-blue-500"
                   />
-                  {age}
+                  {AgeGroupLabels[ageKey]}
                 </label>
               ))}
             </div>
@@ -306,29 +315,62 @@ const VerificationProcess = ({
             <Label className="block text-lg text-[#3174CD] mb-2">
               {t("onboarding.part2.TravelWithPet.title")}
             </Label>
-            <div className="flex flex-wrap gap-4">
-              {petOptions.map((pet) => (
-                <label
-                  key={pet.key}
-                  className="flex items-center gap-2 cursor-pointer text-base text-[#808080]"
-                >
-                  <input
-                    type="radio"
-                    name="travelWithPets"
-                    value={pet.value}
-                    checked={personalInformation.travelWithPets === pet.value}
-                    onChange={() =>
-                      handleChange(
-                        "travelWithPets",
-                        pet.value as TravelWithPets
-                      )
-                    }
-                    className="w-4 h-4 accent-blue-500"
-                  />
-                  {t(`onboarding.part2.TravelWithPet.${pet.key}`)}
-                </label>
-              ))}
+            <div className="flex justify-between flex-wrap gap-4">
+              <div>
+                {petOptions.map((pet) => (
+                  <label
+                    key={pet.key}
+                    className="flex items-center justify-end gap-2 cursor-pointer text-base text-[#808080]"
+                  >
+                    <input
+                      type="radio"
+                      name="travelWithPets"
+                      value={pet.value.toString()}
+                      checked={personalInformation.travelWithPets === pet.value}
+                      onChange={() =>
+                        handleChange(
+                          "travelWithPets",
+                          pet.value as TravelWithPets
+                        )
+                      }
+                      className="w-4 h-4 accent-blue-500"
+                    />
+                    {t(`onboarding.part2.TravelWithPet.${pet.key}`)}
+                  </label>
+                ))}
+              </div>
             </div>
+          </div>
+          {/* <div className="flex flex-col w-1/2">
+            <label
+              htmlFor=""
+              className="block text-lg text-[#3174CD] mb-2 font-semibold"
+            >
+              Max No. of People
+            </label>
+            <input
+              type="text"
+              className="border border-gray-500 w-full rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Max people"
+              name="maxPeople"
+            />
+          </div> */}
+
+          <div>
+            <Label
+              htmlFor="maxPeople"
+              className="block text-lg text-[#3174CD] mb-2 font-semibold"
+            >
+              Max No. of People
+            </Label>
+            <input
+              id="maxPeople"
+              type="number" // Use type="number"
+              value={personalInformation.maxPeople ?? ""} // Connect to state, fallback to empty string if null
+              onChange={handleNumberChange} // Use the new handler
+              className="border border-gray-300 w-full rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g., 4"
+            />
           </div>
         </div>
 

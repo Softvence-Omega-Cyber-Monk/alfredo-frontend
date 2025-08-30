@@ -1,10 +1,13 @@
 import PrimaryButton from "../reusable/PrimaryButton";
-import FeatureItem from './FeatureItem';
+import FeatureItem from "./FeatureItem";
 import House from "@/assets/icons/home-two.svg";
 import Bed from "@/assets/icons/double-bed.svg";
 import Scale from "@/assets/icons/scale.svg";
 import Bath from "@/assets/icons/sunbath.svg";
-import { Share2 } from 'lucide-react';
+import { Share2 } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { FaHeart, FaRegHeart } from "react-icons/fa6";
 
 interface HomeTitleProps {
   title: string;
@@ -16,9 +19,8 @@ interface HomeTitleProps {
   };
 }
 
-const isPremiumMember:boolean = true; // This should be replaced with actual premium status from your auth context or state
-const HomeTitle = ({ title,features }: HomeTitleProps) => {
-
+const isPremiumMember: boolean = true; // This should be replaced with actual premium status from your auth context or state
+const HomeTitle = ({ title, features }: HomeTitleProps) => {
   const featuresItems = [
     {
       icon: House,
@@ -41,27 +43,43 @@ const HomeTitle = ({ title,features }: HomeTitleProps) => {
       value: features?.area !== undefined ? `${features.area} sqf` : "-",
     },
   ];
+
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const toggleFavorite = () => {
+    if (!isFavorite) {
+      toast.success("Added to favorites");
+    }
+    setIsFavorite(!isFavorite);
+  };
   return (
     <div>
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
         <h1 className=" text-2xl md:text-3xl lg:text-[32px] font-medium text-dark-3">
-         {title}
+          {title}
         </h1>
         <div className="flex items-center justify-end gap-2">
+          <button
+            onClick={toggleFavorite}
+            className={`mr-3 transition-transform duration-200 ${
+              isFavorite ? "scale-110" : "scale-110"
+            }`}
+          >
+            {isFavorite ? (
+              <FaHeart className="w-7 h-7 text-[#3072C9] animate-bounce-once" />
+            ) : (
+              <FaRegHeart className="w-7 h-7 text-[#3072C9] hover:text-blue-500 cursor-pointer" />
+            )}
+          </button>
           {isPremiumMember ? (
-
+            <PrimaryButton title="Chat With" />
+          ) : (
             <PrimaryButton
-            title="Chat With"
-
-            />
-          ):(
-
-            <PrimaryButton
-            title="Chat With"
-            textColor="text-[#8B8B8B]"
-            bgColor="bg-[#DEDEDE]"
-            borderColor=""
-            bgImage="/buttonHomeWhite.svg"
+              title="Chat With"
+              textColor="text-[#8B8B8B]"
+              bgColor="bg-[#DEDEDE]"
+              borderColor=""
+              bgImage="/buttonHomeWhite.svg"
             />
           )}
 
@@ -71,8 +89,8 @@ const HomeTitle = ({ title,features }: HomeTitleProps) => {
         </div>
       </div>
 
-       {/* Features */}
-       <div className="py-6 grid grid-cols-2 md:flex md:justify-between gap-4 border-y-2 border-[#80808040]/50 my-6">
+      {/* Features */}
+      <div className="py-6 grid grid-cols-2 md:flex md:justify-between gap-4 border-y-2 border-[#80808040]/50 my-6">
         {featuresItems.map((feature, index) => (
           <FeatureItem
             key={index}
@@ -81,14 +99,9 @@ const HomeTitle = ({ title,features }: HomeTitleProps) => {
             value={feature.value}
           />
         ))}
-        </div>
-        
+      </div>
     </div>
   );
 };
 
 export default HomeTitle;
-
-
-
-

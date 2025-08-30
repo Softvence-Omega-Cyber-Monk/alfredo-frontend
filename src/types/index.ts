@@ -95,8 +95,11 @@ export interface AddPlaceData {
     lng: number;
   } | null;
 
-  homeType: "home" | "apartment" | null;
-  residenceType: "main" | "occasional" | null;
+  homeAddress?: string;
+  destinationAddress?: string; // New field
+
+  homeType: "HOME" | "APARTMENT" | null;
+  residenceType: boolean | null;
 
   selectedAmenities: {
     main: Amenity[];
@@ -113,4 +116,63 @@ export interface AddPlaceData {
     start: Date | null;
     end: Date | null;
   };
+}
+
+//onboarding
+
+export type AgeGroup = "18–30" | "30–50" | "50–65" | "65+";
+export type Gender = "Male" | "Female" | "Not Specified";
+export type Role = "Worker" | "Retired" | "Student" | "Unemployed";
+export type TravelType =
+  | "Business"
+  | "Leisure"
+  | "Adventure"
+  | "Family"
+  | "Solo"
+  | "Cultural";
+export type DestinationType =
+  | "Big Cities"
+  | "Small Cities"
+  | "Seaside"
+  | "Mountain";
+export type TravelGroup =
+  | "By Myself"
+  | "With Family"
+  | "With a Partner"
+  | "With Friends";
+export type TravelWithPets = "Business trips" | "Leisure trips" | "Both";
+
+// Define a flattened form state
+export interface OnboardingPayload {
+  id?: string;
+  userId?: string;
+  location: {
+    lat: number;
+    lng: number;
+  } | null;
+  destinationCords: {
+    lat: number;
+    lng: number;
+  } | null;
+  homeAddress?: string;
+  destination?: string;
+  ageRange?: AgeGroup;
+  gender?: Gender;
+  employmentStatus?: Role;
+  travelType?: TravelType;
+  favoriteDestinations?: DestinationType[];
+  travelMostlyWith?: TravelGroup;
+  isTravelWithPets?: boolean;
+  notes?: string;
+  propertyType?: "home" | "apartment";
+  isMainResidence?: boolean | null;
+  amenities?: string[];
+  transports?: string[];
+  surroundings?: string[];
+  homeName?: string;
+  homeDescription?: string;
+  aboutNeighborhood?: string;
+  homeImages?: string[];
+  availabilityStartDate?: string; // ISO string
+  availabilityEndDate?: string;
 }

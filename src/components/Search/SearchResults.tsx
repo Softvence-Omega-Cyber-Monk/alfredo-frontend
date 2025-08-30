@@ -6,8 +6,10 @@ import { MapPin, House, Building, User } from "lucide-react";
 import cardStar from "@/assets/home/star.svg";
 import { useTranslation } from "react-i18next";
 import PrimaryButton from "../reusable/PrimaryButton";
+import { useNavigate } from "react-router-dom";
 
 const SearchResults: React.FC = () => {
+  const navigate = useNavigate();
   const { searchResults, isLoading, error } = useSearch();
   const { t } = useTranslation("futureList");
 
@@ -130,7 +132,8 @@ const SearchResults: React.FC = () => {
             bgColor="bg-[#F4F7FC] w-full hover:bg-primary-blue hover:text-white"
             borderColor="border-2 border-primary-blue"
             bgImage="/cardButtonHome.svg"
-            onClick={() => console.log("View Details", item.id)}
+            // onClick={() => console.log("View Details", item.id)}
+            onClick={() => navigate(`/home-details/${item.id}`)}
           />
         </div>
       ))}
