@@ -1,6 +1,5 @@
 import {
   MapPin,
-  House,
   BedDouble,
   Bath,
   SquareArrowOutUpRight,
@@ -97,14 +96,14 @@ const CommonCard: React.FC<CommonCardProps> = ({
 
         {/* Features */}
         <div className="my-4 grid grid-cols-3 gap-3">
-          {features.rooms !== undefined && (
+          {/* {features.rooms !== undefined && (
             <div className="flex flex-col justify-center text-center items-center gap-1">
               <House className="text-primary-blue w-5 h-5" />
               <p className="text-dark-3 font-regular text-sm">
                 {features.rooms} Rooms
               </p>
             </div>
-          )}
+          )} */}
           {features.beds !== undefined && (
             <div className="flex flex-col justify-center text-center items-center gap-1">
               <BedDouble className="text-primary-blue w-5 h-5" />
@@ -121,11 +120,11 @@ const CommonCard: React.FC<CommonCardProps> = ({
               </p>
             </div>
           )}
-          {features.sqm !== undefined && (
+          {features.sqft !== undefined && (
             <div className="flex flex-col justify-center text-center items-center gap-1">
               <SquareArrowOutUpRight className="text-primary-blue w-5 h-5" />
               <p className="text-dark-3 font-regular text-sm">
-                {features.sqm} sqm
+                {features.sqft} sqm
               </p>
             </div>
           )}

@@ -12,6 +12,7 @@ import PhotoUpload from "@/components/dashboard/PhotoUpload";
 import DashboardCalendarRangePicker from "@/components/dashboard/DashboardCalendarRangePicker";
 import type { Amenity } from "@/lib/data/amenities";
 import { useTranslation } from "react-i18next";
+import DashboardHeading from "@/components/dashboard/DashboardHeading";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -112,10 +113,11 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold text-primary-blue mb-6">
+    <div className="p-6 max-w-6xl mx-auto">
+      {/* <h1 className="text-3xl font-bold text-primary-blue mb-6">
         {t("dashboard.title")}
-      </h1>
+      </h1> */}
+      <DashboardHeading />
 
       {loading && <p>Loading...</p>}
       {error && (
