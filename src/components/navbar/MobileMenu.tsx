@@ -25,7 +25,7 @@ const MobileMenu: React.FC<Props> = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { t } = useTranslation("navigation"); // ✅ move above any return
+  const { t } = useTranslation("navigation");
 
   const handleLogout = () => {
     dispatch(logout());

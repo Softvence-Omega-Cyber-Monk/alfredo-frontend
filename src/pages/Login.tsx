@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "@/store/Slices/AuthSlice/authSlice";
 import { AppDispatch, RootState } from "@/store/store";
 
-// ✅ Login schema
 const loginSchema = z.object({
   email: z.string().email("Invalid email format"),
   password: z.string().min(6, "Password must be at least 6 characters"),
@@ -39,10 +38,21 @@ const Login = () => {
   const onSubmit = async (data: LoginFormInputs) => {
     const res = await dispatch(loginUser(data));
 
+    // if (loginUser.fulfilled.match(res)) {
+    //   navigate("/dashboard");
+    // } else {
+    //   console.error("Login failed:", res.payload);
+    // }
+
     if (loginUser.fulfilled.match(res)) {
-      navigate("/"); // ✅ Successful login
-    } else {
-      console.error("Login failed:", res.payload);
+      const user = res.payload.user;
+      localStorage.setItem("user", JSON.stringify(user));
+
+      if (!user.hasOnboarded) {
+        navigate("/onboarding");
+      } else {
+        navigate("/dashboard");
+      }
     }
   };
 

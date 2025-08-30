@@ -47,7 +47,7 @@ const BonusProgram: FC = () => {
         </div>
 
         {/* Stat Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mx-auto mb-6">
+        <div className=" w-full mx-auto mb-6">
           {cardData.map((card, index) => (
             <div
               key={index}

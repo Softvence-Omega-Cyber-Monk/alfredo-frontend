@@ -11,6 +11,9 @@ import PrimaryButton from "./PrimaryButton";
 import cardStar from "@/assets/home/star.svg";
 import { CommonCard as CommonCardProps } from "@/types/index";
 import { useTranslation } from "react-i18next";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const CommonCard: React.FC<CommonCardProps> = ({
   image,
@@ -22,12 +25,33 @@ const CommonCard: React.FC<CommonCardProps> = ({
   features,
   onViewDetails,
 }) => {
+  const [isFavorite, setIsFavorite] = useState(false);
   const { t } = useTranslation("futureList");
+
+  const toggleFavorite = () => {
+    if (!isFavorite) {
+      toast.success("Added to favorites");
+    }
+    setIsFavorite(!isFavorite);
+  };
   return (
     <div className="p-3 rounded-3xl bg-[#F4F7FC]">
       <div className="rounded-2xl overflow-hidden max-h-64 relative">
         {/* Main Image */}
         <img src={image} alt={title} className="w-full h-full object-cover" />
+
+        <button
+          onClick={toggleFavorite}
+          className={`absolute top-3 right-4 transition-transform duration-200 ${
+            isFavorite ? "scale-110" : "scale-110"
+          }`}
+        >
+          {isFavorite ? (
+            <FaHeart className="w-5 h-5 text-red-500 animate-bounce-once" />
+          ) : (
+            <FaRegHeart className="w-5 h-5 text-white hover:text-red-500 cursor-pointer" />
+          )}
+        </button>
 
         {/* Bottom overlay with avatar and rating */}
         <div className="absolute bottom-4 left-4 right-4 z-10 flex justify-between items-end bg-white/80 rounded-2xl backdrop-blur-sm p-3">

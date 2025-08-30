@@ -17,7 +17,6 @@ import { logout } from "@/store/Slices/AuthSlice/authSlice";
 import LanguageSwitcher from "../LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 
-
 import type { User as AuthUser } from "@/store/Slices/AuthSlice/authSlice";
 
 interface Props {
@@ -48,15 +47,16 @@ const AuthSection: React.FC<Props> = ({
   if (!isAuthenticated)
     return (
       <div className="flex items-center gap-2">
-        <PrimaryButton
+        <LanguageSwitcher />
+        {/* <PrimaryButton
           title="Join"
           onClick={() => navigate("/signup")}
           textColor="text-primary-blue text-sm md:text-base"
           bgColor="bg-white"
           bgImage="/buttonHomeWhite.svg"
           borderColor="border-primary-blue"
-          className="px-4 py-2"
-        />
+          className="px-2 py-2" 
+        /> */}
         <PrimaryButton
           title="Login"
           onClick={() => navigate("/login")}
