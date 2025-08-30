@@ -1,6 +1,8 @@
 import CommonWrapper from "@/common/CommonWrapper";
 import SearchFilter from "./SearchFilter";
 import { useTranslation } from "react-i18next";
+import { SearchProvider } from "@/contexts/SearchContext";
+import SearchResults from "../Search/SearchResults";
 
 const Banner = () => {
   const { t } = useTranslation("banner");
@@ -25,9 +27,17 @@ const Banner = () => {
               {t("banner.subtitle")}
             </p>
           </div>
-          <div className="mt-6 md:mt-8 lg:mt-10 w-full">
+          {/* <div className="mt-6 md:mt-8 lg:mt-10 w-full">
             <SearchFilter />
-          </div>
+          </div> */}
+           <SearchProvider>
+            <div className="mt-6 md:mt-8 lg:mt-10 w-full">
+              <SearchFilter />
+            </div>
+            <div>
+              <SearchResults />
+            </div>
+          </SearchProvider>
         </div>
       </CommonWrapper>
     </div>
