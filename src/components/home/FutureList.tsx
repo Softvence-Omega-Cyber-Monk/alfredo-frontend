@@ -3,11 +3,24 @@ import ClientHeading from "../reusable/ClientHeading";
 import CommonCard from "../reusable/CommonCard";
 import PrimaryButton from "../reusable/PrimaryButton";
 import { useNavigate } from "react-router-dom";
-import { properties } from "@/lib/data/properties";
+// import { propertiess } from "@/lib/data/properties";
 import { useTranslation } from "react-i18next";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import { useEffect } from "react";
+import { fetchAllProperties } from "@/store/Slices/PropertySlice/propertySlice";
 
 const FutureList = () => {
   const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+  const { myProperties } = useAppSelector((state) => state.property);
+  console.log("properties", myProperties);
+
+  useEffect(() => {
+    dispatch(fetchAllProperties());
+  }, [dispatch]);
+
+  console.log("myProperties", myProperties);
 
   const { t } = useTranslation("futureList");
 
@@ -20,13 +33,23 @@ const FutureList = () => {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-          {properties.map((card) => (
+          {myProperties.map((card) => (
             <CommonCard
               key={card.id}
-              {...card}
-              onViewDetails={() => {
-                navigate(`/home-details/${card.id}`);
+              id={card.id}
+              image={card.images[0] || "/placeholder.jpg"} // backend returns `images: []`
+              avatarImage={card.owner?.photo || "/avatar-placeholder.png"}
+              rating={"5.0"} // your backend doesn’t send ratings → fake it for now
+              ownerName={card.owner?.fullName || "Unknown"}
+              location={card.location}
+              title={card.title}
+              price={card.price}
+              features={{
+                beds: card.bedrooms,
+                baths: card.bathrooms,
+                sqft: Math.floor(card.size),
               }}
+              onViewDetails={() => navigate(`/home-details/${card.id}`)}
             />
           ))}
         </div>
