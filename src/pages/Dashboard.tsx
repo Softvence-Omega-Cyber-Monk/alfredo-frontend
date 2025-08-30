@@ -16,7 +16,10 @@ import { useTranslation } from "react-i18next";
 const Dashboard = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation("dashboard");
-  const { list, loading, error } = useAppSelector((state) => state.onboarding);
+  const { data, list, loading, error } = useAppSelector(
+    (state) => state.onboarding
+  );
+  console.log("dasdadfadsfa", data);
 
   // Controlled state
   const [formValues, setFormValues] = useState({
@@ -115,7 +118,11 @@ const Dashboard = () => {
       </h1>
 
       {loading && <p>Loading...</p>}
-      {error && <p className="text-red-500">{error}</p>}
+      {error && (
+        <p className="text-red-500">
+          {typeof error === "string" ? error : JSON.stringify(error)}
+        </p>
+      )}
 
       {/* HomeType Section */}
       <div className="mt-10">
