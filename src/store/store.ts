@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "@/store/Slices/AuthSlice/authSlice";
 import amenitiesReducer from "@/store/Slices/OnboardingSlice/AmenitySlice";
 import onboardingReducer from "@/store/Slices/OnboardingSlice/OnboardSlice";
+import favoritesReducer from "@/store/Slices/FavoritesSlice/favoritesSlice";
 import propertyReducer from "@/store/Slices/PropertySlice/propertySlice";
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
     auth: authReducer,
     amenities: amenitiesReducer,
     onboarding: onboardingReducer,
+    favorites: favoritesReducer,
     property: propertyReducer,
   },
 });
