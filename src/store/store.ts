@@ -4,6 +4,7 @@ import authReducer from "@/store/Slices/AuthSlice/authSlice";
 import amenitiesReducer from "@/store/Slices/OnboardingSlice/AmenitySlice";
 import onboardingReducer from "@/store/Slices/OnboardingSlice/OnboardSlice";
 import propertyReducer from "@/store/Slices/PropertySlice/propertySlice";
+import chatReducer from "@/store/Slices/ChatSlice/ChatSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     amenities: amenitiesReducer,
     onboarding: onboardingReducer,
     property: propertyReducer,
+    chat: chatReducer,
   },
 });
 
