@@ -1,0 +1,46 @@
+{
+  "settings": {
+    "password": {
+      "title": "Password",
+      "changePassword": "Change Password",
+      "oldPassword": "Old Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "update": "Update",
+      "rememberPassword": "Remember Password",
+      "forgotPassword": "Forgot Password?"
+    },
+    "notification": {
+      "title": "Notification",
+      "subtitle": "Notification Settings",
+      "messaging": "Messaging",
+      "someoneTextsMe": "Someone text me",
+      "iForgot": "I forgot to response messages",
+      "forFiveMinutes": "For 5 Minutes",
+      "forFifteenMinutes": "For 15 Minutes",
+      "forThirtyMinutes": "For 30 Minutes",
+      "friendOrReferral": "Friend / Referral",
+      "iHaveAFriendRequest": "I have a friend request",
+      "someoneAccepts": "Someone accepts my friend request",
+      "someoneInvited": "Someone that I invited as a referral joined the platform",
+      "propertyUpdates": "Property Updates",
+      "someoneAddMyHouse": "Someone adds my house to favorites",
+      "iNeedToUpdate": "I need to update the calenders for my properties",
+      "reminders": "Reminders",
+      "iForgotToRespondToExchange": "I forgot to respond to an exchange request (after 12h)",
+      "anExchangeHasBeenResponded": "An exchange request has been responded to (rejected / approved)",
+      "update": "Update"
+    },
+    "language": {
+      "title": "Language Settings",
+      "subtitle": "Language Settings",
+      "english": "English",
+      "greek": "Greek"
+    },
+    "payment": {
+      "title": "Payment",
+      "subtitle": "Payment Setup",
+      "addNewCard": "Add New Card"
+    }
+  }
+}

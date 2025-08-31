@@ -1,0 +1,134 @@
+{
+  "faq": {
+    "title": "About Vacanza",
+    "highlight": "questions",
+    "subtitle": "Explore our most frequently asked questions to understand how home exchange works, how to get started,",
+    "subtitle1": "and how we ensure a safe and trusted travel experience for all our members.",
+    "firstFaq": {
+      "title": "How it works?",
+      "content": "Vacanza is a local platform that offers you an alternative to the traditional paid booking sites, and a unique way to travel, saving a lot of money for accommodation. Let's briefly see all the benefits of choosing it. 1 is cost saving. You don't need to pay for accommodation. You can travel to other places for work, for leisure or to visit a friend without breaking the bank. 2: additional discounts: on our premium plans, we made sure to bring the best discounts on cars, ferries, flights and more to cut even non-accomodation related costs during your travel. 3: it is helping the local economy and environment. 4. Finally, it's also about making friends: remember that you are exchanging only if you want to, and you can choose when your house is available or not. You can take all the time that you want to meet people and know them, before finalizing the exchange. This will also create more connections for you and friends all over the country. Regarding this all of our community members are verified. For a complete article read."
+    },
+    "secondFaq": {
+      "title": "Who can participate?",
+      "content": "If you want to travel, and save costs while doing it, you will find likely minded people in the community. Whether it is for a short vacation or a long stay, or if you want to find an accommodation to your kid in university without paying a fortune, or a worker that needs a temporary house, or a tenant that want to travel without additional costs for housing, there is a lot of cases where Vacanza can be beneficial. Read our articles."
+    },
+    "thirdFaq": {
+      "title": "What type of property can I put on the site?",
+      "content": "You can add the following types of property: entire house, room in a house, boat, van. As long as it is in livable condition and you specify all the characteristics it is fine. You can add as many listings as you want."
+    },
+    "fourthFaq": {
+      "title": "Is it really free?",
+      "content": "To upload a property on the system is free. Also to request and make exchanges is completely free. You can make unlimited exchanges during your subscription. In order to use the platform we ask for a small amount just to keep the platform working and the staff to work with us. If a member asks you for money, report immediately to us as it is not expected by our rules. Read the article."
+    },
+    "fifthFaq": {
+      "title": "How many free exchanges do I have with my subscription?",
+      "content": "You have unlimited free exchanges. With the Base plan you get 1 year of free exchanges, and with the Premium plan you get 2 years of free exchanges plus other benefits."
+    },
+    "sixthFaq": {
+      "title": "Why should I put my house on Vacanza and not on other sites to make a profit?",
+      "content": "You can also do both, if you are a person who enjoys travelling. Many people would also use some parts of the year to make an income with short term rentals like BnB, and then travelling also for free. One thing does not exclude the other, and you are free to choose the availability of your properties through the property calendar."
+    },
+    "seventhFaq": {
+      "title": "Is my house safe?",
+      "content": "You have complete control on how to dispose of your house: which dates to make it available, who you want in your house, verification systems and communication that helps you prevent possible risks. For all the safety guidelines read."
+    },
+    "eighthFaq": {
+      "title": "Is this model also for long stays or only for short vacations?",
+      "content": "Yes, this model works both for long term stays and for short stays. You have maximum flexibility to choose the dates according to the availability calendar of the property."
+    },
+    "ninthFaq": {
+      "title": "Can I do multiple exchanges with one person also?",
+      "content": "Yes, you can go multiple times to a person's house if they agree and the house is available. The second time will also be better because you already know and trust the person, since you have already exchanged one time."
+    },
+    "tenthFaq": {
+      "title": "Can I bring my pet?",
+      "content": "Every property page has a “pet friendly” icon that shows you if the owner of that house accepts pets or not."
+    },
+    "eleventhFaq": {
+      "title": "What happens if I do not want to exchange for a period of time?",
+      "content": "It is very simple: you can put your house as “unavailable” on your property calendar. When you want to put it back you can put it as “available” and select the dates you want."
+    },
+    "twelfthFaq": {
+      "title": "Can I also exchange cars or bikes?",
+      "content": "If you both agree to it you could also exchange cars or bikes if you want to, in order to save money also from car rentals. We also provide our premium users with discounts from local car rental companies, other than airlines, ferry companies etc., to keep the cost of your vacation as low as possible."
+    },
+    "thirteenthFaq": {
+      "title": "How can the model help the local economy?",
+      "content": "We know that many families and workers now struggle to find affordable homes, given the current economic situation. This system is created so that people can find like-minded people and free accommodation wherever they want to go, either for travel, work or study. This can create less pressure and inflation of the housing market, keeping everything more affordable compared to a city of BnB reducing the supply of houses available for locals."
+    },
+    "fourteenthFaq": {
+      "title": "Can I collaborate with you?",
+      "content": "Of course. If you are a private, you can always give us your feedback, and invite other people to join our community. This way there will be more options of houses and people for users to choose from. If you represent a company, or have ideas to develop, contact us to discuss a collaboration."
+    }
+  },
+
+  "profile": {
+    "title": "About my profile",
+    "firstFaq": {
+      "title": "If I join with a basic account, can I upgrade later to Premium?",
+      "content": "Yes of course, you can upgrade at any moment inside your personal area."
+    },
+    "secondFaq": {
+      "title": "Can I hide my data if I want to?",
+      "content": "Your data including your photo, your email and the address of your properties are hidden to who is not registered to the platform. Only your photo and of course the address of the property (exact or approximate) are visible to who is registered."
+    },
+    "thirdFaq": {
+      "title": "How do I collect badges and what is their function?",
+      "content": "Badges can be obtained in several ways. Some of them are action-based, that means they are unlocked after a specific action. Others are contest-based, so they are time-limited and can be obtained within a period of time. The badges can make your experience on the platform more fun and also indicate how much experience you have, thus creating more trust in the people you connect with."
+    },
+    "fourthFaq": {
+      "title": "Where can I see all the requirements for the badges?",
+      "content": "You can see all the badges in your personal area. Each of them has a specific action that needs to be completed in order to be achieved."
+    },
+    "fifthFaq": {
+      "title": "How do I get the “verified” badge?",
+      "content": "You can get the verified badge completing all the tasks required in your personal area with 100% of completion."
+    }
+  },
+
+  "properties": {
+    "title": "About properties",
+
+    "firstFaq": {
+      "title": "How can I search for properties?",
+      "content": "In your personal area you have a tool that lets you search for properties with advanced filtering (not available if you are not registered)."
+    },
+    "secondFaq": {
+      "title": "Can I also add more than one property? Can I add multiple types of property?",
+      "content": "Yes you can also add more than one property to have more chance of success in exchanging and finding an exchange partner. And yes you can also add multiple types of properties (entire house, room in a house, boat, camper)."
+    },
+    "thirdFaq": {
+      "title": "What type of exchanges can I make?",
+      "content": "You can choose from these 4 methods, based on your schedule and preferences.\n\nSimultaneous exchange\nNon-simultaneous exchange (you exchange your houses at different times, based on your schedules)\nNon-reciprocal (only one person goes to the other person’s house)\nCo-living with the owners."
+    },
+    "fourthFaq": {
+      "title": "What type of properties I can upload?",
+      "content": "You can upload both your main residence and your holiday homes. You can also upload a property that you are renting, if your owner and rental contract allow it. You can upload entire houses, rooms, boats or vans."
+    },
+    "fifthFaq": {
+      "title": "Why did my property get deleted?",
+      "content": "We do regular checks to ensure the maximum safety of our users. We can delete a property if we consider it not safe (sketchy description, sketchy photos or no photos at all). We encourage our users to complete every field requested in order to also create more trust in other users."
+    }
+  },
+
+  "program": {
+    "title": "About properties",
+
+    "firstFaq": {
+      "title": "What kind of bonus programs do you offer?",
+      "content": "The bonus programs include additional discounts (for ferries, cars and flights), and for referrals (if you bring people to the platform). You can see all the details HERE."
+    },
+    "secondFaq": {
+      "title": "How do you know that the people who join are invited by me?",
+      "content": "In the Bonus Programs section, you have a unique referral link to send to your contacts that will assign them to you automatically."
+    },
+    "thirdFaq": {
+      "title": "What do “surprise destination” and “luxury destination” mean?",
+      "content": "It means that we will cover all the transportation costs! Including ferry tickets, plane tickets and cars. Luxury destination refers to places considered more elite and expensive."
+    },
+    "fourthFaq": {
+      "title": "Where can I find additional discounts for transportation, insurance etc.?",
+      "content": "You can find the insurance in your personal area if you joined the platform both with a Premium account and with a Base subscription. You can find additional discounts on flights, cars and ferries only if you are registered with a Premium account. You can choose your plan HERE."
+    }
+  }
+}

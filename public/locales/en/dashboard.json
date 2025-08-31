@@ -1,0 +1,121 @@
+{
+  "dashboard": {
+    "title": "Hi",
+    "subtitle": "You can preview how your home appears to others, make updates, and get ready to welcome guests for a home exchange.",
+    "button1": "Add a place",
+    "button2": "My Places",
+    "button3": "Friends",
+    "button4": "Favorite Places",
+
+    "part1": {
+      "title1": "Preview Your Home Listing",
+      "miniTitle1": "Where is your home?",
+      "subtitle1": "Tell guests where your home is located so they can plan their stay with confidence.",
+      "inputText1": "Select from Google Map",
+
+      "miniTitle2": "Where would you like to go?",
+      "subtitle2": "Choose your destination and start planning your next adventure with Vacanza.",
+      "inputText2": "Select from Google Map",
+      "location": "Pick a Location",
+      "button": "Cancel"
+    },
+
+    "part2": {
+      "title1": "What is your home like?",
+      "title2": "Is it your main residence?",
+      "card1": {
+        "miniTitle1": "Home",
+        "subtitle1": "Your home is an independent property.",
+        "miniTitle2": "Apartment",
+        "subtitle2": "our home is in a building shared by several apartments."
+      },
+
+      "card2": {
+        "miniTitle1": "Yes, I live there all year round",
+        "subtitle1": "Your home is an independent property.",
+        "miniTitle2": "Nor I go there occasionally",
+        "subtitle2": "Your home is in a building shared by several apartments."
+      }
+    },
+
+    "part3": {
+      "title1": "Main",
+      "title2": "Transport",
+      "title3": "Surrounding",
+      "main": {
+        "title1": "Fridge",
+        "title2": "Microwave oven",
+        "title3": "Washing machine",
+        "title4": "Bathtub",
+        "title5": "WIFI",
+        "title6": "Waste Sorting",
+        "title7": "Air Conditioner",
+        "title8": "TV",
+        "title9": "Easily Accessible",
+        "title10": "Balcony",
+        "title11": "Computer",
+        "title12": "Swimming Pool",
+        "title13": "Gym Space",
+        "title14": "Room Heater",
+        "title15": "Parking",
+        "title16": "Playground",
+        "title17": "Terrace",
+        "title18": "Garden",
+        "title19": "Heat Pump",
+        "title20": "Dishwasher",
+        "title21": "Elevator",
+        "title22": "Private Pool",
+        "title23": "BBQ"
+      },
+      "transport": {
+        "title1": "Bicycle",
+        "title2": "Bike",
+        "title3": "Car",
+        "title4": "Bus",
+        "title5": "Train",
+        "title6": "Boat"
+      },
+      "surrounding": {
+        "title1": "Countryside",
+        "title2": "Mountain",
+        "title3": "Coastal",
+        "title4": "Lake",
+        "title5": "City",
+        "title6": "Village",
+        "title7": "River",
+        "title8": "Island"
+      }
+    },
+    "part4": {
+      "title1": "Give your home a Name",
+      "subtitle1": "Pick a name that reflects the personality or charm of your home — it’s the first thing guests will see!",
+      "subtitle1p": "Type your home name",
+
+      "title2": "Describe your home",
+      "subtitle2": "Tell guests what makes your home inviting — mention the style, atmosphere, and anything that makes it feel special.",
+      "subtitle2p": "Describe it here",
+
+      "title3": "Tell us about the area around your home",
+      "subtitle3": "Help guests get a feel for your location — share nearby attractions, dining spots, transport options, and the overall vibe of your neighborhood.",
+      "subtitle3p": "Describe it here",
+
+      "title4": "Add at least 5 pictures",
+      "subtitle4": "Showcase your home from every angle by uploading at least 5 high-quality photos — include key spaces like the living area, kitchen, bedroom, and bathroom.",
+
+      "fileTitle": "Upload Picture",
+      "fileSubtitle": "Upload an image of your property (JPG or PNG format supported)",
+      "image": "No Image Selected",
+
+      "titleAvailability": "Add your home's availability",
+      "titleDate": "Select Your Available Dates",
+      "date1": "Start date",
+      "date2": "End date",
+      "availabilityCard": {
+        "miniTitle1": "Home",
+        "subtitle1": "Your home is an independent property.",
+        "miniTitle2": "Apartment",
+        "subtitle2": "our home is in building shared by several apartments."
+      }
+    }
+  }
+}

@@ -63,7 +63,7 @@ const Photos = ({ photos }: PhotosProps) => {
               alt=""
             />
             <button
-              className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-2 m-2 hover:bg-black/75 transition-colors"
+              className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-2 m-2 hover:bg-black/75 transition-colors cursor-pointer"
               onClick={() => setShowPreview(false)}
             >
               ×
