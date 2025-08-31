@@ -28,8 +28,7 @@ import OnboardingPage from "@/pages/OnboardingPage";
 import Places from "@/pages/Places";
 import PlaceDetails from "@/pages/PlaceDetails";
 import AddPlace from "@/pages/AddPlace";
-
-
+import MyFavoritePage from "@/pages/MyFavoritePage";
 
 const routes = createBrowserRouter([
   {
@@ -120,6 +119,11 @@ const routes = createBrowserRouter([
         path: "/my-properties",
         element: <MyProperties />,
       },
+      {
+        path: "/my-favorite",
+        element: <MyFavoritePage />,
+      },
+
       {
         path: "/places",
         element: <Places />,
