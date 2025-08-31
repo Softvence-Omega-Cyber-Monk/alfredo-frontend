@@ -7,6 +7,7 @@ import cardStar from "@/assets/home/star.svg";
 import { useTranslation } from "react-i18next";
 import PrimaryButton from "../reusable/PrimaryButton";
 import { useNavigate } from "react-router-dom";
+import PageLoader from "@/common/PageLoader";
 
 const SearchResults: React.FC = () => {
   const navigate = useNavigate();
@@ -14,7 +15,11 @@ const SearchResults: React.FC = () => {
   const { t } = useTranslation("futureList");
 
   if (isLoading) {
-    return <div className="p-4 text-center">Loading...</div>;
+    return (
+      <div>
+        <PageLoader />
+      </div>
+    );
   }
 
   if (error) {
