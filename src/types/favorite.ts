@@ -1,4 +1,4 @@
-// src/types/index.ts
+// src/types/favorite.ts
 export interface Property {
   id: string;
   title: string;
