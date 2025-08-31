@@ -1,0 +1,16 @@
+{
+  "contact": {
+    "title": "Contact",
+    "highlight": "us",
+    "subtitle": "Questions? We're here to help...",
+    "help": "We are here to help you:",
+    "helpDesc": "Our experts are available to answer any questions you might have. We’ve got the answers.",
+    "mail": "Directly mail us",
+    "firstName": "First Name *",
+    "lastName": "Last Name",
+    "enterEmail": "Enter your email",
+    "phone": "Enter phone no.",
+    "writeMessage": "Write a message",
+    "bookNow": "Book now"
+  }
+}

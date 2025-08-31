@@ -1,19 +1,14 @@
-import React from "react";
-import {
-  Wifi,
-  Tv,
-  Car,
-  Utensils,
-  AirVent,
-  Dumbbell,
-  Bath,
-  Coffee,
-} from "lucide-react";
 import { MdRocketLaunch } from "react-icons/md";
 import { RiVipDiamondFill } from "react-icons/ri";
 import { FaCheck } from "react-icons/fa";
 import cardImg from "@/assets/home/cardImg.jpg";
 import testimonailPerson from "@/assets/testimonailPerson.jpg";
+
+import fridge from "@/assets/icons/Fridge.svg";
+import Microwave from "@/assets/icons/Micro.svg";
+import washing from "@/assets/icons/washing.svg";
+import bicycle from "@/assets/icons/bicycle.svg";
+import Coastal from "@/assets/icons/sunbath.svg";
 
 export interface HomeDetailsType {
   title: string;
@@ -31,29 +26,27 @@ export interface HomeDetailsType {
     alt: string;
   }[];
   features: {
-    icon: React.ElementType;
-    label: string;
-    value: string;
-  }[];
+    rooms?: number;
+    baths?: number;
+    beds?: number;
+    area?: number;
+  };
   description: {
     text: string;
     homeId: string;
   };
   amenities: {
     main: {
-      icon: React.ElementType;
+      icon: string;
       title: string;
-      items: string[];
     }[];
     transport: {
-      icon: React.ElementType;
+      icon: string;
       title: string;
-      items: string[];
     }[];
     surrounding: {
-      icon: React.ElementType;
+      icon: string;
       title: string;
-      items: string[];
     }[];
   };
   owner: {
@@ -95,12 +88,12 @@ export const homeDetailsData: HomeDetailsType = {
     from: "01-Jun-2026",
     to: "30-Dec-2026",
   },
-  features: [
-    { icon: Car, label: "Rooms", value: "10 rooms" },
-    { icon: Bath, label: "Baths", value: "2 Baths" },
-    { icon: Dumbbell, label: "Beds", value: "10 beds" },
-    { icon: Coffee, label: "Area", value: "250 sqf" },
-  ],
+  features: {
+    rooms: 3,
+    baths: 2,
+    beds: 4,
+    area: 1200,
+  },
   photos: [
     { src: cardImg, alt: "Main view" },
     { src: cardImg, alt: "Second view" },
@@ -126,58 +119,36 @@ export const homeDetailsData: HomeDetailsType = {
   amenities: {
     main: [
       {
-        icon: Wifi,
-        title: "Technology",
-        items: ["Free WiFi", "Smart TV", "Work Space"],
+        icon: fridge,
+        title: "Fridge",
       },
       {
-        icon: Car,
-        title: "Parking",
-        items: ["Free Parking", "Garage"],
+        icon: Microwave,
+        title: "Microwave oven ",
       },
       {
-        icon: Tv,
-        title: "Outdoor",
-        items: ["Garden", "BBQ"],
-      },
-      {
-        icon: Utensils,
-        title: "Kitchen",
-        items: ["Full Kitchen", "Coffee Maker"],
-      },
-      {
-        icon: AirVent,
-        title: "Climate",
-        items: ["AC", "Heating"],
-      },
-      {
-        icon: Bath,
-        title: "Bathroom",
-        items: ["Shower", "Essentials"],
-      },
-      {
-        icon: Dumbbell,
-        title: "Fitness",
-        items: ["Gym Access", "Yoga Mat"],
-      },
-      {
-        icon: Coffee,
-        title: "Services",
-        items: ["Cleaning", "Breakfast"],
+        icon: washing,
+        title: "Washing machine ",
       },
     ],
     transport: [
       {
-        icon: Car,
-        title: "Transport",
-        items: ["Bus Stop", "Train Station", "Airport"],
+        icon: bicycle,
+        title: "Bicycle",
       },
     ],
     surrounding: [
       {
-        icon: Coffee,
-        title: "Nearby",
-        items: ["Restaurants", "Shopping", "Beach"],
+        icon: Coastal,
+        title: "Countryside",
+      },
+      {
+        icon: Coastal,
+        title: "Mountain",
+      },
+      {
+        icon: Coastal,
+        title: "Coastal",
       },
     ],
   },

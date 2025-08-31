@@ -1,0 +1,16 @@
+{
+  "navigation": {
+    "home": "Home",
+    "faq": "FAQ",
+    "articles": "Articles",
+    "contactUs": "Contact Us",
+    "bonusPrograms": "Bonus Program",
+    "plans": "Plans",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout",
+    "Join": "Join",
+    "Login": "Login"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "profile": {
+    "title": "Profile",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phone": "Phone (Whatsapp)",
+    "dob": "Date of Birth",
+    "email": "Email",
+    "identificationType": {
+      "label": "Identification Type",
+      "nid": "NID",
+      "passport": "Passport",
+      "birthCertificate": "Birth Certificate"
+    },
+    "number": "Number",
+    "numberPlaceholder": "Enter identification number",
+    "age": "Age",
+    "gender": {
+      "title": "Gender",
+      "male": "Male",
+      "female": "Female",
+      "notSpecified": "Not Specified"
+    },
+    "iAmA": {
+      "title": "I am a",
+      "worker": "Worker",
+      "retired": "Retired",
+      "student": "Student",
+      "unemployed": "Unemployed"
+    },
+    "iMostlyTravelWith": {
+      "title": "I mostly travel with",
+      "byMyself": "By myself",
+      "family": "Family",
+      "friends": "Friends",
+      "couples": "Couples"
+    },
+    "travelPreferences": {
+      "title": "Travel Preferences",
+      "subTitle": "I travel mostly (select up to 2 options)",
+      "business": "Business",
+      "leisure": "Leisure",
+      "adventure": "Adventure",
+      "family": "Family",
+      "solo": "Solo",
+      "cultural": "Cultural"
+    },
+    "doYouTravelWithPets": {
+      "title": "Do you travel with pets?",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "favoriteDestinations": {
+      "title": "Favorite Destinations (Select all that apply)",
+      "bigCities": "Big Cities",
+      "smallCities": "Small Cities",
+      "seaside": "Sea side",
+      "mountains": "Mountains"
+    },
+    "iTravelFor": {
+      "title": "I travel for (Select all that apply)",
+      "relaxation": "Relaxation",
+      "adventure": "Adventure",
+      "work": "Work"
+    },
+    "notesOnYourself": {
+      "title": "Notes on yourself",
+      "placeHolder": "Write something about yourself"
+    },
+    "accountVerificationStatus": "Account verification status",
+    "verified": "Verified",
+    "notVerified": "Not verified",
+    "saveChanges": "Save changes"
+  }
+}

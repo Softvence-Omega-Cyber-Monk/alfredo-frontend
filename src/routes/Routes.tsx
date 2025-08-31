@@ -20,6 +20,15 @@ import OTP from "@/pages/OTP";
 import VerifyEmail from "@/pages/VerifyEmail";
 import ForgotPassword from "@/pages/ForgotPassword";
 import SetNewPassword from "@/pages/SetNewPassword";
+import SettingPassword from "@/pages/SettingPassword";
+import Messages from "../pages/Messages";
+import Dashboard from "@/pages/Dashboard";
+import MyProperties from "@/pages/MyProperties";
+import OnboardingPage from "@/pages/OnboardingPage";
+import Places from "@/pages/Places";
+import PlaceDetails from "@/pages/PlaceDetails";
+import AddPlace from "@/pages/AddPlace";
+import MyFavoritePage from "@/pages/MyFavoritePage";
 
 const routes = createBrowserRouter([
   {
@@ -71,7 +80,7 @@ const routes = createBrowserRouter([
         element: <OTP />,
       },
       {
-        path: "/verify-email",
+        path: "/verify-otp/:userId",
         element: <VerifyEmail />,
       },
       {
@@ -79,12 +88,8 @@ const routes = createBrowserRouter([
         element: <ForgotPassword />,
       },
       {
-        path: "/set-new-password",
+        path: "/reset-password",
         element: <SetNewPassword />,
-      },
-      {
-        path: "/signup",
-        element: <Signup />,
       },
       {
         path: "/chat",
@@ -97,6 +102,43 @@ const routes = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/settings",
+        element: <SettingPassword />,
+      },
+      {
+        path: "/messages",
+        element: <Messages />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/my-properties",
+        element: <MyProperties />,
+      },
+      {
+        path: "/my-favorite",
+        element: <MyFavoritePage />,
+      },
+
+      {
+        path: "/places",
+        element: <Places />,
+      },
+      {
+        path: "/places/:id",
+        element: <PlaceDetails />,
+      },
+      {
+        path: "/add-place",
+        element: <AddPlace />,
+      },
+      {
+        path: "/onboarding",
+        element: <OnboardingPage />,
       },
       {
         path: "/admin",

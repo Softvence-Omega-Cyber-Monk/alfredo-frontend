@@ -1,49 +1,62 @@
+import dashboard from "@/assets/icons/dashboard.svg";
+import dashboardHover from "@/assets/icons/dashboardHover.svg";
+import profile from "@/assets/icons/userHome.svg";
+import profileHover from "@/assets/icons/userHover.svg";
+import settings from "@/assets/icons/setting.svg";
+import settingsHover from "@/assets/icons/settingHover.svg";
+
 export interface NavItem {
-  title: string;
+  title: string; // Changed from 'title' to 'titleKey'
   path: string;
-  icon?: React.ElementType;
+  icon?: string;
+  hoverIcon?: string;
   isPrivate?: boolean;
 }
 
 export const navigationConfig: NavItem[] = [
   {
-    title: "Home",
+    title: "navigation.home", // Use translation keys
     path: "/",
   },
   {
-    title: "FAQ",
+    title: "navigation.faq",
     path: "/faq",
   },
   {
-    title: "Articles",
+    title: "navigation.articles",
     path: "/articles",
   },
   {
-    title: "Contact Us",
+    title: "navigation.contactUs",
     path: "/contact",
   },
   {
-    title: "Bonus Program",
+    title: "navigation.bonusPrograms",
     path: "/bonus-program",
   },
   {
-    title: "Plans",
+    title: "navigation.plans",
     path: "/plans",
-    // isPrivate: true,
   },
 ];
 
 export const userMenuItems = [
   {
-    title: "Profile",
+    icon: dashboard,
+    hoverIcon: dashboardHover,
+    title: "navigation.dashboard",
+    path: "/dashboard",
+  },
+  {
+    icon: profile,
+    hoverIcon: profileHover,
+    title: "navigation.profile",
     path: "/profile",
   },
   {
-    title: "Settings",
+    icon: settings,
+    hoverIcon: settingsHover,
+    title: "navigation.settings",
     path: "/settings",
-  },
-  {
-    title: "My Properties",
-    path: "/my-properties",
   },
 ];

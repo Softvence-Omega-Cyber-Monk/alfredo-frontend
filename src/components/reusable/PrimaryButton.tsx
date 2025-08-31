@@ -1,4 +1,3 @@
-import React from "react";
 import clsx from "clsx";
 
 interface PrimaryButtonProps {
@@ -26,7 +25,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
     <button
       onClick={onClick}
       className={clsx(
-        "relative overflow-hidden rounded-full transition-colors text-lg font-medium cursor-pointer",
+        "relative overflow-hidden rounded-full transition-colors text-lg hover:brightness-90 font-medium cursor-pointer",
         padding,
         textColor,
         bgColor,
@@ -36,8 +35,12 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
     >
       <span className="relative z-10">{title}</span>
       {bgImage && (
-        <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
-          <img src={bgImage} alt="icon" className="full" />
+        <div className="absolute bottom-0 right-0 opacity-20 items-center justify-center overflow-hidden">
+          <img
+            src={bgImage}
+            alt="icon"
+            className="w-full hover:text-primary-blue"
+          />
         </div>
       )}
     </button>

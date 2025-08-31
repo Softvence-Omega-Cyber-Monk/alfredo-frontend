@@ -1,0 +1,226 @@
+{
+  "onboarding": {
+    "step1": "Welcome ",
+    "step1s": "State",
+    "step2": "Travel ",
+    "step2s": "Verification",
+    "step3": "Select",
+    "step3s": "Type",
+    "step4": "Select",
+    "step4s": "Amenities",
+    "step5": "About",
+    "step5s": "Your Home",
+    "step6": "Upload",
+    "step6s": "Photo",
+    "step7": "Home’s",
+    "step7s": "Availability",
+    "stepButton1": "Cancel",
+    "stepButton2": "Back",
+    "stepButton3": "Continue",
+    "stepButton4": "Finish",
+
+    "part1": {
+      "step": "Welcome State",
+      "headTitle": "Get started with Vacanza.",
+      "headButton": "Save Draft",
+
+      "bigtitle1": "Create your home listing",
+      "subtitle1": "Add your property details, photos, and pricing to start attracting guests.",
+      "bigtitle2": "Introduce yourself.",
+      "subtitle2": "Share a bit about who you are to build trust with potential guests.",
+      "bigtitle3": "Become a member for 59 EUR",
+      "subtitle3": " Unlock full platform benefits and connect with a global community..",
+
+      "minititle1": "Where is your home?",
+      "minisubtitle1": "Tell guests where your home is located so they can plan their stay with confidence.",
+      "location1": "Lat: 23.81018, Lng: 90.42713",
+
+      "minititle2": "Where would you like to go?",
+      "minisubtitle2": "Choose your destination and start planning your next adventure with Vacanza.",
+      "location2": "Lat: 23.81018, Lng: 90.42713",
+
+      "button1": "Cancel",
+      "button2": "Continue",
+      "note": "You'll be able to modify this information later"
+    },
+
+    "part2": {
+      "step": "Travel Verification",
+      "headTitle": "Welcome back, Savannah!",
+      "headButton": "Save Draft",
+
+      "button1": "Cancel",
+      "button2": "Back",
+      "button3": "Continue",
+
+      "age": "Age",
+      "gender": {
+        "title": "Gender",
+        "male": "Male",
+        "female": "Female",
+        "notSpecified": "Not Specified"
+      },
+      "iAmA": {
+        "title": "I am a",
+        "worker": "Worker",
+        "retired": "Retired",
+        "student": "Student",
+        "unemployed": "Unemployed"
+      },
+
+      "travelType": {
+        "title": "Your Travel Type",
+        "subTitle": " (select up to 2 options)",
+        "business": "Business",
+        "leisure": "Leisure",
+        "adventure": "Adventure",
+        "family": "Family",
+        "solo": "Solo",
+        "cultural": "Cultural"
+      },
+      "favoriteDestinations": {
+        "title": "Favorite Destinations (Select all that apply)",
+        "bigCities": "Big Cities",
+        "smallCities": "Small Cities",
+        "seaSide": "Sea side",
+        "mountains": "Mountains"
+      },
+      "iMostlyTravelWith": {
+        "title": "I mostly travel with",
+        "byMyself": "By myself",
+        "family": "Family",
+        "withPartner": "With A Partner",
+        "withFrends": "With Friends"
+      },
+
+      "TravelWithPet": {
+        "title": "Do You Travel With Pets?",
+        "yes": "Yes",
+        "no": "No"
+      },
+      "notesOnYourself": {
+        "title": "Notes on yourself",
+        "placeHolder": "Write something about yourself"
+      }
+    },
+
+    "part3": {
+      "step": "Select Type",
+      "headTitle": "Select Type",
+      "headButton": "Save Draft",
+
+      "title1": "What is your home like?",
+      "card1": {
+        "miniTitle1": "Home",
+        "subtitle1": "Your home is an independent property.",
+        "miniTitle2": "Apartment",
+        "subtitle2": "our home is in a building shared by several apartments."
+      },
+      "title2": "Is it your main residence?",
+      "card2": {
+        "miniTitle1": "Yes, I live there all year round",
+        "subtitle1": "Your home is an independent property.",
+        "miniTitle2": "Nor I go there occasionally",
+        "subtitle2": "Your home is in a building shared by several apartments."
+      }
+    },
+    "part4": {
+      "step": "Select Amenities",
+      "headTitle": "Select Amenities",
+      "headButton": "Save Draft",
+
+      "title1": "Main",
+      "title2": "Transport",
+      "title3": "Surrounding",
+      "main": {
+        "title1": "Fridge",
+        "title2": "Microwave oven",
+        "title3": "Washing machine",
+        "title4": "Bathtub",
+        "title5": "WIFI",
+        "title6": "Waste Sorting",
+        "title7": "Air Conditioner",
+        "title8": "TV",
+        "title9": "Easily Accessible",
+        "title10": "Balcony",
+        "title11": "Computer",
+        "title12": "Swimming Pool",
+        "title13": "Gym Space",
+        "title14": "Room Heater",
+        "title15": "Parking",
+        "title16": "Playground",
+        "title17": "Terrace",
+        "title18": "Garden",
+        "title19": "Heat Pump",
+        "title20": "Dishwasher",
+        "title21": "Elevator",
+        "title22": "Private Pool",
+        "title23": "BBQ"
+      },
+      "transport": {
+        "title1": "Bicycle",
+        "title2": "Bike",
+        "title3": "Car",
+        "title4": "Bus",
+        "title5": "Train",
+        "title6": "Boat"
+      },
+      "surrounding": {
+        "title1": "Countryside",
+        "title2": "Mountain",
+        "title3": "Coastal",
+        "title4": "Lake",
+        "title5": "City",
+        "title6": "Village",
+        "title7": "River",
+        "title8": "Island"
+      }
+    },
+    "part5": {
+      "step": "About Your Home",
+      "headTitle": "About Your Home",
+      "headButton": "Save Draft",
+
+      "title1": "Give your home a Name",
+      "subtitle1": "Pick a name that reflects the personality or charm of your home — it’s the first thing guests will see!",
+      "subtitle1p": "Type your home name",
+
+      "title2": "Describe your home",
+      "subtitle2": "Tell guests what makes your home inviting — mention the style, atmosphere, and anything that makes it feel special.",
+      "subtitle2p": "Describe it here",
+
+      "title3": "Tell us about the area around your home",
+      "subtitle3": "Help guests get a feel for your location — share nearby attractions, dining spots, transport options, and the overall vibe of your neighborhood.",
+      "subtitle3p": "Describe it here"
+    },
+
+    "part6": {
+      "step": "upload photo",
+      "headTitle": "Select Amenities",
+      "headButton": "Save Draft",
+
+      "title4": "Add at least 5 pictures",
+      "subtitle4": "Showcase your home from every angle by uploading at least 5 high-quality photos — include key spaces like the living area, kitchen, bedroom, and bathroom.",
+
+      "fileTitle": "Upload Picture",
+      "fileSubtitle": "Upload an image of your property (JPG or PNG format supported)",
+      "image": "No Image Selected"
+    },
+    "part7": {
+      "step": "Home's Availability",
+      "headTitle": "Add your home's availability",
+      "headButton": "Save Draft",
+
+      "titleAvailability": "Add your home's availability",
+      "titleDate": "Select Your Available Dates",
+      "date1": "Start date",
+      "date2": "End date",
+      "availabilityCard": {
+        "miniTitle1": "Home",
+        "subtitle1": "Your home is an independent property.",
+        "miniTitle2": "Apartment",
+        "subtitle2": "our home is in building shared by several apartments."
+      }
+    }
+  }
+}
