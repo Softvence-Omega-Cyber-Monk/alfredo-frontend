@@ -1,28 +1,7 @@
 export type ConversationType = "supplier" | "support";
 
 export interface Conversation {
-  id: number;
-  name: string;
-  lastMessage: string;
-  timestamp: string;
-  unread: number;
-  avatar: string;
-  online: boolean;
-  type: ConversationType;
-  rating: number; // Made this required since we always provide it
-}
-
-export interface Message {
-  id: number;
-  sender: string;
-  content: string;
-  timestamp: string;
-  isOwn: boolean;
-  type: "text";
-}
-
-export interface Conversation {
-  id: number;
+  id: string;
   name: string;
   lastMessage: string;
   timestamp: string;
@@ -33,9 +12,18 @@ export interface Conversation {
   rating: number;
 }
 
+export interface Message {
+  id: string;
+  sender: string;
+  content: string;
+  timestamp: string;
+  isOwn: boolean;
+  type: "text";
+}
+
 export interface ConversationsListProps {
   conversations: Conversation[];
-  selectedConversation: Conversation;
+  selectedConversation: Conversation | null;
   onSelectConversation: (conversation: Conversation) => void;
   searchTerm: string;
   onSearchChange: (value: string) => void;
@@ -52,4 +40,5 @@ export interface ChatAreaProps {
   onCall: () => void;
   onCloseChat: () => void;
   isVisible: boolean;
+  onToggleInfo: () => void;
 }

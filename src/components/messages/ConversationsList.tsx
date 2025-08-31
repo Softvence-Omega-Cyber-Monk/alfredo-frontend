@@ -4,16 +4,44 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 
 import { Conversation } from "./types";
+// import axios from "axios";
+// import { useAppDispatch } from "@/hooks/useRedux";
 
 interface ConversationsListProps {
   conversations: Conversation[];
-  selectedConversation: Conversation;
+  selectedConversation: Conversation | null; // Allow null
   onSelectConversation: (conversation: Conversation) => void;
   searchTerm: string;
   onSearchChange: (value: string) => void;
   isVisible: boolean;
   onClose?: () => void;
 }
+
+// const token = localStorage.getItem("token");
+
+// const fetchAllConversations = async (
+//   userId: string
+// ): Promise<Conversation[]> => {
+//   try {
+//     console.log("Fetching conversations for userId:", userId);
+//     const res = await axios.get(
+//       `https://alfredo-server-n9x6.onrender.com/chat/history/user/${userId}`,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "Content-Type": "application/json",
+//         },
+//       }
+//     );
+//     // if (Array.isArray(res.data)) {
+//     //   return res.data.map(mapApiToConversation);
+//     // }
+//     return [];
+//   } catch (err) {
+//     console.error("Failed to fetch conversations:", err);
+//     return [];
+//   }
+// };
 
 const ConversationsList: React.FC<ConversationsListProps> = ({
   conversations,
@@ -27,6 +55,14 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
   const filteredConversations = conversations.filter((conv) =>
     conv.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // const dispatch = useAppDispatch();
+
+  // useEffect(() => {
+  //   dispatch(fetchAllConversations as any);
+  // }, [dispatch]);
+
+  console.log("Rendering ConversationsList with conversations:", conversations);
 
   return (
     <div
@@ -58,7 +94,7 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
               if (onClose) onClose(); // Close sidebar on mobile after selection
             }}
             className={`p-3 md:p-4 cursor-pointer  transition-colors  ${
-              selectedConversation.id === conversation.id
+              selectedConversation?.id === conversation.id
                 ? "bg-[#EAF1FA] text-dark-2"
                 : "text-dark-3"
             }`}

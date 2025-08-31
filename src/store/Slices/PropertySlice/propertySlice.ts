@@ -56,7 +56,7 @@ const getAuthConfig = (isMultipart = false) => ({
   },
 });
 
-// ✅ Fetch all properties
+//  Fetch all properties
 export const fetchAllProperties = createAsyncThunk<Property[]>(
   "properties/fetchAll",
   async () => {
@@ -68,7 +68,7 @@ export const fetchAllProperties = createAsyncThunk<Property[]>(
   }
 );
 
-// ✅ Fetch my properties
+//  Fetch my properties
 export const fetchMyProperties = createAsyncThunk<Property[]>(
   "properties/fetchMine",
   async () => {
@@ -80,7 +80,7 @@ export const fetchMyProperties = createAsyncThunk<Property[]>(
   }
 );
 
-// ✅ Fetch single property
+//  Fetch single property
 export const fetchSingleProperty = createAsyncThunk<Property, string>(
   "properties/fetchSingle",
   async (id) => {
@@ -92,7 +92,7 @@ export const fetchSingleProperty = createAsyncThunk<Property, string>(
   }
 );
 
-// ✅ Add new property (with images)
+//  Add new property (with images)
 export const addProperty = createAsyncThunk<Property, FormData>(
   "properties/add",
   async (newProperty) => {
@@ -105,7 +105,7 @@ export const addProperty = createAsyncThunk<Property, FormData>(
   }
 );
 
-// ✅ Update property (supports JSON or FormData)
+//  Update property (supports JSON or FormData)
 export const updateProperty = createAsyncThunk<
   Property,
   { id: string; updatedData: Partial<Property> | FormData }
@@ -118,7 +118,7 @@ export const updateProperty = createAsyncThunk<
   return response.data;
 });
 
-// ✅ Delete property
+//  Delete property
 export const deleteProperty = createAsyncThunk<string, string>(
   "properties/delete",
   async (id) => {
@@ -132,7 +132,7 @@ const propertySlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // 🔹 Fetch All
+    //  Fetch All
     builder.addCase(fetchAllProperties.pending, (state) => {
       state.loading = true;
     });
@@ -145,7 +145,7 @@ const propertySlice = createSlice({
       state.error = action.error.message || "Failed to fetch all properties";
     });
 
-    // 🔹 Fetch My
+    //  Fetch My
     builder.addCase(fetchMyProperties.pending, (state) => {
       state.loading = true;
     });
@@ -158,7 +158,7 @@ const propertySlice = createSlice({
       state.error = action.error.message || "Failed to fetch my properties";
     });
 
-    // 🔹 Fetch Single
+    //  Fetch Single
     builder.addCase(fetchSingleProperty.pending, (state) => {
       state.loading = true;
     });
@@ -171,13 +171,13 @@ const propertySlice = createSlice({
       state.error = action.error.message || "Failed to fetch property";
     });
 
-    // 🔹 Add
+    // Add
     builder.addCase(addProperty.fulfilled, (state, action) => {
       state.allProperties.push(action.payload);
       state.myProperties.push(action.payload);
     });
 
-    // 🔹 Update
+    //  Update
     builder.addCase(updateProperty.fulfilled, (state, action) => {
       const updateInList = (list: Property[]) => {
         const idx = list.findIndex((p) => p.id === action.payload.id);

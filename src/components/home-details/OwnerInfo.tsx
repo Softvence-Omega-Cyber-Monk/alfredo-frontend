@@ -1,27 +1,29 @@
 import { MapPin } from "lucide-react";
 import PrimaryButton from "../reusable/PrimaryButton";
+import { OwnerDetails } from "@/types/PropertyDetails";
 
-interface Badge {
-  color: string;
-  icon: React.ElementType;
-}
+// interface Badge {
+//   color: string;
+//   icon: React.ElementType;
+// }
 
-interface Verification {
-  bgColor: string;
-  iconColor: string;
-  icon: React.ElementType;
-  text: string;
-}
+// interface Verification {
+//   bgColor: string;
+//   iconColor: string;
+//   icon: React.ElementType;
+//   text: string;
+// }
 
 interface OwnerInfoProps {
-  owner: {
-    image: string;
-    name: string;
-    email: string;
-    location: string;
-    badges: Badge[];
-    verifications: Verification[];
-  };
+  // owner: {
+  //   image: string;
+  //   name: string;
+  //   email: string;
+  //   location: string;
+  //   badges: Badge[];
+  //   verifications: Verification[];
+  // };
+  ownerDetails?: OwnerDetails;
   callToAction: {
     message: string;
     button: React.ComponentProps<typeof PrimaryButton>;
@@ -31,7 +33,8 @@ interface OwnerInfoProps {
 }
 
 const OwnerInfo = ({
-  owner,
+  // owner,
+  ownerDetails,
   callToAction,
   isPremiumMember = false,
 }: //   onSubscribeClick,
@@ -63,19 +66,21 @@ OwnerInfoProps) => {
       )}
       {/* Owner Info */}
       <img
-        src={owner.image}
+        src={ownerDetails?.photo || "/defaultAvatar.png"}
         className="h-48 w-full object-cover object-top rounded-lg"
-        alt={owner.name}
+        alt={ownerDetails?.fullName || "Owner Image"}
       />
       <div className="flex flex-col gap-4 pt-4 pb-6 border-b border-[#F4F7FC]">
-        <h3 className="text-lg text-dark-2 font-semibold">{owner.name}</h3>
+        <h3 className="text-lg text-dark-2 font-semibold">
+          {ownerDetails?.fullName}
+        </h3>
         {/* <div className="flex items-center gap-1.5 text-dark-3 text-base">
           <Mail className="w-5 h-5 text-primary-blue" />
           <p>{owner.email}</p>
         </div> */}
         <div className="flex items-start justify-start gap-1.5 text-dark-3 text-base">
           <MapPin className="w-5 h-5 text-primary-blue" />
-          <p>{owner.location}</p>
+          <p>{ownerDetails?.city}</p>
         </div>
       </div>
 
@@ -84,7 +89,7 @@ OwnerInfoProps) => {
         <h2 className="bg-[#EAF1FA] text-dark-2 text-base font-regular px-2 py-1">
           Achievement Badges
         </h2>
-        <div className="p-3">
+        {/* <div className="p-3">
           <div className="flex items-center gap-2">
             {owner.badges.map((badge, index) => (
               <div key={index} className={`${badge.color} p-2 rounded-full`}>
@@ -92,11 +97,11 @@ OwnerInfoProps) => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Verifications */}
-      <div className="flex flex-col gap-3 pb-6 border-b border-[#F4F7FC]">
+      {/* <div className="flex flex-col gap-3 pb-6 border-b border-[#F4F7FC]">
         {owner.verifications.map((verification, index) => (
           <div
             key={index}
@@ -110,7 +115,7 @@ OwnerInfoProps) => {
             <p>{verification.text}</p>
           </div>
         ))}
-      </div>
+      </div> */}
 
       {/* Call to Action */}
       <div className="py-6">
