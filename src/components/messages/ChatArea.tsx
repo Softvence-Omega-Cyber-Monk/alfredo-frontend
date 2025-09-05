@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 import { ChatAreaProps } from "@/components/messages/types";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,6 +14,13 @@ const ChatArea: FC<ChatAreaProps> = ({
   isVisible,
   onToggleInfo,
 }) => {
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
   if (!isVisible) return null;
 
   return (
@@ -61,6 +68,7 @@ const ChatArea: FC<ChatAreaProps> = ({
               </div>
             </div>
           ))}
+          <div ref={bottomRef} />
         </div>
 
         {/* Input */}
