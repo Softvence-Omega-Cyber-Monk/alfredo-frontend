@@ -7,8 +7,17 @@ import Map from "./Map";
 import AccordionComponent from "../reusable/AccordionComponent";
 import { HomeDetailsType } from "@/lib/data/homeDetails.ts";
 import { bonus } from "@/lib/AccordionData/accordionData";
+import { PropertyDetails } from "@/types/PropertyDetails";
 
-const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
+const HomeDetailsTabs = ({
+  data,
+  singlePropertyData,
+}: {
+  data: HomeDetailsType;
+  singlePropertyData: PropertyDetails;
+}) => {
+  // console.log(data, "data in tabsssssssssss");
+  console.log(singlePropertyData, "data in tabs");
   const tabsData = [
     {
       id: "Photos",
@@ -18,12 +27,12 @@ const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
           <Photos photos={data.photos} />
           <Description
             dates={{ from: data.dates.from, to: data.dates.to }}
-            description={data.description}
+            description={singlePropertyData.description}
           />
           <Amenities amenities={data.amenities} />
           <div className="mb-6 md:mb-20">
-           <Map location={data.location} />
-         </div>
+            <Map location={data.location} />
+          </div>
           <AccordionComponent items={bonus} />
         </div>
       ),
@@ -34,7 +43,7 @@ const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
       content: (
         <Description
           dates={{ from: data.dates.from, to: data.dates.to }}
-          description={data.description}
+          description={singlePropertyData.description}
         />
       ),
     },
@@ -56,17 +65,20 @@ const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
     {
       id: "Reviews",
       label: "Reviews",
-      content: <>
-      <Photos photos={data.photos} />
+      content: (
+        <>
+          <Photos photos={data.photos} />
           <Description
             dates={{ from: data.dates.from, to: data.dates.to }}
-            description={data.description}
+            description={singlePropertyData.description}
           />
           <Amenities amenities={data.amenities} />
-         <div className="mb-6 md:mb-20">
-           <Map location={data.location} />
-         </div>
-          <AccordionComponent items={bonus} /></>
+          <div className="mb-6 md:mb-20">
+            <Map location={data.location} />
+          </div>
+          <AccordionComponent items={bonus} />
+        </>
+      ),
     },
   ];
 
@@ -79,11 +91,11 @@ const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
               key={tab.id}
               value={tab.id}
               className="text-dark-3 text-sm md:text-base font-normal rounded-none lg:text-lg 
-                data-[state=active]:shadow-none data-[state=active]:border-t-0 
-                data-[state=active]:text-primary-blue data-[state=active]:bg-[#F4F7FC] 
-                data-[state=active]:rounded-none data-[state=active]:font-semibold 
-                data-[state=active]:border-b-2 border-b-2 
-                data-[state=active]:border-b-primary-blue border-b-dark-3/25"
+                  data-[state=active]:shadow-none data-[state=active]:border-t-0 
+                  data-[state=active]:text-primary-blue data-[state=active]:bg-[#F4F7FC] 
+                  data-[state=active]:rounded-none data-[state=active]:font-semibold 
+                  data-[state=active]:border-b-2 border-b-2 
+                  data-[state=active]:border-b-primary-blue border-b-dark-3/25"
             >
               {tab.label}
             </TabsTrigger>
@@ -91,7 +103,11 @@ const HomeDetailsTabs = ({ data }: { data: HomeDetailsType }) => {
         </TabsList>
 
         <div className="mt-6 md:mt-10">
-          <HomeTitle title={data.title} features={data.features} />
+          <HomeTitle
+            owner={singlePropertyData.owner}
+            title={singlePropertyData.title}
+            features={data.features}
+          />
         </div>
 
         {tabsData.map((tab) => (
