@@ -8,6 +8,8 @@ import { Share2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
+import ChatModal from "../modals/ChatModal";
+import { OwnerDetails } from "@/types/PropertyDetails";
 
 interface HomeTitleProps {
   title: string;
@@ -17,10 +19,12 @@ interface HomeTitleProps {
     beds?: number;
     area?: number;
   };
+  owner: OwnerDetails;
 }
 
 const isPremiumMember: boolean = true; // This should be replaced with actual premium status from your auth context or state
-const HomeTitle = ({ title, features }: HomeTitleProps) => {
+const HomeTitle = ({ title, features, owner }: HomeTitleProps) => {
+  // console.log("owner in HomeTitle:", owner);
   const featuresItems = [
     {
       icon: House,
@@ -45,6 +49,7 @@ const HomeTitle = ({ title, features }: HomeTitleProps) => {
   ];
 
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const toggleFavorite = () => {
     if (!isFavorite) {
@@ -72,7 +77,10 @@ const HomeTitle = ({ title, features }: HomeTitleProps) => {
             )}
           </button>
           {isPremiumMember ? (
-            <PrimaryButton title="Chat With" />
+            <PrimaryButton
+              title="Chat With"
+              onClick={() => setIsChatOpen(true)}
+            />
           ) : (
             <PrimaryButton
               title="Chat With"
@@ -80,6 +88,7 @@ const HomeTitle = ({ title, features }: HomeTitleProps) => {
               bgColor="bg-[#DEDEDE]"
               borderColor=""
               bgImage="/buttonHomeWhite.svg"
+              onClick={() => toast("Upgrade to premium to chat")}
             />
           )}
 
@@ -100,6 +109,12 @@ const HomeTitle = ({ title, features }: HomeTitleProps) => {
           />
         ))}
       </div>
+      {/* chat modal  */}
+      <ChatModal
+        isOpen={isChatOpen}
+        owner={owner}
+        onClose={() => setIsChatOpen(false)}
+      />
     </div>
   );
 };

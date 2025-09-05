@@ -1,15 +1,10 @@
-
 interface DescriptionProps {
   dates: {
     from: string;
     to: string;
   };
-  description: {
-    text: string;
-    homeId: string;
-  };
+  description: string;
 }
-
 
 const Description = ({ dates, description }: DescriptionProps) => {
   return (
@@ -25,13 +20,13 @@ const Description = ({ dates, description }: DescriptionProps) => {
         Description
       </h2>
       <p className="text-sm md:text-lg font-regular text-dark-3 whitespace-pre-line">
-        {description.text}
+        {description}
       </p>
       <br />
-      <p className="text-md md:text-lg font-regular text-dark-3">
+      {/* <p className="text-md md:text-lg font-regular text-dark-3">
         <span className="text-dark-2">Home ID:</span> <br />
         {description.homeId} Copied URL!
-      </p>
+      </p> */}
     </div>
   );
 };
