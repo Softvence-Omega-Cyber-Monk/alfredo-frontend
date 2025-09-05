@@ -2,6 +2,7 @@ import CommonWrapper from "@/common/CommonWrapper";
 import ClientHeading from "../reusable/ClientHeading";
 import PrimaryButton from "../reusable/PrimaryButton";
 import { useTranslation } from "react-i18next";
+import ServicePlan from "../reusable/ServicePlan";
 
 const ChooseYourPlan = () => {
   const { t } = useTranslation("plan");
@@ -23,7 +24,7 @@ const ChooseYourPlan = () => {
         </p>
 
         {/* Button Group */}
-        <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6">
+        {/* <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6">
           <PrimaryButton
             title={t("base")}
             textColor="text-primary-blue"
@@ -39,7 +40,8 @@ const ChooseYourPlan = () => {
             borderColor=""
             className="w-full sm:w-auto px-8 py-2 text-base md:text-lg rounded-full"
           />
-        </div>
+        </div> */}
+        <ServicePlan />
       </CommonWrapper>
     </div>
   );
