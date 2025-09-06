@@ -19,7 +19,7 @@ const PropertiesGrid = () => {
       {myProperties.map((card) => (
         <PropertyCard
           key={card.id}
-          image={card.images[0] || "/placeholder.jpg"} // backend returns `images: []`
+          image={card.images[0]?.url || "/placeholder.jpg"} // backend returns `images: []`
           avatarImage={card.owner?.photo || "/avatar-placeholder.png"}
           rating={"5.0"} // your backend doesn’t send ratings → fake it for now
           ownerName={card.owner?.fullName || "Unknown"}
