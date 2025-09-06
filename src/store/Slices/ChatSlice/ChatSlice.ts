@@ -38,7 +38,7 @@ export const fetchChatHistory = createAsyncThunk<
 >("chat/fetchHistory", async (userId, { rejectWithValue }) => {
   try {
     const res = await axios.get(
-      `https://alfredo-server-n9x6.onrender.com/chat/history/user/${userId}`,
+      `${import.meta.env.VITE_API_URL}/chat/history/user/${userId}`,
       config
     );
     return res.data;
