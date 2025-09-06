@@ -155,16 +155,16 @@ const Messages = () => {
         content: messageInput,
       });
 
-      // Optimistic update
-      dispatch(
-        addMessage({
-          id: messageId,
-          senderId: userId,
-          receiverId: selectedConversation.id,
-          content: messageInput,
-          createdAt: new Date().toISOString(),
-        })
-      );
+      // // Optimistic update
+      // dispatch(
+      //   addMessage({
+      //     id: messageId,
+      //     senderId: userId,
+      //     receiverId: selectedConversation.id,
+      //     content: messageInput,
+      //     createdAt: new Date().toISOString(),
+      //   })
+      // );
 
       setMessageInput("");
     } catch (error) {

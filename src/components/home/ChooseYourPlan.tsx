@@ -1,6 +1,5 @@
 import CommonWrapper from "@/common/CommonWrapper";
 import ClientHeading from "../reusable/ClientHeading";
-import PrimaryButton from "../reusable/PrimaryButton";
 import { useTranslation } from "react-i18next";
 import ServicePlan from "../reusable/ServicePlan";
 
