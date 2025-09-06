@@ -2,6 +2,16 @@ import { FC, useEffect, useRef } from "react";
 import { ChatAreaProps } from "@/components/messages/types";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from "@/components/ui/popover";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import { fetchMyProperties } from "@/store/Slices/PropertySlice/propertySlice";
+// import { Label } from "@/components/ui/label";
+// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+// import PrimaryButton from "../reusable/PrimaryButton";
 
 const ChatArea: FC<ChatAreaProps> = ({
   selectedConversation,
@@ -15,6 +25,9 @@ const ChatArea: FC<ChatAreaProps> = ({
   onToggleInfo,
 }) => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  // const [selectedProperty, setSelectedProperty] = useState("");
+  const { myProperties } = useAppSelector((state) => state.property);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (bottomRef.current) {
@@ -22,6 +35,13 @@ const ChatArea: FC<ChatAreaProps> = ({
     }
   }, [messages]);
   if (!isVisible) return null;
+
+  useEffect(() => {
+    dispatch(fetchMyProperties());
+  }, [dispatch]);
+
+  console.log("mahim properties", myProperties);
+  // console.log("selected property", selectedProperty);
 
   return (
     <AnimatePresence>
@@ -88,6 +108,29 @@ const ChatArea: FC<ChatAreaProps> = ({
             Send
           </button>
         </div>
+        {/* <div>
+          <Popover>
+            <PopoverTrigger>Exchange Request</PopoverTrigger>
+            <PopoverContent className="bg-primary-gray-bg border border-gray-300 shadow-lg">
+              <RadioGroup
+                value={selectedProperty}
+                onValueChange={(value) => setSelectedProperty(value)}
+              >
+                {myProperties?.map((property) => (
+                  <div
+                    key={property.id}
+                    className="flex items-center space-x-2"
+                  >
+                    <RadioGroupItem value={property.id} id={property.id} />
+                    <Label htmlFor={property.id}>{property.title}</Label>
+                  </div>
+                ))}
+              </RadioGroup>
+
+              <PrimaryButton title="Send Request" className="w-full mt-4" />
+            </PopoverContent>
+          </Popover>
+        </div> */}
       </motion.div>
     </AnimatePresence>
   );
