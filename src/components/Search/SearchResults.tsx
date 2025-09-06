@@ -113,7 +113,7 @@ const SearchResults: React.FC = () => {
             </div>
 
             {/* Amenities */}
-            {item.amenities && item.amenities.length > 0 && (
+            {/* {item.amenities && item.amenities.length > 0 && (
               <div className="mt-2">
                 <h4 className="font-medium mb-2">Amenities:</h4>
                 <div className="flex flex-wrap gap-2">
@@ -127,7 +127,7 @@ const SearchResults: React.FC = () => {
                   ))}
                 </div>
               </div>
-            )}
+            )} */}
           </div>
 
           {/* Action Button */}

@@ -58,7 +58,7 @@ const MyFavoriteCard: React.FC<MyFavoriteCardProps> = ({
         <img
           src={
             images && images.length > 0
-              ? images[0]
+              ? images[0].url
               : "/placeholder-property.jpg"
           }
           alt={title}
@@ -127,7 +127,7 @@ const MyFavoriteCard: React.FC<MyFavoriteCardProps> = ({
         <button
           onClick={handleRemoveFavorite}
           disabled={isRemoving}
-          className="px-4 py-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors disabled:opacity-50"
+          className="px-4 py-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors disabled:opacity-50 cursor-pointer"
         >
           {isRemoving ? "Removing..." : "Remove"}
         </button>
@@ -137,7 +137,6 @@ const MyFavoriteCard: React.FC<MyFavoriteCardProps> = ({
 };
 
 export default MyFavoriteCard;
-
 
 // // src/components/favorites/MyFavoriteCard.tsx
 // import {
@@ -284,16 +283,6 @@ export default MyFavoriteCard;
 // };
 
 // export default MyFavoriteCard;
-
-
-
-
-
-
-
-
-
-
 
 // import {
 //   MapPin,
