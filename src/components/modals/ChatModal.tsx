@@ -1,16 +1,34 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import { X } from "lucide-react";
-import { OwnerDetails } from "@/types/PropertyDetails";
+import { OwnerDetails, PropertyDetails } from "@/types/PropertyDetails";
 import { initSocket, isSocketConnected } from "@/services/socket";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import PrimaryButton from "../reusable/PrimaryButton";
+import { fetchMyProperties } from "@/store/Slices/PropertySlice/propertySlice";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import { useParams } from "react-router-dom";
+import { sendExchangeRequest } from "@/helper/sendRequest";
 
 interface ChatModalProps {
   isOpen: boolean;
   onClose: () => void;
   owner: OwnerDetails;
+  singlePropertyData: PropertyDetails;
 }
 
-const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, owner }) => {
+const ChatModal: React.FC<ChatModalProps> = ({
+  isOpen,
+  onClose,
+  owner,
+  singlePropertyData,
+}) => {
   const [messages, setMessages] = useState<
     { text: string; sender: "me" | "other" }[]
   >([]);
@@ -19,10 +37,62 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, owner }) => {
   const socketRef = useRef<any>(null);
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const senderId = user?.id;
-  const receiverId = owner?.id;
+  const senderId = user?.id; //fromUserId in terms of exchange request
+  const receiverId = owner?.id; //toUserId in terms of exchange request
+  const { id } = useParams(); // fromPropertyId in terms of exchange request
+
+  console.log(id, "this is property id from params in chat modal");
 
   console.log("Owner ID: ", senderId, "Receiver ID: ", receiverId);
+  console.log("singlePropertyData in chat modal", singlePropertyData);
+  // console.log("my properties in chat modal", myProperties);
+
+  const [selectedProperty, setSelectedProperty] = useState("");
+  console.log("selectedProperty:", selectedProperty); // toPropertyId in terms of exchange request
+
+  const { myProperties } = useAppSelector((state) => state.property);
+  const dispatch = useAppDispatch();
+
+  //handle send request button
+
+  const handleExchangeRequest = async () => {
+    if (!selectedProperty) {
+      console.log("Please select a property before sending request");
+      return;
+    }
+
+    const payload = {
+      fromUserId: senderId,
+      toUserId: receiverId,
+      fromPropertyId: selectedProperty,
+      toPropertyId: id,
+      message: input || "", // optional
+    };
+
+    try {
+      const res = await sendExchangeRequest(payload);
+      console.log("Exchange request success:", res.data);
+
+      // 🔹 Emit socket message after request succeeds
+      if (socketRef.current) {
+        socketRef.current.emit("send_message", {
+          senderId,
+          toUserId: receiverId,
+          content: `Exchange request sent for property.`,
+        });
+      }
+
+      // Optional: clear input
+      setInput("");
+      onClose();
+    } catch (err) {
+      console.error("Exchange request failed:", err);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(fetchMyProperties());
+  }, [dispatch]);
 
   useEffect(() => {
     if (!senderId) {
@@ -156,6 +226,38 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, owner }) => {
               >
                 Send
               </button>
+            </div>
+            <div>
+              <Popover>
+                <PopoverTrigger>
+                  <PrimaryButton
+                    title="Send Exchange Request"
+                    className="m-4 w-[90%]"
+                  />
+                </PopoverTrigger>
+                <PopoverContent className="bg-primary-gray-bg border border-gray-300 shadow-lg">
+                  <RadioGroup
+                    value={selectedProperty}
+                    onValueChange={(value) => setSelectedProperty(value)}
+                  >
+                    {myProperties?.map((property) => (
+                      <div
+                        key={property.id}
+                        className="flex items-center space-x-2"
+                      >
+                        <RadioGroupItem value={property.id} id={property.id} />
+                        <Label htmlFor={property.id}>{property.title}</Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
+
+                  <PrimaryButton
+                    title="Send Request"
+                    className="w-full mt-4"
+                    onClick={handleExchangeRequest}
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
           </motion.div>
         </motion.div>
