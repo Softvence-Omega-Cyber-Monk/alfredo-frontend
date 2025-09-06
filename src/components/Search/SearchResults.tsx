@@ -12,6 +12,8 @@ import PageLoader from "@/common/PageLoader";
 const SearchResults: React.FC = () => {
   const navigate = useNavigate();
   const { searchResults, isLoading, error } = useSearch();
+
+  console.log(searchResults);
   const { t } = useTranslation("futureList");
 
   if (isLoading) {
@@ -36,10 +38,10 @@ const SearchResults: React.FC = () => {
         <div key={item.id} className="p-3 rounded-3xl bg-[#d9e0ec]">
           {/* Main Image */}
           <div className="rounded-2xl overflow-hidden max-h-64 relative">
-            {item.homeImages && item.homeImages.length > 0 && (
+            {item.images && item.images.length > 0 && (
               <img
-                src={item.homeImages[0]}
-                alt={item.homeName || "Property"}
+                src={item.images[0].url}
+                alt={item.title || "Property"}
                 className="w-full h-full object-cover"
               />
             )}
@@ -48,12 +50,15 @@ const SearchResults: React.FC = () => {
             <div className="absolute bottom-4 left-4 right-4 z-10 flex justify-between items-end bg-white/80 rounded-2xl backdrop-blur-sm p-3">
               <div className="flex items-center gap-2 rounded-full">
                 <img
-                  src={item.homeImages?.[0] || ""}
-                  alt={item.homeName || "Owner"}
+                  src={item.images?.[0]?.url || ""}
+                  alt={"Owner"}
                   className="w-8 h-8 rounded-full object-cover"
                 />
+                {/* <h3 className="text-dark-2 font-semibold text-base">
+                  {item.userId?.slice(0, 6) ?? "Unknown"}
+                </h3> */}
                 <h3 className="text-dark-2 font-semibold text-base">
-                  {item.userId.slice(0, 6)}...
+                  {item.owner?.fullName || "Unknown"}
                 </h3>
               </div>
 
@@ -80,7 +85,7 @@ const SearchResults: React.FC = () => {
 
             {/* Title */}
             <h3 className="text-dark-3 font-semibold text-2xl my-4">
-              {item.homeName || "Unnamed Property"}
+              {item.title || "Unnamed Property"}
             </h3>
 
             {/* Features */}
@@ -113,7 +118,7 @@ const SearchResults: React.FC = () => {
             </div>
 
             {/* Amenities */}
-            {/* {item.amenities && item.amenities.length > 0 && (
+            {item.amenities && item.amenities.length > 0 && (
               <div className="mt-2">
                 <h4 className="font-medium mb-2">Amenities:</h4>
                 <div className="flex flex-wrap gap-2">
@@ -127,7 +132,7 @@ const SearchResults: React.FC = () => {
                   ))}
                 </div>
               </div>
-            )} */}
+            )}
           </div>
 
           {/* Action Button */}
