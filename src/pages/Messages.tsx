@@ -148,7 +148,7 @@ const Messages = () => {
 
     try {
       const socket = getSocket();
-      const messageId = crypto.randomUUID();
+      // const messageId = crypto.randomUUID();
       socket.emit("send_message", {
         senderId: userId,
         toUserId: selectedConversation.id,
@@ -193,7 +193,7 @@ const Messages = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col lg:h-[90vh] shadow-lg overflow-hidden bg-white">
       <div className="flex-1 overflow-hidden">
         {/* Mobile view - Show either conversations list or chat */}
         <div className="md:hidden w-full h-full">
