@@ -9,7 +9,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import ChatModal from "../modals/ChatModal";
-import { OwnerDetails } from "@/types/PropertyDetails";
+import { OwnerDetails, PropertyDetails } from "@/types/PropertyDetails";
 
 interface HomeTitleProps {
   title: string;
@@ -20,10 +20,16 @@ interface HomeTitleProps {
     area?: number;
   };
   owner: OwnerDetails;
+  singlePropertyData: PropertyDetails;
 }
 
 const isPremiumMember: boolean = true; // This should be replaced with actual premium status from your auth context or state
-const HomeTitle = ({ title, features, owner }: HomeTitleProps) => {
+const HomeTitle = ({
+  title,
+  features,
+  owner,
+  singlePropertyData,
+}: HomeTitleProps) => {
   // console.log("owner in HomeTitle:", owner);
   const featuresItems = [
     {
@@ -113,6 +119,7 @@ const HomeTitle = ({ title, features, owner }: HomeTitleProps) => {
       <ChatModal
         isOpen={isChatOpen}
         owner={owner}
+        singlePropertyData={singlePropertyData}
         onClose={() => setIsChatOpen(false)}
       />
     </div>
