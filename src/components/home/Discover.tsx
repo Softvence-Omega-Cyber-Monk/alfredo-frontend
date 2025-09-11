@@ -1,6 +1,6 @@
 import CommonWrapper from "@/common/CommonWrapper";
 import ClientHeading from "../reusable/ClientHeading";
-import discover from "@/assets/home/discover.mp4";
+import discover from "@/assets/home/VACANZA-VSL-ENGLISH.mp4";
 import playBtn from "@/assets/home/playButton.png";
 import { useTranslation } from "react-i18next";
 

@@ -49,7 +49,7 @@ const DashboardHeading = () => {
           </button>
           {/* favorite places button  */}
           <Link
-            to="/my-properties"
+            to="/my-favorite"
             className="relative overflow-hidden rounded-full hover:brightness-80 transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
           >
             <p className="relative z-10">{t("dashboard.button2")}</p>
