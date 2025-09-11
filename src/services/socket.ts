@@ -6,20 +6,21 @@ let socket: Socket | null = null;
 export const initSocket = (userId: string): Socket => {
   if (!socket) {
     console.log("Creating new socket connection for user:", userId);
-    socket = io("https://alfredo-server-n9x6.onrender.com", {
+    socket = io(`${import.meta.env.VITE_BASE_URL}`, {
       query: { userId },
+      transports: ["websocket"],
     });
 
     socket.on("connect", () => {
-      console.log("✅ Connected to socket server with ID:", socket?.id);
+      console.log(" Connected to socket server with ID:", socket?.id);
     });
 
     socket.on("disconnect", (reason) => {
-      console.log("⚠️ Disconnected from socket server. Reason:", reason);
+      console.log(" Disconnected from socket server. Reason:", reason);
     });
 
     socket.on("connect_error", (error) => {
-      console.error("❌ Connection error:", error);
+      console.error(" Connection error:", error);
     });
   } else {
     console.log("Reusing existing socket connection");
