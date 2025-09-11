@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import {
   acceptExchangeRequest,
@@ -9,9 +9,11 @@ import {
 import { ArrowLeft, Calendar, MapPin, User, Home } from "lucide-react";
 import PrimaryButton from "@/components/reusable/PrimaryButton";
 import Loader from "../reusable/Loader";
+import { toast } from "sonner";
 
 const ExchangeRequestDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { currentRequest, loading, error } = useAppSelector(
     (state) => state.exchangeRequest
@@ -39,10 +41,13 @@ const ExchangeRequestDetails = () => {
 
   const handleAcceptRequest = (id: string) => {
     dispatch(acceptExchangeRequest(id));
+    toast("Congratulations! Exchange request has been accepted");
   };
 
   const handleDeleteRequest = (id: string) => {
     dispatch(deleteExchangeRequest(id));
+    toast("Exchange request deleted");
+    navigate("/exchange-request");
   };
 
   return (

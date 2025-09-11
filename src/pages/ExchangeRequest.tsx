@@ -37,39 +37,48 @@ const ExchangeRequest = () => {
 
   // Filter and paginate requests
   const filteredRequests = useMemo(() => {
-    return requests.filter((request) => {
-      // Status filter
-      if (statusFilter !== "ALL" && request.status !== statusFilter) {
-        return false;
-      }
+    return requests
+      .filter((request) => {
+        // Status filter
+        if (statusFilter !== "ALL" && request.status !== statusFilter) {
+          return false;
+        }
 
-      // From property filter
-      if (
-        fromPropertyFilter &&
-        request.fromProperty?.title !== fromPropertyFilter
-      ) {
-        return false;
-      }
+        // From property filter
+        if (
+          fromPropertyFilter &&
+          request.fromProperty?.title !== fromPropertyFilter
+        ) {
+          return false;
+        }
 
-      // To property filter
-      if (toPropertyFilter && request.toProperty?.title !== toPropertyFilter) {
-        return false;
-      }
+        // To property filter
+        if (
+          toPropertyFilter &&
+          request.toProperty?.title !== toPropertyFilter
+        ) {
+          return false;
+        }
 
-      // Search term filter
-      if (searchTerm) {
-        const searchLower = searchTerm.toLowerCase();
+        // Search term filter
+        if (searchTerm) {
+          const searchLower = searchTerm.toLowerCase();
+          return (
+            request.fromProperty?.title?.toLowerCase().includes(searchLower) ||
+            request.toProperty?.title?.toLowerCase().includes(searchLower) ||
+            request.fromUser?.fullName?.toLowerCase().includes(searchLower) ||
+            request.toUser?.fullName?.toLowerCase().includes(searchLower) ||
+            request.message?.toLowerCase().includes(searchLower)
+          );
+        }
+
+        return true;
+      })
+      .sort((a, b) => {
         return (
-          request.fromProperty?.title?.toLowerCase().includes(searchLower) ||
-          request.toProperty?.title?.toLowerCase().includes(searchLower) ||
-          request.fromUser?.fullName?.toLowerCase().includes(searchLower) ||
-          request.toUser?.fullName?.toLowerCase().includes(searchLower) ||
-          request.message?.toLowerCase().includes(searchLower)
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
-      }
-
-      return true;
-    });
+      });
   }, [
     requests,
     statusFilter,
