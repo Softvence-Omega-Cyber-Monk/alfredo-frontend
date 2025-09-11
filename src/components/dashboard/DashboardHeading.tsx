@@ -71,16 +71,18 @@ const DashboardHeading = () => {
               <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
             </div>
           </Link>
-          {/* friends button  */}
-          <button
-            onClick={() => {}}
-            className="relative overflow-hidden rounded-full hover:brightness-80 transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
-          >
-            <p className="relative z-10">{t("dashboard.button3")}</p>
-            <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
-              <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
-            </div>
-          </button>
+          {/* Exchange Request button  */}
+          <Link to="/exchange-request">
+            <button
+              onClick={() => {}}
+              className="relative overflow-hidden rounded-full hover:brightness-80 transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
+            >
+              <p className="relative z-10">{t("dashboard.button3")}</p>
+              <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
+                <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
+              </div>
+            </button>
+          </Link>
         </div>
       </div>
       <AddPlaceModal isOpen={isModalOpen} onClose={handleModalClose} />
