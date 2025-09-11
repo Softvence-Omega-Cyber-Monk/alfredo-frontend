@@ -8,8 +8,7 @@ import {
 } from "@/store/Slices/ExchangeRequestSlice/ExchangeRequestSlice";
 import { ArrowLeft, Calendar, MapPin, User, Home } from "lucide-react";
 import PrimaryButton from "@/components/reusable/PrimaryButton";
-import { MutatingDots } from 'react-loader-spinner'
-
+import Loader from "../reusable/Loader";
 
 const ExchangeRequestDetails = () => {
   const { id } = useParams();
@@ -25,17 +24,7 @@ const ExchangeRequestDetails = () => {
   }, [dispatch, id]);
 
   if (loading) {
-    return <MutatingDots
-  visible={true}
-  height="100"
-  width="100"
-  color="#0d5b9bff"
-  secondaryColor="#0d5b9bff"
-  radius="12.5"
-  ariaLabel="mutating-dots-loading"
-  wrapperStyle={{}}
-  wrapperClass=""
-  />;
+    return <Loader />;
   }
 
   if (error) {

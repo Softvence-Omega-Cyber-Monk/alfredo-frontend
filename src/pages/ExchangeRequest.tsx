@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import CommonWrapper from "@/common/CommonWrapper";
 import { useNavigate } from "react-router-dom";
+import Loader from "@/components/reusable/Loader";
 
 const ExchangeRequest = () => {
   const navigate = useNavigate();
@@ -118,11 +119,7 @@ const ExchangeRequest = () => {
   };
 
   if (loading) {
-    return (
-      <CommonWrapper>
-        <div className="p-4">Loading exchange requests...</div>
-      </CommonWrapper>
-    );
+    return <Loader />;
   }
 
   if (error) {
@@ -399,8 +396,8 @@ const ExchangeRequest = () => {
                 onClick={() => handlePageChange(page)}
                 className={`w-10 h-10 rounded-lg border ${
                   currentPage === page
-                    ? "bg-blue-600 text-white border-blue-600"
-                    : "border-gray-300 hover:bg-gray-50"
+                    ? "bg-[#3072c9] text-white border-[#3072c9]"
+                    : "border-gray-300 text-gray-800 hover:bg-gray-50"
                 }`}
               >
                 {page}

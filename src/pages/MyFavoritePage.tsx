@@ -3,11 +3,11 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import CommonWrapper from "@/common/CommonWrapper";
 import { useTranslation } from "react-i18next";
-import { Loader2 } from "lucide-react";
 import { fetchFavorites } from "@/store/Slices/FavoritesSlice/favoritesSlice";
 import { useNavigate } from "react-router-dom";
 import FavoriteHeading from "@/components/my-favorite/FavoriteHeading";
 import FavoriteGrid from "@/components/my-favorite/FavoriteGrid";
+import Loader from "@/components/reusable/Loader";
 
 const MyFavoritePage = () => {
   const dispatch = useAppDispatch();
@@ -31,13 +31,7 @@ const MyFavoritePage = () => {
   }
 
   if (loading) {
-    return (
-      <CommonWrapper>
-        <div className="flex justify-center items-center min-h-64">
-          <Loader2 className="w-8 h-8 animate-spin text-primary-blue" />
-        </div>
-      </CommonWrapper>
-    );
+    return <Loader />;
   }
 
   if (error) {

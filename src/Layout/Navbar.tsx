@@ -38,9 +38,9 @@ const Navbar: React.FC = () => {
               {isAuthenticated && (
                 <Link to="/my-favorite">
                   <div className="relative inline-block">
-                    <MdOutlineFavorite className="text-3xl text-red-500 cursor-pointer" />
+                    <MdOutlineFavorite className="text-3xl text-primary-blue cursor-pointer" />
                     {favorites.length > 0 && (
-                      <span className="absolute -top-2 -right-3 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-[#3174CD] rounded-full shadow-lg">
+                      <span className="absolute -top-2 -right-3 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full shadow-lg">
                         {favorites.length}
                       </span>
                     )}
