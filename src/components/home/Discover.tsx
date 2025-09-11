@@ -1,11 +1,14 @@
 import CommonWrapper from "@/common/CommonWrapper";
 import ClientHeading from "../reusable/ClientHeading";
-import discover from "@/assets/home/VACANZA-VSL-ENGLISH.mp4";
+import discoverEnglish from "@/assets/home/VACANZA-VSL-ENGLISH.mp4";
+import discoverGreek from "@/assets/home/VACANZA-VSL-GREEK.mp4";
 import playBtn from "@/assets/home/playButton.png";
 import { useTranslation } from "react-i18next";
 
 const Discover = () => {
-  const { t } = useTranslation("discover");
+  const { t, i18n } = useTranslation("discover");
+
+  const videoSrc = i18n.language === "el" ? discoverGreek : discoverEnglish;
   return (
     <div className="pb-10 lg:pb-32">
       <CommonWrapper>
@@ -19,7 +22,7 @@ const Discover = () => {
 
         <div className="mt-9 relative md:px-20 lg:px-20">
           <video
-            src={discover}
+            src={videoSrc}
             className="w-full h-auto rounded-[40px]"
             autoPlay
             muted
