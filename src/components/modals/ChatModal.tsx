@@ -14,7 +14,8 @@ import PrimaryButton from "../reusable/PrimaryButton";
 import { fetchMyProperties } from "@/store/Slices/PropertySlice/propertySlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { useParams } from "react-router-dom";
-import { sendExchangeRequest } from "@/helper/sendRequest";
+import { toast } from "sonner";
+import { sendExchangeRequest } from "@/store/Slices/ExchangeRequestSlice/ExchangeRequestSlice";
 
 interface ChatModalProps {
   isOpen: boolean;
@@ -35,60 +36,91 @@ const ChatModal: React.FC<ChatModalProps> = ({
   const [input, setInput] = useState("");
   const [socketReady, setSocketReady] = useState(false);
   const socketRef = useRef<any>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const senderId = user?.id; //fromUserId in terms of exchange request
-  const receiverId = owner?.id; //toUserId in terms of exchange request
-  const { id } = useParams(); // fromPropertyId in terms of exchange request
-
-  console.log(id, "this is property id from params in chat modal");
-
-  console.log("Owner ID: ", senderId, "Receiver ID: ", receiverId);
-  console.log("singlePropertyData in chat modal", singlePropertyData);
-  // console.log("my properties in chat modal", myProperties);
+  const senderId = user?.id;
+  const receiverId = owner?.id;
 
   const [selectedProperty, setSelectedProperty] = useState("");
-  console.log("selectedProperty:", selectedProperty); // toPropertyId in terms of exchange request
-
   const { myProperties } = useAppSelector((state) => state.property);
   const dispatch = useAppDispatch();
 
-  //handle send request button
+  //get the id
+  const { id } = useParams();
+
+  // Get the selected property title
+  const selectedPropertyTitle =
+    myProperties?.find((property) => property.id === selectedProperty)?.title ||
+    "a property";
+
+  // Handle exchange request button
+  // const handleExchangeRequest = () => {
+  //   if (!selectedProperty) {
+  //     console.log("Please select a property before sending request");
+  //     return;
+  //   }
+
+  //   // Create the exchange request message
+  //   const exchangeMessage = `I want to exchange my property "${selectedPropertyTitle}" for your property "${singlePropertyData.title}". Please check your exchange route on dashboard for details.`;
+
+  //   // Send the message through socket
+  //   if (socketRef.current) {
+  //     socketRef.current.emit("send_message", {
+  //       senderId,
+  //       toUserId: receiverId,
+  //       content: exchangeMessage,
+  //     });
+  //   }
+  //   setSelectedProperty("");
+  // };
 
   const handleExchangeRequest = async () => {
-    if (!selectedProperty) {
+    if (!selectedProperty || !id) {
       console.log("Please select a property before sending request");
       return;
     }
 
-    const payload = {
-      fromUserId: senderId,
-      toUserId: receiverId,
-      fromPropertyId: selectedProperty,
-      toPropertyId: id,
-      message: input || "", // optional
-    };
+    const exchangeMessage = `I want to exchange my property "${selectedPropertyTitle}" for your property "${singlePropertyData.title}. Please check your exchange route on dashboard for details."`;
 
     try {
-      const res = await sendExchangeRequest(payload);
-      console.log("Exchange request success:", res.data);
+      // Dispatch the thunk
+      // if(!toPropertyId) return;
+      const result = await dispatch(
+        sendExchangeRequest({
+          fromUserId: senderId,
+          toUserId: receiverId,
+          fromPropertyId: selectedProperty,
+          toPropertyId: id!,
+          message: exchangeMessage,
+        })
+      ).unwrap();
 
-      // 🔹 Emit socket message after request succeeds
+      console.log("Exchange request sent successfully:", result);
+
+      // Send the message through socket after successful API call
       if (socketRef.current) {
         socketRef.current.emit("send_message", {
           senderId,
           toUserId: receiverId,
-          content: `Exchange request sent for property.`,
+          content: exchangeMessage,
         });
       }
 
-      // Optional: clear input
-      setInput("");
-      onClose();
-    } catch (err) {
-      console.error("Exchange request failed:", err);
+      // Close the popover
+      setSelectedProperty("");
+      toast.success("Request sent successfully");
+    } catch (error) {
+      console.error("Failed to send exchange request:", error);
+      toast.error("Failed to send request");
     }
   };
+
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   useEffect(() => {
     dispatch(fetchMyProperties());
@@ -160,6 +192,14 @@ const ChatModal: React.FC<ChatModalProps> = ({
       content: input,
     });
 
+    // Add the message to local state for immediate display
+    // setMessages((prev) => [
+    //   ...prev,
+    //   {
+    //     text: input,
+    //     sender: "me",
+    //   },
+    // ]);
     setInput("");
   };
 
@@ -188,7 +228,10 @@ const ChatModal: React.FC<ChatModalProps> = ({
             </div>
 
             {/* Messages */}
-            <div className="flex-1 p-4 overflow-y-auto space-y-2 bg-gray-50">
+            <div
+              className="flex-1 p-4 overflow-y-auto space-y-2 bg-gray-50"
+              style={{ maxHeight: "300px" }}
+            >
               {messages.map((msg, i) => (
                 <div
                   key={i}
@@ -207,6 +250,7 @@ const ChatModal: React.FC<ChatModalProps> = ({
                   </div>
                 </div>
               ))}
+              <div ref={bottomRef} />
             </div>
 
             {/* Input */}
@@ -227,15 +271,22 @@ const ChatModal: React.FC<ChatModalProps> = ({
                 Send
               </button>
             </div>
-            <div>
+
+            {/* Exchange Request Button */}
+            <div className="p-3 bg-white border-t">
               <Popover>
                 <PopoverTrigger>
                   <PrimaryButton
                     title="Send Exchange Request"
-                    className="m-4 w-[90%]"
+                    className="w-full"
                   />
                 </PopoverTrigger>
-                <PopoverContent className="bg-primary-gray-bg border border-gray-300 shadow-lg">
+                <PopoverContent className="bg-primary-gray-bg backdrop-blur-lg border border-gray-300 absolute -top-44 -left-64 shadow-lg">
+                  <div className="mb-2">
+                    <Label className="font-semibold">
+                      Select your property to exchange:
+                    </Label>
+                  </div>
                   <RadioGroup
                     value={selectedProperty}
                     onValueChange={(value) => setSelectedProperty(value)}
@@ -243,7 +294,7 @@ const ChatModal: React.FC<ChatModalProps> = ({
                     {myProperties?.map((property) => (
                       <div
                         key={property.id}
-                        className="flex items-center space-x-2"
+                        className="flex items-center space-x-2 py-1"
                       >
                         <RadioGroupItem value={property.id} id={property.id} />
                         <Label htmlFor={property.id}>{property.title}</Label>
@@ -255,6 +306,7 @@ const ChatModal: React.FC<ChatModalProps> = ({
                     title="Send Request"
                     className="w-full mt-4"
                     onClick={handleExchangeRequest}
+                    // disabled={!selectedProperty}
                   />
                 </PopoverContent>
               </Popover>

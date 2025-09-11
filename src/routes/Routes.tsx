@@ -29,6 +29,8 @@ import Places from "@/pages/Places";
 import PlaceDetails from "@/pages/PlaceDetails";
 import AddPlace from "@/pages/AddPlace";
 import MyFavoritePage from "@/pages/MyFavoritePage";
+import ExchangeRequest from "@/pages/ExchangeRequest";
+import ExchangeRequestDetails from "@/components/ExchangeRequest/ExchangeRequestDetails";
 
 const routes = createBrowserRouter([
   {
@@ -122,6 +124,14 @@ const routes = createBrowserRouter([
       {
         path: "/my-favorite",
         element: <MyFavoritePage />,
+      },
+      {
+        path: "/exchange-request",
+        element: <ExchangeRequest />,
+      },
+      {
+        path: "/exchange-request/:id",
+        element: <ExchangeRequestDetails />,
       },
 
       {
