@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchSingleProperty } from "@/store/Slices/PropertySlice/propertySlice";
 import { OwnerDetails, PropertyDetails } from "@/types/PropertyDetails";
+import Loader from "@/components/reusable/Loader";
 
 const HomeDetails = () => {
   const { callToAction } = homeDetailsData;
@@ -34,7 +35,7 @@ const HomeDetails = () => {
                 singlePropertyData={singleProperty as PropertyDetails}
               />
             ) : (
-              <p>Loading property details...</p>
+              <Loader />
             )}
           </div>
 
