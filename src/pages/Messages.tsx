@@ -29,7 +29,7 @@ const fetchConversations = async (userId: string): Promise<Conversation[]> => {
   try {
     console.log("Fetching conversations for userId:", userId);
     const res = await axios.get(
-      `https://alfredo-server-n9x6.onrender.com/chat/partners/${userId}`,
+      `${import.meta.env.VITE_API_URL}/chat/partners/${userId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

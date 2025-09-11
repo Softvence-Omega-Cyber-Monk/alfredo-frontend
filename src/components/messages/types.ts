@@ -18,7 +18,8 @@ export interface Message {
   content: string;
   timestamp: string;
   isOwn: boolean;
-  type: "text";
+  type?: "text" | "request"; // NEW
+  status?: "pending" | "accepted" | "rejected"; // NEW
 }
 
 export interface ConversationsListProps {
