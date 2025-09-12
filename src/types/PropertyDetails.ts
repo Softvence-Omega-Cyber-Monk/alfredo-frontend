@@ -37,6 +37,11 @@ export interface OwnerDetails {
   hasOnboarded: boolean;
 }
 
+export interface PropertyImage {
+  id: string;
+  url: string;
+}
+
 export interface PropertyDetails {
   id: string;
   title: string;
@@ -47,7 +52,7 @@ export interface PropertyDetails {
   size: number;
   bedrooms: number;
   bathrooms: number;
-  images: string[];
+  images: PropertyImage[];
   isAvailable: boolean;
   ownerId: string;
   createdAt: string;

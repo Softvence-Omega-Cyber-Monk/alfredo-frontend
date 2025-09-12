@@ -1,4 +1,5 @@
 // src/redux/slices/propertySlice.ts
+import { PropertyImage } from "@/types/PropertyDetails";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -12,10 +13,10 @@ export interface Owner {
   createdAt: string;
   updatedAt: string;
 }
-export interface PropertyImage {
-  url: string;
-  publicId: string;
-}
+// export interface PropertyImage {
+//   url: string;
+//   publicId: string;
+// }
 
 export interface Property {
   id: string;
