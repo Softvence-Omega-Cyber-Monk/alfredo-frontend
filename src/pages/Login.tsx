@@ -47,6 +47,7 @@ const Login = () => {
     if (loginUser.fulfilled.match(res)) {
       const user = res.payload.user;
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", res.payload.token);
 
       if (!user.hasOnboarded) {
         navigate("/onboarding");
@@ -131,7 +132,7 @@ const Login = () => {
             {/* Submit Button */}
             <AuthButton
               title={loading ? "Logging in..." : "Log In"}
-              onClick={handleSubmit(onSubmit)}
+              type="submit"
             />
           </form>
 

@@ -13,6 +13,7 @@ import DashboardCalendarRangePicker from "@/components/dashboard/DashboardCalend
 import type { Amenity } from "@/lib/data/amenities";
 import { useTranslation } from "react-i18next";
 import DashboardHeading from "@/components/dashboard/DashboardHeading";
+import Loader from "@/components/reusable/Loader";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -119,7 +120,11 @@ const Dashboard = () => {
       </h1> */}
       <DashboardHeading />
 
-      {loading && <p>Loading...</p>}
+      {loading && (
+        <div>
+          <Loader />
+        </div>
+      )}
       {error && (
         <p className="text-red-500">
           {typeof error === "string" ? error : JSON.stringify(error)}
