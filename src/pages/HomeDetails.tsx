@@ -16,7 +16,7 @@ const HomeDetails = () => {
   const dispatch = useAppDispatch();
   const { singleProperty } = useAppSelector((state) => state.property);
 
-  // console.log("singleProperty", singleProperty);
+  console.log("singleProperty", singleProperty);
 
   useEffect(() => {
     if (id) {
