@@ -3,6 +3,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import messageIcon from "@/assets/icons/message-multiple-02.svg";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import ScrollToTop from "@/utils/ScrollToTop";
 
 const Layout: React.FC = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const Layout: React.FC = () => {
     <div>
       <Navbar />
       <main>
+        <ScrollToTop />
         <Outlet />
       </main>
       {!shouldHideFooter && <Footer />}

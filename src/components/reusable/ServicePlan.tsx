@@ -13,7 +13,7 @@ interface Plan {
   description: string;
   price: number;
   features: string[];
-  planType: string; // YEARLY | TWO_YEARLY
+  planType: string;
   status: string;
   priceId: string;
 }
@@ -151,8 +151,6 @@ const ServicePlan: FC = () => {
             </Dialog.Title>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* form inputs (Name, Email, Phone, City) same as before */}
-
               {/* Payment Method */}
               <div className="w-full flex flex-col space-y-2">
                 <label className="text-sm text-[#808080] font-DM-sans">
