@@ -29,7 +29,7 @@ const fetchConversations = async (userId: string): Promise<Conversation[]> => {
   try {
     console.log("Fetching conversations for userId:", userId);
     const res = await axios.get(
-      `https://alfredo-server-n9x6.onrender.com/chat/partners/${userId}`,
+      `${import.meta.env.VITE_API_URL}/chat/partners/${userId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -148,23 +148,23 @@ const Messages = () => {
 
     try {
       const socket = getSocket();
-      const messageId = crypto.randomUUID();
+      // const messageId = crypto.randomUUID();
       socket.emit("send_message", {
         senderId: userId,
         toUserId: selectedConversation.id,
         content: messageInput,
       });
 
-      // Optimistic update
-      dispatch(
-        addMessage({
-          id: messageId,
-          senderId: userId,
-          receiverId: selectedConversation.id,
-          content: messageInput,
-          createdAt: new Date().toISOString(),
-        })
-      );
+      // // Optimistic update
+      // dispatch(
+      //   addMessage({
+      //     id: messageId,
+      //     senderId: userId,
+      //     receiverId: selectedConversation.id,
+      //     content: messageInput,
+      //     createdAt: new Date().toISOString(),
+      //   })
+      // );
 
       setMessageInput("");
     } catch (error) {
@@ -193,7 +193,7 @@ const Messages = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col lg:h-[90vh] shadow-lg overflow-hidden bg-white">
       <div className="flex-1 overflow-hidden">
         {/* Mobile view - Show either conversations list or chat */}
         <div className="md:hidden w-full h-full">

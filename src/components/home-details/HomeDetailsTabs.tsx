@@ -17,7 +17,7 @@ const HomeDetailsTabs = ({
   singlePropertyData: PropertyDetails;
 }) => {
   // console.log(data, "data in tabsssssssssss");
-  console.log(singlePropertyData, "data in tabs");
+  // console.log(singlePropertyData, "data in tabs");
   const tabsData = [
     {
       id: "Photos",
@@ -107,6 +107,7 @@ const HomeDetailsTabs = ({
             owner={singlePropertyData.owner}
             title={singlePropertyData.title}
             features={data.features}
+            singlePropertyData={singlePropertyData}
           />
         </div>
 
