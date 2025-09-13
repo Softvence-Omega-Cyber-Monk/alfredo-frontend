@@ -12,6 +12,7 @@ import {
   fetchTransportAmenities,
   AmenityItem as ApiAmenity, // added
 } from "@/store/Slices/OnboardingSlice/AmenitySlice";
+import Loader from "../reusable/Loader";
 
 interface AmenitiesProps {
   selectedAmenities: {
@@ -79,7 +80,12 @@ const SelectAmenities = ({
 
   const { t } = useTranslation("dashboard");
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   if (error) return <div>{error}</div>;
 
   return (

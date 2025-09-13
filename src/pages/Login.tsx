@@ -47,6 +47,7 @@ const Login = () => {
     if (loginUser.fulfilled.match(res)) {
       const user = res.payload.user;
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", res.payload.token);
 
       if (!user.hasOnboarded) {
         navigate("/onboarding");

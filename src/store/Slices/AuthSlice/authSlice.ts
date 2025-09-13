@@ -84,14 +84,7 @@ export const loginUser = createAsyncThunk<
     const { data } = await api.post("/auth/login", credentials);
 
     const authData: AuthResponse = {
-      user: {
-        id: data.user.id,
-        firstName: data.user.fullName.split(" ")[0],
-        lastName: data.user.fullName.split(" ").slice(1).join(" "),
-        email: data.user.email,
-        role: data.user.role,
-        hasOnboarded: data.user.hasOnboarded,
-      },
+      user: data.user,
       token: data.accessToken,
     };
 

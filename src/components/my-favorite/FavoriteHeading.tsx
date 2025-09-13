@@ -6,7 +6,7 @@ const FavoriteHeading = () => {
     <div className="grid grid-cols-1 md:grid-cols-2 text-center md:text-left items-center justify-center gap-4">
       <div>
         <h1 className="font-semibold text-primary-blue text-3xl md:text-4xl lg:text-[40px]">
-          My Fevorite
+          My Favorite
         </h1>
       </div>
       <div className="flex justify-center md:justify-end">
