@@ -30,7 +30,6 @@ const HomeTitle = ({
   owner,
   singlePropertyData,
 }: HomeTitleProps) => {
-  // console.log("owner in HomeTitle:", owner);
   const featuresItems = [
     {
       icon: House,
@@ -63,6 +62,24 @@ const HomeTitle = ({
     }
     setIsFavorite(!isFavorite);
   };
+
+  const handleShare = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: singlePropertyData.title,
+          text: singlePropertyData.description,
+          url: window.location.href,
+        });
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        toast.success("Link copied to clipboard!");
+      }
+    } catch (error) {
+      console.error("Error sharing:", error);
+    }
+  };
+
   return (
     <div>
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
@@ -98,7 +115,10 @@ const HomeTitle = ({
             />
           )}
 
-          <div className="text-primary-blue bg-white shadow-[0px_0px_10px_0px_#B9D7FF] p-2 rounded-full cursor-pointer">
+          <div
+            className="text-primary-blue bg-white shadow-[0px_0px_10px_0px_#B9D7FF] p-2 rounded-full cursor-pointer"
+            onClick={handleShare}
+          >
             <Share2 className="" />
           </div>
         </div>
