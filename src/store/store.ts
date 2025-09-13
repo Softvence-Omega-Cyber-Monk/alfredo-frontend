@@ -6,6 +6,7 @@ import onboardingReducer from "@/store/Slices/OnboardingSlice/OnboardSlice";
 import favoritesReducer from "@/store/Slices/FavoritesSlice/favoritesSlice";
 import propertyReducer from "@/store/Slices/PropertySlice/propertySlice";
 import chatReducer from "@/store/Slices/ChatSlice/ChatSlice";
+import exchangeRequestReducer from "@/store/Slices/ExchangeRequestSlice/ExchangeRequestSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     favorites: favoritesReducer,
     property: propertyReducer,
     chat: chatReducer,
+    exchangeRequest: exchangeRequestReducer,
   },
 });
 
