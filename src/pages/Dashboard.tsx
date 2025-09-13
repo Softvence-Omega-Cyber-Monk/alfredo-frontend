@@ -127,7 +127,7 @@ const Dashboard = () => {
       )}
       {error && (
         <p className="text-red-500">
-          {typeof error === "string" ? error : JSON.stringify(error)}
+          {typeof error === "string" ? error : JSON.stringify(error.message)}
         </p>
       )}
 
