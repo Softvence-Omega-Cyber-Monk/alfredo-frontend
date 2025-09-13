@@ -49,11 +49,20 @@ export interface Owner {
   updatedAt: string;
 }
 
+// export interface SearchParams {
+//   destination?: string;
+//   propertyType?: string;
+//   availabilityStartDate?: string;
+//   maxPeople?: number;
+// }
 export interface SearchParams {
-  destination?: string;
+  location?: string;
   propertyType?: string;
-  availabilityStartDate?: string;
   maxPeople?: number;
+  availabilityStartDate?: string;
+  availabilityEndDate?: string;
+  amenities?: string; // comma-separated string for API
+  isTravelWithPets?: boolean;
 }
 
 interface PropertyImage {
@@ -61,7 +70,7 @@ interface PropertyImage {
   publicId: string;
 }
 
-export interface OnboardingData {
+export interface PropertyData {
   id: string;
   images: PropertyImage[];
   owner?: Owner;
@@ -97,7 +106,7 @@ export interface ApiResponse {
   status: number;
   success: boolean;
   message: string;
-  data: OnboardingData[];
+  data: PropertyData[];
 }
 
 export interface Amenity {
@@ -108,7 +117,9 @@ export interface Amenity {
 
 export const getAmenities = async (): Promise<Amenity[]> => {
   try {
-    const response = await api.get<{ data: Amenity[] }>("/amenities");
+    const response = await api.get<{ data: Amenity[] }>(
+      "/onboarding/amenities"
+    );
     return response.data.data;
   } catch (error) {
     console.error("Error fetching amenities:", error);
