@@ -1,5 +1,5 @@
-import { MoveRight } from "lucide-react";
-import { Link } from "react-router-dom";
+// import { MoveRight } from "lucide-react";
+// import { Link } from "react-router-dom";
 
 interface PlacesHeadingProps {
   hasPlaces: boolean;
@@ -18,7 +18,7 @@ const PlacesHeading = ({ hasPlaces }: PlacesHeadingProps) => {
             : `You Haven't Listed Any Places Yet.`}
         </p>
       </div>
-      <div className="flex justify-center lg:justify-end">
+      {/* <div className="flex justify-center lg:justify-end">
         <Link
           to="/add-place"
           className="relative overflow-hidden rounded-full transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
@@ -29,7 +29,7 @@ const PlacesHeading = ({ hasPlaces }: PlacesHeadingProps) => {
             <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
           </div>
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };
