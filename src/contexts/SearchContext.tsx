@@ -1,10 +1,10 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { SearchParams, OnboardingData, searchOnboarding } from '../services/api';
+import React, { createContext, useContext, useState, ReactNode } from "react";
+import { SearchParams, PropertyData, searchOnboarding } from "../services/api";
 
 interface SearchContextType {
   searchParams: SearchParams;
   setSearchParams: (params: SearchParams) => void;
-  searchResults: OnboardingData[];
+  searchResults: PropertyData[];
   isLoading: boolean;
   error: string | null;
   performSearch: () => Promise<void>;
@@ -16,7 +16,7 @@ const SearchContext = createContext<SearchContextType | undefined>(undefined);
 export const useSearch = () => {
   const context = useContext(SearchContext);
   if (context === undefined) {
-    throw new Error('useSearch must be used within a SearchProvider');
+    throw new Error("useSearch must be used within a SearchProvider");
   }
   return context;
 };
@@ -27,24 +27,47 @@ interface SearchProviderProps {
 
 export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
   const [searchParams, setSearchParams] = useState<SearchParams>({});
-  const [searchResults, setSearchResults] = useState<OnboardingData[]>([]);
+  const [searchResults, setSearchResults] = useState<PropertyData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const performSearch = async () => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
-      const response = await searchOnboarding(searchParams);
+      // Only include filled params
+      const filteredParams: SearchParams = {};
+      Object.entries(searchParams).forEach(([key, value]) => {
+        if (value !== "" && value !== undefined && value !== null) {
+          filteredParams[key as keyof SearchParams] = value as any;
+        }
+      });
+
+      const response = await searchOnboarding(filteredParams);
       setSearchResults(response.data);
     } catch (err) {
-      setError('Failed to fetch search results');
+      setError("Failed to fetch search results");
       console.error(err);
     } finally {
       setIsLoading(false);
     }
   };
+
+  // const performSearch = async () => {
+  //   setIsLoading(true);
+  //   setError(null);
+
+  //   try {
+  //     const response = await searchOnboarding(searchParams);
+  //     setSearchResults(response.data);
+  //   } catch (err) {
+  //     setError('Failed to fetch search results');
+  //     console.error(err);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const clearSearch = () => {
     setSearchParams({});
@@ -63,8 +86,6 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
   };
 
   return (
-    <SearchContext.Provider value={value}>
-      {children}
-    </SearchContext.Provider>
+    <SearchContext.Provider value={value}>{children}</SearchContext.Provider>
   );
 };

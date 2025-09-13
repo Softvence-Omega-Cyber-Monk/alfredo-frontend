@@ -1,6 +1,6 @@
 import React from "react";
 import { useSearch } from "@/contexts/SearchContext";
-import { OnboardingData } from "@/services/api";
+import { PropertyData } from "@/services/api";
 import { MapPin, House, Building, User } from "lucide-react";
 
 import cardStar from "@/assets/home/star.svg";
@@ -34,7 +34,7 @@ const SearchResults: React.FC = () => {
 
   return (
     <div className="  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-      {searchResults.map((item: OnboardingData) => (
+      {searchResults.map((item: PropertyData) => (
         <div key={item.id} className="p-3 rounded-3xl bg-[#d9e0ec]">
           {/* Main Image */}
           <div className="rounded-2xl overflow-hidden max-h-64 relative">
