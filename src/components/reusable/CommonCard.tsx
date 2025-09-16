@@ -13,7 +13,10 @@ import { CommonCard as CommonCardProps } from "@/types/index";
 import { useTranslation } from "react-i18next";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
-import { addFavorite, removeFavorite } from "@/store/Slices/FavoritesSlice/favoritesSlice";
+import {
+  addFavorite,
+  removeFavorite,
+} from "@/store/Slices/FavoritesSlice/favoritesSlice";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 
@@ -26,7 +29,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
   location,
   title,
   features,
-  price,
+  // price,
   onViewDetails,
 }) => {
   const dispatch = useAppDispatch();
@@ -39,7 +42,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
   // Check if this property is in favorites
   useEffect(() => {
     if (id) {
-      const found = favorites.some(fav => fav.id === id);
+      const found = favorites.some((fav) => fav.id === id);
       setIsFavorite(found);
     }
   }, [favorites, id]);
@@ -49,9 +52,9 @@ const CommonCard: React.FC<CommonCardProps> = ({
       toast.error("Please login to add favorites");
       return;
     }
-    
+
     if (!id) return;
-    
+
     setIsLoading(true);
     try {
       if (isFavorite) {
@@ -123,9 +126,9 @@ const CommonCard: React.FC<CommonCardProps> = ({
         <h3 className="text-dark-3 font-semibold text-2xl my-4">{title}</h3>
 
         {/* Price */}
-        <h3 className="text-primary-blue font-semibold text-2xl pb-4 border-b border-b-[#EAF1FA]">
+        {/* <h3 className="text-primary-blue font-semibold text-2xl pb-4 border-b border-b-[#EAF1FA]">
           ${price}
-        </h3>
+        </h3> */}
 
         {/* Features */}
         <div className="my-4 grid grid-cols-3 gap-3">
@@ -185,7 +188,6 @@ const CommonCard: React.FC<CommonCardProps> = ({
 };
 
 export default CommonCard;
-
 
 // import {
 //   MapPin,

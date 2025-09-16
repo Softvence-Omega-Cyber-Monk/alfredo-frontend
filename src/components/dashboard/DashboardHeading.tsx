@@ -20,6 +20,9 @@ const DashboardHeading = () => {
     setIsModalOpen(false);
   };
 
+  const storedUser = localStorage.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
+
   // const handleFormSubmit = (data: any) => {
   //   console.log("Payload to send:", data);
   //   // TODO: call your backend API here
@@ -28,7 +31,7 @@ const DashboardHeading = () => {
     <div className="grid grid-cols-1 lg:grid-cols-2 text-center lg:text-left items-center justify-center gap-4">
       <div>
         <h1 className="font-semibold text-primary-blue text-3xl md:text-4xl lg:text-[40px]">
-          {t("dashboard.title")} Mahim,
+          {t("dashboard.title")} {user.fullName.split(" ")[0]},
         </h1>
         <p className="text-sm md:text-base text-dark-3 font-regular mt-3 max-w-[588px] mx-auto lg:mx-0">
           {t("dashboard.subtitle")}
