@@ -203,6 +203,9 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
               >
                 <option value="HOME">Home</option>
                 <option value="APARTMENT">Apartment</option>
+                <option value="ROOM">Room</option>
+                <option value="BOAT">Boat</option>
+                <option value="VAN">Van</option>
               </select>
             </div>
           </div>
