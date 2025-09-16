@@ -11,6 +11,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOtp, signupUser } from "@/store/Slices/AuthSlice/authSlice";
 import { AppDispatch, RootState } from "@/store/store";
+import TermsModal from "@/components/modals/TermsModal";
+import PrivacyModal from "@/components/modals/PrivacyModal";
 
 const signupSchema = z
   .object({
@@ -49,6 +51,9 @@ const Signup = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
 
   const onSubmit = async (data: SignupFormInputs) => {
     // Register the user
@@ -240,15 +245,32 @@ const Signup = () => {
               />
               <label className="text-[16px] text-basic-dark font-semibold">
                 I agree to the{" "}
-                <a href="#" className="text-primary-blue underline">
+                <button
+                  type="button"
+                  onClick={() => setIsTermsOpen(true)}
+                  className="text-primary-blue underline cursor-pointer"
+                >
                   Terms of Service
-                </a>{" "}
+                </button>{" "}
                 and{" "}
-                <a href="#" className="text-primary-blue underline">
+                <button
+                  type="button"
+                  onClick={() => setIsPrivacyOpen(true)}
+                  className="text-primary-blue underline cursor-pointer"
+                >
                   Privacy Policy
-                </a>
+                </button>
               </label>
             </div>
+            {/* Modals */}
+            <TermsModal
+              isOpen={isTermsOpen}
+              onClose={() => setIsTermsOpen(false)}
+            />
+            <PrivacyModal
+              isOpen={isPrivacyOpen}
+              onClose={() => setIsPrivacyOpen(false)}
+            />
             {errors.agreeToTerms && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.agreeToTerms.message}
