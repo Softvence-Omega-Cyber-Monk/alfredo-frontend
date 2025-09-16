@@ -172,10 +172,10 @@ const SearchFilter = () => {
                   handleInputChange("propertyType", value)
                 }
               >
-                <SelectTrigger className="w-full border-[#C4D7F1] cursor-pointer">
+                <SelectTrigger className="w-full border-[#C4D7F1] cursor-pointer text-gray-600">
                   <SelectValue placeholder={t("search.home")} />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-none cursor-pointer">
+                <SelectContent className="bg-white border-none cursor-pointer font-DM-sans text-gray-600">
                   {availablePropertyTypes.map((type) => (
                     <SelectItem
                       key={type.value}
@@ -191,45 +191,6 @@ const SearchFilter = () => {
           </div>
 
           {/* Dates */}
-          {/* <div className="flex-1">
-            <label
-              htmlFor="homeDate"
-              className="block text-sm text-dark-3 mb-1"
-            >
-              {t("search.dates")}
-            </label>
-            <div className="flex items-center gap-2">
-              <img src={calendar} alt="calendar icon" className="w-5 h-5" />
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    data-empty={!dateRange?.from}
-                    className="w-full text-left font-normal bg-transparent border-none focus:ring-0 shadow-none"
-                  >
-                    {dateRange?.from
-                      ? dateRange.to
-                        ? `${format(dateRange.from, "LLL dd, y")} - ${format(
-                            dateRange.to,
-                            "LLL dd, y"
-                          )}`
-                        : format(dateRange.from, "LLL dd, y")
-                      : t("search.pickADateRange")}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 bg-white border">
-                  <Calendar
-                    mode="range"
-                    selected={dateRange}
-                    onSelect={setDateRange}
-                    numberOfMonths={1}
-                    className="[--rdp-accent-color:#3174cd]"
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-          </div> */}
-          {/* Dates */}
           <div className="flex-1">
             <label
               htmlFor="homeDate"
@@ -244,7 +205,7 @@ const SearchFilter = () => {
                   <Button
                     variant="outline"
                     data-empty={!dateRange?.from}
-                    className="w-full text-left font-normal bg-transparent border-none focus:ring-0 shadow-none"
+                    className="w-full text-left font-normal bg-transparent border-none focus:ring-0 shadow-none text-gray-600 font-DM-sans"
                   >
                     {dateRange?.from ? (
                       dateRange.to ? (
@@ -289,10 +250,10 @@ const SearchFilter = () => {
                 ])
               }
             >
-              <SelectTrigger className="w-full border-[#C4D7F1]">
-                <SelectValue placeholder="Amenities" />
+              <SelectTrigger className="w-full border-[#C4D7F1] text-gray-600 font-DM-sans">
+                <SelectValue placeholder={t("search.amenities")} />
               </SelectTrigger>
-              <SelectContent className="bg-white border-none cursor-pointer">
+              <SelectContent className="bg-white border-none cursor-pointer text-gray-600">
                 {availableAmenities.map((amenity) => (
                   <SelectItem
                     key={amenity.id}

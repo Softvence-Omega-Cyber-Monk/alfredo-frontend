@@ -263,9 +263,9 @@ const Messages = () => {
               onToggleInfo={() => setShowInfoPanel(true)}
             />
           ) : null}
-          <div className="w-1/4 xl:w-1/5">
+          {/* <div className="w-1/4 xl:w-1/5">
             <ChatInfoPanel />
-          </div>
+          </div> */}
         </div>
         {/* Sidebar overlay for mobile (when toggled from chat view) */}
         {showSidebar && (
