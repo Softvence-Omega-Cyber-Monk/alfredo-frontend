@@ -78,6 +78,8 @@ const ServicePlan: FC = () => {
     }
   };
 
+  console.log("planssssss: ", plans);
+
   return (
     <>
       <section className="flex items-center justify-center">

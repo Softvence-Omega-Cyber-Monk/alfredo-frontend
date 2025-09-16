@@ -17,6 +17,11 @@ const Layout: React.FC = () => {
   ];
   const shouldHideFooter = hideFooterPaths.includes(location.pathname);
 
+  const hideMessageButtonPaths = ["/messages"];
+  const shouldHideMessageButton = hideMessageButtonPaths.includes(
+    location.pathname
+  );
+
   return (
     <div>
       <Navbar />
@@ -26,12 +31,14 @@ const Layout: React.FC = () => {
       </main>
       {!shouldHideFooter && <Footer />}
 
-      <Link
-        to="/messages"
-        className="p-2 md:p-2.5 rounded-full bg-white shadow-[0_0_10px_0_#B9D7FF]  fixed bottom-10 right-8 z-100"
-      >
-        <img src={messageIcon} className="w-4 h-4 md:w-6 md:h-6" alt="" />
-      </Link>
+      {!shouldHideMessageButton && (
+        <Link
+          to="/messages"
+          className="p-2 md:p-2.5 rounded-full bg-white shadow-[0_0_10px_0_#B9D7FF] fixed bottom-10 right-8 z-100"
+        >
+          <img src={messageIcon} className="w-4 h-4 md:w-6 md:h-6" alt="" />
+        </Link>
+      )}
     </div>
   );
 };

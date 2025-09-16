@@ -38,7 +38,7 @@ const Testimonial = () => {
                 />
                 <div className="flex flex-col">
                   <h1 className="text-black font-bold">Cassey Flower</h1>
-                  <p>Business Analyst</p>
+                  {/* <p>Business Analyst</p> */}
                 </div>
               </div>
               <div className="flex items-center">
@@ -65,7 +65,7 @@ const Testimonial = () => {
                 />
                 <div className="flex flex-col">
                   <h1 className="text-black font-bold">Jonathan Dews</h1>
-                  <p>Software Engineer</p>
+                  {/* <p>Software Engineer</p> */}
                 </div>
               </div>
               <div className="flex items-center">
@@ -93,7 +93,7 @@ const Testimonial = () => {
                 />
                 <div className="flex flex-col">
                   <h1 className="text-black font-bold">Mertha Lime</h1>
-                  <p>CTO</p>
+                  {/* <p>CTO</p> */}
                 </div>
               </div>
               <div className="flex items-center">
