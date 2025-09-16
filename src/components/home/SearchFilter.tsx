@@ -67,6 +67,9 @@ const SearchFilter = () => {
     setAvailablePropertyTypes([
       { value: "HOME", label: t("search.home") },
       { value: "APARTMENT", label: t("search.apartment") },
+      { value: "ROOM", label: t("search.room") },
+      { value: "BOAT", label: t("search.boat") },
+      { value: "VAN", label: t("search.van") },
     ]);
   }, [t]);
 
@@ -95,8 +98,8 @@ const SearchFilter = () => {
       params.amenities = localSearch.amenities.join(",");
     if (localSearch.isTravelWithPets) params.isTravelWithPets = true;
 
-    setSearchParams(params); // ✅ store params in context
-    await performSearch(params); // ✅ pass fresh params directly (no stale state)
+    setSearchParams(params); //  store params in context
+    await performSearch(params); // pass fresh params directly (no stale state)
   };
 
   return (
