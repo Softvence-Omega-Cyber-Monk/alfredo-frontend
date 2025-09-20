@@ -2,6 +2,9 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 
+const storedUser = localStorage.getItem("user");
+const storedToken = localStorage.getItem("token");
+
 // ========== Types ==========
 export interface User {
   id: string;
@@ -37,8 +40,8 @@ interface ApiError {
 // ========== Initial State ==========
 const initialState: AuthState = {
   isAuthenticated: false,
-  user: null,
-  token: null,
+  user: storedUser ? JSON.parse(storedUser) : null,
+  token: storedToken,
   loading: false,
   error: null,
 };
