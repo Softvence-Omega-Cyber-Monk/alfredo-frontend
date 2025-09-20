@@ -16,6 +16,7 @@ interface Plan {
   planType: string;
   status: string;
   priceId: string;
+  plan_duration: string;
 }
 
 const config = {
@@ -93,8 +94,8 @@ const ServicePlan: FC = () => {
                 className="relative bg-white p-[40px] flex flex-col w-full max-w-[384px] border border-primary-border-color rounded-[24px] text-center min-h-[680px] hover:shadow-2xl hover:shadow-[#bfd4f0] hover:bg-[#EAF1FA] duration-300 transition-all  ease-in-out"
               >
                 {/* Tag */}
-                <div className="absolute -top-6 left-23 bg-primary-blue text-white text-[16px] px-6 py-[10px] rounded-full shadow-md">
-                  {plan.planType}
+                <div className="absolute -top-6 left-26 bg-primary-blue text-white text-[16px] px-6 py-[10px] rounded-full shadow-md">
+                  {plan.plan_duration}
                 </div>
 
                 {/* Content */}
