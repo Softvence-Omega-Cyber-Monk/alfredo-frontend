@@ -79,7 +79,7 @@ const ServicePlan: FC = () => {
     }
   };
 
-  console.log("planssssss: ", plans);
+  // console.log("planssssss: ", plans);
 
   return (
     <>
@@ -88,58 +88,64 @@ const ServicePlan: FC = () => {
           {loading ? (
             <p className="text-center">Loading plans...</p>
           ) : (
-            plans.map((plan) => (
-              <div
-                key={plan.id}
-                className="relative bg-white p-[40px] flex flex-col w-full max-w-[384px] border border-primary-border-color rounded-[24px] text-center min-h-[680px] hover:shadow-2xl hover:shadow-[#bfd4f0] hover:bg-[#EAF1FA] duration-300 transition-all  ease-in-out"
-              >
-                {/* Tag */}
-                <div className="absolute -top-6 left-26 bg-primary-blue text-white text-[16px] px-6 py-[10px] rounded-full shadow-md">
-                  {plan.plan_duration}
-                </div>
-
-                {/* Content */}
-                <div className="flex flex-col gap-6 flex-grow">
-                  <h2 className="text-[24px] font-semibold text-[#505050]">
-                    {plan.name}
-                  </h2>
-                  <div className="mx-auto mt-1">
-                    <p className="text-[64px] font-semibold text-primary-blue">
-                      {plan.price}
-                      <span className="text-[24px] font-semibold"> €</span>
-                    </p>
-                  </div>
-                  <p className="text-[16px] text-[#505050] mt-2">
-                    {plan.description}
-                  </p>
-
-                  <div className="border-b border-b-[#EAF1FA]" />
-
-                  <ul className="space-y-3 text-left">
-                    {plan.features.map((feature, i) => (
-                      <li
-                        key={i}
-                        className="flex items-center gap-3 text-basic-dark text-4"
-                      >
-                        <img src={check} alt="check icon" className="w-5 h-5" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* CTA Button */}
-                <ReusableButton
-                  className="mt-6 w-full"
-                  onClick={() => {
-                    setSelectedPlan(plan);
-                    setOpen(true);
-                  }}
+            plans
+              .map((plan) => (
+                <div
+                  key={plan.id}
+                  className="relative bg-white p-[40px] flex flex-col w-full max-w-[384px] border border-primary-border-color rounded-[24px] text-center min-h-[680px] hover:shadow-2xl hover:shadow-[#bfd4f0] hover:bg-[#EAF1FA] duration-300 transition-all  ease-in-out"
                 >
-                  {t("ourplan.plancard1.button")}
-                </ReusableButton>
-              </div>
-            ))
+                  {/* Tag */}
+                  <div className="absolute -top-6 left-26 bg-primary-blue text-white text-[16px] px-6 py-[10px] rounded-full shadow-md">
+                    {plan.plan_duration}
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex flex-col gap-6 flex-grow">
+                    <h2 className="text-[24px] font-semibold text-[#505050]">
+                      {plan.name}
+                    </h2>
+                    <div className="mx-auto mt-1">
+                      <p className="text-[64px] font-semibold text-primary-blue">
+                        {plan.price}
+                        <span className="text-[24px] font-semibold"> €</span>
+                      </p>
+                    </div>
+                    <p className="text-[16px] text-[#505050] mt-2">
+                      {plan.description}
+                    </p>
+
+                    <div className="border-b border-b-[#EAF1FA]" />
+
+                    <ul className="space-y-3 text-left">
+                      {plan.features.map((feature, i) => (
+                        <li
+                          key={i}
+                          className="flex items-center gap-3 text-basic-dark text-4"
+                        >
+                          <img
+                            src={check}
+                            alt="check icon"
+                            className="w-5 h-5"
+                          />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* CTA Button */}
+                  <ReusableButton
+                    className="mt-6 w-full"
+                    onClick={() => {
+                      setSelectedPlan(plan);
+                      setOpen(true);
+                    }}
+                  >
+                    {t("ourplan.plancard1.button")}
+                  </ReusableButton>
+                </div>
+              ))
+              .reverse()
           )}
         </div>
       </section>
