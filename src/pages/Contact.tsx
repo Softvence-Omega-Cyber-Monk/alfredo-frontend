@@ -26,7 +26,7 @@ const Contact = () => {
       name: `${data.firstName} ${data.lastName}`,
       email: data.email,
       phoneNumber: data.phone,
-      opinion: data.message, // assuming "message" field maps to "opinion"
+      opinion: data.message,
     };
 
     dispatch(createContact(contactPayload))
@@ -175,7 +175,7 @@ const Contact = () => {
                 type="submit"
                 className="text-[18px] md:text-[24px] w-full font-semibold py-6 px-6 rounded-full"
               >
-                {t("contact.bookNow")}
+                {t("contact.startConversation")}
               </ReusableButton>
             </form>
           </div>

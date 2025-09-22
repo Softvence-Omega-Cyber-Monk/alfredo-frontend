@@ -22,6 +22,10 @@ const Layout: React.FC = () => {
     location.pathname
   );
 
+  const token = localStorage.getItem("token");
+  console.log(token, "token in layout");
+  // const parsedUser = user ? JSON.parse(user) : null;
+
   return (
     <div>
       <Navbar />
@@ -31,7 +35,7 @@ const Layout: React.FC = () => {
       </main>
       {!shouldHideFooter && <Footer />}
 
-      {!shouldHideMessageButton && (
+      {!shouldHideMessageButton && token && (
         <Link
           to="/messages"
           className="p-2 md:p-2.5 rounded-full bg-white shadow-[0_0_10px_0_#B9D7FF] fixed bottom-10 right-8 z-100"
