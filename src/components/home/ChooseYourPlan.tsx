@@ -16,9 +16,13 @@ const ChooseYourPlan = () => {
       <div className="inset-0 absolute bg-[#F4F7FC] -z-10"></div>
 
       <CommonWrapper>
-        <ClientHeading headingText={t("title")} spanText={t("highlight")} />
+        <ClientHeading
+          headingText={t("title")}
+          spanText={t("highlight")}
+          last={t("last")}
+        />
 
-        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-dark-3 font-regular text-center max-w-4xl mx-auto mb-10 px-4 pt-6">
+        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-dark-3 font-regular text-center max-w-4xl mx-auto mb-24 px-4 pt-6">
           {t("para")}
         </p>
         <ServicePlan />
