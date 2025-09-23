@@ -28,7 +28,7 @@ const initialState: UserState = {
 const user = localStorage.getItem("user");
 const parsedUser = user ? JSON.parse(user) : null;
 
-const id = parsedUser.id;
+const id = parsedUser?.id;
 
 // Get user by ID
 export const fetchUser = createAsyncThunk("user/fetchUser", async () => {
@@ -36,40 +36,6 @@ export const fetchUser = createAsyncThunk("user/fetchUser", async () => {
   const res = await api.get(`/user/my-profile`);
   return res.data;
 });
-
-// Update user
-// export const updateUser = createAsyncThunk(
-//   "user/updateUser",
-//   async (updatedData: {
-//     fullName?: string;
-//     email?: string;
-//     phoneNumber?: string;
-//     dateOfBirth?: string;
-//     notes?: string;
-//     photo?: File | null;
-//   }) => {
-//     const id = localStorage.getItem("userId");
-//     if (!id) throw new Error("User ID not found in localStorage");
-
-//     const formData = new FormData();
-//     if (updatedData.fullName) formData.append("fullName", updatedData.fullName);
-//     if (updatedData.email) formData.append("email", updatedData.email);
-//     if (updatedData.phoneNumber)
-//       formData.append("phoneNumber", updatedData.phoneNumber);
-//     if (updatedData.dateOfBirth)
-//       formData.append("dateOfBirth", updatedData.dateOfBirth);
-//     if (updatedData.notes) formData.append("notes", updatedData.notes);
-//     if (updatedData.photo) formData.append("photo", updatedData.photo);
-
-//     const res = await api.patch(`/user/me`, formData, {
-//       headers: {
-//         "Content-Type": "multipart/form-data",
-//       },
-//     });
-
-//     return res.data;
-//   }
-// );
 
 export const updateUser = createAsyncThunk(
   "user/updateUser",
