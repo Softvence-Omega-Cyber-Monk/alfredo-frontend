@@ -46,12 +46,12 @@ const Subscribe = () => {
                 <h1 className="text-xl font-bold">{t("contact")}</h1>
                 <p className="flex items-center gap-2">
                   <img src={location} alt="" className="w-4 h-4" />
-                  758/2 Athens, Greece
+                  Athens, Greece
                 </p>
-                <p className="flex items-center gap-2">
+                {/* <p className="flex items-center gap-2">
                   <img src={phone} alt="" className="w-4 h-4" />
                   +888 8888 8888
-                </p>
+                </p> */}
                 <p className="flex items-center gap-2">
                   <img src={email} alt="" className="w-4 h-4" />
                   alfredo@business.com

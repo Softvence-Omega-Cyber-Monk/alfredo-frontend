@@ -5,6 +5,7 @@
     "subtitle": "Exchange your home with travelers from around the world — safe, easy, and flexible."
   },
   "search": {
+    "selectFilters": "Select Filters",
     "placeholder": "Where to?",
     "guest": "Guest",
     "placeInGreece": "Place in Greece",
@@ -12,6 +13,8 @@
     "propertyType": "Property Type",
     "dates": "Dates",
     "amenities": "Amenities",
+    "transports": "Transports",
+    "surroundings": "Surroundings",
     "pickADateRange": "Pick a date range",
     "search": "Search",
     "home": "Home",

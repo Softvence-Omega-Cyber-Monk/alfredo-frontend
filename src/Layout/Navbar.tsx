@@ -10,24 +10,19 @@ import AuthSection from "../components/navbar/AuthSection";
 import MobileMenu from "../components/navbar/MobileMenu";
 import { MdOutlineFavorite } from "react-icons/md";
 import { fetchFavorites } from "@/store/Slices/FavoritesSlice/favoritesSlice";
-import { fetchUser } from "@/store/Slices/Profile/ProfileSlice";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const dispatch = useAppDispatch();
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
-  const { data } = useAppSelector((state) => state.user);
   const { favorites } = useAppSelector((state) => state.favorites);
-
-  console.log(data, "user data for photo from navbar:::::::::::::::::::");
 
   // Fetch favorites when user authenticates
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(fetchFavorites());
     }
-    dispatch(fetchUser());
   }, [isAuthenticated, dispatch]);
 
   return (
