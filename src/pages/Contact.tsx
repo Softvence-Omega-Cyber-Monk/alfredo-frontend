@@ -1,5 +1,4 @@
 import CommonWrapper from "@/common/CommonWrapper";
-import ClientHeading from "@/components/reusable/ClientHeading";
 import Conversation from "@/components/reusable/Conversation";
 import ReusableButton from "@/components/reusable/ReusableButton";
 import Subscribe from "@/components/reusable/Subscribe";
