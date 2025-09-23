@@ -7,6 +7,7 @@ import favoritesReducer from "@/store/Slices/FavoritesSlice/favoritesSlice";
 import propertyReducer from "@/store/Slices/PropertySlice/propertySlice";
 import chatReducer from "@/store/Slices/ChatSlice/ChatSlice";
 import exchangeRequestReducer from "@/store/Slices/ExchangeRequestSlice/ExchangeRequestSlice";
+import userReducer from "@/store/Slices/Profile/ProfileSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     property: propertyReducer,
     chat: chatReducer,
     exchangeRequest: exchangeRequestReducer,
+    user: userReducer,
   },
 });
 
