@@ -1,5 +1,4 @@
 import location from "@/assets/location.svg";
-import phone from "@/assets/phone.svg";
 import email from "@/assets/email.svg";
 import ReusableButton from "./ReusableButton";
 import { useTranslation } from "react-i18next";
@@ -48,10 +47,7 @@ const Subscribe = () => {
                   <img src={location} alt="" className="w-4 h-4" />
                   Athens, Greece
                 </p>
-                {/* <p className="flex items-center gap-2">
-                  <img src={phone} alt="" className="w-4 h-4" />
-                  +888 8888 8888
-                </p> */}
+
                 <p className="flex items-center gap-2">
                   <img src={email} alt="" className="w-4 h-4" />
                   alfredo@business.com
