@@ -1,22 +1,25 @@
+"use client";
+
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { termsContent } from "@/lib/data/termsAndCondition";
+import { cookieContent } from "@/lib/data/termsAndCondition";
 
-interface TermsModalProps {
+interface CookiePolicyModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const TermsModal = ({ isOpen, onClose }: TermsModalProps) => {
+const CookiePolicyModal = ({ isOpen, onClose }: CookiePolicyModalProps) => {
   const { i18n } = useTranslation();
 
   return (
@@ -25,7 +28,7 @@ const TermsModal = ({ isOpen, onClose }: TermsModalProps) => {
         {/* Header */}
         <DialogHeader className="flex flex-row items-center justify-between">
           <DialogTitle className="text-2xl font-bold">
-            Terms of Service
+            Cookie Policy
           </DialogTitle>
           <button
             onClick={onClose}
@@ -35,10 +38,13 @@ const TermsModal = ({ isOpen, onClose }: TermsModalProps) => {
           </button>
         </DialogHeader>
 
-        {/* Scrollable Terms */}
+        {/* Scrollable Content */}
         <ScrollArea className="mt-4 h-[400px] pr-2">
+          <DialogDescription className="sr-only">
+            Please read our cookie policy carefully.
+          </DialogDescription>
           <div className="prose prose-sm max-w-none whitespace-pre-line">
-            {termsContent[i18n.language] || termsContent.en}
+            {cookieContent[i18n.language] || cookieContent.en}
           </div>
         </ScrollArea>
 
@@ -51,4 +57,4 @@ const TermsModal = ({ isOpen, onClose }: TermsModalProps) => {
   );
 };
 
-export default TermsModal;
+export default CookiePolicyModal;

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import CommonWrapper from "@/common/CommonWrapper";
 import ClientHeading from "../reusable/ClientHeading";
-import discoverEnglish from "@/assets/home/VACANZA-VSL-ENGLISH.mp4";
-import discoverGreek from "@/assets/home/VACANZA-VSL-GREEK.mp4";
+import discoverEnglish from "@/assets/home/VACANZA-VSL-ENGLISH-NEW.mp4";
+import discoverGreek from "@/assets/home/VACANZA-VSL-GREEK-NEW.mp4";
 import playBtn from "@/assets/home/playButton.png";
 import { useTranslation } from "react-i18next";
 
@@ -54,7 +54,7 @@ const Discover = () => {
               muted
               loop
               playsInline
-              preload="none"
+              preload="metadata"
               poster="/discover-poster.png"
             />
           ) : (
