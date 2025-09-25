@@ -6,8 +6,32 @@ import { FaCcStripe } from "react-icons/fa";
 import { Button } from "../ui/button";
 import ReusableButton from "./ReusableButton";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+
+interface Translation {
+  id: string;
+  planId: string;
+  language: string;
+  name: string;
+  description: string;
+  features: string[];
+  planDuration: string;
+  planType: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 interface Plan {
+  id: string;
+  price: number;
+  status: string;
+  priceId: string;
+  createdAt: string;
+  updatedAt: string;
+  translations: Translation[];
+}
+
+interface ProcessedPlan {
   id: string;
   name: string;
   description: string;
@@ -29,18 +53,49 @@ const config = {
 const ServicePlan: FC = () => {
   const [open, setOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("stripe");
-  const [plans, setPlans] = useState<Plan[]>([]);
+  const [plans, setPlans] = useState<ProcessedPlan[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<ProcessedPlan | null>(null);
 
-  const { t } = useTranslation("ourplan");
+  const { t, i18n } = useTranslation("ourplan");
+  const currentLanguage = i18n.language;
 
   useEffect(() => {
     const fetchPlans = async () => {
       try {
         setLoading(true);
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/plans`);
-        setPlans(res.data.data);
+
+        // Process the plans to get the correct translation based on current language
+        const processedPlans: ProcessedPlan[] = res.data.data
+          .map((plan: Plan) => {
+            // Find the translation for current language, fallback to English if not found
+            const translation =
+              plan.translations.find(
+                (t: Translation) => t.language === currentLanguage
+              ) ||
+              plan.translations.find((t: Translation) => t.language === "en");
+
+            if (!translation) {
+              console.warn(`No translation found for plan ${plan.id}`);
+              return null;
+            }
+
+            return {
+              id: plan.id,
+              name: translation.name,
+              description: translation.description,
+              price: plan.price,
+              features: translation.features,
+              planType: translation.planType,
+              status: plan.status,
+              priceId: plan.priceId,
+              plan_duration: translation.planDuration,
+            };
+          })
+          .filter(Boolean); // Remove any null values
+
+        setPlans(processedPlans);
       } catch (error) {
         console.error("Error fetching plans:", error);
       } finally {
@@ -49,7 +104,7 @@ const ServicePlan: FC = () => {
     };
 
     fetchPlans();
-  }, []);
+  }, [currentLanguage]); // Re-fetch when language changes
 
   // Handle Submit
   const handleSubmit = async (e: React.FormEvent) => {
@@ -75,11 +130,16 @@ const ServicePlan: FC = () => {
       console.log("Checkout response:", res.data);
       window.location.href = res.data.url;
     } catch (err) {
+      if (axios.isAxiosError(err)) {
+        toast.error(err.response?.data?.message || "Something went wrong");
+      } else {
+        toast.error("Unexpected error occurred");
+      }
       console.error("Error creating checkout:", err);
     }
   };
 
-  // console.log("planssssss: ", plans);
+  console.log("plans:", plans);
 
   return (
     <>
@@ -89,7 +149,7 @@ const ServicePlan: FC = () => {
             <p className="text-center">Loading plans...</p>
           ) : (
             plans
-              .map((plan) => (
+              ?.map((plan) => (
                 <div
                   key={plan.id}
                   className="relative bg-white p-[40px] flex flex-col w-full max-w-[384px] border border-primary-border-color rounded-[24px] text-center min-h-[680px] hover:shadow-2xl hover:shadow-[#bfd4f0] hover:bg-[#EAF1FA] duration-300 transition-all  ease-in-out"

@@ -49,7 +49,7 @@ const HomeTitle = ({
     {
       icon: Scale,
       label: "Area",
-      value: features?.area !== undefined ? `${features.area} sqf` : "-",
+      value: features?.area !== undefined ? `${features.area} sqm` : "-",
     },
   ];
 
