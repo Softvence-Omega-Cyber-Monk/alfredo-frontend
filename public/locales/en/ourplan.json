@@ -76,7 +76,7 @@
       "cityp": "Enter your city*",
       "payment": " Payment Method*",
       "stripe": " Stripe Pay",
-      "button": " Save"
+      "button": "Choose"
     },
     "startjourney": {
       "title1": "Start Your Journey with",

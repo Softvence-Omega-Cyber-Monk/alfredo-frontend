@@ -12,16 +12,15 @@ import Loader from "@/components/reusable/Loader";
 
 const HomeDetails = () => {
   const { callToAction } = homeDetailsData;
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
   const { singleProperty } = useAppSelector((state) => state.property);
 
   console.log("singleProperty", singleProperty);
 
   useEffect(() => {
-    if (id) {
-      dispatch(fetchSingleProperty(id));
-    }
+    if (!id) return;
+    dispatch(fetchSingleProperty(id));
   }, [id]);
 
   return (
