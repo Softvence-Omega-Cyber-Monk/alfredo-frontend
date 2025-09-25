@@ -26,7 +26,7 @@ const FutureList = () => {
 
   console.log("mahim", myProperties);
 
-  console.log("All data ", allProperties);
+  console.log("All data ", filteredProperties);
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const { t } = useTranslation("futureList");
 
