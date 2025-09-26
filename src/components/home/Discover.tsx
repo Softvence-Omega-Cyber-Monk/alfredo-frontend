@@ -55,7 +55,7 @@ const Discover = () => {
               loop
               playsInline
               preload="metadata"
-              poster="/discover-poster.png"
+              poster="/discover-poster-min.png"
             />
           ) : (
             // Show poster image before video loads
