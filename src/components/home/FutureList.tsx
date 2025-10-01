@@ -72,7 +72,7 @@ const FutureList = () => {
         <div className="mt-8 flex justify-center">
           <PrimaryButton
             title={t("exploreMore")}
-            onClick={() => navigate("/places")}
+            onClick={() => navigate("/plans")}
           />
         </div>
       </CommonWrapper>
