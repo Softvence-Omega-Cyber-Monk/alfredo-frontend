@@ -4,9 +4,44 @@ import ReusableButton from "./ReusableButton";
 import { useTranslation } from "react-i18next";
 import { Parallax } from "react-parallax";
 import subscribeBg from "@/assets/subscribeBg.jpg";
+import { useState } from "react";
+import api from "@/services/api";
+import { toast } from "sonner";
 
 const Subscribe = () => {
   const { t } = useTranslation("subscribe");
+  const [inputEmail, setInputEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!inputEmail) {
+      setMessage("Please enter your email.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setMessage("");
+      const response = await api.post("/web-subscribe", {
+        email: inputEmail,
+      });
+
+      if (response.data?.success) {
+        setMessage("Subscribed successfully!");
+        toast("Subscribed successfully!");
+        setInputEmail("");
+      } else {
+        setMessage(response.data?.message || "Subscription failed.");
+      }
+    } catch (error: any) {
+      setMessage(error.response?.data?.message || "Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Parallax
@@ -50,7 +85,7 @@ const Subscribe = () => {
 
                 <p className="flex items-center gap-2">
                   <img src={email} alt="" className="w-4 h-4" />
-                  alfredo@business.com
+                  info@vacanzagreece.gr
                 </p>
               </div>
 
@@ -60,14 +95,25 @@ const Subscribe = () => {
                   {t("subscribe")}
                 </h1>
                 <div className="relative mt-3">
-                  <input
-                    type="text"
-                    className="w-full md:w-[383px] h-[52px] px-5 bg-white bg-opacity-20 placeholder-white text-basic-dark rounded-full"
-                    placeholder="Your email"
-                  />
-                  <ReusableButton className="w-full md:w-auto mt-4 md:mt-0 md:absolute md:top-1 md:right-[5px]">
-                    {t("subscribeBtn")}
-                  </ReusableButton>
+                  <form onSubmit={handleSubscribe} className="w-full md:w-auto">
+                    <input
+                      type="email"
+                      value={inputEmail}
+                      onChange={(e) => setInputEmail(e.target.value)}
+                      className="w-full md:w-[383px] h-[52px] px-5 bg-white bg-opacity-20 placeholder-white text-basic-dark rounded-full"
+                      placeholder="Your email"
+                    />
+                    <ReusableButton
+                      className="w-full md:w-auto mt-4 md:mt-0 md:absolute md:top-1 md:right-[5px]"
+                      type="submit"
+                      disabled={loading}
+                    >
+                      {loading ? "Subscribing..." : t("subscribeBtn")}
+                    </ReusableButton>
+                  </form>
+                  {message && (
+                    <p className="mt-2 text-sm text-yellow-200">{message}</p>
+                  )}
                 </div>
               </div>
             </div>

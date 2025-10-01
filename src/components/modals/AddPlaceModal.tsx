@@ -260,7 +260,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
               />
             </div>
             <div>
-              <Label>Size (sqft)</Label>
+              <Label>Size (sqm)</Label>
               <input
                 type="number"
                 name="size"
