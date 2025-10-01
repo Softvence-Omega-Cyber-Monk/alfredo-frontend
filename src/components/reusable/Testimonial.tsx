@@ -1,7 +1,7 @@
 import CommonWrapper from "@/common/CommonWrapper";
 import youngLady from "@/assets/testimonial/review-young-lady.jpg";
-import oldLady from "@/assets/testimonial/review-old-lady.jpg";
-import youngMan from "@/assets/testimonial//review-young-man.jpg";
+import oldLady from "@/assets/testimonial/testimonial-image3.jpg";
+import youngMan from "@/assets/testimonial/testimonial-image2.jpg";
 import comma from "@/assets/comma.svg";
 import ClientHeading from "./ClientHeading";
 import { useTranslation } from "react-i18next";
@@ -96,7 +96,7 @@ const Testimonial = () => {
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div className="flex flex-col">
-                  <h1 className="text-black font-bold">Lefteris K.</h1>
+                  <h1 className="text-black font-bold"> Elisabeth P.</h1>
                   {/* <p>CTO</p> */}
                 </div>
               </div>
