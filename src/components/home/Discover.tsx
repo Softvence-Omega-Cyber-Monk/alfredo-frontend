@@ -24,7 +24,7 @@ const Discover = () => {
         if (videoRef.current) {
           videoRef.current.muted = true; // back to silent mode
           videoRef.current.pause(); // optional → pause when exit fullscreen
-          videoRef.current.currentTime = 0; // optional → restart from beginning
+          // videoRef.current.currentTime = 0; // optional → restart from beginning
           videoRef.current.play(); // keep looping silently in background
         }
       }
