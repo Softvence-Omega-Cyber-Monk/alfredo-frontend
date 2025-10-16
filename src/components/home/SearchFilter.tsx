@@ -228,7 +228,7 @@ const SearchFilter = () => {
               className="w-5 h-5 cursor-pointer"
             />
             <label htmlFor="pets" className="text-sm text-dark-3">
-              Travel with Pets
+              {t("search.pets")}
             </label>
           </div>
 
