@@ -101,7 +101,7 @@ const Subscribe = () => {
                       value={inputEmail}
                       onChange={(e) => setInputEmail(e.target.value)}
                       className="w-full md:w-[383px] h-[52px] px-5 bg-white bg-opacity-20 placeholder-white text-basic-dark rounded-full"
-                      placeholder="Your email"
+                      placeholder={t("email")}
                     />
                     <ReusableButton
                       className="w-full md:w-auto mt-4 md:mt-0 md:absolute md:top-1 md:right-[5px]"
