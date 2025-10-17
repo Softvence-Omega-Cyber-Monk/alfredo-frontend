@@ -1,0 +1,9 @@
+{
+  "search": {
+    "title":"search.filters",
+    "filtersButton": "Select Filters",
+    "amenities": "Amenities",
+    "transports": "Transports",
+    "surroundings": "Surroundings"
+  }
+}
