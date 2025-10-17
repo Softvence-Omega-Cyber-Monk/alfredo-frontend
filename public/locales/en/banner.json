@@ -17,6 +17,8 @@
     "apartment": "Apartment",
     "room": "Room",
     "boat": "Boat",
-    "van": "Van"
+    "van": "Van",
+    "filters":"search.filters",
+    "selectpet":"Travel with Pets"
   }
 }
