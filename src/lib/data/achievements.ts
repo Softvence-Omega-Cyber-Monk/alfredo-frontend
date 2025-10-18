@@ -9,7 +9,7 @@ import goldenHost from "@/assets/achievements/goldenHost.png";
 import checkMarkGreen from "@/assets/icons/checkmaekBgGreen.svg";
 import verified from "@/assets/achievements/blueVerify.png";
 import userIconBlue from "@/assets/icons/users3.svg";
-import diamond2 from "@/assets/icons/diamondSharp.svg";
+// import diamond2 from "@/assets/icons/diamondSharp.svg";
 import seasons from "@/assets/icons/exchange-alt.svg";
 import autumn from "@/assets/achievements/seasons-based/autumn traveler.png";
 import winter from "@/assets/achievements/seasons-based/winter traveler.png";
@@ -243,16 +243,16 @@ const achievementsData = [
         descriptionColor: "#D97706",
         cardType: "iconOnly" as const,
       },
-      {
-        id: 5,
-        title: "bonus.achivement.card6.fiveBonus.title",
-        description: "bonus.achivement.card6.fiveBonus.content",
-        borderColor: "#D2D2D2",
-        bgColor: "#EBEBEB",
-        icon: diamond2,
-        titleColor: "#2C2C2C",
-        descriptionColor: "#505050",
-      },
+      // {
+      //   id: 5,
+      //   title: "bonus.achivement.card6.fiveBonus.title",
+      //   description: "bonus.achivement.card6.fiveBonus.content",
+      //   borderColor: "#D2D2D2",
+      //   bgColor: "#EBEBEB",
+      //   icon: diamond2,
+      //   titleColor: "#2C2C2C",
+      //   descriptionColor: "#505050",
+      // },
     ],
   },
   {
