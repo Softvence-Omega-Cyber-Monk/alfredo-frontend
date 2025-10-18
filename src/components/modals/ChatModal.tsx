@@ -260,7 +260,7 @@ const ChatModal: React.FC<ChatModalProps> = ({
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Type a message..."
-                className="flex-1 border rounded-full px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-[#3174cd]"
+                className="flex-1 border border-gray-300 rounded-full px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-[#3174cd]"
                 onKeyDown={(e) => e.key === "Enter" && sendMessage()}
               />
               <button
@@ -273,7 +273,7 @@ const ChatModal: React.FC<ChatModalProps> = ({
             </div>
 
             {/* Exchange Request Button */}
-            <div className="p-3 bg-white border-t">
+            <div className="p-3 bg-white border-t border-gray-300">
               <Popover>
                 <PopoverTrigger>
                   <PrimaryButton

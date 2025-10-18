@@ -40,6 +40,7 @@ const AuthSection: React.FC<Props> = ({
 
   const handleLogout = () => {
     dispatch(logout());
+    localStorage.removeItem("user");
     navigate("/login");
     setMobileMenuOpen(false);
   };
