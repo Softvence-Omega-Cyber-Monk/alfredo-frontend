@@ -26,10 +26,11 @@ const Plans: FC = () => {
         </div>
 
         <div className="mt-20">
+          {/* this is service plan  */}
           <ServicePlan />
         </div>
 
-        <div className="lg:w-3/4 md:w-3/4 w-full mx-auto mt-[140px] max-sm:mt-[70px]">
+        <div className="lg:w-3/4 md:w-3/4 w-full mx-auto mt-[140px] max-sm:mt-[72px]">
           <AccordionComponent items={bonus} />
         </div>
 

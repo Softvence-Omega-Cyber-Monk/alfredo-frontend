@@ -17,7 +17,7 @@ const Banner = () => {
       <CommonWrapper>
         <div className="flex flex-col items-center justify-center gap-4 py-8 md:py-[80px] lg:py-[140px]">
           <div className="text-center font-normal text-dark-3 px-4 md:px-6">
-            <h1 className="capitalize text-4xl md:text-5xl lg:text-[80px] max-w-[700px] mx-auto leading-[1.2]">
+            <h1 className="capitalize text-3xl md:text-5xl lg:text-[80px] max-w-[700px] mx-auto leading-[1.2]">
               {t("banner.title")}{" "}
               <span className="font-Grand-Hotel text-primary-blue">
                 {t("banner.highlight")}
@@ -30,7 +30,7 @@ const Banner = () => {
           {/* <div className="mt-6 md:mt-8 lg:mt-10 w-full">
             <SearchFilter />
           </div> */}
-           <SearchProvider>
+          <SearchProvider>
             <div className="mt-6 md:mt-8 lg:mt-10 w-full">
               <SearchFilter />
             </div>

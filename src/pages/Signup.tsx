@@ -11,6 +11,16 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOtp, signupUser } from "@/store/Slices/AuthSlice/authSlice";
 import { AppDispatch, RootState } from "@/store/store";
+// import TermsModal from "@/components/modals/TermsModal";
+// import PrivacyModal from "@/components/modals/PrivacyModal";
+// import CookiePolicyModal from "@/components/modals/CookiePolicy";
+import CustomModal from "@/components/modals/CustomModal";
+import {
+  cookieContent,
+  privacyContent,
+  termsContent,
+} from "@/lib/data/termsAndCondition";
+import { toast } from "sonner";
 
 const signupSchema = z
   .object({
@@ -50,6 +60,10 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const [isCookieOpen, setIsCookieOpen] = useState(false);
+
   const onSubmit = async (data: SignupFormInputs) => {
     // Register the user
     const resultAction = await dispatch(
@@ -68,6 +82,7 @@ const Signup = () => {
       const otpAction = await dispatch(sendOtp({ userId, method: "email" }));
       if (sendOtp.fulfilled.match(otpAction)) {
         console.log("OTP sent successfully:", otpAction.payload.message);
+        toast("OTP sent successfully to your email. Please check your email.");
         // Navigate to verify OTP page with userId in URL
         navigate(`/verify-otp/${userId}`);
       } else {
@@ -240,15 +255,50 @@ const Signup = () => {
               />
               <label className="text-[16px] text-basic-dark font-semibold">
                 I agree to the{" "}
-                <a href="#" className="text-primary-blue underline">
+                <button
+                  type="button"
+                  onClick={() => setIsTermsOpen(true)}
+                  className="text-primary-blue underline cursor-pointer"
+                >
                   Terms of Service
-                </a>{" "}
+                </button>
+                {", "}
+                <button
+                  type="button"
+                  onClick={() => setIsCookieOpen(true)}
+                  className="text-primary-blue underline cursor-pointer"
+                >
+                  Cookie Policy
+                </button>{" "}
                 and{" "}
-                <a href="#" className="text-primary-blue underline">
+                <button
+                  type="button"
+                  onClick={() => setIsPrivacyOpen(true)}
+                  className="text-primary-blue underline cursor-pointer"
+                >
                   Privacy Policy
-                </a>
+                </button>
               </label>
             </div>
+            {/* Modals */}
+            <CustomModal
+              isOpen={isTermsOpen}
+              onClose={() => setIsTermsOpen(false)}
+              title="Terms of Service"
+              content={termsContent}
+            />
+            <CustomModal
+              isOpen={isPrivacyOpen}
+              onClose={() => setIsPrivacyOpen(false)}
+              title="Privacy Policy"
+              content={privacyContent}
+            />
+            <CustomModal
+              isOpen={isCookieOpen}
+              onClose={() => setIsCookieOpen(false)}
+              title="Cookie Policy"
+              content={cookieContent}
+            />
             {errors.agreeToTerms && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.agreeToTerms.message}

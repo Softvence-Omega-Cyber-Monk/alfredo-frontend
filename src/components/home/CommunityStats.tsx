@@ -37,14 +37,14 @@ const CommunityStats = () => {
               <img
                 src={youngMan}
                 alt=""
-                className="w-[60px] h-[60px] absolute left-[125px] object-cover rounded-full border-white border-4"
+                className="w-[60px] h-[60px] absolute left-[120px] object-cover rounded-full border-white border-4"
               />
             </div>
-            <h1 className="text-primary-blue text-3xl md:text-[36px] lg:text-[40px] font-semibold">
+            {/* <h1 className="text-primary-blue text-3xl md:text-[36px] lg:text-[40px] font-semibold">
               6,500 +
-            </h1>
+            </h1> */}{" "}
           </div>
-          <p>{t("community.last")}</p>
+          <p> {t("community.last")}</p>
         </div>
       </CommonWrapper>
     </div>

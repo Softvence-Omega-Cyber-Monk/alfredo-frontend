@@ -1,16 +1,19 @@
-import { MoveRight } from "lucide-react";
-import { Link } from "react-router-dom";
+// import { MoveRight } from "lucide-react";
+// import { Link } from "react-router-dom";
 
 interface PlacesHeadingProps {
   hasPlaces: boolean;
 }
+
+const storedUser = localStorage.getItem("user");
+const user = storedUser ? JSON.parse(storedUser) : null;
 
 const PlacesHeading = ({ hasPlaces }: PlacesHeadingProps) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 text-center lg:text-left items-center justify-center gap-4">
       <div>
         <h1 className="font-semibold text-primary-blue text-3xl md:text-4xl lg:text-[40px]">
-          Hi JonDon,
+          Hi {user.fullName.split(" ")[0]},
         </h1>
         <p className="text-sm md:text-base text-dark-3 font-regular mt-3 max-w-[588px] mx-auto lg:mx-0">
           {hasPlaces
@@ -18,7 +21,7 @@ const PlacesHeading = ({ hasPlaces }: PlacesHeadingProps) => {
             : `You Haven't Listed Any Places Yet.`}
         </p>
       </div>
-      <div className="flex justify-center lg:justify-end">
+      {/* <div className="flex justify-center lg:justify-end">
         <Link
           to="/add-place"
           className="relative overflow-hidden rounded-full transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
@@ -29,7 +32,7 @@ const PlacesHeading = ({ hasPlaces }: PlacesHeadingProps) => {
             <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
           </div>
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };
