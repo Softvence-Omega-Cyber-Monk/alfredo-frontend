@@ -1,5 +1,5 @@
 import articleImage from "@/assets/articleImg.png";
-import testimonailPerson from "@/assets/testimonailPerson.jpg";
+// import testimonailPerson from "@/assets/testimonailPerson.jpg";
 import { useTranslation } from "react-i18next";
 const TopArticle = () => {
   const { t } = useTranslation("articles");
@@ -25,7 +25,7 @@ const TopArticle = () => {
             {t("articles.showcaseArticle.description")}
           </p>
         </div>
-        <div className="flex items-center gap-4">
+        {/* <div className="flex items-center gap-4">
           <img
             src={testimonailPerson}
             className="w-16 h-16 rounded-full object-cover object-center"
@@ -37,7 +37,7 @@ const TopArticle = () => {
             </h3>
             <p className="text-sm font-normal">Manager of IT</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -44,6 +44,9 @@ const SearchCombinedFilter = () => {
     };
     fetchData();
   }, []);
+  console.log("Amenities:", amenities);
+  console.log("Transports:", transports);
+  console.log("Surroundings:", surroundings);
 
   const toggleSelection = (
     id: string,
@@ -160,7 +163,6 @@ const SearchCombinedFilter = () => {
 };
 
 export default SearchCombinedFilter;
-
 
 // import { useEffect, useState } from "react";
 // import { Button } from "@/components/ui/button";

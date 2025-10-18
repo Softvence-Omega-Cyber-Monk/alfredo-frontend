@@ -26,8 +26,8 @@ const PropertyCard: React.FC<CommonCardProps> = ({
   image,
   location,
   title,
-  price,
-  priceUnit = "/mt",
+  // price,
+  // priceUnit = "/mt",
   features,
   onViewDetails,
 }) => {
@@ -49,12 +49,12 @@ const PropertyCard: React.FC<CommonCardProps> = ({
         <h3 className="text-dark-3 font-semibold text-2xl my-4">{title}</h3>
 
         {/* Price */}
-        <h3 className="text-primary-blue font-semibold text-2xl pb-4 border-b border-b-[#EAF1FA]">
+        {/* <h3 className="text-primary-blue font-semibold text-2xl pb-4 border-b border-b-[#EAF1FA]">
           ${price}
           <span className="font-Grand-Hotel font-regular text-base text-dark-2 pl-1">
             {priceUnit}
           </span>
-        </h3>
+        </h3> */}
 
         {/* Features */}
         <div className="my-4 flex items-center justify-between">

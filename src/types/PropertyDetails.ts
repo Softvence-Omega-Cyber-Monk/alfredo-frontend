@@ -37,6 +37,11 @@ export interface OwnerDetails {
   hasOnboarded: boolean;
 }
 
+export interface PropertyImage {
+  id: string;
+  url: string;
+}
+
 export interface PropertyDetails {
   id: string;
   title: string;
@@ -47,10 +52,51 @@ export interface PropertyDetails {
   size: number;
   bedrooms: number;
   bathrooms: number;
-  images: string[];
+  images: Array<{
+    url: string;
+    publicId: string;
+  }>;
+  propertyType: string;
+  maxPeople: number;
   isAvailable: boolean;
+  isTravelWithPets: boolean;
   ownerId: string;
+  isDeleted: boolean;
+  averageRating: number;
+  reviewCount: number;
+  availabilityStartDate: string;
+  availabilityEndDate: string;
   createdAt: string;
   updatedAt: string;
   owner: OwnerDetails;
+  amenities: Array<{
+    id: string;
+    name: string;
+    icon: string;
+  }>;
+  transports: Array<{
+    id: string;
+    name: string;
+    icon: string;
+  }>;
+  surroundings: Array<{
+    id: string;
+    name: string;
+    icon: string;
+  }>;
+  Review: Review[];
+}
+
+export interface Review {
+  id?: string;
+  rating: number;
+  comment: string;
+  userId?: string;
+  propertyId?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  user?: {
+    fullName: string;
+    photo?: string;
+  };
 }
