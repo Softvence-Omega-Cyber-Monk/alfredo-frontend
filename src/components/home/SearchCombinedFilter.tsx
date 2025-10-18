@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,10 +14,13 @@ import { useTranslation } from "react-i18next";
 interface Item {
   id: string;
   name: string;
+  greek_name?: string;
+  icon?: string;
 }
 
 const SearchCombinedFilter = () => {
-  const { t } = useTranslation("sbanner"); // ✅ same namespace as SearchFilter
+  const { t, i18n } = useTranslation("sbanner"); // ✅ same namespace as SearchFilter
+  const currentLanguage = i18n.language;
 
   const [amenities, setAmenities] = useState<Item[]>([]);
   const [transports, setTransports] = useState<Item[]>([]);
@@ -27,26 +32,35 @@ const SearchCombinedFilter = () => {
     []
   );
 
+  // ✅ Fetch data and map according to current language
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [a, t, s] = await Promise.all([
+        const [aRes, tRes, sRes] = await Promise.all([
           getAmenities(),
           getTransports(),
           getSurroundings(),
         ]);
-        setAmenities(a);
-        setTransports(t);
-        setSurroundings(s);
+
+        const mapTranslatedData = (data: Item[]) =>
+          data.map((item) => ({
+            ...item,
+            name:
+              currentLanguage === "el" && item.greek_name
+                ? item.greek_name
+                : item.name,
+          }));
+
+        setAmenities(mapTranslatedData(aRes));
+        setTransports(mapTranslatedData(tRes));
+        setSurroundings(mapTranslatedData(sRes));
       } catch (error) {
         console.error("Failed to load filter options:", error);
       }
     };
+
     fetchData();
-  }, []);
-  console.log("Amenities:", amenities);
-  console.log("Transports:", transports);
-  console.log("Surroundings:", surroundings);
+  }, [currentLanguage]); // ✅ Refetch and remap when language changes
 
   const toggleSelection = (
     id: string,
@@ -122,7 +136,7 @@ const SearchCombinedFilter = () => {
           variant="outline"
           className="w-full border-gray-300 text-gray-700 cursor-pointer"
         >
-          {t("search.filtersButton")} {/* ✅ i18n key */}
+          {t("search.filtersButton")}
         </Button>
       </PopoverTrigger>
 
@@ -171,14 +185,9 @@ export default SearchCombinedFilter;
 //   PopoverTrigger,
 //   PopoverContent,
 // } from "@/components/ui/popover";
-// // import { useSearch } from "@/contexts/SearchContext";
-// import {
-//   getAmenities,
-//   getTransports,
-//   getSurroundings,
-//   // SearchParams,
-// } from "@/services/api";
-// import { X } from "lucide-react"; // optional: for remove icon on selected tag
+// import { getAmenities, getTransports, getSurroundings } from "@/services/api";
+// import { X } from "lucide-react";
+// import { useTranslation } from "react-i18next";
 
 // interface Item {
 //   id: string;
@@ -186,7 +195,7 @@ export default SearchCombinedFilter;
 // }
 
 // const SearchCombinedFilter = () => {
-//   // const { performSearch, setSearchParams } = useSearch();
+//   const { t } = useTranslation("sbanner"); // ✅ same namespace as SearchFilter
 
 //   const [amenities, setAmenities] = useState<Item[]>([]);
 //   const [transports, setTransports] = useState<Item[]>([]);
@@ -215,6 +224,9 @@ export default SearchCombinedFilter;
 //     };
 //     fetchData();
 //   }, []);
+//   console.log("Amenities:", amenities);
+//   console.log("Transports:", transports);
+//   console.log("Surroundings:", surroundings);
 
 //   const toggleSelection = (
 //     id: string,
@@ -235,22 +247,6 @@ export default SearchCombinedFilter;
 //     );
 //   };
 
-//   // const applyFilters = async () => {
-//   //   const params: SearchParams = {
-//   //     amenities: selectedAmenities.length
-//   //       ? selectedAmenities.join(",")
-//   //       : undefined,
-//   //     transports: selectedTransports.length
-//   //       ? selectedTransports.join(",")
-//   //       : undefined,
-//   //     surroundings: selectedSurroundings.length
-//   //       ? selectedSurroundings.join(",")
-//   //       : undefined,
-//   //   };
-//   //   setSearchParams(params);
-//   //   await performSearch(params);
-//   // };
-
 //   const renderFilterSection = (
 //     title: string,
 //     items: Item[],
@@ -265,7 +261,7 @@ export default SearchCombinedFilter;
 //         {items.map((item) => (
 //           <label
 //             key={item.id}
-//             className="flex items-center gap-3 p-2 rounded-lg  hover:bg-gray-100 transition-colors cursor-pointer"
+//             className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
 //           >
 //             <input
 //               type="checkbox"
@@ -304,14 +300,15 @@ export default SearchCombinedFilter;
 //       <PopoverTrigger asChild className="bg-white">
 //         <Button
 //           variant="outline"
-//           className="w-full border-gray-300 text-gray-700  cursor-pointer"
+//           className="w-full border-gray-300 text-gray-700 cursor-pointer"
 //         >
-//           Select Filters
+//           {t("search.filtersButton")} {/* ✅ i18n key */}
 //         </Button>
 //       </PopoverTrigger>
-//       <PopoverContent className="bg-white w-80 p-5 space-y-1 shadow-lg border border-gray-200 rounded-lg">
-//         {/* Display selected tags */}
-//         <div className="flex flex-wrap mb-3 ">
+
+//       <PopoverContent className="bg-white w-80 p-5 space-y-3 shadow-lg border border-gray-200 rounded-lg">
+//         {/* Selected Tags */}
+//         <div className="flex flex-wrap mb-3">
 //           {renderSelectedTags(selectedAmenities, amenities, "amenity")}
 //           {renderSelectedTags(selectedTransports, transports, "transport")}
 //           {renderSelectedTags(
@@ -321,31 +318,25 @@ export default SearchCombinedFilter;
 //           )}
 //         </div>
 
+//         {/* Filter Sections */}
 //         {renderFilterSection(
-//           "Amenities",
+//           t("search.amenities"),
 //           amenities,
 //           selectedAmenities,
 //           "amenity"
 //         )}
 //         {renderFilterSection(
-//           "Transports",
+//           t("search.transports"),
 //           transports,
 //           selectedTransports,
 //           "transport"
 //         )}
 //         {renderFilterSection(
-//           "Surroundings",
+//           t("search.surroundings"),
 //           surroundings,
 //           selectedSurroundings,
 //           "surrounding"
 //         )}
-
-//         {/* <Button
-//           className="w-full bg-primary-blue text-white hover:bg-blue-600 transition-colors cursor-pointer"
-//           onClick={applyFilters}
-//         >
-//           Apply Filters
-//         </Button> */}
 //       </PopoverContent>
 //     </Popover>
 //   );

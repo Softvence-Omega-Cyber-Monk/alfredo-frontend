@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { Parallax } from "react-parallax";
 import subscribeBg from "@/assets/subscribeBg.jpg";
 import location from "@/assets/location.svg";
-import phone from "@/assets/phone.svg";
 import emailIcon from "@/assets/email.svg";
 import ReusableButton from "./ReusableButton";
 
