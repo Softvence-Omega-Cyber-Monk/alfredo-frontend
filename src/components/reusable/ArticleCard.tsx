@@ -21,7 +21,7 @@ const ArticleCard: FC<ArticleProps> = ({
   lastUpdate,
   title,
   excerpt,
-  author,
+  // author,
 }) => {
   const { t } = useTranslation("articles");
   return (
@@ -45,7 +45,7 @@ const ArticleCard: FC<ArticleProps> = ({
             </h2>
             <p className="text-base mb-3 line-clamp-4">{t(excerpt)}</p>
           </div>
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             <img
               src={author.avatar}
               className="w-12 h-12 rounded-full object-cover"
@@ -57,7 +57,7 @@ const ArticleCard: FC<ArticleProps> = ({
               </h3>
               <p className="text-sm">{author.role}</p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </Link>

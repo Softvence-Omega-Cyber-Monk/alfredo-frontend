@@ -132,7 +132,7 @@ const Login = () => {
             {/* Submit Button */}
             <AuthButton
               title={loading ? "Logging in..." : "Log In"}
-              onClick={handleSubmit(onSubmit)}
+              type="submit"
             />
           </form>
 

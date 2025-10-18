@@ -1,5 +1,4 @@
 import CommonWrapper from "@/common/CommonWrapper";
-import ClientHeading from "@/components/reusable/ClientHeading";
 import Conversation from "@/components/reusable/Conversation";
 import ReusableButton from "@/components/reusable/ReusableButton";
 import Subscribe from "@/components/reusable/Subscribe";
@@ -26,7 +25,7 @@ const Contact = () => {
       name: `${data.firstName} ${data.lastName}`,
       email: data.email,
       phoneNumber: data.phone,
-      opinion: data.message, // assuming "message" field maps to "opinion"
+      opinion: data.message,
     };
 
     dispatch(createContact(contactPayload))
@@ -46,10 +45,19 @@ const Contact = () => {
       <CommonWrapper>
         {/* top heading section */}
         <div className="my-[64px] max-[767px]:my-[32px]">
-          <ClientHeading
+          {/* <ClientHeading
             headingText={t("contact.title")}
             spanText={t("contact.highlight")}
-          />
+          /> */}
+          <div className="text-center">
+            <h1 className="font-Grand-Hotel text-3xl lg:text-[60px] ml-4 text-primary-blue">
+              {t("contact.title")}
+              <span className="text-3xl lg:text-[60px] text-[#505050] text-center">
+                {" "}
+                {t("contact.highlight")}
+              </span>
+            </h1>
+          </div>
           <p className="text-[24px] not-italic font-normal text-center text-basic-dark max-[767px]:text-[18px] max-[767px]:leading-[28px]">
             {t("contact.subtitle")}
           </p>
@@ -175,7 +183,7 @@ const Contact = () => {
                 type="submit"
                 className="text-[18px] md:text-[24px] w-full font-semibold py-6 px-6 rounded-full"
               >
-                {t("contact.bookNow")}
+                {t("contact.startConversation")}
               </ReusableButton>
             </form>
           </div>

@@ -87,6 +87,8 @@ const ExchangeRequest = () => {
     searchTerm,
   ]);
 
+  console.log("filtered request", filteredRequests);
+
   // Get unique values for filter dropdowns
   const statusOptions = useMemo(() => {
     const statuses = [...new Set(requests.map((req) => req.status))];
@@ -304,7 +306,7 @@ const ExchangeRequest = () => {
                 className="bg-white rounded-lg shadow-md p-4 border border-gray-200 flex flex-col h-full"
               >
                 <h3 className="font-semibold text-lg mb-2">
-                  Request #{request.id.slice(0, 8)}
+                  {request.toProperty.title}
                 </h3>
                 <p className="text-gray-600 text-sm mb-2">
                   Status:{" "}
@@ -350,7 +352,7 @@ const ExchangeRequest = () => {
                   <div className="flex-1">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-2">
                       <h3 className="font-semibold text-lg">
-                        Request #{request.id.slice(0, 8)}
+                        {request.toProperty.title}
                       </h3>
                       <span
                         className={`px-2 py-1 rounded-full text-xs font-medium ${

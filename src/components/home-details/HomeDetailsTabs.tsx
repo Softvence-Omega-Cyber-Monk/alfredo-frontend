@@ -8,6 +8,8 @@ import AccordionComponent from "../reusable/AccordionComponent";
 import { HomeDetailsType } from "@/lib/data/homeDetails.ts";
 import { bonus } from "@/lib/AccordionData/accordionData";
 import { PropertyDetails } from "@/types/PropertyDetails";
+import Reviews from "./Reviews"; // You'll need to create this component
+import { useParams } from "react-router-dom";
 
 const HomeDetailsTabs = ({
   data,
@@ -16,20 +18,58 @@ const HomeDetailsTabs = ({
   data: HomeDetailsType;
   singlePropertyData: PropertyDetails;
 }) => {
-  // console.log(data, "data in tabsssssssssss");
-  // console.log(singlePropertyData, "data in tabs");
+  console.log(singlePropertyData, "dddddddd");
+  const { id } = useParams();
+  const storedUser = localStorage.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
+  // Transform API data for the components
+  const transformedAmenities = {
+    main:
+      singlePropertyData.amenities?.map((amenity) => ({
+        icon: amenity.icon,
+        title: amenity.name,
+      })) || [],
+    transport:
+      singlePropertyData.transports?.map((transport) => ({
+        icon: transport.icon,
+        title: transport.name,
+      })) || [],
+    surrounding:
+      singlePropertyData.surroundings?.map((surrounding) => ({
+        icon: surrounding.icon,
+        title: surrounding.name,
+      })) || [],
+  };
+
+  const transformedPhotos =
+    singlePropertyData.images?.map((image) => ({
+      src: image.url,
+      alt: singlePropertyData.title,
+    })) || [];
+
   const tabsData = [
     {
       id: "Photos",
       label: "Photos",
       content: (
         <div className="space-y-6">
-          <Photos photos={data.photos} />
+          <Photos photos={transformedPhotos} />
           <Description
-            dates={{ from: data.dates.from, to: data.dates.to }}
+            dates={{
+              from: singlePropertyData.availabilityStartDate
+                ? new Date(
+                    singlePropertyData.availabilityStartDate
+                  ).toLocaleDateString()
+                : "N/A",
+              to: singlePropertyData.availabilityEndDate
+                ? new Date(
+                    singlePropertyData.availabilityEndDate
+                  ).toLocaleDateString()
+                : "N/A",
+            }}
             description={singlePropertyData.description}
           />
-          <Amenities amenities={data.amenities} />
+          <Amenities amenities={transformedAmenities} />
           <div className="mb-6 md:mb-20">
             <Map location={data.location} />
           </div>
@@ -42,7 +82,18 @@ const HomeDetailsTabs = ({
       label: "Description",
       content: (
         <Description
-          dates={{ from: data.dates.from, to: data.dates.to }}
+          dates={{
+            from: singlePropertyData.availabilityStartDate
+              ? new Date(
+                  singlePropertyData.availabilityStartDate
+                ).toLocaleDateString()
+              : "N/A",
+            to: singlePropertyData.availabilityEndDate
+              ? new Date(
+                  singlePropertyData.availabilityEndDate
+                ).toLocaleDateString()
+              : "N/A",
+          }}
           description={singlePropertyData.description}
         />
       ),
@@ -50,7 +101,7 @@ const HomeDetailsTabs = ({
     {
       id: "Amenities",
       label: "Amenities",
-      content: <Amenities amenities={data.amenities} />,
+      content: <Amenities amenities={transformedAmenities} />,
     },
     {
       id: "Map",
@@ -66,18 +117,12 @@ const HomeDetailsTabs = ({
       id: "Reviews",
       label: "Reviews",
       content: (
-        <>
-          <Photos photos={data.photos} />
-          <Description
-            dates={{ from: data.dates.from, to: data.dates.to }}
-            description={singlePropertyData.description}
-          />
-          <Amenities amenities={data.amenities} />
-          <div className="mb-6 md:mb-20">
-            <Map location={data.location} />
-          </div>
-          <AccordionComponent items={bonus} />
-        </>
+        <Reviews
+          reviews={singlePropertyData.Review || []}
+          propertyId={id || ""}
+          isOwner={user.id === singlePropertyData.owner.id}
+          userId={user.id}
+        />
       ),
     },
   ];
@@ -106,7 +151,12 @@ const HomeDetailsTabs = ({
           <HomeTitle
             owner={singlePropertyData.owner}
             title={singlePropertyData.title}
-            features={data.features}
+            features={{
+              rooms: singlePropertyData.bedrooms,
+              beds: singlePropertyData.bedrooms,
+              baths: singlePropertyData.bathrooms,
+              area: singlePropertyData.size,
+            }}
             singlePropertyData={singlePropertyData}
           />
         </div>

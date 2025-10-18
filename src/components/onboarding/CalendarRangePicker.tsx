@@ -59,6 +59,7 @@ const CalendarRangePicker = ({
         <div className="flex justify-between items-center mb-2">
           {isFirstCalendar ? (
             <button
+              type="button"
               onClick={() => setMonthOffset((prev) => prev - 1)}
               className="p-1 rounded hover:bg-[#808080]"
             >
@@ -113,6 +114,7 @@ const CalendarRangePicker = ({
 
             return (
               <button
+                type="button"
                 key={day.toISOString()}
                 onClick={() => handleDayClick(day)}
                 className={clsx(

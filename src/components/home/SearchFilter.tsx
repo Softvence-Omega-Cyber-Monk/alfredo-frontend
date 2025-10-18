@@ -54,6 +54,9 @@ const SearchFilter = () => {
     setAvailablePropertyTypes([
       { value: "HOME", label: t("search.home") },
       { value: "APARTMENT", label: t("search.apartment") },
+      { value: "ROOM", label: t("search.room") },
+      { value: "BOAT", label: t("search.boat") },
+      { value: "VAN", label: t("search.van") },
     ]);
   }, [t]);
 
@@ -146,7 +149,7 @@ const SearchFilter = () => {
                   handleInputChange("propertyType", value)
                 }
               >
-                <SelectTrigger className="w-full border-[#C4D7F1] cursor-pointer">
+                <SelectTrigger className="w-full border-[#C4D7F1] cursor-pointer text-gray-600">
                   <SelectValue placeholder={t("search.home")} />
                 </SelectTrigger>
                 <SelectContent className=" bg-white border-none">
@@ -187,7 +190,9 @@ const SearchFilter = () => {
                         format(dateRange.from, "LLL dd, y")
                       )
                     ) : (
-                      <span>{t("search.pickADateRange")}</span>
+                      <span className="text-dark-3">
+                        {t("search.pickADateRange")}
+                      </span>
                     )}
                   </Button>
                 </PopoverTrigger>
@@ -204,10 +209,10 @@ const SearchFilter = () => {
             </div>
           </div>
 
-          {/* ✅ Combined Amenities + Transport + Surroundings */}
+          {/*  Combined Amenities + Transport + Surroundings */}
           <div className="flex-1 cursor-pointer">
             <label className="block text-sm text-dark-3 mb-1">
-              {t("search.filters")}
+              {t("search.amenities")}
             </label>
             <SearchCombinedFilter />
           </div>

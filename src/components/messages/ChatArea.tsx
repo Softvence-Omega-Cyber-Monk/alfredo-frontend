@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef } from "react";
 import { ChatAreaProps } from "@/components/messages/types";
-import { X } from "lucide-react";
+// import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 // import {
 //   Popover,
@@ -19,8 +19,8 @@ const ChatArea: FC<ChatAreaProps> = ({
   messageInput,
   onMessageInputChange,
   onSendMessage,
-  onCall,
-  onCloseChat,
+  // onCall,
+  // onCloseChat,
   isVisible,
   onToggleInfo,
 }) => {
@@ -42,6 +42,7 @@ const ChatArea: FC<ChatAreaProps> = ({
 
   console.log("mahim properties", myProperties);
   // console.log("selected property", selectedProperty);
+  console.log(selectedConversation, "selected conversation.....");
 
   return (
     <AnimatePresence>
@@ -52,7 +53,7 @@ const ChatArea: FC<ChatAreaProps> = ({
         exit={{ opacity: 0 }}
       >
         {/* Header */}
-        <div className="flex justify-between items-center p-4 bg-[#3174cd] text-white">
+        <div className="flex justify-between items-center p-4 mt-2 bg-[#3174cd] text-white">
           <div className="flex items-center space-x-2">
             <h2 className="text-lg font-medium">{selectedConversation.name}</h2>
             <button onClick={onToggleInfo} className="text-sm">
@@ -60,12 +61,12 @@ const ChatArea: FC<ChatAreaProps> = ({
             </button>
           </div>
           <div className="flex items-center space-x-2">
-            <button onClick={onCall} className="text-sm">
+            {/* <button onClick={onCall} className="text-sm">
               Call
-            </button>
-            <button onClick={onCloseChat}>
+            </button> */}
+            {/* <button onClick={onCloseChat}>
               <X className="w-6 h-6" />
-            </button>
+            </button> */}
           </div>
         </div>
 
@@ -108,29 +109,6 @@ const ChatArea: FC<ChatAreaProps> = ({
             Send
           </button>
         </div>
-        {/* <div>
-          <Popover>
-            <PopoverTrigger>Exchange Request</PopoverTrigger>
-            <PopoverContent className="bg-primary-gray-bg border border-gray-300 shadow-lg">
-              <RadioGroup
-                value={selectedProperty}
-                onValueChange={(value) => setSelectedProperty(value)}
-              >
-                {myProperties?.map((property) => (
-                  <div
-                    key={property.id}
-                    className="flex items-center space-x-2"
-                  >
-                    <RadioGroupItem value={property.id} id={property.id} />
-                    <Label htmlFor={property.id}>{property.title}</Label>
-                  </div>
-                ))}
-              </RadioGroup>
-
-              <PrimaryButton title="Send Request" className="w-full mt-4" />
-            </PopoverContent>
-          </Popover>
-        </div> */}
       </motion.div>
     </AnimatePresence>
   );
