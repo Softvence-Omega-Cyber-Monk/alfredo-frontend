@@ -3,7 +3,7 @@
     "title": "Hi",
     "subtitle": "You can preview how your home appears to others, make updates, and get ready to welcome guests for a home exchange.",
     "button1": "Add a place",
-    "button2": "Favorite Place",
+    "button2": "Favorite Places",
     "button3": "Exchange Request",
     "button4": "My Places",
 
@@ -116,6 +116,9 @@
         "miniTitle2": "Apartment",
         "subtitle2": "our home is in building shared by several apartments."
       }
+    },
+    "part5": {
+      "title": "Available for Home Exchange?"
     }
   }
 }

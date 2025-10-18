@@ -21,21 +21,32 @@ interface AddPlaceModalProps {
   onClose: () => void;
 }
 
+type PropertyForm = Omit<
+  Property,
+  "size" | "bedrooms" | "bathrooms" | "maxPeople" | "price"
+> & {
+  size: string | number;
+  bedrooms: string | number;
+  bathrooms: string | number;
+  maxPeople: string | number;
+  price: string | number;
+};
+
 const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
   const dispatch = useAppDispatch();
   const { main, transport, surrounding, loading, error } = useAppSelector(
     (state) => state.amenities
   );
 
-  const [formData, setFormData] = useState<Property>({
+  const [formData, setFormData] = useState<PropertyForm>({
     title: "",
     description: "",
     location: "",
     country: "",
-    price: 0,
-    size: 0,
-    bedrooms: 0,
-    bathrooms: 0,
+    price: "",
+    size: "",
+    bedrooms: "",
+    bathrooms: "",
     propertyType: "HOME",
     maxPeople: 1,
     isTravelWithPets: false,
@@ -68,12 +79,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
     const { name, value, type, checked } = e.target as HTMLInputElement;
     setFormData({
       ...formData,
-      [name]:
-        type === "checkbox"
-          ? checked
-          : type === "number"
-          ? Number(value)
-          : value,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
@@ -247,8 +253,8 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
           </div>
 
           {/* Numeric Fields */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* <div>
               <Label>Price (Eur)</Label>
               <input
                 type="number"
@@ -258,7 +264,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
                 className="w-full border p-2 rounded mt-1"
                 required
               />
-            </div>
+            </div> */}
             <div>
               <Label>Size (sqm)</Label>
               <input

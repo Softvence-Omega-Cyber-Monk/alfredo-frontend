@@ -242,7 +242,7 @@ const Dashboard = () => {
       {/* Availability */}
       <div className="mt-10">
         <h3 className="text-lg text-primary-blue font-semibold ">
-          {t("dashboard.part7.title")}
+          {t("dashboard.part4.titleAvailability")}
         </h3>
         <DashboardCalendarRangePicker
           availabilityDates={formValues.availabilityDates}
@@ -255,7 +255,7 @@ const Dashboard = () => {
       {/* Exchange */}
       <div className="mt-10">
         <h3 className="text-lg text-primary-blue font-semibold ">
-          Available for Home Exchange?
+          {t("dashboard.part5.title")}
         </h3>
         <select
           value={formValues.isAvailableForExchange ? "yes" : "no"}
