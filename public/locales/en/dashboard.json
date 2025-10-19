@@ -35,7 +35,9 @@
         "subtitle1": "Your home is an independent property.",
         "miniTitle2": "Nor I go there occasionally",
         "subtitle2": "Your home is in a building shared by several apartments."
-      }
+      },
+      "placeholder1": "Enter your Home address",
+      "placeholder2": "Enter your Destination"
     },
 
     "part3": {
@@ -84,9 +86,11 @@
         "title6": "Village",
         "title7": "River",
         "title8": "Island"
-      }
+      },
+      "placeholder1": "Enter your home name"
     },
     "part4": {
+      "placeholder": "Tell us about the area around your home",
       "title1": "Give your home a Name",
       "subtitle1": "Pick a name that reflects the personality or charm of your home — it’s the first thing guests will see!",
       "subtitle1p": "Type your home name",

@@ -188,7 +188,7 @@ const Dashboard = () => {
           placeholder={t("dashboard.part3.placeholder1")}
           className="mt-4 px-4 py-3"
         />
-        <h3 className="text-lg text-primary-blue font-semibold ">
+        <h3 className="text-lg text-primary-blue font-semibold mt-5">
           Describe your home
         </h3>
 
@@ -198,7 +198,7 @@ const Dashboard = () => {
             handleDataChange({ homeDescription: e.target.value })
           }
           placeholder={"Describe your home"}
-          className="mt-6 min-h-[100px]"
+          className="mt-5 min-h-[100px]"
         />
       </div>
 

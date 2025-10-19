@@ -29,7 +29,7 @@ const PropertiesGrid = () => {
           features={{
             beds: card.bedrooms,
             baths: card.bathrooms,
-            sqft: Math.floor(card.size),
+            sqm: Math.floor(card.size),
           }}
           onViewDetails={() => navigate(`/home-details/${card.id}`)}
         />
