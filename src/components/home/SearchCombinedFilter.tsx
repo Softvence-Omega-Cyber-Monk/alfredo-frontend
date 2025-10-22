@@ -134,13 +134,13 @@ const SearchCombinedFilter = () => {
       <PopoverTrigger asChild className="bg-white">
         <Button
           variant="outline"
-          className="w-full border-gray-300 text-gray-700 cursor-pointer"
+          className="w-full border-gray-300 text-gray-700 cursor-pointer flex justify-start"
         >
           {t("search.filtersButton")}
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="bg-white w-80 p-5 space-y-3 shadow-lg border border-gray-200 rounded-lg">
+      <PopoverContent className="  bg-white w-80 p-5 space-y-3 shadow-lg border border-gray-200 rounded-lg">
         {/* Selected Tags */}
         <div className="flex flex-wrap mb-3">
           {renderSelectedTags(selectedAmenities, amenities, "amenity")}
