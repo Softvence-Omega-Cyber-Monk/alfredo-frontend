@@ -10,6 +10,11 @@ import { toast } from "sonner";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import ChatModal from "../modals/ChatModal";
 import { OwnerDetails, PropertyDetails } from "@/types/PropertyDetails";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import {
+  addFavorite,
+  removeFavorite,
+} from "@/store/Slices/FavoritesSlice/favoritesSlice";
 
 interface HomeTitleProps {
   title: string;
@@ -23,13 +28,14 @@ interface HomeTitleProps {
   singlePropertyData: PropertyDetails;
 }
 
-const isPremiumMember: boolean = true; // This should be replaced with actual premium status from your auth context or state
+const isPremiumMember: boolean = true;
 const HomeTitle = ({
   title,
   features,
   owner,
   singlePropertyData,
 }: HomeTitleProps) => {
+  console.log("Single Property Data in HomeTitle:", singlePropertyData);
   const featuresItems = [
     {
       icon: House,
@@ -53,14 +59,32 @@ const HomeTitle = ({
     },
   ];
 
-  const [isFavorite, setIsFavorite] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [animateHeart, setAnimateHeart] = useState(false);
 
-  const toggleFavorite = () => {
-    if (!isFavorite) {
-      toast.success("Added to favorites");
+  const dispatch = useAppDispatch();
+
+  const { favorites, loading } = useAppSelector((state) => state.favorites);
+
+  const isFavorited = favorites.some((fav) => fav.id === singlePropertyData.id);
+
+  const toggleFavorite = async () => {
+    try {
+      // Instant visual feedback
+      setAnimateHeart(true);
+      setTimeout(() => setAnimateHeart(false), 600);
+
+      if (!isFavorited) {
+        // Optimistic update
+        toast.success("Added to favorites");
+        dispatch(addFavorite(singlePropertyData.id));
+      } else {
+        toast.success("Removed from favorites");
+        dispatch(removeFavorite(singlePropertyData.id));
+      }
+    } catch (error: any) {
+      toast.error(error || "Something went wrong");
     }
-    setIsFavorite(!isFavorite);
   };
 
   const handleShare = async () => {
@@ -89,16 +113,20 @@ const HomeTitle = ({
         <div className="flex items-center justify-end gap-2">
           <button
             onClick={toggleFavorite}
-            className={`mr-3 transition-transform duration-200 ${
-              isFavorite ? "scale-110" : "scale-110"
-            }`}
+            disabled={loading}
+            className="mr-3 transition-transform duration-200"
           >
-            {isFavorite ? (
-              <FaHeart className="w-7 h-7 text-[#3072C9] animate-bounce-once" />
+            {isFavorited ? (
+              <FaHeart
+                className={`w-7 h-7 text-[#3072C9] ${
+                  animateHeart ? "animate-bounce-once" : ""
+                }`}
+              />
             ) : (
               <FaRegHeart className="w-7 h-7 text-[#3072C9] hover:text-blue-500 cursor-pointer" />
             )}
           </button>
+
           {isPremiumMember ? (
             <PrimaryButton
               title="Chat With"

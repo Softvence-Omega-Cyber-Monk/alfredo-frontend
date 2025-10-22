@@ -59,6 +59,7 @@ const ServicePlan: FC = () => {
 
   const { t, i18n } = useTranslation("ourplan");
   const currentLanguage = i18n.language;
+  // console.log(currentLanguage, "currentLanguage");
 
   useEffect(() => {
     const fetchPlans = async () => {
