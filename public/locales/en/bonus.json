@@ -3,8 +3,8 @@
     "title": "Invite Friends.",
     "title1": "Earn Travel",
     "highlight": "Bonuses",
-    "subtitle": "Share your referral link and earn rewards when your friends join.",
-    "subtitle1": " and complete their first vacanza.",
+    "subtitle": "Share your referral link and earn rewards when your friends join",
+    "subtitle1": " and complete their first vacanza",
     "referralLink": {
       "title": "Your Unique Referral Link",
       "subtitle": "Share this link with your friends to start earning.",
@@ -338,23 +338,23 @@
     "title": "About my profile",
     "firstBonus": {
       "title": "Invite 1 Person",
-      "content": "DUO badge.",
-      "content1": "20% Coupon off Another year Subscription."
+      "content": "DUO badge",
+      "content1": "20% Coupon off Another year Subscription"
     },
     "secondBonus": {
       "title": "Invite 3 Persons",
-      "content": "LOTS OF FRIENDS badge.",
-      "content1": "20% Coupon off Another year Subscription."
+      "content": "LOTS OF FRIENDS badge",
+      "content1": "20% Coupon off Another year Subscription"
     },
     "thirdBonus": {
       "title": "Invite 10 Persons",
-      "content": "FREE plane or ferry ticket to surprise destination, offered by Vacanza!.",
-      "content1": "PURE CHARISMA badge."
+      "content": "FREE plane or ferry ticket to surprise destination, offered by Vacanza!",
+      "content1": "PURE CHARISMA badge"
     },
     "fourthBonus": {
       "title": "Invite 50 Persons",
-      "content": "FREE plane or ferry ticket to luxury destination + car included, offered by Vacanza! .",
-      "content1": "VIP badge.",
+      "content": "FREE plane or ferry ticket to luxury destination + car included, offered by Vacanza!",
+      "content1": "VIP badge",
       "content2": "50% off Another year Subscription"
     }
   }
