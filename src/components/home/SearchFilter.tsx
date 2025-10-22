@@ -46,6 +46,7 @@ const SearchFilter = () => {
   });
 
   const { t } = useTranslation("banner");
+  // const { t } = useTranslation("sbanner");
   const { setSearchParams, performSearch } = useSearch();
 
   // Hardcoded property types
@@ -100,7 +101,7 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.placeholder")}
             </label>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 border border-[#C4D7F1] px-2 rounded-lg">
               <img src={map} alt="map icon" className="w-5 h-5" />
               <Input
                 value={localSearch.destination}
@@ -118,7 +119,7 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.guest")}
             </label>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 border border-[#C4D7F1] px-2 rounded-lg">
               <img src={user} alt="user icon" className="w-5 h-5" />
               <Input
                 type="text"
@@ -140,7 +141,7 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.propertyType")}
             </label>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 ">
               <img src={home} alt="home icon" className="w-5 h-5" />
               <Select
                 value={localSearch.propertyType}
@@ -171,7 +172,7 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.dates")}
             </label>
-            <div className="flex items-center gap-0">
+            <div className="flex items-center gap-2 border border-[#C4D7F1] px-2  rounded-lg">
               <img src={calendar} alt="calendar icon" className="w-5 h-5" />
               <Popover>
                 <PopoverTrigger asChild>
@@ -189,7 +190,7 @@ const SearchFilter = () => {
                         format(dateRange.from, "LLL dd, y")
                       )
                     ) : (
-                      <span className="text-dark-3">
+                      <span className="text-dark-3 flex items-center mr-auto justify-start">
                         {t("search.pickADateRange")}
                       </span>
                     )}
@@ -201,7 +202,7 @@ const SearchFilter = () => {
                     selected={dateRange}
                     onSelect={setDateRange}
                     numberOfMonths={1}
-                    className="[--rdp-accent-color:#3174cd] [--rdp-background-color:theme(colors.blue.200)]"
+                    className=" [--rdp-accent-color:#3174cd] [--rdp-background-color:theme(colors.blue.200)]"
                   />
                 </PopoverContent>
               </Popover>
@@ -228,7 +229,7 @@ const SearchFilter = () => {
               className="w-5 h-5 cursor-pointer "
             />
             <label htmlFor="pets" className="text-sm text-dark-3">
-              {t("search.pets")}
+              {t("search.selectpet")}
             </label>
           </div>
 
