@@ -6,7 +6,7 @@ interface PropertyFeatures {
   rooms?: number;
   beds?: number;
   baths?: number;
-  sqft?: number;
+  sqm?: number;
 }
 
 interface CommonCardProps {
@@ -82,11 +82,11 @@ const PropertyCard: React.FC<CommonCardProps> = ({
               </p>
             </div>
           )}
-          {features.sqft !== undefined && (
+          {features.sqm !== undefined && (
             <div className="flex flex-col justify-center text-center items-center gap-1">
               <SquareArrowOutUpRight className="text-primary-blue w-5 h-5" />
               <p className="text-dark-3 font-regular text-sm">
-                {features.sqft} sqf
+                {features.sqm} sqm
               </p>
             </div>
           )}

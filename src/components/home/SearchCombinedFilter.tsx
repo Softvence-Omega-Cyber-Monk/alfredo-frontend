@@ -103,7 +103,9 @@ const SearchCombinedFilter = () => {
               checked={selected.includes(item.id)}
               onChange={() => toggleSelection(item.id, type)}
             />
-            <span className="text-sm text-gray-800">{item.name}</span>
+            <span className="text-sm text-gray-800">
+              {currentLanguage === "el" ? item.greek_name : item.name}
+            </span>
           </label>
         ))}
       </div>
@@ -119,7 +121,7 @@ const SearchCombinedFilter = () => {
           key={id}
           className="inline-flex items-center px-2 py-1 bg-primary-blue text-white text-xs rounded-full mr-2 mb-2"
         >
-          {item.name}
+          {currentLanguage === "el" ? item.greek_name : item.name}
           <X
             size={12}
             className="ml-1 cursor-pointer"
