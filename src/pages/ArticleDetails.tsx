@@ -6,6 +6,7 @@ import Testimonial from "@/components/reusable/Testimonial";
 import Breadcrumb from "../components/articles/Breadcrumb";
 import { useTranslation } from "react-i18next";
 import { articles } from "@/lib/data/articles";
+import ArticleDescription from "@/components/articles/ArticleDescription";
 
 // const allArticles = [
 //   {
@@ -53,22 +54,9 @@ const ArticleDetails = () => {
               alt={article.title}
               className="rounded-2xl w-full"
             />
-            <div className="p-4 bg-[#FFFFFFB2] backdrop-blur-[10px] flex items-center gap-4 absolute bottom-4 left-4 rounded-2xl">
-              <img
-                src={article.author.avatar}
-                className="w-12 lg:w-16 h-12 lg:h-16 rounded-full object-cover object-center"
-                alt={article.author.name}
-              />
-              <div className="flex flex-col gap-1">
-                <h3 className="text-base lg:text-[20px] font-bold text-primary-blue">
-                  {article.author.name}
-                </h3>
-                <p className="text-sm font-normal">{article.author.role}</p>
-              </div>
-            </div>
           </div>
           <div className="text-base lg:text-lg text-dark-3 font-normal py-6 md:py-8 lg:py-10">
-            {t(article.excerpt)}
+            <ArticleDescription text={t(article.excerpt)} />
           </div>
 
           <div className="text-center">

@@ -38,11 +38,45 @@ const AuthSection: React.FC<Props> = ({
 
   const { t } = useTranslation("navigation");
 
-  const handleLogout = () => {
-    dispatch(logout());
-    localStorage.removeItem("user");
-    navigate("/login");
-    setMobileMenuOpen(false);
+  // const handleLogout = () => {
+  //   dispatch(logout());
+  //   localStorage.removeItem("user");
+  //   navigate("/login");
+  //   setMobileMenuOpen(false);
+  // };
+  const handleLogout = async () => {
+    try {
+      const baseURL = import.meta.env.VITE_API_URL;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+
+      // Call logout API (device limit / session logout)
+      await fetch(`${baseURL}/auth/logout`, {
+        method: "POST",
+        ...config,
+      });
+
+      // Clear local data
+      dispatch(logout());
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+
+      // Redirect to login page
+      navigate("/login");
+      setMobileMenuOpen(false);
+    } catch (error) {
+      console.error("Logout failed:", error);
+      // Still force local logout to ensure safety
+      dispatch(logout());
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      navigate("/login");
+    }
   };
 
   if (!isAuthenticated)

@@ -109,7 +109,7 @@ const SearchFilter = () => {
                   handleInputChange("destination", e.target.value)
                 }
                 placeholder={t("search.placeInGreece")}
-                className="w-full text-sm md:text-base bg-transparent border-none focus:ring-0 shadow-none"
+                className="w-full text-sm md:text-base bg-transparent border-none focus:ring-0 shadow-none placeholder:text-sm"
               />
             </div>
           </div>
@@ -128,7 +128,7 @@ const SearchFilter = () => {
                 value={localSearch.maxPeople}
                 onChange={(e) => handleInputChange("maxPeople", e.target.value)}
                 placeholder={t("search.selectHere")}
-                className="w-full text-sm md:text-base bg-transparent border-none focus:ring-0 shadow-none"
+                className="w-full text-sm md:text-base bg-transparent border-none focus:ring-0 shadow-none placeholder:text-sm"
                 onKeyPress={(e) => {
                   if (!/[0-9]/.test(e.key)) e.preventDefault();
                 }}
@@ -226,7 +226,7 @@ const SearchFilter = () => {
               onChange={(e) =>
                 handleInputChange("isTravelWithPets", e.target.checked)
               }
-              className="w-5 h-5 cursor-pointer"
+              className="w-5 h-5 cursor-pointer "
             />
             <label htmlFor="pets" className="text-sm text-dark-3">
               {t("search.selectpet")}
