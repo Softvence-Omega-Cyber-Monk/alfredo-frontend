@@ -101,7 +101,7 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.placeholder")}
             </label>
-            <div className="flex items-center gap-2 border border-[#C4D7F1] px-2 py-0.5 rounded-lg">
+            <div className="flex items-center gap-2 border border-[#C4D7F1] px-2 rounded-lg">
               <img src={map} alt="map icon" className="w-5 h-5" />
               <Input
                 value={localSearch.destination}
@@ -119,7 +119,7 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.guest")}
             </label>
-            <div className="flex items-center gap-2 border border-[#C4D7F1] px-2 py-0.5 rounded-lg">
+            <div className="flex items-center gap-2 border border-[#C4D7F1] px-2 rounded-lg">
               <img src={user} alt="user icon" className="w-5 h-5" />
               <Input
                 type="text"
@@ -172,7 +172,7 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.dates")}
             </label>
-            <div className="flex items-center gap-2 border border-[#C4D7F1] px-2 py-0.5 rounded-lg">
+            <div className="flex items-center gap-2 border border-[#C4D7F1] px-2  rounded-lg">
               <img src={calendar} alt="calendar icon" className="w-5 h-5" />
               <Popover>
                 <PopoverTrigger asChild>
