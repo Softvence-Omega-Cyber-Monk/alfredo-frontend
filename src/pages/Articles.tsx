@@ -11,7 +11,7 @@ const Articles = () => {
     <div className="">
       <CommonWrapper>
         <div>
-          <h1 className="font-Grand-Hotel text-[96px] ml-4 text-primary-blue text-center">
+          <h1 className="font-Grand-Hotel text-[56px] ml-4 text-primary-blue text-center">
             {t("articles.title")}
           </h1>
         </div>

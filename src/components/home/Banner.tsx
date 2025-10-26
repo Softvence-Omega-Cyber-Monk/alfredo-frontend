@@ -6,6 +6,9 @@ import SearchResults from "../Search/SearchResults";
 
 const Banner = () => {
   const { t } = useTranslation("banner");
+  const { i18n } = useTranslation();
+  const currentLanguage = i18n.language;
+
   return (
     <div
       className="w-full bg-bottom bg-repeat-x  flex flex-col items-center justify-center relative"
@@ -17,12 +20,23 @@ const Banner = () => {
       <CommonWrapper>
         <div className="flex flex-col items-center justify-center gap-4 py-8 md:py-[80px] lg:py-[140px]">
           <div className="text-center font-normal text-dark-3 px-4 md:px-6">
-            <h1 className="capitalize text-3xl md:text-5xl lg:text-[70px] max-w-[700px] mx-auto leading-[1.2]">
+            <h1
+              className={`capitalize max-w-[700px] mx-auto leading-[1.2] ${
+                currentLanguage === "el"
+                  ? "text-2xl md:text-4xl lg:text-[50px]" // smaller for Greek
+                  : "text-3xl md:text-5xl lg:text-[70px]" // default for English and others
+              }`}
+            >
               {t("banner.title")}{" "}
-              <span className="font-Grand-Hotel text-primary-blue">
+              <span
+                className={`font-Grand-Hotel text-primary-blue ${
+                  currentLanguage === "el" ? "text-[50px]" : ""
+                }`}
+              >
                 {t("banner.highlight")}
               </span>
             </h1>
+
             <p className="text-base md:text-lg lg:text-xl font-medium mt-3 md:mt-4 lg:mt-6">
               {t("banner.subtitle")}
             </p>

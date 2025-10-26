@@ -11,6 +11,30 @@ export interface User {
   dateOfBirth: string | null;
   identification: string | null;
   role: string;
+  onboarding?: {
+    ageRange: string;
+    gender: string;
+    employmentStatus: string;
+    travelType: string[];
+    favoriteDestinations: string[];
+    travelMostlyWith: string; // Note: this is string in OnboardingPayload, not string[]
+    isTravelWithPets: boolean;
+    notes: string;
+    // Add other onboarding fields as needed
+    homeAddress?: string;
+    destination?: string;
+    maxPeople?: number;
+    propertyType?: "HOME" | "APARTMENT" | null;
+    isMainResidence?: boolean | null;
+    amenities?: string[];
+    transport?: string[];
+    surroundings?: string[];
+    homeName?: string;
+    homeDescription?: string;
+    aboutNeighborhood?: string;
+    availabilityStartDate?: string | null;
+    availabilityEndDate?: string | null;
+  };
 }
 
 interface UserState {
@@ -25,13 +49,17 @@ const initialState: UserState = {
   error: null,
 };
 
-const user = localStorage.getItem("user");
-const parsedUser = user ? JSON.parse(user) : null;
+// const user = localStorage.getItem("user");
+// const parsedUser = user ? JSON.parse(user) : null;
 
-const id = parsedUser?.id;
+// const id = parsedUser?.id;
 
 // Get user by ID
 export const fetchUser = createAsyncThunk("user/fetchUser", async () => {
+  const user = localStorage.getItem("user");
+  const parsedUser = user ? JSON.parse(user) : null;
+
+  const id = parsedUser?.id;
   if (!id) throw new Error("User ID not found in localStorage");
   const res = await api.get(`/user/my-profile`);
   return res.data;

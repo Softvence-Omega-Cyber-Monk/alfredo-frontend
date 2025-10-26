@@ -32,7 +32,7 @@ const SearchCombinedFilter = () => {
     []
   );
 
-  // ✅ Fetch data and map according to current language
+  // Fetch data and map according to current language
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -136,7 +136,7 @@ const SearchCombinedFilter = () => {
       <PopoverTrigger asChild className="bg-white">
         <Button
           variant="outline"
-          className="w-full border-gray-300 text-gray-700 cursor-pointer flex justify-start"
+          className="w-full border-gray-300 text-gray-700 cursor-pointer flex justify-start text-xs"
         >
           {t("search.filtersButton")}
         </Button>

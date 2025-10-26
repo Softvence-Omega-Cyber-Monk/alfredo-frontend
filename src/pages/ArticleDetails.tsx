@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import PrimaryButton from "../components/reusable/PrimaryButton";
-import RelatedArticles from "../components/articles/RelatedArticles";
+// import RelatedArticles from "../components/articles/RelatedArticles";
 import CommonWrapper from "@/common/CommonWrapper";
 import Testimonial from "@/components/reusable/Testimonial";
 import Breadcrumb from "../components/articles/Breadcrumb";
@@ -29,6 +29,8 @@ const ArticleDetails = () => {
   const { id } = useParams();
   const article = articles.find((a) => a.id === id) ?? articles[0];
   const { t } = useTranslation("articles");
+
+  console.log(article, "article details");
 
   return (
     <div>
@@ -59,12 +61,12 @@ const ArticleDetails = () => {
             <ArticleDescription text={t(article.excerpt)} />
           </div>
 
-          <div className="text-center">
+          {/* <div className="text-center">
             <PrimaryButton title="Read More" />
-          </div>
+          </div> */}
         </div>
         <div className=" mt-24 md:mt-32 lg:mt-36">
-          <RelatedArticles />
+          {/* <RelatedArticles /> */}
         </div>
         <Testimonial />
       </CommonWrapper>
