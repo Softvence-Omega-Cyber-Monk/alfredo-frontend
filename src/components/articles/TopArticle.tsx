@@ -1,6 +1,7 @@
 import articleImage from "@/assets/articleImg.png";
 // import testimonailPerson from "@/assets/testimonailPerson.jpg";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 const TopArticle = () => {
   const { t } = useTranslation("articles");
   return (
@@ -18,9 +19,11 @@ const TopArticle = () => {
           <p className="text-sm lg:text-base font-normal mb-3">
             Last Update: 20-June-2024
           </p>
-          <h2 className="text-2xl lg:text-[32px] font-medium mb-4 text-primary-blue line-clamp-2">
-            {t("articles.showcaseArticle.title")}
-          </h2>
+          <Link to="/articles/0">
+            <h2 className="text-2xl lg:text-[32px] font-medium mb-4 text-primary-blue line-clamp-2">
+              {t("articles.showcaseArticle.title")}
+            </h2>
+          </Link>
           <p className="text-xl lg:text-2xl font-normal mb-3 line-clamp-8">
             {t("articles.showcaseArticle.description")}
           </p>

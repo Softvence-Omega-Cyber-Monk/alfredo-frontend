@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import PrimaryButton from "../components/reusable/PrimaryButton";
+// import PrimaryButton from "../components/reusable/PrimaryButton";
 // import RelatedArticles from "../components/articles/RelatedArticles";
 import CommonWrapper from "@/common/CommonWrapper";
 import Testimonial from "@/components/reusable/Testimonial";
