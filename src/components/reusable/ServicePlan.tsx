@@ -28,6 +28,7 @@ interface Plan {
   priceId: string;
   createdAt: string;
   updatedAt: string;
+  is_populer: boolean;
   translations: Translation[];
 }
 
@@ -41,6 +42,7 @@ interface ProcessedPlan {
   status: string;
   priceId: string;
   plan_duration: string;
+  is_populer: boolean;
 }
 
 const config = {
@@ -92,6 +94,7 @@ const ServicePlan: FC = () => {
               status: plan.status,
               priceId: plan.priceId,
               plan_duration: translation.planDuration,
+              is_populer: plan.is_populer,
             };
           })
           .filter(Boolean); // Remove any null values
@@ -152,7 +155,12 @@ const ServicePlan: FC = () => {
             plans?.map((plan) => (
               <div
                 key={plan.id}
-                className="relative bg-white p-[40px] flex flex-col w-full max-w-[384px] border border-primary-border-color rounded-[24px] text-center min-h-[680px] hover:shadow-2xl hover:shadow-[#bfd4f0] hover:bg-[#EAF1FA] duration-300 transition-all  ease-in-out"
+                className={`relative p-[40px] flex flex-col w-full max-w-[384px] border border-primary-border-color rounded-[24px] text-center min-h-[680px] duration-300 transition-all ease-in-out
+    ${
+      plan.is_populer
+        ? "bg-[#EAF1FA] shadow-2xl shadow-[#bfd4f0]"
+        : "bg-white hover:shadow-2xl hover:shadow-[#bfd4f0] hover:bg-[#EAF1FA]"
+    }`}
               >
                 {/* Tag */}
                 <div className="absolute -top-6 left-26 bg-primary-blue text-white text-[16px] px-6 py-[10px] rounded-full shadow-md">
