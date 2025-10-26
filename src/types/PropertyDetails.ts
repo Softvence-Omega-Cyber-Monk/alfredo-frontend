@@ -10,6 +10,19 @@
 //   text: string;
 // }
 
+export interface Badge {
+  id: string;
+  type: string;
+  displayName: string;
+  greek_displayName: string;
+  description: string;
+  badge_type: string;
+  greek_discription: string;
+  icon: string;
+  iconPublicId: string;
+  createdAt: string;
+}
+
 export interface OwnerDetails {
   id: string;
   fullName: string;
@@ -25,7 +38,7 @@ export interface OwnerDetails {
   resetToken: string | null;
   resetTokenExpiry: string | null;
   isSubscribed: boolean;
-  achievementBadges: string[];
+  achievementBadges: Badge[];
   paymentCardNumber: string[];
   role: string;
   createdAt: string;

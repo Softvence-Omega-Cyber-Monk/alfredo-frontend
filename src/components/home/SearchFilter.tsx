@@ -109,7 +109,7 @@ const SearchFilter = () => {
                   handleInputChange("destination", e.target.value)
                 }
                 placeholder={t("search.placeInGreece")}
-                className="w-full text-sm md:text-base bg-transparent border-none focus:ring-0 shadow-none placeholder:text-sm"
+                className="w-full text-sm md:text-base bg-transparent border-none focus:ring-0 shadow-none placeholder:text-xs"
               />
             </div>
           </div>
@@ -128,7 +128,7 @@ const SearchFilter = () => {
                 value={localSearch.maxPeople}
                 onChange={(e) => handleInputChange("maxPeople", e.target.value)}
                 placeholder={t("search.selectHere")}
-                className="w-full text-sm md:text-base bg-transparent border-none focus:ring-0 shadow-none placeholder:text-sm"
+                className="w-full text-sm md:text-base bg-transparent border-none focus:ring-0 shadow-none placeholder:text-xs"
                 onKeyPress={(e) => {
                   if (!/[0-9]/.test(e.key)) e.preventDefault();
                 }}
@@ -149,10 +149,10 @@ const SearchFilter = () => {
                   handleInputChange("propertyType", value)
                 }
               >
-                <SelectTrigger className="w-full border-[#C4D7F1] cursor-pointer text-gray-600">
+                <SelectTrigger className="w-full border-[#C4D7F1] cursor-pointer text-gray-600 text-xs">
                   <SelectValue placeholder={t("search.home")} />
                 </SelectTrigger>
-                <SelectContent className=" bg-white border-none">
+                <SelectContent className=" bg-white border-none ">
                   {availablePropertyTypes.map((type) => (
                     <SelectItem
                       key={type.value}
@@ -190,7 +190,7 @@ const SearchFilter = () => {
                         format(dateRange.from, "LLL dd, y")
                       )
                     ) : (
-                      <span className="text-dark-3 flex items-center mr-auto justify-start">
+                      <span className="text-dark-3 flex items-center mr-auto justify-start text-xs">
                         {t("search.pickADateRange")}
                       </span>
                     )}
@@ -226,9 +226,9 @@ const SearchFilter = () => {
               onChange={(e) =>
                 handleInputChange("isTravelWithPets", e.target.checked)
               }
-              className="w-5 h-5 cursor-pointer "
+              className="w-5 h-5 cursor-pointer"
             />
-            <label htmlFor="pets" className="text-sm text-dark-3">
+            <label htmlFor="pets" className="text-sm text-dark-3 text-xs">
               {t("search.selectpet")}
             </label>
           </div>
