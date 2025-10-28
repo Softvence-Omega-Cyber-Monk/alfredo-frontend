@@ -62,6 +62,7 @@ export const signupUser = createAsyncThunk<
     email: string;
     mobile: string;
     password: string;
+    referralCode?: string;
   },
   { rejectValue: string }
 >("auth/register", async (newUser, { rejectWithValue }) => {
