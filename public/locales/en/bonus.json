@@ -6,8 +6,8 @@
     "subtitle": "Share your referral link and earn rewards when your friends join",
     "subtitle1": " and complete their first vacanza",
     "referralLink": {
-      "title": "Your Unique Referral Link",
-      "subtitle": "Share this link with your friends to start earning.",
+      "title": "Your Unique Referral Code",
+      "subtitle": "Share this code with your friends to start earning.",
       "copy": "Copy",
       "share": "Share via:"
     },
@@ -19,7 +19,7 @@
     "achivement": {
       "title": "Achievement",
       "highlight": "Badges",
-      "subtitle": "Unlock badges by completing activities and milestones .",
+      "subtitle": "Unlock badges by completing activities and milestones.",
 
       "card1": {
         "cardtitle1": "Promotional",

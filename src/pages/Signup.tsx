@@ -33,6 +33,7 @@ const signupSchema = z
       .min(6, "Password must be at least 6 characters")
       .regex(/[0-9]/, "Must contain a number"),
     confirmPassword: z.string(),
+    referralCode: z.string().optional(),
     agreeToTerms: z.literal(true, {
       errorMap: () => ({ message: "You must agree to the terms." }),
     }),
@@ -73,6 +74,7 @@ const Signup = () => {
         email: data.email,
         mobile: data.mobile,
         password: data.password,
+        referralCode: data.referralCode,
       })
     );
 
@@ -137,7 +139,7 @@ const Signup = () => {
               </div>
             </div>
 
-            {/* Email & Mobile Fields */}
+            {/* Email Fields */}
             <div className="flex flex-col md:flex-row gap-6">
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
@@ -155,7 +157,9 @@ const Signup = () => {
                   </p>
                 )}
               </div>
+            </div>
 
+            <div className="flex flex-col md:flex-row gap-6">
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
                   Phone Number
@@ -172,6 +176,25 @@ const Signup = () => {
                 {errors.mobile && (
                   <p className="text-red-500 text-sm mt-1">
                     {errors.mobile.message}
+                  </p>
+                )}
+              </div>
+              <div className="w-full">
+                <label className="text-[18px] font-semibold text-basic-dark">
+                  Referral Code (if you have any)
+                </label>
+                <input
+                  type="text"
+                  placeholder="123456"
+                  {...register("referralCode")}
+                  className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2
+                    [&::-webkit-outer-spin-button]:appearance-none 
+                    [&::-webkit-inner-spin-button]:appearance-none 
+                    [-moz-appearance:textfield]"
+                />
+                {errors.referralCode && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.referralCode.message}
                   </p>
                 )}
               </div>
