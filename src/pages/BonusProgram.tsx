@@ -13,6 +13,7 @@ import { bonus } from "@/lib/AccordionData/accordionData";
 import ReusableButton from "@/components/reusable/ReusableButton";
 import AchievementGrid from "@/components/plans/AchievementGrid";
 import { useTranslation } from "react-i18next";
+import { useAppSelector } from "@/hooks/useRedux";
 
 const BonusProgram: FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -29,6 +30,10 @@ const BonusProgram: FC = () => {
   const { t } = useTranslation("bonus");
   const { i18n } = useTranslation();
   const currentLanguage = i18n.language;
+
+  const { data: user } = useAppSelector((state) => state.user);
+
+  console.log(user, "user in bonus program page");
   return (
     <div>
       <CommonWrapper>
@@ -88,7 +93,7 @@ const BonusProgram: FC = () => {
                   className="text-[60px] md:text-[64px] font-semibold leading-none"
                   style={{ color: card.color }}
                 >
-                  {card.amount}
+                  {index === 0 && user ? user.totalReferrals : card.amount}
                   {card.currency && (
                     <span className="text-[24px] font-semibold ml-2">
                       {card.currency}

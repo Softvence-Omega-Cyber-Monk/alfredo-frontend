@@ -21,6 +21,7 @@ export interface User {
   identification: string | null;
   role: string;
   achievementBadges: achievementBadges[];
+  totalReferrals: number;
   onboarding?: {
     ageRange: string;
     gender: string;

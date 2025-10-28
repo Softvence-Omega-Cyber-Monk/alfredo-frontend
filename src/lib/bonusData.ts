@@ -7,7 +7,7 @@ export const cardData: Card[] = [
   {
     title: "bonus.firstBonus.content",
     titleSub: "bonus.firstBonus.content1",
-    amount: 12,
+    amount: 3,
     bgColor: "#F6F3FF",
     borderColor: "#E7D4FF",
     color: "#8260F8",
