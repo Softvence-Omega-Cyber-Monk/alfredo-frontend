@@ -22,6 +22,7 @@ export interface User {
   role: string;
   achievementBadges: achievementBadges[];
   totalReferrals: number;
+  referralCode: string;
   onboarding?: {
     ageRange: string;
     gender: string;
