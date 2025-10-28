@@ -155,7 +155,9 @@ const BonusProgram: FC = () => {
                 ref={inputRef}
                 className="w-full sm:w-3/4 border border-primary-border-color py-3 px-4 rounded-[25px] text-[16px] text-basic-dark bg-white"
                 type="text"
-                value="vacanza.com/r/yourname"
+                value={
+                  user ? user.referralCode : "https://example.com/referral"
+                }
                 readOnly
               />
               <ReusableButton
