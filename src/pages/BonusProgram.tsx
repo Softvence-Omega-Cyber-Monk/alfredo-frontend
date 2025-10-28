@@ -204,8 +204,10 @@ const BonusProgram: FC = () => {
               </Link>
             </li>
             <li>
-              <Link
-                to="/"
+              <a
+                href="https://www.instagram.com/vacanzagreece/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="font-regular lg:text-xl flex gap-2 items-center"
               >
                 <img
@@ -213,7 +215,7 @@ const BonusProgram: FC = () => {
                   alt="instagram"
                   className="w-8 h-8 max-[767px]:w-6 max-[767px]:h-6"
                 />
-              </Link>
+              </a>
             </li>
             <li>
               <Link
