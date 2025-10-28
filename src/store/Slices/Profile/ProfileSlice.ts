@@ -1,6 +1,15 @@
 import api from "@/services/api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+export interface achievementBadges {
+  id: string;
+  displayName: string;
+  description: string;
+  icon: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface User {
   id: string;
   fullName: string;
@@ -11,6 +20,7 @@ export interface User {
   dateOfBirth: string | null;
   identification: string | null;
   role: string;
+  achievementBadges: achievementBadges[];
   onboarding?: {
     ageRange: string;
     gender: string;

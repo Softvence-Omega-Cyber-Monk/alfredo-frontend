@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { fetchUser, updateUser } from "@/store/Slices/Profile/ProfileSlice";
 import penIcon from "@/assets/icons/pen-icon.svg";
 import { Textarea } from "@/components/ui/textarea";
+import NotificationPreferences from "../reusable/NotificationPreferences";
 
 const ProfileForm = () => {
   const { t } = useTranslation("profile");
@@ -192,6 +193,26 @@ const ProfileForm = () => {
                 onChange={handlePhotoChange}
               />
             </div>
+            {user?.achievementBadges && user.achievementBadges.length > 0 && (
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
+                {user.achievementBadges.map((badge) => (
+                  <div
+                    key={badge.id}
+                    title={badge.description}
+                    className="flex items-center gap-2 bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 px-3 py-2 rounded-full shadow-sm border border-blue-300 text-sm font-medium hover:scale-105 transition-transform duration-200"
+                  >
+                    {badge.icon && (
+                      <img
+                        src={badge.icon}
+                        alt={badge.displayName}
+                        className="w-7 h-7 object-contain"
+                      />
+                    )}{" "}
+                    {badge.displayName}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Profile Form */}
@@ -203,7 +224,7 @@ const ProfileForm = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Basic info */}
               <div>
-                <Label>Full Name</Label>
+                <Label className="mb-2">Full Name</Label>
                 <Input
                   name="fullName"
                   value={formData.fullName}
@@ -211,7 +232,7 @@ const ProfileForm = () => {
                 />
               </div>
               <div>
-                <Label>Email</Label>
+                <Label className="mb-2">Email</Label>
                 <Input
                   name="email"
                   value={formData.email}
@@ -219,7 +240,7 @@ const ProfileForm = () => {
                 />
               </div>
               <div>
-                <Label>Phone Number</Label>
+                <Label className="mb-2">Phone Number</Label>
                 <Input
                   name="phoneNumber"
                   value={formData.phoneNumber}
@@ -229,7 +250,7 @@ const ProfileForm = () => {
 
               {/* Age */}
               <div>
-                <Label>Age Range</Label>
+                <Label className="mb-2">Age Range</Label>
                 <div className="flex flex-wrap gap-3">
                   {["AGE_18_30", "AGE_30_50", "AGE_50_65", "AGE_65_PLUS"].map(
                     (age) => (
@@ -253,7 +274,7 @@ const ProfileForm = () => {
 
               {/* Gender */}
               <div>
-                <Label>Gender</Label>
+                <Label className="mb-2">Gender</Label>
                 <div className="flex gap-3">
                   {["MALE", "FEMALE", "NOT_SPECIFIED"].map((g) => (
                     <label key={g} className="flex items-center gap-2">
@@ -274,7 +295,7 @@ const ProfileForm = () => {
 
               {/* Employment */}
               <div>
-                <Label>I am a</Label>
+                <Label className="mb-2">I am a</Label>
                 <div className="flex gap-3 flex-wrap">
                   {["WORKER", "RETIRED", "STUDENT", "UNEMPLOYED"].map(
                     (status) => (
@@ -295,7 +316,7 @@ const ProfileForm = () => {
 
               {/* Travel mostly with */}
               <div>
-                <Label>I travel mostly with (max 2)</Label>
+                <Label className="mb-2">I travel mostly with (max 2)</Label>
                 <div className="flex gap-3 flex-wrap">
                   {["MYSELF", "FAMILY", "COUPLE", "FRIENDS"].map((opt) => (
                     <label key={opt} className="flex items-center gap-2">
@@ -314,7 +335,7 @@ const ProfileForm = () => {
 
               {/* Favourite destinations */}
               <div>
-                <Label>Favourite destinations</Label>
+                <Label className="mb-2">Favourite destinations</Label>
                 <div className="flex gap-3 flex-wrap">
                   {["BIG_CITIES", "SMALL_CITIES", "SEASIDE", "MOUNTAIN"].map(
                     (dest) => (
@@ -335,7 +356,7 @@ const ProfileForm = () => {
 
               {/* Travel type */}
               <div>
-                <Label>I travel for</Label>
+                <Label className="mb-2">I travel for</Label>
                 <div className="flex gap-3 flex-wrap">
                   {["RELAX", "ADVENTURE", "WORK"].map((type) => (
                     <label key={type} className="flex items-center gap-2">
@@ -354,7 +375,7 @@ const ProfileForm = () => {
 
               {/* Travel with pets */}
               <div>
-                <Label>Traveling with pets</Label>
+                <Label className="mb-2">Traveling with pets</Label>
                 <div className="flex gap-4">
                   <label className="flex items-center gap-2">
                     <input
@@ -391,7 +412,7 @@ const ProfileForm = () => {
 
               {/* Notes */}
               <div>
-                <Label>Notes about yourself</Label>
+                <Label className="mb-2">Notes about yourself</Label>
                 <Textarea
                   name="notes"
                   value={formData.notes}
@@ -399,6 +420,9 @@ const ProfileForm = () => {
                   placeholder="Tell us about yourself..."
                 />
               </div>
+
+              <h3 className="text-lg font-medium mt-8 mb-3">Notifications</h3>
+              <NotificationPreferences />
 
               {/* Submit */}
               <div>
