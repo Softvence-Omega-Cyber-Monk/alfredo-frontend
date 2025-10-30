@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
+import { Lock } from "lucide-react";
 
 interface ArticleProps {
   id: string;
@@ -8,11 +9,8 @@ interface ArticleProps {
   lastUpdate: string;
   title: string;
   excerpt: string;
-  author: {
-    name: string;
-    role: string;
-    avatar: string;
-  };
+  isReserved?: boolean;
+  isLocked?: boolean;
 }
 
 const ArticleCard: FC<ArticleProps> = ({
@@ -21,22 +19,49 @@ const ArticleCard: FC<ArticleProps> = ({
   lastUpdate,
   title,
   excerpt,
-  // author,
+  isLocked = false,
 }) => {
   const { t } = useTranslation("articles");
+
+  // If locked → redirect to plan page
+  const targetLink = isLocked ? "/plans" : `/articles/${id}`;
+
   return (
-    <Link to={`/articles/${id}`} className="block">
-      <div className="border border-[#F4F7FC] rounded-xl lg:rounded-3xl overflow-hidden relative hover:border-[#75A2DE] hover:shadow-[0_0_25px_0_#B9D7FF] transition-all ease-in-out duration-300 bg-transparent hover:bg-[#EAF1FA]/40 ">
+    <Link to={targetLink} className="block">
+      <div
+        className={`border border-[#F4F7FC] rounded-xl lg:rounded-3xl overflow-hidden relative transition-all ease-in-out duration-300 
+        ${
+          isLocked
+            ? "opacity-70 hover:opacity-80"
+            : "hover:border-[#75A2DE] hover:shadow-[0_0_25px_0_#B9D7FF] hover:bg-[#EAF1FA]/40"
+        }
+        bg-transparent`}
+      >
+        {/* Decorative background */}
         <div className="absolute bottom-0 right-0 -z-10">
           <img src="/articleHomeIcon.svg" alt="" />
         </div>
-        <div className="rounded-xl lg:rounded-3xl overflow-hidden">
+
+        {/* Image */}
+        <div className="rounded-xl lg:rounded-3xl overflow-hidden relative">
           <img
             src={image}
             className="w-full lg:h-[388px] object-cover"
             alt={title}
           />
+
+          {/* 🔒 Lock overlay for locked articles */}
+          {isLocked && (
+            <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white text-center p-4">
+              <Lock className="w-10 h-10 mb-2" />
+              <p className="text-sm font-medium">
+                Subscribe to unlock this article
+              </p>
+            </div>
+          )}
         </div>
+
+        {/* Text content */}
         <div className="flex flex-col justify-between gap-8 text-dark-3 p-4 lg:p-6">
           <div>
             <p className="text-base mb-4">Last Update: {lastUpdate}</p>
@@ -45,19 +70,6 @@ const ArticleCard: FC<ArticleProps> = ({
             </h2>
             <p className="text-base mb-3 line-clamp-4">{t(excerpt)}</p>
           </div>
-          {/* <div className="flex items-center gap-4">
-            <img
-              src={author.avatar}
-              className="w-12 h-12 rounded-full object-cover"
-              alt={author.name}
-            />
-            <div>
-              <h3 className="text-lg font-bold text-primary-blue">
-                {author.name}
-              </h3>
-              <p className="text-sm">{author.role}</p>
-            </div>
-          </div> */}
         </div>
       </div>
     </Link>

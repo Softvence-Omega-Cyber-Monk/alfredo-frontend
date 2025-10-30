@@ -23,6 +23,7 @@ export interface User {
   achievementBadges: achievementBadges[];
   totalReferrals: number;
   referralCode: string;
+  isSubscribed: boolean;
   onboarding?: {
     ageRange: string;
     gender: string;

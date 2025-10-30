@@ -28,30 +28,15 @@
           "content": "Subscribe until 30/09!"
         }
       },
-      "card2": {
-        "cardtitle2": "Loyality",
+      "card3": {
+        "cardtitle3": "LOYALTY",
         "firstBonus": {
           "title": "Traveler",
-          "content": "Purchased the base plan."
+          "content": "Purchased the base plan"
         },
         "secondBonus": {
           "title": "Premium Traveler",
-          "content": "Purchased the Premium Plan."
-        }
-      },
-      "card3": {
-        "cardtitle3": "Loyalty (Years Active)",
-        "firstBonus": {
-          "title": "Top Supporter",
-          "content": "4+ Years Active"
-        },
-        "secondBonus": {
-          "title": "Premium Traveler",
-          "content": "Received 100 reviews as a host."
-        },
-        "thirdBonus": {
-          "title": "One Year Traveler",
-          "content": "2 years active"
+          "content": "Purchased the premium plan"
         },
         "fourthBonus": {
           "title": "Supporter",

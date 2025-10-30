@@ -163,13 +163,18 @@ const ServicePlan: FC = () => {
     }`}
               >
                 {/* Tag */}
-                <div className="absolute -top-6 left-26 bg-primary-blue text-white text-[16px] px-6 py-[10px] rounded-full shadow-md">
-                  {plan.plan_duration}
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-primary-blue text-white text-[16px] px-6 py-[10px] rounded-full shadow-md">
+                  {plan.plan_duration} {plan.is_populer ? "(Popular)" : ""}
                 </div>
+
+                {/* Popular Tag */}
+                {/* {plan.is_populer && (
+                  <div className="absolute top-20 right-36  text-[#0ed300] text-[14px] font-semibold px-4 py-[6px] rounded-full "></div>
+                )} */}
 
                 {/* Content */}
                 <div className="flex flex-col gap-6 flex-grow">
-                  <h2 className="text-[24px] font-semibold text-[#505050]">
+                  <h2 className="text-[24px] font-semibold text-[#505050] mt-5">
                     {plan.name}
                   </h2>
                   <div className="mx-auto mt-1">
