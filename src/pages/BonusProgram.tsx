@@ -93,7 +93,9 @@ const BonusProgram: FC = () => {
                   className="text-[60px] md:text-[64px] font-semibold leading-none"
                   style={{ color: card.color }}
                 >
-                  {index === 0 && user ? user.totalReferrals : card.amount}
+                  {index === 0 && user && user.isSubscribed
+                    ? user.totalReferrals
+                    : card.amount}
                   {card.currency && (
                     <span className="text-[24px] font-semibold ml-2">
                       {card.currency}

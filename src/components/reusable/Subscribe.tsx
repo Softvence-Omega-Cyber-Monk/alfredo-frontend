@@ -87,7 +87,7 @@ const Subscribe = () => {
 
                 <p className="flex items-center gap-2">
                   <img src={emailIcon} alt="" className="w-4 h-4" />
-                  alfredo@business.com
+                  info@vacanzagreece.gr
                 </p>
               </div>
 
