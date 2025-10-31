@@ -88,14 +88,14 @@ const SearchCombinedFilter = () => {
     type: "amenity" | "transport" | "surrounding"
   ) => (
     <div>
-      <h4 className="text-sm font-semibold text-gray-700 mb-2 cursor-pointer">
+      <h4 className="text-sm font-semibold text-gray-700 mb-2 cursor-pointer ">
         {title}
       </h4>
-      <div className="max-h-24 overflow-y-auto space-y-1 px-1">
+      <div className="max-h-24 overflow-y-auto space-y-1 px-1 ">
         {items.map((item) => (
           <label
             key={item.id}
-            className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+            className="flex items-center gap-3 p-2  rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
           >
             <input
               type="checkbox"
@@ -142,7 +142,7 @@ const SearchCombinedFilter = () => {
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="  bg-white w-80 p-5 space-y-3 shadow-lg border border-gray-200 rounded-lg">
+      <PopoverContent className=" bg-white w-80 p-5 space-y-3 shadow-lg border border-gray-200 rounded-lg">
         {/* Selected Tags */}
         <div className="flex flex-wrap mb-3">
           {renderSelectedTags(selectedAmenities, amenities, "amenity")}
