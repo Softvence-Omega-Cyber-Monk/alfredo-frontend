@@ -39,6 +39,8 @@ const Contact = () => {
       });
   };
   const { t } = useTranslation("contact");
+  const { i18n } = useTranslation();
+  const currentLanguage = i18n.language;
 
   return (
     <div>
@@ -50,14 +52,27 @@ const Contact = () => {
             spanText={t("contact.highlight")}
           /> */}
           <div className="text-center">
-            <h1 className="font-Grand-Hotel text-3xl lg:text-[60px] ml-4 text-primary-blue">
+            <h1
+              className={`font-Grand-Hotel text-primary-blue ${
+                currentLanguage === "el"
+                  ? "text-[28px] lg:text-[40px]" // smaller for Greek
+                  : "text-3xl lg:text-[60px]" // default for English or others
+              } ${currentLanguage === "el" ? "ml-0" : "ml-4"}`}
+            >
               {t("contact.title")}
-              <span className="text-3xl lg:text-[60px] text-[#505050] text-center">
+              <span
+                className={`text-[#505050] text-center ${
+                  currentLanguage === "el"
+                    ? "text-[28px] lg:text-[40px]" // smaller font for Greek
+                    : "text-3xl lg:text-[60px]" // default size
+                }`}
+              >
                 {" "}
                 {t("contact.highlight")}
               </span>
             </h1>
           </div>
+
           <p className="text-[24px] not-italic font-normal text-center text-basic-dark max-[767px]:text-[18px] max-[767px]:leading-[28px]">
             {t("contact.subtitle")}
           </p>

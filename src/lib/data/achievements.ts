@@ -1,7 +1,7 @@
-import bag from "@/assets/icons/bag.svg";
-import crown from "@/assets/icons/crown.svg";
-import sprout from "@/assets/icons/sprout.svg";
-import diamond from "@/assets/icons/diamond.svg";
+// import bag from "@/assets/icons/bag.svg";
+// import crown from "@/assets/icons/crown.svg";
+// import sprout from "@/assets/icons/sprout.svg";
+// import diamond from "@/assets/icons/diamond.svg";
 import trophy from "@/assets/icons/trophy.svg";
 import cardsHeart from "@/assets/icons/cardsHeart.svg";
 import ratingStar from "@/assets/icons/ratingStar.svg";
@@ -19,8 +19,8 @@ import explorer from "@/assets/achievements/seasons-based/explorer.png";
 import sustainability from "@/assets/achievements/sustainability/ecofriendly.png";
 import premimumTraveler from "@/assets/achievements/loyalty/PremiumTraveler (2 years).png";
 import twoyears from "@/assets/achievements/loyalty/supporter (2 years).png";
-import oneyears from "@/assets/achievements/loyalty/traveler (1 year).png";
-import earlyAdopter from "@/assets/achievements/loyalty/early adopter.png";
+// import oneyears from "@/assets/achievements/loyalty/traveler (1 year).png";
+// import earlyAdopter from "@/assets/achievements/loyalty/early adopter.png";
 import duo from "@/assets/achievements/referrals/duo.png";
 import lotsOfFriends from "@/assets/achievements/referrals/lots of friends.png";
 import pureCharisma from "@/assets/achievements/referrals/pure charisma.png";
@@ -49,51 +49,51 @@ import thrace from "@/assets/achievements/region-based/thrace.png";
 import discount from "@/assets/achievements/discount/every euro counts.png";
 
 const achievementsData = [
-  {
-    id: 1,
-    achievementsType: "bonus.achivement.card1.cardtitle1",
-    achievementsTypeIcon: sprout,
-    achievements: [
-      {
-        id: 1,
-        title: "bonus.achivement.card1.firstBonus.title",
-        description: "bonus.achivement.card1.firstBonus.content",
-        borderColor: "#E6CEFF",
-        bgColor: "#F6EDFF",
-        icon: earlyAdopter,
-        titleColor: "#5837A4",
-        descriptionColor: "#9333EA",
-        cardType: "iconOnly" as const,
-      },
-    ],
-  },
-  {
-    id: 2,
-    achievementsType: "bonus.achivement.card2.cardtitle2",
-    achievementsTypeIcon: crown,
-    achievements: [
-      {
-        id: 1,
-        title: "bonus.achivement.card1.firstBonus.title",
-        description: "bonus.achivement.card2.firstBonus.content",
-        borderColor: "#C5DFFF",
-        bgColor: "#E3EFFE",
-        icon: bag,
-        titleColor: "#1E3A8A",
-        descriptionColor: "#2563EB",
-      },
-      {
-        id: 2,
-        title: "bonus.achivement.card2.secondBonus.title",
-        description: "bonus.achivement.card1.firstBonus.content",
-        borderColor: "#FFEC9D",
-        bgColor: "#FEF7D9",
-        icon: diamond,
-        titleColor: "#78350F",
-        descriptionColor: "#D97706",
-      },
-    ],
-  },
+  // {
+  //   id: 1,
+  //   achievementsType: "bonus.achivement.card1.cardtitle1",
+  //   achievementsTypeIcon: sprout,
+  //   achievements: [
+  //     {
+  //       id: 1,
+  //       title: "bonus.achivement.card1.firstBonus.title",
+  //       description: "bonus.achivement.card1.firstBonus.content",
+  //       borderColor: "#E6CEFF",
+  //       bgColor: "#F6EDFF",
+  //       icon: earlyAdopter,
+  //       titleColor: "#5837A4",
+  //       descriptionColor: "#9333EA",
+  //       cardType: "iconOnly" as const,
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: 2,
+  //   achievementsType: "bonus.achivement.card2.cardtitle2",
+  //   achievementsTypeIcon: crown,
+  //   achievements: [
+  //     {
+  //       id: 1,
+  //       title: "bonus.achivement.card1.firstBonus.title",
+  //       description: "bonus.achivement.card2.firstBonus.content",
+  //       borderColor: "#C5DFFF",
+  //       bgColor: "#E3EFFE",
+  //       icon: bag,
+  //       titleColor: "#1E3A8A",
+  //       descriptionColor: "#2563EB",
+  //     },
+  //     {
+  //       id: 2,
+  //       title: "bonus.achivement.card2.secondBonus.title",
+  //       description: "bonus.achivement.card1.firstBonus.content",
+  //       borderColor: "#FFEC9D",
+  //       bgColor: "#FEF7D9",
+  //       icon: diamond,
+  //       titleColor: "#78350F",
+  //       descriptionColor: "#D97706",
+  //     },
+  //   ],
+  // },
   {
     id: 3,
     achievementsType: "bonus.achivement.card3.cardtitle3",
@@ -119,18 +119,6 @@ const achievementsData = [
         icon: premimumTraveler,
         titleColor: "#78350F",
         descriptionColor: "#D97706",
-        cardType: "iconOnly" as const,
-      },
-      {
-        id: 3,
-        title: "bonus.achivement.card3.thirdBonus.title",
-        description: "bonus.achivement.card3.thirdBonus.content",
-        borderColor: "#C5DFFF",
-        bgColor: "#E3EFFE",
-        descriptionColor: "#2563EB",
-        icon: oneyears,
-        titleColor: "#063F5B",
-
         cardType: "iconOnly" as const,
       },
       {

@@ -6,10 +6,10 @@
     "subtitle": "Share your referral link and earn rewards when your friends join",
     "subtitle1": " and complete their first vacanza",
     "referralLink": {
-      "title": "Your Unique Referral Link",
-      "subtitle": "Share this link with your friends to start earning.",
+      "title": "Your Unique Referral Code",
+      "subtitle": "Share this code with your friends to start earning.",
       "copy": "Copy",
-      "share": "Share vai:"
+      "share": "Share via:"
     },
     "liveChat": {
       "title": "Live Chat Support",
@@ -19,7 +19,7 @@
     "achivement": {
       "title": "Achievement",
       "highlight": "Badges",
-      "subtitle": "Unlock badges by completing activities and milestones .",
+      "subtitle": "Unlock badges by completing activities and milestones.",
 
       "card1": {
         "cardtitle1": "Promotional",
@@ -28,30 +28,15 @@
           "content": "Subscribe until 30/09!"
         }
       },
-      "card2": {
-        "cardtitle2": "Loyality",
+      "card3": {
+        "cardtitle3": "LOYALTY",
         "firstBonus": {
           "title": "Traveler",
-          "content": "Purchased the base plan."
+          "content": "Purchased the base plan"
         },
         "secondBonus": {
           "title": "Premium Traveler",
-          "content": "Purchased the Premium Plan."
-        }
-      },
-      "card3": {
-        "cardtitle3": "Loyalty (Years Active)",
-        "firstBonus": {
-          "title": "Top Supporter",
-          "content": "4+ Years Active"
-        },
-        "secondBonus": {
-          "title": "Premium Traveler",
-          "content": "Received 100 reviews as a host."
-        },
-        "thirdBonus": {
-          "title": "One Year Traveler",
-          "content": "2 years active"
+          "content": "Purchased the premium plan"
         },
         "fourthBonus": {
           "title": "Supporter",

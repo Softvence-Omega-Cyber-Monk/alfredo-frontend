@@ -13,6 +13,7 @@ import {
 import { X } from "lucide-react";
 import CalendarRangePicker from "../onboarding/CalendarRangePicker";
 import { MdCancel } from "react-icons/md";
+import CountryCitySelect from "../reusable/CountryCitySelect";
 
 // Calendar picker
 
@@ -176,6 +177,8 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
     onClose();
   };
 
+  console.log(formData, "form data in add place");
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-4xl max-h-[600px] overflow-y-auto p-6">
@@ -227,8 +230,10 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
+          <div className="4">
+            <CountryCitySelect formData={formData} setFormData={setFormData} />
+
+            {/* <div>
               <Label>Location</Label>
               <input
                 type="text"
@@ -249,7 +254,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
                 className="w-full border p-2 rounded mt-1"
                 required
               />
-            </div>
+            </div> */}
           </div>
 
           {/* Numeric Fields */}

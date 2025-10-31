@@ -42,6 +42,7 @@ const HomeDetails = () => {
           <div className="lg:col-span-3">
             <OwnerInfo
               // owner={owner}
+              city={singleProperty?.location || ""}
               ownerDetails={singleProperty?.owner as OwnerDetails}
               callToAction={callToAction}
               isPremiumMember={true} // You can replace this with actual premium status from your auth context or state

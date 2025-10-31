@@ -23,6 +23,7 @@ interface OwnerInfoProps {
   //   badges: Badge[];
   //   verifications: Verification[];
   // };
+  city?: string;
   ownerDetails?: OwnerDetails;
   callToAction: {
     message: string;
@@ -34,6 +35,7 @@ interface OwnerInfoProps {
 
 const OwnerInfo = ({
   // owner,
+  city,
   ownerDetails,
   callToAction,
   isPremiumMember = false,
@@ -80,24 +82,37 @@ OwnerInfoProps) => {
         </div> */}
         <div className="flex items-start justify-start gap-1.5 text-dark-3 text-base">
           <MapPin className="w-5 h-5 text-primary-blue" />
-          <p>{ownerDetails?.city}</p>
+          <p>{city}</p>
         </div>
       </div>
-
       {/* Achievement Badges */}
       <div className="border border-[#F4F7FC] rounded-lg my-6">
         <h2 className="bg-[#EAF1FA] text-dark-2 text-base font-regular px-2 py-1">
           Achievement Badges
         </h2>
-        {/* <div className="p-3">
-          <div className="flex items-center gap-2">
-            {owner.badges.map((badge, index) => (
-              <div key={index} className={`${badge.color} p-2 rounded-full`}>
-                <badge.icon className="text-white w-6 h-6" />
+
+        <div className="p-3 flex flex-wrap gap-3">
+          {ownerDetails?.achievementBadges?.length ? (
+            ownerDetails.achievementBadges.map((badge) => (
+              <div
+                key={badge.id}
+                className="flex items-center gap-2 bg-[#F4F7FC] border border-gray-200 px-3 py-1.5 rounded-full shadow-sm hover:shadow-md transition"
+                title={badge.description}
+              >
+                <img
+                  src={badge.icon}
+                  alt={badge.displayName}
+                  className="w-5 h-5 object-contain"
+                />
+                <span className="text-sm font-medium text-dark-2">
+                  {badge.displayName}
+                </span>
               </div>
-            ))}
-          </div>
-        </div> */}
+            ))
+          ) : (
+            <p className="text-sm text-dark-3">No badges earned yet.</p>
+          )}
+        </div>
       </div>
 
       {/* Verifications */}
