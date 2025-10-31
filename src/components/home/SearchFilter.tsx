@@ -109,14 +109,14 @@ const SearchFilter = () => {
                   handleInputChange("destination", e.target.value)
                 }
                 placeholder={t("search.placeInGreece")}
-                className="w-full text-sm md:text-base bg-transparent border-none focus:ring-0 shadow-none placeholder:text-xs"
+                className="w-full text-sm py-5 md:text-base bg-transparent border-none focus:ring-0 shadow-none placeholder:text-sm"
               />
             </div>
           </div>
 
           {/* Guests */}
           <div className="flex-1">
-            <label className="block text-sm text-dark-3 mb-1">
+            <label className="block text-sm text-dark-3 mb-1 ">
               {t("search.guest")}
             </label>
             <div className="flex items-center gap-2 border border-[#C4D7F1] px-2 rounded-lg">
@@ -128,7 +128,7 @@ const SearchFilter = () => {
                 value={localSearch.maxPeople}
                 onChange={(e) => handleInputChange("maxPeople", e.target.value)}
                 placeholder={t("search.selectHere")}
-                className="w-full text-sm md:text-base bg-transparent border-none focus:ring-0 shadow-none placeholder:text-xs"
+                className="w-full text-sm md:text-base py-5 bg-transparent border-none focus:ring-0 shadow-none placeholder:text-sm"
                 onKeyPress={(e) => {
                   if (!/[0-9]/.test(e.key)) e.preventDefault();
                 }}
@@ -141,7 +141,7 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.propertyType")}
             </label>
-            <div className="flex items-center gap-2 ">
+            <div className="flex items-center gap-2 border p-0.5 rounded-lg border-[#C4D7F1] ">
               <img src={home} alt="home icon" className="w-5 h-5" />
               <Select
                 value={localSearch.propertyType}
@@ -149,10 +149,10 @@ const SearchFilter = () => {
                   handleInputChange("propertyType", value)
                 }
               >
-                <SelectTrigger className="w-full border-[#C4D7F1] cursor-pointer text-gray-600 text-xs">
+                <SelectTrigger className="w-full border-none cursor-pointer text-gray-600">
                   <SelectValue placeholder={t("search.home")} />
                 </SelectTrigger>
-                <SelectContent className=" bg-white border-none ">
+                <SelectContent className=" bg-white border-none">
                   {availablePropertyTypes.map((type) => (
                     <SelectItem
                       key={type.value}
@@ -172,7 +172,7 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.dates")}
             </label>
-            <div className="flex items-center gap-2 border border-[#C4D7F1] px-2  rounded-lg">
+            <div className="flex items-center -gap-4 border border-[#C4D7F1] px-2 p-0.5  rounded-lg">
               <img src={calendar} alt="calendar icon" className="w-5 h-5" />
               <Popover>
                 <PopoverTrigger asChild>
@@ -190,7 +190,7 @@ const SearchFilter = () => {
                         format(dateRange.from, "LLL dd, y")
                       )
                     ) : (
-                      <span className="text-dark-3 flex items-center mr-auto justify-start text-xs">
+                      <span className="text-dark-3 flex items-center mr-auto justify-start">
                         {t("search.pickADateRange")}
                       </span>
                     )}
@@ -211,14 +211,14 @@ const SearchFilter = () => {
 
           {/*  Combined Amenities + Transport + Surroundings */}
           <div className="flex-1 cursor-pointer">
-            <label className="block text-sm text-dark-3 mb-1">
+            <label className="block text-sm text-dark-3 mb-1 ">
               {t("search.amenities")}
             </label>
             <SearchCombinedFilter />
           </div>
 
           {/* Pets */}
-          <div className="flex-1 flex items-center gap-2">
+          <div className="flex-1 flex items-center gap-2 p-0.5 mt-4">
             <input
               id="pets"
               type="checkbox"
@@ -226,9 +226,9 @@ const SearchFilter = () => {
               onChange={(e) =>
                 handleInputChange("isTravelWithPets", e.target.checked)
               }
-              className="w-5 h-5 cursor-pointer"
+              className="w-5 h-5 cursor-pointer "
             />
-            <label htmlFor="pets" className="text-sm text-dark-3 text-xs">
+            <label htmlFor="pets" className="text-sm text-dark-3">
               {t("search.selectpet")}
             </label>
           </div>
