@@ -17,7 +17,7 @@ const ArticleDescription: React.FC<ArticleDescriptionProps> = ({ text }) => {
   }
 
   // Split before and after the keyword
-  const [beforeText] = text.split(keyword);
+  const [beforeText, afterText] = text.split(keyword);
 
   return (
     <p className="whitespace-pre-line">
@@ -28,6 +28,7 @@ const ArticleDescription: React.FC<ArticleDescriptionProps> = ({ text }) => {
       >
         {keyword}
       </Link>
+      {afterText}
     </p>
   );
 };

@@ -1,6 +1,5 @@
 import MiniWrapper from "@/common/MiniWrapper";
 import ProfileForm from "@/components/ProfileComponent/ProfileForm";
-
 const background = {
   backgroundImage: 'url("/cityscape.svg")',
 };
