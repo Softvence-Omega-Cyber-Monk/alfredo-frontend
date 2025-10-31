@@ -99,7 +99,7 @@ const SearchCombinedFilter = () => {
           >
             <input
               type="checkbox"
-              className="w-4 h-4 accent-primary-blue"
+              className="w-4 h-4 accent-primary-blue "
               checked={selected.includes(item.id)}
               onChange={() => toggleSelection(item.id, type)}
             />
