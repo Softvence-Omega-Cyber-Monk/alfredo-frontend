@@ -24,7 +24,7 @@ const MyFavoriteCard: React.FC<MyFavoriteCardProps> = ({
   location,
   country,
   title,
-  price,
+
   size,
   bedrooms,
   bathrooms,
@@ -78,9 +78,9 @@ const MyFavoriteCard: React.FC<MyFavoriteCardProps> = ({
           {title}
         </h3>
 
-        <h3 className="text-primary-blue font-semibold text-2xl pb-4 border-b border-b-[#EAF1FA]">
+        {/* <h3 className="text-primary-blue font-semibold text-2xl pb-4 border-b border-b-[#EAF1FA]">
           ${price}
-        </h3>
+        </h3> */}
 
         <div className="my-4 grid grid-cols-3 gap-3">
           {bedrooms !== undefined && (

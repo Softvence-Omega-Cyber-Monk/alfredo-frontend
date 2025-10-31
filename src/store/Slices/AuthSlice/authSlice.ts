@@ -39,7 +39,7 @@ interface ApiError {
 
 // ========== Initial State ==========
 const initialState: AuthState = {
-  isAuthenticated: false,
+  isAuthenticated: !!storedToken,
   user: storedUser ? JSON.parse(storedUser) : null,
   token: storedToken,
   loading: false,
@@ -282,7 +282,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;
-
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
         localStorage.setItem("token", action.payload.token);
       })
       .addCase(loginUser.rejected, (state, action) => {

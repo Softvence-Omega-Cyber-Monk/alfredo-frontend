@@ -45,13 +45,6 @@ interface ProcessedPlan {
   is_populer: boolean;
 }
 
-const config = {
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-    "Content-Type": "application/json",
-  },
-};
-
 const ServicePlan: FC = () => {
   const [open, setOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("stripe");
@@ -115,6 +108,19 @@ const ServicePlan: FC = () => {
     e.preventDefault();
     if (!selectedPlan) return;
 
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error("Please login first");
+      return;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    };
+
     // Map plan duration
     const planDuration = selectedPlan.planType === "TWO_YEARLY" ? 2 : 1;
 
@@ -163,7 +169,7 @@ const ServicePlan: FC = () => {
     }`}
               >
                 {/* Tag */}
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-primary-blue text-white text-[16px] px-6 py-[10px] rounded-full shadow-md">
+                <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary-blue text-white text-[16px] px-6 py-[10px] rounded-full shadow-md">
                   {plan.plan_duration} {plan.is_populer ? "(Popular)" : ""}
                 </div>
 
@@ -173,7 +179,7 @@ const ServicePlan: FC = () => {
                 )} */}
 
                 {/* Content */}
-                <div className="flex flex-col gap-6 flex-grow">
+                <div className="flex flex-col gap-6 flex-grow mt-12">
                   <h2 className="text-[24px] font-semibold text-[#505050] mt-5">
                     {plan.name}
                   </h2>
