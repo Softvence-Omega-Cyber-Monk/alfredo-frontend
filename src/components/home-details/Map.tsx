@@ -58,23 +58,22 @@ const Map: React.FC<MapProps> = ({
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-2xl font-semibold text-dark-3 mb-4">
-              Sign in to view location
+              Choose a plan
             </h2>
             <p className="text-gray-600 mb-6">
-              Create an account or sign in to see the exact location of this
-              property.
+              Please buy a plan to access the map and connect with the
             </p>
             <div className="flex gap-4">
               <button
                 className="flex-1 py-3 px-6 bg-primary-blue text-white rounded-lg hover:bg-blue-600 transition-colors"
                 onClick={() => {
                   // TODO: Replace with actual login logic
-                  console.log("Login clicked");
+                  window.location.href = "/plans";
                 }}
               >
-                Sign In
+                Plan
               </button>
-              <button
+              {/* <button
                 className="flex-1 py-3 px-6 border border-primary-blue text-primary-blue rounded-lg hover:bg-blue-50 transition-colors"
                 onClick={() => {
                   // TODO: Replace with actual register logic
@@ -82,7 +81,7 @@ const Map: React.FC<MapProps> = ({
                 }}
               >
                 Create Account
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
