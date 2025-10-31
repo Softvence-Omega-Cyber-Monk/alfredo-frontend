@@ -101,7 +101,7 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.placeholder")}
             </label>
-            <div className="flex items-center gap-2 border border-[#C4D7F1] px-2 rounded-lg">
+            <div className="flex items-center gap-1 border border-[#C4D7F1] text-xs px-2 rounded-lg">
               <img src={map} alt="map icon" className="w-5 h-5" />
               <Input
                 value={localSearch.destination}
@@ -109,7 +109,7 @@ const SearchFilter = () => {
                   handleInputChange("destination", e.target.value)
                 }
                 placeholder={t("search.placeInGreece")}
-                className="w-full text-sm py-5 md:text-base bg-transparent border-none focus:ring-0 shadow-none placeholder:text-sm"
+                className="w-full text-sm py-5 md:text-base bg-transparent border-none focus:ring-0 shadow-none placeholder:text-xs"
               />
             </div>
           </div>
@@ -119,7 +119,7 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1 ">
               {t("search.guest")}
             </label>
-            <div className="flex items-center gap-2 border border-[#C4D7F1] px-2 rounded-lg">
+            <div className="flex items-center gap-1 border border-[#C4D7F1] px-2 rounded-lg">
               <img src={user} alt="user icon" className="w-5 h-5" />
               <Input
                 type="text"
@@ -128,7 +128,7 @@ const SearchFilter = () => {
                 value={localSearch.maxPeople}
                 onChange={(e) => handleInputChange("maxPeople", e.target.value)}
                 placeholder={t("search.selectHere")}
-                className="w-full text-sm md:text-base py-5 bg-transparent border-none focus:ring-0 shadow-none placeholder:text-sm"
+                className="w-full text-sm md:text-xs py-5 bg-transparent border-none focus:ring-0 shadow-none placeholder:text-xs"
                 onKeyPress={(e) => {
                   if (!/[0-9]/.test(e.key)) e.preventDefault();
                 }}
@@ -141,7 +141,7 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.propertyType")}
             </label>
-            <div className="flex items-center gap-2 border p-0.5 rounded-lg border-[#C4D7F1] ">
+            <div className="flex items-center gap-1 border p-0.5 px-2 rounded-lg border-[#C4D7F1] ">
               <img src={home} alt="home icon" className="w-5 h-5" />
               <Select
                 value={localSearch.propertyType}
@@ -149,10 +149,10 @@ const SearchFilter = () => {
                   handleInputChange("propertyType", value)
                 }
               >
-                <SelectTrigger className="w-full border-none cursor-pointer text-gray-600">
+                <SelectTrigger className="w-full border-none cursor-pointer text-gray-600 text-xs">
                   <SelectValue placeholder={t("search.home")} />
                 </SelectTrigger>
-                <SelectContent className=" bg-white border-none">
+                <SelectContent className=" bg-white border-none ">
                   {availablePropertyTypes.map((type) => (
                     <SelectItem
                       key={type.value}
@@ -178,7 +178,7 @@ const SearchFilter = () => {
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
-                    className="w-full text-left font-normal bg-transparent border-none focus:ring-0 shadow-none"
+                    className="w-full text-left font-normal bg-transparent border-none text-xs focus:ring-0 shadow-none"
                   >
                     {dateRange?.from ? (
                       dateRange.to ? (
@@ -210,7 +210,7 @@ const SearchFilter = () => {
           </div>
 
           {/*  Combined Amenities + Transport + Surroundings */}
-          <div className="flex-1 cursor-pointer">
+          <div className="flex-1 cursor-pointer p-0.5 px-2">
             <label className="block text-sm text-dark-3 mb-1 ">
               {t("search.amenities")}
             </label>
