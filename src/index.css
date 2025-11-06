@@ -12,7 +12,7 @@
 
   /* font  */
   --font-DM-sans: "DM Sans", sans-serif;
-  --font-Grand-Hotel: "Grand Hotel", cursive;
+  --font-Grand-Hotel: "Grand Hotel";
 }
 
 @layer base {

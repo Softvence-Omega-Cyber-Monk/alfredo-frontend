@@ -102,7 +102,7 @@ const Subscribe = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full md:w-[383px] h-[52px] px-5 bg-white bg-opacity-20 placeholder-white text-basic-dark rounded-full"
-                    placeholder="Your email"
+                    placeholder={t("email")}
                   />
                   <ReusableButton
                     onClick={handleSubscribe}
