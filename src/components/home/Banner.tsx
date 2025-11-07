@@ -30,7 +30,7 @@ const Banner = () => {
               {t("banner.title")}{" "}
               <span
                 className={`font-Grand-Hotel text-primary-blue ${
-                  currentLanguage === "el" ? "text-[50px]" : ""
+                  currentLanguage === "el" ? "" : ""
                 }`}
               >
                 {t("banner.highlight")}
