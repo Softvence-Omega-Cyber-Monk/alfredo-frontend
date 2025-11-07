@@ -11,6 +11,7 @@ import AuthButton from "@/components/reusable/AuthButton";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "@/store/Slices/AuthSlice/authSlice";
 import { AppDispatch, RootState } from "@/store/store";
+import { useTranslation } from "react-i18next";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email format"),
@@ -26,6 +27,12 @@ const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { loading, error } = useSelector((state: RootState) => state.auth);
+
+  const { t } = useTranslation("auth");
+
+  {
+    /* <label>{t("auth.login.emailAddress")}</label> */
+  }
 
   const {
     register,
@@ -61,17 +68,18 @@ const Login = () => {
     <CommonWrapper>
       <div className="flex items-center justify-center mx-auto my-[64px] max-[767px]:mt-[40px]">
         <div className="max-[767px]:w-full w-[65%] bg-white">
-          <AuthenticateHeading title="Login now !" />
+          {/* Heading */}
+          <AuthenticateHeading title={t("auth.login.loginNow")} />
 
           <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-6">
             {/* Email Field */}
             <div>
               <label className="text-[18px] font-semibold text-basic-dark">
-                Email Address
+                {t("auth.login.emailAddress")}
               </label>
               <input
                 type="email"
-                placeholder="you@example.com"
+                placeholder={t("auth.login.emailAddress")}
                 {...register("email")}
                 className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
               />
@@ -85,12 +93,12 @@ const Login = () => {
             {/* Password Field */}
             <div className="w-full">
               <label className="text-[18px] font-semibold text-basic-dark">
-                Password
+                {t("auth.login.password")}
               </label>
               <div className="relative mt-2">
                 <input
                   type={showPassword ? "text" : "password"}
-                  placeholder="Enter password"
+                  placeholder={t("auth.login.password")}
                   {...register("password")}
                   className="w-full px-4 py-3 border border-[#808080] rounded-[8px] focus:ring-1 focus:ring-primary-blue pr-12"
                 />
@@ -112,43 +120,49 @@ const Login = () => {
               )}
             </div>
 
-            {/* Remember Password & Forgot */}
+            {/* Remember Password + Forgot */}
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-start gap-2">
                 <input type="checkbox" className="mt-1 cursor-pointer" />
                 <label className="text-[16px] text-basic-dark font-semibold">
-                  Remember Password
+                  {t("auth.login.rememberPassword")}
                 </label>
               </div>
               <Link to="/forgot-password">
                 <p className="text-[16px] text-basic-dark font-semibold cursor-pointer hover:underline">
-                  Forgot Password?
+                  {t("auth.login.forgotPassword")}
                 </p>
               </Link>
             </div>
 
+            {/* Error Message */}
             {error && <p className="text-red-500 text-center">{error}</p>}
 
             {/* Submit Button */}
             <AuthButton
-              title={loading ? "Logging in..." : "Log In"}
+              title={
+                loading
+                  ? t("auth.login.submit") + "..."
+                  : t("auth.login.submit")
+              }
               type="submit"
             />
           </form>
 
+          {/* Footer */}
           <div>
             <p className="text-[18px] text-basic-dark text-center mt-[64px]">
-              Don’t have an account?{" "}
+              {t("auth.login.noAccount")}{" "}
               <Link
                 to="/signup"
                 className="text-primary-blue hover:border-b border-primary-blue duration-200"
               >
-                Sign up
+                {t("auth.login.signup")}
               </Link>
             </p>
+
             <p className="text-[16px] text-basic-dark text-center mt-4">
-              By using SecureLogin you agree to the Terms of Service and Privacy
-              Policy
+              {t("auth.login.secureNotice")}
             </p>
           </div>
         </div>

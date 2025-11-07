@@ -1,4 +1,4 @@
-import articleImage from "@/assets/articleImg.png";
+import articleImage from "@/assets/articles/article-top.jpg";
 // import testimonailPerson from "@/assets/testimonailPerson.jpg";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";

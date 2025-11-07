@@ -11,9 +11,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOtp, signupUser } from "@/store/Slices/AuthSlice/authSlice";
 import { AppDispatch, RootState } from "@/store/store";
-// import TermsModal from "@/components/modals/TermsModal";
-// import PrivacyModal from "@/components/modals/PrivacyModal";
-// import CookiePolicyModal from "@/components/modals/CookiePolicy";
 import CustomModal from "@/components/modals/CustomModal";
 import {
   cookieContent,
@@ -21,6 +18,7 @@ import {
   termsContent,
 } from "@/lib/data/termsAndCondition";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const signupSchema = z
   .object({
@@ -49,6 +47,7 @@ const Signup = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { loading, error } = useSelector((state: RootState) => state.auth);
+  const { t } = useTranslation("auth");
 
   const {
     register,
@@ -99,18 +98,18 @@ const Signup = () => {
     <CommonWrapper>
       <div className="flex items-center justify-center mx-auto my-[64px] max-[767px]:mt-[40px]">
         <div className="w-[65%] max-[767px]:w-full bg-white">
-          <AuthenticateHeading title="First time here? Sign up now!" />
+          <AuthenticateHeading title={t("auth.signup.title")} />
 
           <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-6">
             {/* Name Fields */}
             <div className="flex flex-col md:flex-row gap-6">
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
-                  First Name
+                  {t("auth.signup.firstName")}
                 </label>
                 <input
                   type="text"
-                  placeholder="John"
+                  placeholder={t("auth.signup.firstName")}
                   {...register("firstName")}
                   className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
                 />
@@ -123,11 +122,11 @@ const Signup = () => {
 
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
-                  Last Name
+                  {t("auth.signup.lastName")}
                 </label>
                 <input
                   type="text"
-                  placeholder="Doe"
+                  placeholder={t("auth.signup.lastName")}
                   {...register("lastName")}
                   className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
                 />
@@ -143,11 +142,11 @@ const Signup = () => {
             <div className="flex flex-col md:flex-row gap-6">
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
-                  Email Address
+                  {t("auth.signup.emailAddress")}
                 </label>
                 <input
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder={t("auth.signup.emailAddress")}
                   {...register("email")}
                   className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
                 />
@@ -162,11 +161,11 @@ const Signup = () => {
             <div className="flex flex-col md:flex-row gap-6">
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
-                  Phone Number
+                  {t("auth.signup.phoneNumber")}
                 </label>
                 <input
                   type="text"
-                  placeholder="+000522559985"
+                  placeholder={t("auth.signup.phoneNumber")}
                   {...register("mobile")}
                   className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2
                     [&::-webkit-outer-spin-button]:appearance-none 
@@ -181,11 +180,11 @@ const Signup = () => {
               </div>
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
-                  Referral Code (if you have any)
+                  {t("auth.signup.referralCode")}
                 </label>
                 <input
                   type="text"
-                  placeholder="123456"
+                  placeholder={t("auth.signup.referralCode")}
                   {...register("referralCode")}
                   className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2
                     [&::-webkit-outer-spin-button]:appearance-none 
@@ -205,12 +204,12 @@ const Signup = () => {
               {/* Password */}
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
-                  Password
+                  {t("auth.signup.password")}
                 </label>
                 <div className="relative mt-2">
                   <input
                     type={showPassword ? "text" : "password"}
-                    placeholder="********"
+                    placeholder={t("auth.signup.password")}
                     {...register("password")}
                     className="w-full px-4 py-3 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue pr-12"
                   />
@@ -236,12 +235,12 @@ const Signup = () => {
               {/* Confirm Password */}
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
-                  Confirm Password
+                  {t("auth.signup.confirmPassword")}
                 </label>
                 <div className="relative mt-2">
                   <input
                     type={showConfirmPassword ? "text" : "password"}
-                    placeholder="********"
+                    placeholder={t("auth.signup.confirmPassword")}
                     {...register("confirmPassword")}
                     className="w-full px-4 py-3 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue pr-12"
                   />
@@ -266,7 +265,7 @@ const Signup = () => {
             </div>
 
             <p className="text-[16px] text-basic-dark">
-              Minimum 8 characters, including 1 uppercase letter and 1 number.
+              {t("auth.signup.passwordRequirement")}
             </p>
 
             {/* Terms Agreement */}
@@ -277,29 +276,37 @@ const Signup = () => {
                 className="mt-1 cursor-pointer"
               />
               <label className="text-[16px] text-basic-dark font-semibold">
-                I agree to the{" "}
+                {t("auth.signup.agreeText").split("terms of service")[0]}
                 <button
                   type="button"
                   onClick={() => setIsTermsOpen(true)}
                   className="text-primary-blue underline cursor-pointer"
                 >
-                  Terms of Service
+                  {t("auth.signup.agreeText").includes("terms of service")
+                    ? "Terms of Service"
+                    : "Όρους Παροχής Υπηρεσιών"}
                 </button>
-                {", "}
+                {t("auth.signup.agreeText").includes("cookie policy")
+                  ? ", "
+                  : " "}
                 <button
                   type="button"
                   onClick={() => setIsCookieOpen(true)}
                   className="text-primary-blue underline cursor-pointer"
                 >
-                  Cookie Policy
-                </button>{" "}
-                and{" "}
+                  {t("auth.signup.agreeText").includes("cookie policy")
+                    ? "Cookie Policy"
+                    : "Πολιτική Cookies"}
+                </button>
+                {t("auth.signup.agreeText").includes("and") ? " and " : " και "}
                 <button
                   type="button"
                   onClick={() => setIsPrivacyOpen(true)}
                   className="text-primary-blue underline cursor-pointer"
                 >
-                  Privacy Policy
+                  {t("auth.signup.agreeText").includes("privacy policy")
+                    ? "Privacy Policy"
+                    : "Πολιτική Απορρήτου"}
                 </button>
               </label>
             </div>
@@ -332,19 +339,23 @@ const Signup = () => {
 
             {/* Submit Button */}
             <AuthButton
-              title={loading ? "Signing up..." : "Sign Up"}
+              title={
+                loading
+                  ? t("auth.signup.submit") + "..."
+                  : t("auth.signup.submit")
+              }
               onClick={handleSubmit(onSubmit)}
             />
           </form>
 
           {/* Already have account */}
           <p className="text-[18px] text-basic-dark text-center mt-[64px]">
-            Already have an account?{" "}
+            {t("auth.signup.alreadyHaveAccount")}{" "}
             <Link
               to="/login"
               className="text-primary-blue hover:border-b border-primary-blue duration-200"
             >
-              Log In
+              {t("auth.signup.login")}
             </Link>
           </p>
         </div>

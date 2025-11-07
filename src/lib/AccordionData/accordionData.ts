@@ -120,8 +120,4 @@ export const aboutPrgram = [
     title: "program.fourthFaq.title",
     content: "program.fourthFaq.content",
   },
-  {
-    title: "program.fifthFaq.title",
-    content: "program.fifthFaq.content",
-  },
 ];

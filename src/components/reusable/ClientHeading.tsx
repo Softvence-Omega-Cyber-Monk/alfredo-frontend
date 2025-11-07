@@ -17,7 +17,7 @@ const ClientHeading: React.FC<ClientHeadingProps> = ({
     <h1 className="text-3xl lg:text-[60px] text-[#505050] text-center">
       {headingText}
       <span
-        className={`font-Grand-Hotel text-3xl lg:text-[60px] text-primary-blue  ${
+        className={`font-Grand-Hotel text-4xl lg:text-[60px] text-primary-blue mb-2  ${
           currentLanguage === "el" ? "ml-0 -tracking-[2px]" : "ml-3"
         }`}
       >

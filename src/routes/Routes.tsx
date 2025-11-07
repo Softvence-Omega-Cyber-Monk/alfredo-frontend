@@ -31,6 +31,7 @@ import AddPlace from "@/pages/AddPlace";
 import MyFavoritePage from "@/pages/MyFavoritePage";
 import ExchangeRequest from "@/pages/ExchangeRequest";
 import ExchangeRequestDetails from "@/components/ExchangeRequest/ExchangeRequestDetails";
+import Success from "@/pages/Success";
 
 const routes = createBrowserRouter([
   {
@@ -149,6 +150,10 @@ const routes = createBrowserRouter([
       {
         path: "/onboarding",
         element: <OnboardingPage />,
+      },
+      {
+        path: "/success",
+        element: <Success />,
       },
       {
         path: "/admin",
