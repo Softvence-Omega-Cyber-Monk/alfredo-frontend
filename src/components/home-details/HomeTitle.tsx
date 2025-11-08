@@ -15,6 +15,7 @@ import {
   addFavorite,
   removeFavorite,
 } from "@/store/Slices/FavoritesSlice/favoritesSlice";
+import { useTranslation } from "react-i18next";
 
 interface HomeTitleProps {
   title: string;
@@ -36,26 +37,39 @@ const HomeTitle = ({
   singlePropertyData,
 }: HomeTitleProps) => {
   console.log("Single Property Data in HomeTitle:", singlePropertyData);
+  const { t } = useTranslation("homeDetails");
   const featuresItems = [
     {
       icon: House,
-      label: "Rooms",
-      value: features?.rooms !== undefined ? `${features.rooms} rooms` : "-",
+      label: t("properties.rooms"),
+      value:
+        features?.rooms !== undefined
+          ? `${features.rooms} ${t("properties.rooms")}`
+          : "-",
     },
     {
       icon: Bed,
       label: "Beds",
-      value: features?.beds !== undefined ? `${features.beds} beds` : "-",
+      value:
+        features?.beds !== undefined
+          ? `${features.beds} ${t("properties.beds")}`
+          : "-",
     },
     {
       icon: Bath,
       label: "Baths",
-      value: features?.baths !== undefined ? `${features.baths} Baths` : "-",
+      value:
+        features?.baths !== undefined
+          ? `${features.baths} ${t("properties.baths")}`
+          : "-",
     },
     {
       icon: Scale,
       label: "Area",
-      value: features?.area !== undefined ? `${features.area} sqm` : "-",
+      value:
+        features?.area !== undefined
+          ? `${features.area} ${t("properties.area")}`
+          : "-",
     },
   ];
 
@@ -129,12 +143,12 @@ const HomeTitle = ({
 
           {isPremiumMember ? (
             <PrimaryButton
-              title="Chat With"
+              title={t("chatWith")}
               onClick={() => setIsChatOpen(true)}
             />
           ) : (
             <PrimaryButton
-              title="Chat With"
+              title={t("chatWith")}
               textColor="text-[#8B8B8B]"
               bgColor="bg-[#DEDEDE]"
               borderColor=""

@@ -1,0 +1,18 @@
+{
+  "title": "Choose your",
+  "properties": {
+    "rooms": "Rooms",
+    "beds": "Beds",
+    "baths": "Baths",
+    "area": "sqm"
+  },
+  "photos": "Photos",
+  "description": "Description",
+  "amenities": "Amenities",
+  "map": "Map",
+  "reviews": "Reviews",
+  "faq": "FAQ",
+  "chatWith": "Chat with",
+  "achievementBadge": "Achievement Badge",
+  "startExchange": "Start exchanging your home! Create a VACANZA account to start contacting members."
+}

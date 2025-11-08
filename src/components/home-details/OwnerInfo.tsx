@@ -1,6 +1,7 @@
 import { MapPin } from "lucide-react";
 import PrimaryButton from "../reusable/PrimaryButton";
 import { OwnerDetails } from "@/types/PropertyDetails";
+import { useTranslation } from "react-i18next";
 
 // interface Badge {
 //   color: string;
@@ -41,6 +42,8 @@ const OwnerInfo = ({
   isPremiumMember = false,
 }: //   onSubscribeClick,
 OwnerInfoProps) => {
+  const { t } = useTranslation("homeDetails");
+
   return (
     <div className="relative p-6 border border-[#F4F7FC] rounded-lg md:rounded-3xl bg-white">
       {!isPremiumMember && (
@@ -88,7 +91,7 @@ OwnerInfoProps) => {
       {/* Achievement Badges */}
       <div className="border border-[#F4F7FC] rounded-lg my-6">
         <h2 className="bg-[#EAF1FA] text-dark-2 text-base font-regular px-2 py-1">
-          Achievement Badges
+          {t("achievementBadge")}
         </h2>
 
         <div className="p-3 flex flex-wrap gap-3">

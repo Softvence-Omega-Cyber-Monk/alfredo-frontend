@@ -10,6 +10,7 @@ import { bonus } from "@/lib/AccordionData/accordionData";
 import { PropertyDetails } from "@/types/PropertyDetails";
 import Reviews from "./Reviews"; // You'll need to create this component
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const HomeDetailsTabs = ({
   data,
@@ -22,6 +23,8 @@ const HomeDetailsTabs = ({
   const { id } = useParams();
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
+
+  const { t } = useTranslation("homeDetails");
   // Transform API data for the components
   const transformedAmenities = {
     main:
@@ -50,7 +53,7 @@ const HomeDetailsTabs = ({
   const tabsData = [
     {
       id: "Photos",
-      label: "Photos",
+      label: t("photos"),
       content: (
         <div className="space-y-6">
           <Photos photos={transformedPhotos} />
@@ -79,7 +82,7 @@ const HomeDetailsTabs = ({
     },
     {
       id: "Description",
-      label: "Description",
+      label: t("description"),
       content: (
         <Description
           dates={{
@@ -100,22 +103,22 @@ const HomeDetailsTabs = ({
     },
     {
       id: "Amenities",
-      label: "Amenities",
+      label: t("amenities"),
       content: <Amenities amenities={transformedAmenities} />,
     },
     {
       id: "Map",
-      label: "Map",
+      label: t("map"),
       content: <Map location={data.location} />,
     },
     {
       id: "FAQ",
-      label: "FAQ",
+      label: t("faq"),
       content: <AccordionComponent items={bonus} />,
     },
     {
       id: "Reviews",
-      label: "Reviews",
+      label: t("reviews"),
       content: (
         <Reviews
           reviews={singlePropertyData.Review || []}
