@@ -98,7 +98,7 @@ export interface AddPlaceData {
   homeAddress?: string;
   destinationAddress?: string; // New field
 
-  homeType: "HOME" | "APARTMENT" | null;
+  homeType: "HOME" | "APARTMENT" | "BOAT" | "VAN" | null;
   residenceType: boolean | null;
 
   selectedAmenities: {

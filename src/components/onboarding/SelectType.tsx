@@ -7,9 +7,9 @@ import residence from "@/assets/icons/building-three.svg";
 import casual from "@/assets/icons/city-one.svg";
 import { useTranslation } from "react-i18next";
 interface HomeTypeProps {
-  homeType: "HOME" | "APARTMENT" | null;
+  homeType: "HOME" | "APARTMENT" | "BOAT" | "VAN" | null;
   residenceType: boolean | null;
-  onHomeTypeChange: (homeType: "HOME" | "APARTMENT") => void;
+  onHomeTypeChange: (homeType: "HOME" | "APARTMENT" | "BOAT" | "VAN") => void;
   onResidenceTypeChange: (residenceType: boolean) => void;
 }
 const SelectType = ({
@@ -94,6 +94,54 @@ const SelectType = ({
                 {t("onboarding.part3.card1.subtitle2")}
               </p>
             </div>
+            <div
+              onClick={() => onHomeTypeChange("BOAT")}
+              className={`p-6 flex flex-col gap-2.5 border rounded-lg cursor-pointer transition-all ${
+                homeType === "BOAT"
+                  ? "border-primary-blue bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
+                  : "border-[#EAF1FA] hover:bg-[#F4F7FC] hover:border-primary-blue"
+              }`}
+            >
+              <div className="flex items-center gap-2 ">
+                <img src={apartment} alt="" />
+                <p
+                  className={`text-lg font-medium ${
+                    homeType === "BOAT"
+                      ? "text-primary-blue"
+                      : "text-primary-blue"
+                  }`}
+                >
+                  {t("onboarding.part3.card1.miniTitle3")}
+                </p>
+              </div>
+              <p className="text-base text-dark-3 font-regular">
+                {t("onboarding.part3.card1.subtitle3")}
+              </p>
+            </div>
+            <div
+              onClick={() => onHomeTypeChange("VAN")}
+              className={`p-6 flex flex-col gap-2.5 border rounded-lg cursor-pointer transition-all ${
+                homeType === "VAN"
+                  ? "border-primary-blue bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
+                  : "border-[#EAF1FA] hover:bg-[#F4F7FC] hover:border-primary-blue"
+              }`}
+            >
+              <div className="flex items-center gap-2 ">
+                <img src={apartment} alt="" />
+                <p
+                  className={`text-lg font-medium ${
+                    homeType === "VAN"
+                      ? "text-primary-blue"
+                      : "text-primary-blue"
+                  }`}
+                >
+                  {t("onboarding.part3.card1.miniTitle4")}
+                </p>
+              </div>
+              <p className="text-base text-dark-3 font-regular">
+                {t("onboarding.part3.card1.subtitle4")}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -104,7 +152,7 @@ const SelectType = ({
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6 ">
             <div
               onClick={() => onResidenceTypeChange(true)}
-              className={`p-6 flex flex-col gap-2.5 border rounded-lg cursor-pointer transition-all ${
+              className={`p-6 flex gap-2.5 border rounded-lg cursor-pointer transition-all ${
                 residenceType === true
                   ? "border-primary-blue bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
                   : "border-[#EAF1FA] hover:bg-[#F4F7FC] hover:border-primary-blue"
@@ -122,10 +170,10 @@ const SelectType = ({
                   {t("onboarding.part3.card2.miniTitle1")}
                 </p>
               </div>
-              <p className="text-base text-dark-3 font-regular">
+              {/* <p className="text-base text-dark-3 font-regular">
                 {t("onboarding.part3.card2.subtitle1")}Your home is an
                 independent property.
-              </p>
+              </p> */}
             </div>
 
             <div
@@ -149,10 +197,10 @@ const SelectType = ({
                   occasionally
                 </p>
               </div>
-              <p className="text-base text-dark-3 font-regular">
+              {/* <p className="text-base text-dark-3 font-regular">
                 {t("onboarding.part3.card2.subtitle2")}Your home is in a
                 building shared by several apartments.
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
