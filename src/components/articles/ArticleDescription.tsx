@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import {} from "react-i18next";
 
 interface ArticleDescriptionProps {
   text: string;
 }
 
 const ArticleDescription: React.FC<ArticleDescriptionProps> = ({ text }) => {
-  const { i18n } = useTranslation();
-
   // Match patterns like <Link:/plans>BASIC</Link>
   const linkRegex = /<Link:([^>]+)>(.*?)<\/Link>/g;
 
