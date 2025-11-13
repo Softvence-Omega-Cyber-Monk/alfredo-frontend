@@ -13,20 +13,21 @@ import articleImg12 from "@/assets/articles/article-12.png";
 import articleImg13 from "@/assets/articles/article-13.png";
 import articleImg14 from "@/assets/articles/article-14.png";
 import testimonealPerson from "@/assets/testimonailPerson.jpg";
+import articleImage from "@/assets/articles/article-top.jpg";
 
 export const articles = [
-  // {
-  //   id: "0",
-  //   image: articleImage,
-  //   lastUpdate: "20-June-2024",
-  //   title: "articles.showcaseArticle.title",
-  //   excerpt: "articles.showcaseArticle.description",
-  //   author: {
-  //     name: "Mr. Jhon Don",
-  //     role: "Manager of IT",
-  //     avatar: testimonealPerson,
-  //   },
-  // },
+  {
+    id: "0",
+    image: articleImage,
+    lastUpdate: "20-June-2024",
+    title: "articles.showcaseArticle.title",
+    excerpt: "articles.showcaseArticle.description",
+    author: {
+      name: "Mr. Jhon Don",
+      role: "Manager of IT",
+      avatar: testimonealPerson,
+    },
+  },
   {
     id: "1",
     image: articleImg1,

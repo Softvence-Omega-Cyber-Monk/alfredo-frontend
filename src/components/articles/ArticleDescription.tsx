@@ -7,28 +7,51 @@ interface ArticleDescriptionProps {
 
 const ArticleDescription: React.FC<ArticleDescriptionProps> = ({ text }) => {
   const { i18n } = useTranslation();
-  const lang = i18n.language;
 
-  // Define keywords for English and Greek
-  const keyword = lang === "el" ? "ΕΔΩ" : "HERE";
+  // Match patterns like <Link:/plans>BASIC</Link>
+  const linkRegex = /<Link:([^>]+)>(.*?)<\/Link>/g;
 
-  if (!text.includes(keyword)) {
-    return <p className="whitespace-pre-line">{text}</p>;
+  const parts: (string | { path: string; label: string })[] = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = linkRegex.exec(text)) !== null) {
+    const [fullMatch, path, label] = match;
+    const start = match.index;
+
+    if (start > lastIndex) {
+      parts.push(text.substring(lastIndex, start));
+    }
+
+    parts.push({ path, label });
+    lastIndex = start + fullMatch.length;
   }
 
-  // Split before and after the keyword
-  const [beforeText, afterText] = text.split(keyword);
+  if (lastIndex < text.length) {
+    parts.push(text.substring(lastIndex));
+  }
 
   return (
     <p className="whitespace-pre-line">
-      {beforeText}
-      <Link
-        to="/plans"
-        className="text-primary-blue underline font-semibold hover:text-blue-700"
-      >
-        {keyword}
-      </Link>
-      {afterText}
+      {parts.map((part, index) =>
+        typeof part === "string" ? (
+          part
+        ) : (
+          <Link
+            key={index}
+            to={
+              part.path.startsWith("/")
+                ? part.path
+                : /^\d+$/.test(part.path)
+                ? `/articles/${part.path}`
+                : `/${part.path}`
+            }
+            className="text-primary-blue underline font-semibold hover:text-blue-700"
+          >
+            {part.label}
+          </Link>
+        )
+      )}
     </p>
   );
 };

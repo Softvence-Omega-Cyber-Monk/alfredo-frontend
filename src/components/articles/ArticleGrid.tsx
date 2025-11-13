@@ -7,9 +7,11 @@ const ArticleGrid = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const isSubscribed = user?.isSubscribed;
 
+  const filteredArticles = articles.filter((article) => article.id !== "0");
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 md:mt-16 lg:mt-20">
-      {articles.map((article, index) => {
+      {filteredArticles.map((article, index) => {
         const translatedTitle = t(article.title);
         const isReserved =
           translatedTitle.includes("(RESERVED TO MEMBERS)") ||
