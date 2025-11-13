@@ -31,16 +31,19 @@ const HomeDetailsTabs = ({
       singlePropertyData.amenities?.map((amenity) => ({
         icon: amenity.icon,
         title: amenity.name,
+        greek_name: (amenity as any).greek_name || amenity.name,
       })) || [],
     transport:
       singlePropertyData.transports?.map((transport) => ({
         icon: transport.icon,
         title: transport.name,
+        greek_name: (transport as any).greek_name || transport.name,
       })) || [],
     surrounding:
       singlePropertyData.surroundings?.map((surrounding) => ({
         icon: surrounding.icon,
         title: surrounding.name,
+        greek_name: (surrounding as any).greek_name || surrounding.name,
       })) || [],
   };
 

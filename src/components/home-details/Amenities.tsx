@@ -3,6 +3,7 @@ import AmenityCard from "../reusable/AmenityCard";
 interface AmenitySection {
   icon: string;
   title: string;
+  greek_name: string;
 }
 
 interface AmenitiesData {
