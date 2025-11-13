@@ -10,7 +10,7 @@ import {
   fetchMainAmenities,
   fetchSurroundingAmenities,
   fetchTransportAmenities,
-  AmenityItem as ApiAmenity, // added
+  AmenityItem as ApiAmenity,
 } from "@/store/Slices/OnboardingSlice/AmenitySlice";
 import Loader from "../reusable/Loader";
 
@@ -79,6 +79,7 @@ const SelectAmenities = ({
   };
 
   const { t } = useTranslation("dashboard");
+  const { i18n } = useTranslation();
 
   if (loading)
     return (
@@ -113,7 +114,11 @@ const SelectAmenities = ({
             ([category, items]: [string, ApiAmenity[]]) => (
               <div key={category} className="mb-8">
                 <h2 className="text-xl font-semibold text-primary-blue capitalize mb-4">
-                  {t(category)}
+                  {category === "main"
+                    ? t("dashboard.part3.title1")
+                    : category === "transport"
+                    ? t("dashboard.part3.title2")
+                    : t("dashboard.part3.title3")}
                 </h2>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
@@ -143,7 +148,9 @@ const SelectAmenities = ({
                           className="w-6 h-6 mb-1 mx-auto" // ensure centering
                         />
                         <p className="text-base font-regular text-center text-dark-2">
-                          {t(amenity.name)}
+                          {i18n.language === "el"
+                            ? amenity.greek_name
+                            : amenity.name}
                         </p>
                       </div>
                     );

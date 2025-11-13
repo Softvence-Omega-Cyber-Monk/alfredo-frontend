@@ -25,7 +25,7 @@
       "headButton": "Save Draft",
 
       "bigtitle1": "Create your home listing",
-      "subtitle1": "Add your property details, photos, and pricing to start attracting guests.",
+      "subtitle1": "Add your property details, photos to start attracting guests.",
       "bigtitle2": "Introduce yourself.",
       "subtitle2": "Share a bit about who you are to build trust with potential guests.",
       "bigtitle3": "Become a member for 59 EUR",
@@ -46,7 +46,7 @@
 
     "part2": {
       "step": "Travel Verification",
-      "headTitle": "Welcome back, Savannah!",
+      "headTitle": "Welcome back!",
       "headButton": "Save Draft",
 
       "button1": "Cancel",
@@ -114,7 +114,11 @@
         "miniTitle1": "Home",
         "subtitle1": "Your home is an independent property.",
         "miniTitle2": "Apartment",
-        "subtitle2": "our home is in a building shared by several apartments."
+        "subtitle2": "our home is in a building shared by several apartments.",
+        "miniTitle3": "Boat",
+        "subtitle3": "Your boat is an independent property.",
+        "miniTitle4": "Van",
+        "subtitle4": "Your van is an independent property."
       },
       "title2": "Is it your main residence?",
       "card2": {

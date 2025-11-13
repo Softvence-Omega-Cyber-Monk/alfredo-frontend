@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import {
   getOnboarding,
-  postOnboarding,
+  // postOnboarding,
 } from "@/store/Slices/OnboardingSlice/OnboardSlice";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+// import { Input } from "@/components/ui/input";
+// import { Textarea } from "@/components/ui/textarea";
 import HomeType from "@/components/dashboard/HomeType";
 import DashboardAmenities from "@/components/dashboard/DashboardAmenities";
-import PhotoUpload from "@/components/dashboard/PhotoUpload";
-import DashboardCalendarRangePicker from "@/components/dashboard/DashboardCalendarRangePicker";
+// import PhotoUpload from "@/components/dashboard/PhotoUpload";
+// import DashboardCalendarRangePicker from "@/components/dashboard/DashboardCalendarRangePicker";
 import type { Amenity } from "@/lib/data/amenities";
 import { useTranslation } from "react-i18next";
 import DashboardHeading from "@/components/dashboard/DashboardHeading";
@@ -93,25 +93,25 @@ const Dashboard = () => {
     setFormValues((prev) => ({ ...prev, ...updates }));
   };
 
-  const handleSubmit = () => {
-    const payload = {
-      ...formValues,
-      amenities: selectedAmenities.main.map((a) => a.title),
-      transport: selectedAmenities.transport.map((a) => a.title),
-      surroundings: selectedAmenities.surrounding.map((a) => a.title),
-      availabilityStartDate: formValues.availabilityDates.start
-        ? formValues.availabilityDates.start.toISOString()
-        : null,
-      availabilityEndDate: formValues.availabilityDates.end
-        ? formValues.availabilityDates.end.toISOString()
-        : null,
-    };
+  // const handleSubmit = () => {
+  //   const payload = {
+  //     ...formValues,
+  //     amenities: selectedAmenities.main.map((a) => a.title),
+  //     transport: selectedAmenities.transport.map((a) => a.title),
+  //     surroundings: selectedAmenities.surrounding.map((a) => a.title),
+  //     availabilityStartDate: formValues.availabilityDates.start
+  //       ? formValues.availabilityDates.start.toISOString()
+  //       : null,
+  //     availabilityEndDate: formValues.availabilityDates.end
+  //       ? formValues.availabilityDates.end.toISOString()
+  //       : null,
+  //   };
 
-    const formData = new FormData();
-    formData.append("data", JSON.stringify(payload));
-    formValues.homeImages.forEach((file) => formData.append("images", file));
-    dispatch(postOnboarding(formData));
-  };
+  //   const formData = new FormData();
+  //   formData.append("data", JSON.stringify(payload));
+  //   formValues.homeImages.forEach((file) => formData.append("images", file));
+  //   dispatch(postOnboarding(formData));
+  // };
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
@@ -154,11 +154,8 @@ const Dashboard = () => {
       </div>
 
       {/* Home Address & Destination */}
-      <div className="mt-10">
+      {/* <div className="mt-10">
         <h3 className="text-lg text-primary-blue font-semibold ">Location</h3>
-        {/* <p className="text-base text-dark-3 font-regular mt-3 ">
-          {t("dashboard.part2.subtitle")}
-        </p> */}
 
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input
@@ -174,10 +171,10 @@ const Dashboard = () => {
             className="px-4 py-3"
           />
         </div>
-      </div>
+      </div> */}
 
       {/* Home Name & Description */}
-      <div className="mt-10">
+      {/* <div className="mt-10">
         <h3 className="text-lg text-primary-blue font-semibold ">
           Give your home a Name
         </h3>
@@ -200,10 +197,10 @@ const Dashboard = () => {
           placeholder={"Describe your home"}
           className="mt-5 min-h-[100px]"
         />
-      </div>
+      </div> */}
 
       {/* Neighborhood */}
-      <div className="mt-10">
+      {/* <div className="mt-10">
         <h3 className="text-lg text-primary-blue font-semibold ">
           Tell us about the area around your home
         </h3>
@@ -215,7 +212,7 @@ const Dashboard = () => {
           placeholder={t("dashboard.part4.placeholder")}
           className="mt-4 min-h-[100px]"
         />
-      </div>
+      </div> */}
 
       {/* Amenities */}
       <div className="mt-10">
@@ -227,7 +224,7 @@ const Dashboard = () => {
       </div>
 
       {/* Photos */}
-      <div className="mt-10">
+      {/* <div className="mt-10">
         <h3 className="text-lg text-primary-blue font-semibold ">
           Upload Photos
         </h3>
@@ -237,10 +234,10 @@ const Dashboard = () => {
             handleDataChange({ homeImages: newPhotos })
           }
         />
-      </div>
+      </div> */}
 
       {/* Availability */}
-      <div className="mt-10">
+      {/* <div className="mt-10">
         <h3 className="text-lg text-primary-blue font-semibold ">
           {t("dashboard.part4.titleAvailability")}
         </h3>
@@ -250,7 +247,7 @@ const Dashboard = () => {
             handleDataChange({ availabilityDates: dates })
           }
         />
-      </div>
+      </div> */}
 
       {/* Exchange */}
       <div className="mt-10">
@@ -272,14 +269,14 @@ const Dashboard = () => {
       </div>
 
       {/* Submit */}
-      <div className="mt-12">
+      {/* <div className="mt-12">
         <button
           onClick={handleSubmit}
           className="px-6 py-3 bg-primary-blue text-white rounded-lg shadow hover:bg-primary-blue/90 cursor-pointer transition"
         >
           Save Changes
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

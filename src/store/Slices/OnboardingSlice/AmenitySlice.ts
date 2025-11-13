@@ -8,6 +8,7 @@ export interface AmenityItem {
   id: string;
   name: string;
   icon: string;
+  greek_name: string;
 }
 
 interface AmenitiesState {
