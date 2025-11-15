@@ -78,7 +78,7 @@ const AchievementAccordion: React.FC<AccordionProps> = ({
                 <img
                   src={icn}
                   alt="arrow"
-                  className={`h-4 w-4 transition-transform duration-300 ${
+                  className={`h-5 w-5 transition-transform duration-300 ${
                     isOpen ? "rotate-180" : ""
                   }`}
                 />
@@ -128,7 +128,7 @@ const AchievementAccordion: React.FC<AccordionProps> = ({
                           }}
                         >
                           <div className="flex items-center gap-2 mb-3">
-                            <div className="w-10 h-10 flex justify-center items-center">
+                            <div className="w-12 h-12 flex justify-center items-center">
                               <img src={icon} alt={title} className="w-full" />
                             </div>
                             <h3
