@@ -2,7 +2,8 @@
 // import crown from "@/assets/icons/crown.svg";
 // import sprout from "@/assets/icons/sprout.svg";
 // import diamond from "@/assets/icons/diamond.svg";
-import trophy from "@/assets/icons/trophy.svg";
+import traveler from "@/assets/achievements/Traveler/Traveler.png";
+// import trophy from "@/assets/icons/trophy.svg";
 import cardsHeart from "@/assets/icons/cardsHeart.svg";
 import ratingStar from "@/assets/icons/ratingStar.svg";
 import goldenHost from "@/assets/achievements/goldenHost.png";
@@ -105,7 +106,7 @@ const achievementsData = [
         description: "bonus.achivement.card3.firstBonus.content",
         borderColor: "#E6CEFF",
         bgColor: "#F6EDFF",
-        icon: trophy,
+        icon: traveler,
         titleColor: "#5837A4",
         descriptionColor: "#9333EA",
       },
