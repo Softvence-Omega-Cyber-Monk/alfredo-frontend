@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import ArticleDescription from "../articles/ArticleDescription";
 
 interface AccordionItem {
   title: string;
@@ -85,7 +86,8 @@ const AccordionComponent: React.FC<AccordionProps> = ({
               }}
               className="overflow-hidden transition-all duration-400 ease-in-out text-basic-dark text-[18px] leading-relaxed pt-4 max-[767px]:text-sm max-[767px]:leading-[1.6rem]"
             >
-              <p>{t(item.content)}</p>
+              {/* <p>{t(item.content)}</p> */}
+              <ArticleDescription text={t(item.content)} />
             </div>
           </div>
         );
