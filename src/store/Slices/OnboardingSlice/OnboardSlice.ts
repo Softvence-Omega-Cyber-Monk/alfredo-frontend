@@ -16,7 +16,7 @@ export interface OnboardingPayload {
   isTravelWithPets: boolean;
   maxPeople: number;
   notes: string;
-  propertyType: "HOME" | "APARTMENT" | "BOAT" | "VAN" | null;
+  propertyType: "HOME" | "APARTMENT" | "BOAT" | "VAN" | "ROOM" | null;
   isMainResidence: boolean | null;
   amenities: string[];
   transport: string[];

@@ -65,6 +65,7 @@ export interface PropertyDetails {
   size: number;
   bedrooms: number;
   bathrooms: number;
+  isExchanged: boolean;
   images: Array<{
     url: string;
     publicId: string;

@@ -8,15 +8,31 @@ interface ReviewsProps {
   propertyId: string;
   isOwner: boolean;
   userId: string | null;
+  isExchanged: boolean | null; // Add this prop
 }
 
-const Reviews = ({ reviews, propertyId, isOwner, userId }: ReviewsProps) => {
+const Reviews = ({
+  reviews,
+  propertyId,
+  isOwner,
+  userId,
+  isExchanged, // Add this parameter
+}: ReviewsProps) => {
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  // Handler for Add Review button click
+  const handleAddReviewClick = () => {
+    if (isExchanged !== true) {
+      toast.error("You need to exchange first to give review");
+      return;
+    }
+    setShowReviewForm(!showReviewForm);
+  };
 
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +52,7 @@ const Reviews = ({ reviews, propertyId, isOwner, userId }: ReviewsProps) => {
     setSuccess("");
 
     try {
-      const token = localStorage.getItem("token"); // Or your preferred token storage method
+      const token = localStorage.getItem("token");
 
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/reviews/${propertyId}`,
@@ -56,12 +72,12 @@ const Reviews = ({ reviews, propertyId, isOwner, userId }: ReviewsProps) => {
         setRating(0);
         setComment("");
         setShowReviewForm(false);
-        toast.success("Review submitted successfully!!");
-        // You might want to refresh the reviews data here
-        window.location.reload(); // Simple approach, or use a state update function
+        toast.success("Review submitted successfully!");
+        window.location.reload();
       }
     } catch (err: any) {
       setError(err.response?.data?.message || "Failed to submit review");
+      toast.error(err.response?.data?.message || "Failed to submit review");
     } finally {
       setIsSubmitting(false);
     }
@@ -96,7 +112,7 @@ const Reviews = ({ reviews, propertyId, isOwner, userId }: ReviewsProps) => {
 
         {!isOwner && userId && (
           <button
-            onClick={() => setShowReviewForm(!showReviewForm)}
+            onClick={handleAddReviewClick}
             className="bg-primary-blue text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
           >
             {showReviewForm ? "Cancel Review" : "Add a Review"}
@@ -155,7 +171,7 @@ const Reviews = ({ reviews, propertyId, isOwner, userId }: ReviewsProps) => {
 
         {!isOwner && userId && (
           <button
-            onClick={() => setShowReviewForm(!showReviewForm)}
+            onClick={handleAddReviewClick}
             className="bg-primary-blue text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
           >
             {showReviewForm ? "Cancel Review" : "Add a Review"}

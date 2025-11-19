@@ -98,6 +98,9 @@
         "yes": "Yes",
         "no": "No"
       },
+      "maxNoOfPeople": {
+        "title": "Max no. Of People?"
+      },
       "notesOnYourself": {
         "title": "Notes on yourself",
         "placeHolder": "Write something about yourself"
@@ -118,7 +121,9 @@
         "miniTitle3": "Boat",
         "subtitle3": "Your boat is an independent property.",
         "miniTitle4": "Van",
-        "subtitle4": "Your van is an independent property."
+        "subtitle4": "Your van is an independent property.",
+        "miniTitle5": "Room",
+        "subtitle5": "Your Room is an independent property."
       },
       "title2": "Is it your main residence?",
       "card2": {
