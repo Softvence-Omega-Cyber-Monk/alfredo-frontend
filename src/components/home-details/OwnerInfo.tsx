@@ -1,29 +1,12 @@
-import { MapPin } from "lucide-react";
+import { MapPin, Lock } from "lucide-react";
 import PrimaryButton from "../reusable/PrimaryButton";
 import { OwnerDetails } from "@/types/PropertyDetails";
 import { useTranslation } from "react-i18next";
-
-// interface Badge {
-//   color: string;
-//   icon: React.ElementType;
-// }
-
-// interface Verification {
-//   bgColor: string;
-//   iconColor: string;
-//   icon: React.ElementType;
-//   text: string;
-// }
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+// import { on } from "events";
 
 interface OwnerInfoProps {
-  // owner: {
-  //   image: string;
-  //   name: string;
-  //   email: string;
-  //   location: string;
-  //   badges: Badge[];
-  //   verifications: Verification[];
-  // };
   city?: string;
   ownerDetails?: OwnerDetails;
   callToAction: {
@@ -31,18 +14,42 @@ interface OwnerInfoProps {
     button: React.ComponentProps<typeof PrimaryButton>;
   };
   isPremiumMember?: boolean;
-  onSubscribeClick?: () => void;
+  onViewDetails?: () => void; // Add this prop
 }
 
 const OwnerInfo = ({
-  // owner,
   city,
   ownerDetails,
   callToAction,
   isPremiumMember = false,
-}: //   onSubscribeClick,
-OwnerInfoProps) => {
+  onViewDetails,
+}: OwnerInfoProps) => {
   const { t } = useTranslation("homeDetails");
+  const navigate = useNavigate();
+
+  // Get current user's subscription status
+  const storedUser = localStorage.getItem("user");
+  const currentUser = storedUser ? JSON.parse(storedUser) : null;
+  const isUserSubscribed = currentUser?.isSubscribed || false;
+
+  const handleButtonClick = () => {
+    if (!isUserSubscribed) {
+      toast.error("Please subscribe to view owner details");
+      // Redirect to plans page after a short delay
+      setTimeout(() => {
+        navigate("/plans"); // Adjust to your actual plans page route
+      }, 1000);
+    } else {
+      // If subscribed, trigger the view details modal
+      if (onViewDetails) {
+        onViewDetails();
+      }
+    }
+  };
+
+  // const handleButtonClickTest = () => {
+  //   onViewDetails && onViewDetails();
+  // };
 
   return (
     <div className="relative p-6 border border-[#F4F7FC] rounded-lg md:rounded-3xl bg-white">
@@ -79,15 +86,12 @@ OwnerInfoProps) => {
         <h3 className="text-lg text-dark-2 font-semibold">
           {ownerDetails?.fullName}
         </h3>
-        {/* <div className="flex items-center gap-1.5 text-dark-3 text-base">
-          <Mail className="w-5 h-5 text-primary-blue" />
-          <p>{owner.email}</p>
-        </div> */}
         <div className="flex items-start justify-start gap-1.5 text-dark-3 text-base">
           <MapPin className="w-5 h-5 text-primary-blue" />
           <p>{city}</p>
         </div>
       </div>
+
       {/* Achievement Badges */}
       <div className="border border-[#F4F7FC] rounded-lg my-6">
         <h2 className="bg-[#EAF1FA] text-dark-2 text-base font-regular px-2 py-1">
@@ -118,30 +122,32 @@ OwnerInfoProps) => {
         </div>
       </div>
 
-      {/* Verifications */}
-      {/* <div className="flex flex-col gap-3 pb-6 border-b border-[#F4F7FC]">
-        {owner.verifications.map((verification, index) => (
-          <div
-            key={index}
-            className="flex items-center gap-1.5 text-dark-3 text-sm"
-          >
-            <div
-              className={`p-1.5 rounded-full ${verification.bgColor} ${verification.iconColor}`}
-            >
-              <verification.icon className="w-3 h-3" />
-            </div>
-            <p>{verification.text}</p>
-          </div>
-        ))}
-      </div> */}
-
       {/* Call to Action */}
       <div className="py-6">
         <h4 className="text-sm font-regular text-dark-2">
           {callToAction.message}
         </h4>
       </div>
-      <PrimaryButton {...callToAction.button} />
+      {/* <PrimaryButton {...callToAction.button} onClick={handleButtonClickTest} /> */}
+
+      {/* Conditional Button based on subscription */}
+      {isUserSubscribed ? (
+        <PrimaryButton {...callToAction.button} onClick={handleButtonClick} />
+      ) : (
+        <PrimaryButton
+          title={
+            <div className="flex items-center justify-center gap-2">
+              <Lock className="w-4 h-4" />
+              <span>{callToAction.button.title}</span>
+            </div>
+          }
+          textColor="text-[#8B8B8B]"
+          bgColor="bg-[#DEDEDE]"
+          borderColor=""
+          bgImage="/buttonHomeWhite.svg"
+          onClick={handleButtonClick}
+        />
+      )}
     </div>
   );
 };

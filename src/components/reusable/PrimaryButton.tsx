@@ -1,7 +1,8 @@
 import clsx from "clsx";
+import { ReactNode } from "react";
 
 interface PrimaryButtonProps {
-  title: string;
+  title: string | ReactNode; // Changed to accept both string and ReactNode
   bgImage?: string;
   textColor?: string;
   bgColor?: string;

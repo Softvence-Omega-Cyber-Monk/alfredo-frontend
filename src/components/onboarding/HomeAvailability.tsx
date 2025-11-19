@@ -1,8 +1,8 @@
 import { TbChecklist } from "react-icons/tb";
 import { Button } from "../ui/button";
 import Title from "./Shared/Title";
-import check from "@/assets/icons/dashboardCheck.svg";
-import cross from "@/assets/icons/dashboardCross.svg";
+// import check from "@/assets/icons/dashboardCheck.svg";
+// import cross from "@/assets/icons/dashboardCross.svg";
 import CalendarRangePicker from "./CalendarRangePicker";
 import { useTranslation } from "react-i18next";
 
@@ -21,11 +21,11 @@ interface HomeAvailabilityProps {
 }
 
 const HomeAvailability = ({
-  availabilityType,
+  // availabilityType,
   availabilityDates,
   onAvailabilityChange,
-  onDataChange,
-}: HomeAvailabilityProps) => {
+}: // onDataChange,
+HomeAvailabilityProps) => {
   const { t } = useTranslation("onboarding");
   return (
     <div className="w-full py-6 md:py-10 space-y-6 ">
@@ -46,7 +46,7 @@ const HomeAvailability = ({
       </div>
       <hr className="text-[#EAF1FA]" />
       {/* 33 */}
-      <div>
+      {/* <div>
         <div className="mt-10">
           <h3 className="text-lg text-primary-blue font-semibold ">
             {t("onboarding.part7.titleAvailability")}
@@ -99,7 +99,7 @@ const HomeAvailability = ({
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       {/*  */}
       <div className=" space-y-6">
         <h1 className="text-[#3174CD] font-dmSans text-[18px] font-semibold leading-[27px]">

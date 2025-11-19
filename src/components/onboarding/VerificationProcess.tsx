@@ -361,13 +361,14 @@ const VerificationProcess = ({
               htmlFor="maxPeople"
               className="block text-lg text-[#3174CD] mb-2 font-semibold"
             >
-              Max No. of People
+              {t("onboarding.part2.maxNoOfPeople.title")}
             </Label>
+
             <input
               id="maxPeople"
-              type="number" // Use type="number"
-              value={personalInformation.maxPeople ?? ""} // Connect to state, fallback to empty string if null
-              onChange={handleNumberChange} // Use the new handler
+              type="number"
+              value={personalInformation.maxPeople ?? ""}
+              onChange={handleNumberChange}
               className="border border-gray-300 w-full rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="e.g., 4"
             />

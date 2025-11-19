@@ -4,7 +4,7 @@ import House from "@/assets/icons/home-two.svg";
 import Bed from "@/assets/icons/double-bed.svg";
 import Scale from "@/assets/icons/scale.svg";
 import Bath from "@/assets/icons/sunbath.svg";
-import { Share2 } from "lucide-react";
+import { Share2, Lock } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
@@ -16,6 +16,7 @@ import {
   removeFavorite,
 } from "@/store/Slices/FavoritesSlice/favoritesSlice";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 interface HomeTitleProps {
   title: string;
@@ -29,7 +30,6 @@ interface HomeTitleProps {
   singlePropertyData: PropertyDetails;
 }
 
-const isPremiumMember: boolean = true;
 const HomeTitle = ({
   title,
   features,
@@ -38,6 +38,8 @@ const HomeTitle = ({
 }: HomeTitleProps) => {
   console.log("Single Property Data in HomeTitle:", singlePropertyData);
   const { t } = useTranslation("homeDetails");
+  const navigate = useNavigate();
+
   const featuresItems = [
     {
       icon: House,
@@ -82,6 +84,11 @@ const HomeTitle = ({
 
   const isFavorited = favorites.some((fav) => fav.id === singlePropertyData.id);
 
+  // Get current user's subscription status
+  const storedUser = localStorage.getItem("user");
+  const currentUser = storedUser ? JSON.parse(storedUser) : null;
+  const isUserSubscribed = currentUser?.isSubscribed || false;
+
   const toggleFavorite = async () => {
     try {
       // Instant visual feedback
@@ -118,6 +125,21 @@ const HomeTitle = ({
     }
   };
 
+  const handleChatClick = () => {
+    if (!isUserSubscribed) {
+      toast.error("Please subscribe to unlock chat feature");
+      setTimeout(() => {
+        navigate("/plans");
+      }, 1000);
+    } else {
+      setIsChatOpen(true);
+    }
+  };
+
+  // const handleChatClickTest = () => {
+  //   setIsChatOpen(true);
+  // };
+
   return (
     <div>
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
@@ -141,20 +163,27 @@ const HomeTitle = ({
             )}
           </button>
 
-          {isPremiumMember ? (
-            <PrimaryButton
-              title={t("chatWith")}
-              onClick={() => setIsChatOpen(true)}
-            />
+          {/* Test purpose  */}
+          {/* <PrimaryButton title={t("chatWith")} onClick={handleChatClickTest} /> */}
+
+          {isUserSubscribed ? (
+            <PrimaryButton title={t("chatWith")} onClick={handleChatClick} />
           ) : (
-            <PrimaryButton
-              title={t("chatWith")}
-              textColor="text-[#8B8B8B]"
-              bgColor="bg-[#DEDEDE]"
-              borderColor=""
-              bgImage="/buttonHomeWhite.svg"
-              onClick={() => toast("Upgrade to premium to chat")}
-            />
+            <div className="relative">
+              <PrimaryButton
+                title={
+                  <div className="flex items-center gap-2">
+                    <Lock className="w-4 h-4" />
+                    <span>{t("chatWith")}</span>
+                  </div>
+                }
+                textColor="text-[#8B8B8B]"
+                bgColor="bg-[#DEDEDE]"
+                borderColor=""
+                bgImage="/buttonHomeWhite.svg"
+                onClick={handleChatClick}
+              />
+            </div>
           )}
 
           <div
@@ -177,13 +206,22 @@ const HomeTitle = ({
           />
         ))}
       </div>
-      {/* chat modal  */}
-      <ChatModal
+
+      {/* chat modal - only opens if user is subscribed */}
+      {/* <ChatModal
         isOpen={isChatOpen}
         owner={owner}
         singlePropertyData={singlePropertyData}
         onClose={() => setIsChatOpen(false)}
-      />
+      /> */}
+      {isUserSubscribed && (
+        <ChatModal
+          isOpen={isChatOpen}
+          owner={owner}
+          singlePropertyData={singlePropertyData}
+          onClose={() => setIsChatOpen(false)}
+        />
+      )}
     </div>
   );
 };

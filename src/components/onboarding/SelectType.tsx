@@ -7,9 +7,11 @@ import residence from "@/assets/icons/building-three.svg";
 import casual from "@/assets/icons/city-one.svg";
 import { useTranslation } from "react-i18next";
 interface HomeTypeProps {
-  homeType: "HOME" | "APARTMENT" | "BOAT" | "VAN" | null;
+  homeType: "HOME" | "APARTMENT" | "BOAT" | "VAN" | "ROOM" | null;
   residenceType: boolean | null;
-  onHomeTypeChange: (homeType: "HOME" | "APARTMENT" | "BOAT" | "VAN") => void;
+  onHomeTypeChange: (
+    homeType: "HOME" | "APARTMENT" | "BOAT" | "VAN" | "ROOM"
+  ) => void;
   onResidenceTypeChange: (residenceType: boolean) => void;
 }
 const SelectType = ({
@@ -136,6 +138,30 @@ const SelectType = ({
                   }`}
                 >
                   {t("onboarding.part3.card1.miniTitle4")}
+                </p>
+              </div>
+              <p className="text-base text-dark-3 font-regular">
+                {t("onboarding.part3.card1.subtitle4")}
+              </p>
+            </div>
+            <div
+              onClick={() => onHomeTypeChange("ROOM")}
+              className={`p-6 flex flex-col gap-2.5 border rounded-lg cursor-pointer transition-all ${
+                homeType === "ROOM"
+                  ? "border-primary-blue bg-[#F4F7FC] shadow-[0_0_24px_0_rgba(49,116,205,0.25)]"
+                  : "border-[#EAF1FA] hover:bg-[#F4F7FC] hover:border-primary-blue"
+              }`}
+            >
+              <div className="flex items-center gap-2 ">
+                <img src={apartment} alt="" />
+                <p
+                  className={`text-lg font-medium ${
+                    homeType === "ROOM"
+                      ? "text-primary-blue"
+                      : "text-primary-blue"
+                  }`}
+                >
+                  {t("onboarding.part3.card1.miniTitle5")}
                 </p>
               </div>
               <p className="text-base text-dark-3 font-regular">

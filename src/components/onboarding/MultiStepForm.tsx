@@ -37,7 +37,7 @@ export type DestinationType =
   | "Mountain";
 export type TravelGroup = "BY_MYSELF" | "FAMILY" | "COUPLE" | "FRIENDS";
 export type TravelWithPets = boolean;
-export type HomeApartmentType = "HOME" | "APARTMENT" | "BOAT" | "VAN";
+export type HomeApartmentType = "HOME" | "APARTMENT" | "BOAT" | "VAN" | "ROOM";
 
 // const propertyTypeLabels: Record<string, string> = {
 //   home: "Home",

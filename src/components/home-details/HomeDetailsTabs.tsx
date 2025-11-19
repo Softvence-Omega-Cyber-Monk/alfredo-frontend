@@ -128,6 +128,7 @@ const HomeDetailsTabs = ({
           propertyId={id || ""}
           isOwner={user.id === singlePropertyData.owner.id}
           userId={user.id}
+          isExchanged={singlePropertyData.isExchanged}
         />
       ),
     },
