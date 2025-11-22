@@ -143,7 +143,7 @@ const PropertiesGrid = () => {
       setEditModalOpen(false);
       setNewImages([]);
       setFormData({});
-      dispatch(fetchMyProperties()); // Refresh list
+      dispatch(fetchMyProperties());
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "Failed to update property";
@@ -283,11 +283,11 @@ const PropertiesGrid = () => {
                   </div>
 
                   <div>
-                    <label className="block mb-2 font-medium">Price</label>
+                    <label className="block mb-2 font-medium">Size (sqm)</label>
                     <input
                       type="number"
-                      name="price"
-                      value={formData.price || 0}
+                      name="size"
+                      value={formData.size || 0}
                       onChange={handleInputChange}
                       className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                       min="0"
@@ -318,18 +318,6 @@ const PropertiesGrid = () => {
                     />
                   </div>
 
-                  <div>
-                    <label className="block mb-2 font-medium">Size (sqm)</label>
-                    <input
-                      type="number"
-                      name="size"
-                      value={formData.size || 0}
-                      onChange={handleInputChange}
-                      className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      min="0"
-                    />
-                  </div>
-
                   <div className="flex items-center">
                     <input
                       type="checkbox"
@@ -338,7 +326,9 @@ const PropertiesGrid = () => {
                       onChange={handleInputChange}
                       className="mr-2"
                     />
-                    <label className="font-medium">Available for Rent</label>
+                    <label className="font-medium">
+                      Available for exchange
+                    </label>
                   </div>
                 </div>
 

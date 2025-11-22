@@ -32,6 +32,7 @@ import MyFavoritePage from "@/pages/MyFavoritePage";
 import ExchangeRequest from "@/pages/ExchangeRequest";
 import ExchangeRequestDetails from "@/components/ExchangeRequest/ExchangeRequestDetails";
 import Success from "@/pages/Success";
+import Cancel from "@/pages/Cancel";
 
 const routes = createBrowserRouter([
   {
@@ -154,6 +155,10 @@ const routes = createBrowserRouter([
       {
         path: "/success",
         element: <Success />,
+      },
+      {
+        path: "/success",
+        element: <Cancel />,
       },
       {
         path: "/admin",
