@@ -262,10 +262,9 @@ const ProfileForm = () => {
                           checked={formData.ageRange === age}
                           onChange={handleInputChange}
                         />
-                        {age
-                          .replace("AGE_", "")
-                          .replace("_", "-")
-                          .replace("PLUS", "+")}
+                        {age === "AGE_65_PLUS"
+                          ? "65+"
+                          : age.replace("AGE_", "").replace("_", "-")}
                       </label>
                     )
                   )}

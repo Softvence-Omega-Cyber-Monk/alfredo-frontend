@@ -43,7 +43,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
     title: "",
     description: "",
     location: "",
-    country: "",
+    country: "Greece",
     price: "",
     size: "",
     bedrooms: "",

@@ -50,7 +50,7 @@ const ArticleCard: FC<ArticleProps> = ({
             alt={title}
           />
 
-          {/* 🔒 Lock overlay for locked articles */}
+          {/*  Lock overlay for locked articles */}
           {isLocked && (
             <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white text-center p-4">
               <Lock className="w-10 h-10 mb-2" />

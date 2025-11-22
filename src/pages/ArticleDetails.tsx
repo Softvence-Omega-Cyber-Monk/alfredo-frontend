@@ -44,9 +44,6 @@ const ArticleDetails = () => {
               ]}
             />
           </div>
-          <p className="text-sm lg:text-base  mb-2 lg:mb-3 font-normal text-dark-3 text-center">
-            Last Update: {article.lastUpdate}
-          </p>
           <h1 className="text-2xl lg:text-[32px] font-medium text-primary-blue mb-6 lg:mb-8 max-w-[700px] mx-auto text-center">
             {t(article.title)}
           </h1>
