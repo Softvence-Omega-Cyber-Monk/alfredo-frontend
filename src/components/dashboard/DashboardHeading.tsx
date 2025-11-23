@@ -1,8 +1,8 @@
-import { MoveRight } from "lucide-react";
-import { useState } from "react";
+// import { MoveRight } from "lucide-react";
+// import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import AddPlaceModal from "../modals/AddPlaceModal";
+// import { Link } from "react-router-dom";
+// import AddPlaceModal from "../modals/AddPlaceModal";
 
 // interface DashboardHeadingProps {
 //   onSubmit: () => void;
@@ -11,14 +11,14 @@ import AddPlaceModal from "../modals/AddPlaceModal";
 
 const DashboardHeading = () => {
   const { t } = useTranslation("dashboard");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleAddPlace = () => {
-    setIsModalOpen(true);
-  };
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const handleAddPlace = () => {
+  //   setIsModalOpen(true);
+  // };
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
+  // const handleModalClose = () => {
+  //   setIsModalOpen(false);
+  // };
 
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
@@ -37,7 +37,7 @@ const DashboardHeading = () => {
           {t("dashboard.subtitle")}
         </p>
       </div>
-      <div className="flex justify-center gap-4 lg:justify-end">
+      {/* <div className="flex justify-center gap-4 lg:justify-end">
         <div className="lg:flex flex-col gap-3">
           <button
             onClick={() => {
@@ -50,20 +50,19 @@ const DashboardHeading = () => {
               <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
             </div>
           </button>
-          {/* favorite places button  */}
+
           <Link
             to="/my-favorite"
             className="relative overflow-hidden rounded-full hover:brightness-80 transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
           >
             <p className="relative z-10">{t("dashboard.button2")}</p>
-            {/* <MoveRight className="relative z-10 w-5 h-5" /> */}
+
             <div className="absolute bottom-0 right-0 opacity-80 items-center justify-center overflow-hidden">
               <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
             </div>
           </Link>
         </div>
         <div className="lg:flex flex-col gap-3">
-          {/* my places button  */}
           <Link
             to="/my-properties"
             className="relative overflow-hidden rounded-full hover:brightness-80 transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5"
@@ -74,7 +73,7 @@ const DashboardHeading = () => {
               <img src="/buttonHomeIcon.svg" alt="icon" className="w-full" />
             </div>
           </Link>
-          {/* Exchange Request button  */}
+
           <Link to="/exchange-request">
             <button
               onClick={() => {}}
@@ -87,8 +86,8 @@ const DashboardHeading = () => {
             </button>
           </Link>
         </div>
-      </div>
-      <AddPlaceModal isOpen={isModalOpen} onClose={handleModalClose} />
+      </div> */}
+      {/* <AddPlaceModal isOpen={isModalOpen} onClose={handleModalClose} /> */}
     </div>
   );
 };
