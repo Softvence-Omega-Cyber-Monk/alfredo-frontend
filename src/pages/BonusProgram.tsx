@@ -2,9 +2,9 @@ import { FC, useRef, useState } from "react";
 import CommonWrapper from "@/common/CommonWrapper";
 import { cardData, inviteData } from "@/lib/bonusData";
 import { FiCopy, FiCheckCircle } from "react-icons/fi"; // updated
-import fb from "../assets/footer/fb.svg";
-import insta from "../assets/footer/instagram.svg";
-import linkedin from "../assets/footer/linkedin.svg";
+import fb from "@/assets/footer/fb.svg";
+import insta from "@/assets/footer/instagram.svg";
+import linkedin from "@/assets/footer/linkedin.svg";
 import { Link } from "react-router-dom";
 import Conversation from "@/components/reusable/Conversation";
 import Subscribe from "@/components/reusable/Subscribe";

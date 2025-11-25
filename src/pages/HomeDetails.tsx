@@ -18,7 +18,7 @@ const HomeDetails = () => {
   const { singleProperty } = useAppSelector((state) => state.property);
   const [isOwnerModalOpen, setIsOwnerModalOpen] = useState(false);
 
-  console.log("singleProperty", singleProperty);
+  // console.log("singleProperty", singleProperty);
 
   useEffect(() => {
     if (!id) return;

@@ -7,6 +7,7 @@ import ChooseYourPlan from "../components/home/ChooseYourPlan";
 import FutureList from "../components/home/FutureList";
 import Testimonial from "../components/reusable/Testimonial";
 import Subscribe from "../components/reusable/Subscribe";
+import Social from "@/components/reusable/Social";
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
       <FutureList />
       <Testimonial />
       <Subscribe />
+      <Social />
     </>
   );
 };

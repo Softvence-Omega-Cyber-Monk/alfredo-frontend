@@ -24,11 +24,15 @@ const FutureList = () => {
     (property) => !myProperties.some((myProp) => myProp.id === property.id)
   );
 
-  console.log("mahim", myProperties);
+  // console.log("mahim", myProperties);
 
-  console.log("All data ", filteredProperties);
+  // console.log("All data ", filteredProperties);
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const { t } = useTranslation("futureList");
+
+  const storedUser = localStorage.getItem("user");
+  const currentUser = storedUser ? JSON.parse(storedUser) : null;
+  const isUserSubscribed = currentUser?.isSubscribed || false;
 
   useEffect(() => {
     dispatch(fetchAllProperties());
@@ -72,7 +76,13 @@ const FutureList = () => {
         <div className="mt-8 flex justify-center">
           <PrimaryButton
             title={t("exploreMore")}
-            onClick={() => navigate("/plans")}
+            onClick={() => {
+              if (isUserSubscribed) {
+                navigate("/places");
+              } else {
+                navigate("/plans");
+              }
+            }}
           />
         </div>
       </CommonWrapper>

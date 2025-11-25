@@ -105,7 +105,7 @@ const Discover = () => {
           {!isPlaying && (
             <button
               onClick={handlePlayClick}
-              className="absolute -bottom-8 md:-bottom-10 lg:-bottom-12 left-1/2 transform -translate-x-1/2 p-4 md:p-6 rounded-full bg-black/20 backdrop-blur-xl z-10"
+              className="absolute -bottom-8 cursor-pointer md:-bottom-10 lg:-bottom-12 left-1/2 transform -translate-x-1/2 p-4 md:p-6 rounded-full bg-black/20 backdrop-blur-xl z-10"
             >
               <img
                 src={playBtn}

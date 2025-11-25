@@ -8,12 +8,12 @@ import AccordionComponent from "../reusable/AccordionComponent";
 import { HomeDetailsType } from "@/lib/data/homeDetails.ts";
 import { bonus } from "@/lib/AccordionData/accordionData";
 import { PropertyDetails } from "@/types/PropertyDetails";
-import Reviews from "./Reviews"; // You'll need to create this component
+import Reviews from "./Reviews";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useState, useEffect } from "react";
 
 const HomeDetailsTabs = ({
-  data,
   singlePropertyData,
 }: {
   data: HomeDetailsType;
@@ -25,6 +25,92 @@ const HomeDetailsTabs = ({
   const user = storedUser ? JSON.parse(storedUser) : null;
 
   const { t } = useTranslation("homeDetails");
+
+  // Check if user is subscribed
+  const isSubscribed = user?.isSubscribed || false;
+
+  // State for location coordinates
+  const [locationCoordinates, setLocationCoordinates] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
+
+  const [isLoadingLocation, setIsLoadingLocation] = useState(true);
+
+  // Geocode location string to coordinates
+  useEffect(() => {
+    const geocodeLocation = async () => {
+      setIsLoadingLocation(true);
+
+      // Build location query from API data (NOT from data.location)
+      const locationParts = [];
+      if (singlePropertyData.location) {
+        locationParts.push(singlePropertyData.location);
+      }
+      if (singlePropertyData.country) {
+        locationParts.push(singlePropertyData.country);
+      }
+
+      const locationString = locationParts.join(", ");
+
+      if (!locationString) {
+        console.warn("No location data available");
+        setIsLoadingLocation(false);
+        return;
+      }
+
+      console.log("🗺️ Geocoding location:", locationString);
+
+      try {
+        // Using Nominatim (OpenStreetMap) - free and no API key required
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+            locationString
+          )}&limit=1&addressdetails=1`,
+          {
+            headers: {
+              "User-Agent": "HomeExchangeApp/1.0",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Geocoding API error: ${response.status}`);
+        }
+
+        const geocodeData = await response.json();
+        console.log("📍 Geocoding response:", geocodeData);
+
+        if (geocodeData && geocodeData.length > 0) {
+          const coordinates = {
+            lat: parseFloat(geocodeData[0].lat),
+            lng: parseFloat(geocodeData[0].lon),
+          };
+
+          console.log("✅ Setting coordinates:", coordinates);
+          setLocationCoordinates(coordinates);
+        } else {
+          console.warn("❌ No geocoding results found for:", locationString);
+          // Set fallback coordinates
+          setLocationCoordinates({ lat: 37.9838, lng: 23.7275 }); // Athens, Greece as fallback
+        }
+      } catch (error) {
+        console.error("❌ Geocoding failed:", error);
+        // Set fallback coordinates
+        setLocationCoordinates({ lat: 37.9838, lng: 23.7275 }); // Athens, Greece as fallback
+      } finally {
+        setIsLoadingLocation(false);
+      }
+    };
+
+    // Only geocode if we have property data
+    if (singlePropertyData?.location || singlePropertyData?.country) {
+      geocodeLocation();
+    } else {
+      setIsLoadingLocation(false);
+    }
+  }, [singlePropertyData?.location, singlePropertyData?.country]);
+
   // Transform API data for the components
   const transformedAmenities = {
     main:
@@ -77,7 +163,17 @@ const HomeDetailsTabs = ({
           />
           <Amenities amenities={transformedAmenities} />
           <div className="mb-6 md:mb-20">
-            <Map location={data.location} />
+            {isLoadingLocation && (
+              <div className="w-full h-[526px] rounded-2xl border border-[#BFD4F0] flex items-center justify-center">
+                <div className="text-center">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-blue mx-auto mb-4"></div>
+                  <p className="text-gray-500">Loading map...</p>
+                </div>
+              </div>
+            )}
+            {!isLoadingLocation && locationCoordinates && (
+              <Map location={locationCoordinates} isLoggedIn={isSubscribed} />
+            )}
           </div>
           <AccordionComponent items={bonus} />
         </div>
@@ -112,7 +208,20 @@ const HomeDetailsTabs = ({
     {
       id: "Map",
       label: t("map"),
-      content: <Map location={data.location} />,
+      content: isLoadingLocation ? (
+        <div className="w-full h-[526px] rounded-2xl border border-[#BFD4F0] flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-blue mx-auto mb-4"></div>
+            <p className="text-gray-500">Loading map...</p>
+          </div>
+        </div>
+      ) : locationCoordinates ? (
+        <Map location={locationCoordinates} isLoggedIn={isSubscribed} />
+      ) : (
+        <div className="w-full h-[526px] rounded-2xl border border-[#BFD4F0] flex items-center justify-center">
+          <p className="text-gray-500">Location not available</p>
+        </div>
+      ),
     },
     {
       id: "FAQ",
@@ -126,8 +235,8 @@ const HomeDetailsTabs = ({
         <Reviews
           reviews={singlePropertyData.Review || []}
           propertyId={id || ""}
-          isOwner={user.id === singlePropertyData.owner.id}
-          userId={user.id}
+          isOwner={user?.id === singlePropertyData.owner.id}
+          userId={user?.id}
           isExchanged={singlePropertyData.isExchanged}
         />
       ),
