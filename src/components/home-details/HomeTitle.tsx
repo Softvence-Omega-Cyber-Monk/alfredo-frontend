@@ -36,7 +36,7 @@ const HomeTitle = ({
   owner,
   singlePropertyData,
 }: HomeTitleProps) => {
-  console.log("Single Property Data in HomeTitle:", singlePropertyData);
+  // console.log("Single Property Data in HomeTitle:", singlePropertyData);
   const { t } = useTranslation("homeDetails");
   const navigate = useNavigate();
 

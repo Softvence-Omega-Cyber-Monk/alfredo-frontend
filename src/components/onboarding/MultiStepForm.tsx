@@ -6,14 +6,14 @@ import star2 from "../../assets/icons/starBlue.svg";
 
 import GetStarted from "./GetStarted";
 import VerificationProcess from "./VerificationProcess";
-import SelectType from "./SelectType";
-import SelectAmenities from "./SelectAmenities";
-import AboutYourHome from "./AboutYourHome";
+// import SelectType from "./SelectType";
+// import SelectAmenities from "./SelectAmenities";
+// import AboutYourHome from "./AboutYourHome";
 import UploadPhoto from "./UploadPhoto";
-import HomeAvailability from "./HomeAvailability";
+// import HomeAvailability from "./HomeAvailability";
 
 import { AddPlaceData } from "@/types";
-import { Amenity } from "@/lib/data/amenities";
+// import { Amenity } from "@/lib/data/amenities";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
@@ -61,11 +61,11 @@ interface OnboardingData extends AddPlaceData {
 const steps = [
   { number: 1, title: "onboarding.step1", subtitle: "onboarding.step1s" },
   { number: 2, title: "onboarding.step2", subtitle: "onboarding.step2s" },
-  { number: 3, title: "onboarding.step3", subtitle: "onboarding.step3s" },
-  { number: 4, title: "onboarding.step4", subtitle: "onboarding.step4s" },
-  { number: 5, title: "onboarding.step5", subtitle: "onboarding.step5s" },
-  { number: 6, title: "onboarding.step6", subtitle: "onboarding.step6s" },
-  { number: 7, title: "onboarding.step7", subtitle: "onboarding.step7s" },
+  // { number: 3, title: "onboarding.step3", subtitle: "onboarding.step3s" },
+  // { number: 4, title: "onboarding.step4", subtitle: "onboarding.step4s" },
+  // { number: 5, title: "onboarding.step5", subtitle: "onboarding.step5s" },
+  { number: 3, title: "onboarding.step6", subtitle: "onboarding.step6s" },
+  // { number: 7, title: "onboarding.step7", subtitle: "onboarding.step7s" },
 ];
 
 const MultiStepForm = () => {
@@ -234,60 +234,60 @@ const MultiStepForm = () => {
             }
           />
         );
+      // case 3:
+      //   return (
+      //     <SelectType
+      //       homeType={addPlaceData.homeType}
+      //       residenceType={addPlaceData.residenceType}
+      //       onHomeTypeChange={(homeType: HomeApartmentType) =>
+      //         handleDataUpdate({
+      //           homeType,
+      //         })
+      //       }
+      //       onResidenceTypeChange={(residenceType: boolean) =>
+      //         handleDataUpdate({ residenceType })
+      //       }
+      //     />
+      //   );
+      // case 4:
+      //   return (
+      //     <SelectAmenities
+      //       selectedAmenities={addPlaceData.selectedAmenities}
+      //       onAmenitiesChange={(selectedAmenities: {
+      //         main: Amenity[];
+      //         transport: Amenity[];
+      //         surrounding: Amenity[];
+      //       }) => handleDataUpdate({ selectedAmenities })}
+      //     />
+      //   );
+      // case 5:
+      //   return (
+      //     <AboutYourHome
+      //       homeName={addPlaceData.homeName}
+      //       homeDescription={addPlaceData.homeDescription}
+      //       areaDescription={addPlaceData.areaDescription}
+      //       availabilityType={addPlaceData.availabilityType}
+      //       onDataChange={handleDataUpdate}
+      //     />
+      //   );
       case 3:
-        return (
-          <SelectType
-            homeType={addPlaceData.homeType}
-            residenceType={addPlaceData.residenceType}
-            onHomeTypeChange={(homeType: HomeApartmentType) =>
-              handleDataUpdate({
-                homeType,
-              })
-            }
-            onResidenceTypeChange={(residenceType: boolean) =>
-              handleDataUpdate({ residenceType })
-            }
-          />
-        );
-      case 4:
-        return (
-          <SelectAmenities
-            selectedAmenities={addPlaceData.selectedAmenities}
-            onAmenitiesChange={(selectedAmenities: {
-              main: Amenity[];
-              transport: Amenity[];
-              surrounding: Amenity[];
-            }) => handleDataUpdate({ selectedAmenities })}
-          />
-        );
-      case 5:
-        return (
-          <AboutYourHome
-            homeName={addPlaceData.homeName}
-            homeDescription={addPlaceData.homeDescription}
-            areaDescription={addPlaceData.areaDescription}
-            availabilityType={addPlaceData.availabilityType}
-            onDataChange={handleDataUpdate}
-          />
-        );
-      case 6:
         return (
           <UploadPhoto
             photos={addPlaceData.photos}
             onDataChange={handleDataUpdate}
           />
         );
-      case 7:
-        return (
-          <HomeAvailability
-            onDataChange={handleDataUpdate}
-            availabilityType={addPlaceData.availabilityType}
-            availabilityDates={addPlaceData.availabilityDates}
-            onAvailabilityChange={(availabilityDates) =>
-              handleDataUpdate({ availabilityDates })
-            }
-          />
-        );
+      // case 7:
+      //   return (
+      //     <HomeAvailability
+      //       onDataChange={handleDataUpdate}
+      //       availabilityType={addPlaceData.availabilityType}
+      //       availabilityDates={addPlaceData.availabilityDates}
+      //       onAvailabilityChange={(availabilityDates) =>
+      //         handleDataUpdate({ availabilityDates })
+      //       }
+      //     />
+      //   );
       default:
         return <div className="text-center">Invalid step</div>;
     }

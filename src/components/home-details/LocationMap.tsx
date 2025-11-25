@@ -1,5 +1,5 @@
 // LocationMap.tsx
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useEffect } from "react";
@@ -21,10 +21,26 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 
+// Component to update map center when location changes
+const MapUpdater = ({
+  location,
+}: {
+  location: { lat: number; lng: number };
+}) => {
+  const map = useMap();
+
+  useEffect(() => {
+    console.log("Updating map center to:", location);
+    map.setView([location.lat, location.lng], 13);
+  }, [location, map]);
+
+  return null;
+};
+
 const LocationMap = ({ location, isLoggedIn }: LocationMapProps) => {
   useEffect(() => {
-    // future effect if needed
-  }, [location]);
+    console.log("LocationMap rendered with:", { location, isLoggedIn });
+  }, [location, isLoggedIn]);
 
   return (
     <div className={`w-full h-full ${!isLoggedIn ? "blur-[8px]" : ""}`}>
@@ -33,6 +49,7 @@ const LocationMap = ({ location, isLoggedIn }: LocationMapProps) => {
         zoom={13}
         scrollWheelZoom={false}
         className="w-full h-full rounded-xl"
+        key={`${location.lat}-${location.lng}`} // Force re-render when location changes
       >
         <TileLayer
           attribution='&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -41,6 +58,7 @@ const LocationMap = ({ location, isLoggedIn }: LocationMapProps) => {
         <Marker position={[location.lat, location.lng]}>
           <Popup>Property Location</Popup>
         </Marker>
+        <MapUpdater location={location} />
       </MapContainer>
     </div>
   );
