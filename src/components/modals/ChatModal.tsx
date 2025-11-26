@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { sendExchangeRequest } from "@/store/Slices/ExchangeRequestSlice/ExchangeRequestSlice";
+import { sendNotification } from "@/helper/NotificationService";
 
 interface ChatModalProps {
   isOpen: boolean;
@@ -54,38 +55,55 @@ const ChatModal: React.FC<ChatModalProps> = ({
     myProperties?.find((property) => property.id === selectedProperty)?.title ||
     "a property";
 
-  // Handle exchange request button
-  // const handleExchangeRequest = () => {
-  //   if (!selectedProperty) {
+  // const handleExchangeRequest = async () => {
+  //   if (!selectedProperty || !id) {
   //     console.log("Please select a property before sending request");
   //     return;
   //   }
 
-  //   // Create the exchange request message
-  //   const exchangeMessage = `I want to exchange my property "${selectedPropertyTitle}" for your property "${singlePropertyData.title}". Please check your exchange route on dashboard for details.`;
+  //   const exchangeMessage = `I want to exchange my property "${selectedPropertyTitle}" for your property "${singlePropertyData.title}. Please check your exchange route on dashboard for details."`;
 
-  //   // Send the message through socket
-  //   if (socketRef.current) {
-  //     socketRef.current.emit("send_message", {
-  //       senderId,
-  //       toUserId: receiverId,
-  //       content: exchangeMessage,
-  //     });
+  //   try {
+  //     // Dispatch the thunk
+  //     // if(!toPropertyId) return;
+  //     const result = await dispatch(
+  //       sendExchangeRequest({
+  //         fromUserId: senderId,
+  //         toUserId: receiverId,
+  //         fromPropertyId: selectedProperty,
+  //         toPropertyId: id!,
+  //         message: exchangeMessage,
+  //       })
+  //     ).unwrap();
+
+  //     console.log("Exchange request sent successfully:", result);
+
+  //     // Send the message through socket after successful API call
+  //     if (socketRef.current) {
+  //       socketRef.current.emit("send_message", {
+  //         senderId,
+  //         toUserId: receiverId,
+  //         content: exchangeMessage,
+  //       });
+  //     }
+
+  //     // Close the popover
+  //     setSelectedProperty("");
+  //     toast.success("Request sent successfully");
+  //   } catch (error) {
+  //     console.error("Failed to send exchange request:", error);
+  //     toast.error("Failed to send request");
   //   }
-  //   setSelectedProperty("");
   // };
-
   const handleExchangeRequest = async () => {
     if (!selectedProperty || !id) {
-      console.log("Please select a property before sending request");
+      toast.error("Please select a property before sending request");
       return;
     }
 
-    const exchangeMessage = `I want to exchange my property "${selectedPropertyTitle}" for your property "${singlePropertyData.title}. Please check your exchange route on dashboard for details."`;
+    const exchangeMessage = `I want to exchange my property "${selectedPropertyTitle}" for your property "${singlePropertyData.title}". Please check your exchange route on dashboard for details.`;
 
     try {
-      // Dispatch the thunk
-      // if(!toPropertyId) return;
       const result = await dispatch(
         sendExchangeRequest({
           fromUserId: senderId,
@@ -98,7 +116,7 @@ const ChatModal: React.FC<ChatModalProps> = ({
 
       console.log("Exchange request sent successfully:", result);
 
-      // Send the message through socket after successful API call
+      // Send the message through socket
       if (socketRef.current) {
         socketRef.current.emit("send_message", {
           senderId,
@@ -107,7 +125,13 @@ const ChatModal: React.FC<ChatModalProps> = ({
         });
       }
 
-      // Close the popover
+      // Send notification for exchange request
+      await sendNotification(
+        receiverId,
+        `Exchange Request from ${user?.name || user?.username || "User"}`,
+        `Exchange request for ${singlePropertyData.title}`
+      );
+
       setSelectedProperty("");
       toast.success("Request sent successfully");
     } catch (error) {
@@ -173,7 +197,37 @@ const ChatModal: React.FC<ChatModalProps> = ({
     };
   }, [senderId]);
 
-  const sendMessage = () => {
+  // const sendMessage = async () => {
+  //   if (!input.trim() || !receiverId) {
+  //     console.log("Input or receiverId is empty");
+  //     return;
+  //   }
+
+  //   if (!socketRef.current) {
+  //     console.error("Socket not available");
+  //     return;
+  //   }
+
+  //   console.log("Sending message:", input, "to:", receiverId);
+
+  //   socketRef.current.emit("send_message", {
+  //     senderId: senderId,
+  //     toUserId: receiverId,
+  //     content: input,
+  //   });
+
+  //   try {
+  //     await sendNotification(
+  //       receiverId,
+  //       `New message from ${user?.name || "User"}`,
+  //       input.length > 50 ? input.substring(0, 50) + "..." : input
+  //     );
+  //   } catch (error) {
+  //     console.error("Failed to send notification:", error);
+  //   }
+  //   setInput("");
+  // };
+  const sendMessage = async () => {
     if (!input.trim() || !receiverId) {
       console.log("Input or receiverId is empty");
       return;
@@ -186,23 +240,27 @@ const ChatModal: React.FC<ChatModalProps> = ({
 
     console.log("Sending message:", input, "to:", receiverId);
 
+    // Send the message via socket
     socketRef.current.emit("send_message", {
       senderId: senderId,
       toUserId: receiverId,
       content: input,
     });
 
-    // Add the message to local state for immediate display
-    // setMessages((prev) => [
-    //   ...prev,
-    //   {
-    //     text: input,
-    //     sender: "me",
-    //   },
-    // ]);
+    // Send notification to the receiver
+    try {
+      await sendNotification(
+        receiverId,
+        `New message from ${user?.name || user?.username || "User"}`,
+        input.length > 50 ? input.substring(0, 50) + "..." : input
+      );
+      console.log("Notification sent successfully");
+    } catch (error) {
+      console.error("Failed to send notification:", error);
+    }
+
     setInput("");
   };
-
   return (
     <AnimatePresence>
       {isOpen && (
