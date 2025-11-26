@@ -20,6 +20,12 @@ const ExchangeRequest = () => {
   const { requests, loading, error } = useAppSelector(
     (state) => state.exchangeRequest
   );
+
+  // Get current user - adjust this based on where you store user info
+  // This could be from state.auth, state.user, or wherever your user data is
+  const currentUser = useAppSelector((state) => state.auth.user); // Adjust this path
+  const currentUserId = currentUser?.id;
+
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
@@ -39,6 +45,15 @@ const ExchangeRequest = () => {
   const filteredRequests = useMemo(() => {
     return requests
       .filter((request) => {
+        // CRITICAL: Only show requests where current user is involved
+        if (!currentUserId) return false;
+
+        const isInvolved =
+          request.fromUserId === currentUserId ||
+          request.toUserId === currentUserId;
+
+        if (!isInvolved) return false;
+
         // Status filter
         if (statusFilter !== "ALL" && request.status !== statusFilter) {
           return false;
@@ -81,33 +96,44 @@ const ExchangeRequest = () => {
       });
   }, [
     requests,
+    currentUserId,
     statusFilter,
     fromPropertyFilter,
     toPropertyFilter,
     searchTerm,
   ]);
 
-  console.log("filtered request", filteredRequests);
-
-  // Get unique values for filter dropdowns
+  // Get unique values for filter dropdowns - only from user's requests
   const statusOptions = useMemo(() => {
-    const statuses = [...new Set(requests.map((req) => req.status))];
+    const userRequests = requests.filter(
+      (req) =>
+        req.fromUserId === currentUserId || req.toUserId === currentUserId
+    );
+    const statuses = [...new Set(userRequests.map((req) => req.status))];
     return ["ALL", ...statuses];
-  }, [requests]);
+  }, [requests, currentUserId]);
 
   const fromPropertyOptions = useMemo(() => {
-    const properties = requests
+    const userRequests = requests.filter(
+      (req) =>
+        req.fromUserId === currentUserId || req.toUserId === currentUserId
+    );
+    const properties = userRequests
       .map((req) => req.fromProperty?.title)
       .filter(Boolean);
     return [...new Set(properties)];
-  }, [requests]);
+  }, [requests, currentUserId]);
 
   const toPropertyOptions = useMemo(() => {
-    const properties = requests
+    const userRequests = requests.filter(
+      (req) =>
+        req.fromUserId === currentUserId || req.toUserId === currentUserId
+    );
+    const properties = userRequests
       .map((req) => req.toProperty?.title)
       .filter(Boolean);
     return [...new Set(properties)];
-  }, [requests]);
+  }, [requests, currentUserId]);
 
   // Pagination logic
   const totalPages = Math.ceil(filteredRequests.length / itemsPerPage);
@@ -145,7 +171,7 @@ const ExchangeRequest = () => {
     <CommonWrapper>
       <div className="p-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-          <h1 className="text-2xl font-bold">Exchange Requests</h1>
+          <h1 className="text-2xl font-bold">My Exchange Requests</h1>
 
           <div className="flex items-center gap-2">
             {/* Search Input */}

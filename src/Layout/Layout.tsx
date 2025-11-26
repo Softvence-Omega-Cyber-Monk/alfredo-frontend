@@ -22,8 +22,12 @@ const Layout: React.FC = () => {
     location.pathname
   );
 
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  console.log(user, "user in layout");
+
   const token = localStorage.getItem("token");
-  console.log(token, "token in layout");
+  // console.log(token, "token in layout");
   // const parsedUser = user ? JSON.parse(user) : null;
 
   return (
@@ -37,7 +41,7 @@ const Layout: React.FC = () => {
 
       {!shouldHideMessageButton && token && (
         <Link
-          to="/messages"
+          to={`${user.isSubscribed ? "/messages" : "/plans"}`}
           className="p-2 md:p-2.5 rounded-full bg-white shadow-[0_0_10px_0_#B9D7FF] fixed bottom-10 right-8 z-100"
         >
           <img src={messageIcon} className="w-4 h-4 md:w-6 md:h-6" alt="" />
