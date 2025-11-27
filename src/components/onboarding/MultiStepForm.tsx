@@ -116,13 +116,13 @@ const MultiStepForm = () => {
 
   const handleSubmitData = async () => {
     try {
-      console.log("Starting form submission...");
+      // console.log("Starting form submission...");
       const user = localStorage.getItem("user");
-      console.log("Raw user from localStorage:", user); // What does this log?
+      // console.log("Raw user from localStorage:", user); // What does this log?
 
       const parsedUser = user ? JSON.parse(user) : null;
-      console.log("Parsed user object:", parsedUser); // What does this log?
-      console.log("User ID to be sent:", parsedUser?.id); // What does this log?
+      // console.log("Parsed user object:", parsedUser); // What does this log?
+      // console.log("User ID to be sent:", parsedUser?.id); // What does this log?
       const userId = parsedUser?.id;
 
       if (!userId) {

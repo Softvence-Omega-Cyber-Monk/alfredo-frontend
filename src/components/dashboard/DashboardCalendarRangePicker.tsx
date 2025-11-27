@@ -43,7 +43,7 @@ const DashboardCalendarRangePicker = ({
     }
   };
 
-  console.log("Selected Range:", availabilityDates);
+  // console.log("Selected Range:", availabilityDates);
 
   const renderCalendar = (offset: number) => {
     const monthDate = addMonths(currentMonth, monthOffset + offset);

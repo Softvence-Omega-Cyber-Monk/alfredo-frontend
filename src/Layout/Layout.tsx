@@ -24,8 +24,6 @@ const Layout: React.FC = () => {
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
-  console.log(user, "user in layout");
-
   const token = localStorage.getItem("token");
   // console.log(token, "token in layout");
   // const parsedUser = user ? JSON.parse(user) : null;

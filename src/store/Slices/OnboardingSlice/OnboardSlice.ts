@@ -64,7 +64,7 @@ export const postOnboarding = createAsyncThunk(
           "Content-Type": "multipart/form-data",
         },
       };
-      console.log("Sending request to:", `${baseURL}/onboarding`);
+      // console.log("Sending request to:", `${baseURL}/onboarding`);
       const response = await axios.post(
         `${baseURL}/onboarding`,
         payload,

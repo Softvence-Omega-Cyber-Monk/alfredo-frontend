@@ -7,11 +7,11 @@ const OTP = () => {
   const email = "j****e@example.com";
 
   const handleMobileClick = () => {
-    console.log("Selected Mobile:", mobile);
+    // console.log("Selected Mobile:", mobile);
   };
 
   const handleEmailClick = () => {
-    console.log("Selected Email:", email);
+    // console.log("Selected Email:", email);
   };
 
   return (

@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 //   PopoverContent,
 //   PopoverTrigger,
 // } from "@/components/ui/popover";
-import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import { useAppDispatch } from "@/hooks/useRedux";
 import { fetchMyProperties } from "@/store/Slices/PropertySlice/propertySlice";
 // import { Label } from "@/components/ui/label";
 // import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -26,7 +26,7 @@ const ChatArea: FC<ChatAreaProps> = ({
 }) => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
   // const [selectedProperty, setSelectedProperty] = useState("");
-  const { myProperties } = useAppSelector((state) => state.property);
+  // const { myProperties } = useAppSelector((state) => state.property);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -40,9 +40,9 @@ const ChatArea: FC<ChatAreaProps> = ({
     dispatch(fetchMyProperties());
   }, [dispatch]);
 
-  console.log("mahim properties", myProperties);
+  // console.log("mahim properties", myProperties);
   // console.log("selected property", selectedProperty);
-  console.log(selectedConversation, "selected conversation.....");
+  // console.log(selectedConversation, "selected conversation.....");
 
   return (
     <AnimatePresence>

@@ -82,7 +82,7 @@ const Signup = () => {
       // Send OTP
       const otpAction = await dispatch(sendOtp({ userId, method: "email" }));
       if (sendOtp.fulfilled.match(otpAction)) {
-        console.log("OTP sent successfully:", otpAction.payload.message);
+        // console.log("OTP sent successfully:", otpAction.payload.message);
         toast("OTP sent successfully to your email. Please check your email.");
         // Navigate to verify OTP page with userId in URL
         navigate(`/verify-otp/${userId}`);

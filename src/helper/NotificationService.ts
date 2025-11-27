@@ -4,7 +4,7 @@ import axios from "axios";
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "https://vacanzagreece.gr/api";
 
-console.log("🔧 NotificationService API_BASE_URL:", API_BASE_URL);
+// console.log("🔧 NotificationService API_BASE_URL:", API_BASE_URL);
 
 // Create axios instance
 const apiClient = axios.create({
@@ -22,8 +22,8 @@ apiClient.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
     // Fix TypeScript errors with optional chaining and fallbacks
-    const fullUrl = `${config.baseURL || ""}${config.url || ""}`;
-    console.log("📡 Request:", config.method?.toUpperCase(), fullUrl);
+    // const fullUrl = `${config.baseURL || ""}${config.url || ""}`;
+    // console.log("📡 Request:", config.method?.toUpperCase(), fullUrl);
     return config;
   },
   (error) => Promise.reject(error)
@@ -32,7 +32,7 @@ apiClient.interceptors.request.use(
 // Response interceptor
 apiClient.interceptors.response.use(
   (response) => {
-    console.log("✅ Success:", response.config.url, response.status);
+    // console.log("✅ Success:", response.config.url, response.status);
     return response;
   },
   (error) => {
