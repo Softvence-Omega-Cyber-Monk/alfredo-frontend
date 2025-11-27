@@ -1,0 +1,38 @@
+{
+  "title": "Προσθήκη Χώρου",
+  "successMessage": "Το ακίνητο προστέθηκε με επιτυχία!",
+  "loading": "Φόρτωση ανέσεων...",
+  "countryValue": "Ελλάδα",
+  "fields": {
+    "title": "Τίτλος",
+    "propertyType": "Τύπος Ακινήτου",
+    "description": "Περιγραφή",
+    "country": "Χώρα",
+    "city": "Πόλη",
+    "cityPlaceholder": "Εισάγετε την πόλη σας",
+    "size": "Μέγεθος (τμ)",
+    "maxPeople": "Μέγιστος Αριθμός Ατόμων",
+    "bedrooms": "Υπνοδωμάτια",
+    "bathrooms": "Μπάνια",
+    "availabilityDates": "Ημερομηνίες Διαθεσιμότητας",
+    "isAvailable": "Είναι Διαθέσιμο",
+    "travelWithPets": "Επιτρέπεται Ταξίδι με Κατοικίδια;",
+    "uploadImages": "Ανέβασμα Εικόνων (μέχρι 5)"
+  },
+  "propertyTypes": {
+    "home": "Σπίτι",
+    "apartment": "Διαμέρισμα",
+    "room": "Δωμάτιο",
+    "boat": "Σκάφος",
+    "van": "Βαν"
+  },
+  "sections": {
+    "amenities": "Ανέσεις",
+    "transport": "Μεταφορά",
+    "surroundings": "Περιβάλλον"
+  },
+  "buttons": {
+    "cancel": "Ακύρωση",
+    "save": "Αποθήκευση"
+  }
+}

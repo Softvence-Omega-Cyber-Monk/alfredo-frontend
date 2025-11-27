@@ -136,9 +136,9 @@ const HomeTitle = ({
     }
   };
 
-  // const handleChatClickTest = () => {
-  //   setIsChatOpen(true);
-  // };
+  const handleChatClickTest = () => {
+    setIsChatOpen(true);
+  };
 
   return (
     <div>
@@ -164,7 +164,7 @@ const HomeTitle = ({
           </button>
 
           {/* Test purpose  */}
-          {/* <PrimaryButton title={t("chatWith")} onClick={handleChatClickTest} /> */}
+          <PrimaryButton title={t("chatWith")} onClick={handleChatClickTest} />
 
           {isUserSubscribed ? (
             <PrimaryButton title={t("chatWith")} onClick={handleChatClick} />
@@ -208,12 +208,12 @@ const HomeTitle = ({
       </div>
 
       {/* chat modal - only opens if user is subscribed */}
-      {/* <ChatModal
+      <ChatModal
         isOpen={isChatOpen}
         owner={owner}
         singlePropertyData={singlePropertyData}
         onClose={() => setIsChatOpen(false)}
-      /> */}
+      />
       {isUserSubscribed && (
         <ChatModal
           isOpen={isChatOpen}

@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 interface CountryCityFields {
   country: string;
   location: string;
@@ -12,22 +14,24 @@ const CountryCitySelect = <T extends CountryCityFields>({
   formData,
   setFormData,
 }: CountryCitySelectProps<T>) => {
+  const { t } = useTranslation("addPlaceModal");
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {/* Country Locked to Greece */}
       <div>
-        <label className="block mb-1 font-medium">Country</label>
+        <label className="block mb-1 font-medium">{t("fields.country")}</label>
         <input
           type="text"
           className="w-full border p-2 rounded bg-gray-100 cursor-pointer"
-          value="Greece"
+          value={t("countryValue")}
           disabled
         />
       </div>
 
       {/* Manual City Input */}
       <div>
-        <label className="block mb-1 font-medium">City</label>
+        <label className="block mb-1 font-medium">{t("fields.city")}</label>
         <input
           type="text"
           name="location"
@@ -40,7 +44,7 @@ const CountryCitySelect = <T extends CountryCityFields>({
             }))
           }
           className="w-full border p-2 rounded"
-          placeholder="Enter your city"
+          placeholder={t("fields.cityPlaceholder")}
           required
         />
       </div>
