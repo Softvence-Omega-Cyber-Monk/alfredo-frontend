@@ -14,8 +14,7 @@ import { X } from "lucide-react";
 import CalendarRangePicker from "../onboarding/CalendarRangePicker";
 import { MdCancel } from "react-icons/md";
 import CountryCitySelect from "../reusable/CountryCitySelect";
-
-// Calendar picker
+import { useTranslation } from "react-i18next";
 
 interface AddPlaceModalProps {
   isOpen: boolean;
@@ -35,6 +34,7 @@ type PropertyForm = Omit<
 
 const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation("addPlaceModal");
   const { main, transport, surrounding, loading, error } = useAppSelector(
     (state) => state.amenities
   );
@@ -58,10 +58,8 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
     transports: [],
     surroundings: [],
   });
-
   const [files, setFiles] = useState<File[]>([]);
 
-  // Fetch amenities on open
   useEffect(() => {
     if (isOpen) {
       dispatch(fetchMainAmenities());
@@ -84,7 +82,6 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
     });
   };
 
-  // Toggle amenities/transport/surroundings
   const toggleSelection = (
     category: "amenities" | "transports" | "surroundings",
     id: string
@@ -93,7 +90,6 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
     const updated = current.includes(id)
       ? current.filter((item) => item !== id)
       : [...current, id];
-
     setFormData({
       ...formData,
       [category]: updated,
@@ -114,28 +110,12 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
     setFiles(updated);
   };
 
-  // const handleDateChange = (dates: {
-  //   start: Date | null;
-  //   end: Date | null;
-  // }) => {
-  //   setFormData({
-  //     ...formData,
-  //     availabilityStartDate: dates.start
-  //       ? dates.start.toISOString().split("T")[0]
-  //       : "",
-  //     availabilityEndDate: dates.end
-  //       ? dates.end.toISOString().split("T")[0]
-  //       : "",
-  //   });
-  // };
   const handleDateChange = (dates: {
     start: Date | null;
     end: Date | null;
   }) => {
-    // Helper function to format date without timezone issues
     const formatDate = (date: Date | null): string => {
       if (!date) return "";
-      // Use local date components instead of ISO string
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, "0");
       const day = String(date.getDate()).padStart(2, "0");
@@ -151,8 +131,6 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // build payload
     const payload: Property = {
       ...formData,
       price: Number(formData.price),
@@ -162,10 +140,8 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
       maxPeople: Number(formData.maxPeople),
     };
 
-    // build FormData for backend
     const formDataToSend = new FormData();
     formDataToSend.append("data", JSON.stringify(payload));
-
     if (files.length) {
       files.forEach((file) => {
         formDataToSend.append("files", file);
@@ -173,17 +149,15 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
     }
 
     dispatch(addProperty(formDataToSend));
-    toast.success("Property added successfully!");
+    toast.success(t("successMessage"));
     onClose();
   };
-
-  // console.log(formData, "form data in add place");
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-4xl max-h-[600px] overflow-y-auto p-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold mb-6">Add Place</h2>
+          <h2 className="text-2xl font-semibold mb-6">{t("title")}</h2>
           <button type="button" onClick={onClose} className="">
             <MdCancel className="w-8 h-8" />
           </button>
@@ -192,7 +166,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
           {/* Basic Info */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label>Title</Label>
+              <Label>{t("fields.title")}</Label>
               <input
                 type="text"
                 name="title"
@@ -203,24 +177,25 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
               />
             </div>
             <div>
-              <Label>Property Type</Label>
+              <Label>{t("fields.propertyType")}</Label>
               <select
                 name="propertyType"
                 value={formData.propertyType}
                 onChange={handleChange}
                 className="w-full border p-2 rounded mt-1"
               >
-                <option value="HOME">Home</option>
-                <option value="APARTMENT">Apartment</option>
-                <option value="ROOM">Room</option>
-                <option value="BOAT">Boat</option>
-                <option value="VAN">Van</option>
+                <option value="HOME">{t("propertyTypes.home")}</option>
+                <option value="APARTMENT">
+                  {t("propertyTypes.apartment")}
+                </option>
+                <option value="ROOM">{t("propertyTypes.room")}</option>
+                <option value="BOAT">{t("propertyTypes.boat")}</option>
+                <option value="VAN">{t("propertyTypes.van")}</option>
               </select>
             </div>
           </div>
-
           <div>
-            <Label>Description</Label>
+            <Label>{t("fields.description")}</Label>
             <textarea
               name="description"
               value={formData.description}
@@ -229,49 +204,13 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
               required
             />
           </div>
-
           <div className="4">
             <CountryCitySelect formData={formData} setFormData={setFormData} />
-
-            {/* <div>
-              <Label>Location</Label>
-              <input
-                type="text"
-                name="location"
-                value={formData.location}
-                onChange={handleChange}
-                className="w-full border p-2 rounded mt-1"
-                required
-              />
-            </div>
-            <div>
-              <Label>Country</Label>
-              <input
-                type="text"
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-                className="w-full border p-2 rounded mt-1"
-                required
-              />
-            </div> */}
           </div>
-
           {/* Numeric Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* <div>
-              <Label>Price (Eur)</Label>
-              <input
-                type="number"
-                name="price"
-                value={formData.price}
-                onChange={handleChange}
-                className="w-full border p-2 rounded mt-1"
-                required
-              />
-            </div> */}
             <div>
-              <Label>Size (sqm)</Label>
+              <Label>{t("fields.size")}</Label>
               <input
                 type="number"
                 name="size"
@@ -282,7 +221,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
               />
             </div>
             <div>
-              <Label>Max People</Label>
+              <Label>{t("fields.maxPeople")}</Label>
               <input
                 type="number"
                 name="maxPeople"
@@ -294,10 +233,9 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
               />
             </div>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label>Bedrooms</Label>
+              <Label>{t("fields.bedrooms")}</Label>
               <input
                 type="number"
                 name="bedrooms"
@@ -308,7 +246,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
               />
             </div>
             <div>
-              <Label>Bathrooms</Label>
+              <Label>{t("fields.bathrooms")}</Label>
               <input
                 type="number"
                 name="bathrooms"
@@ -319,10 +257,9 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
               />
             </div>
           </div>
-
           {/* Availability Dates */}
           <div>
-            <Label>Availability Dates</Label>
+            <Label>{t("fields.availabilityDates")}</Label>
             <CalendarRangePicker
               availabilityDates={{
                 start: formData.availabilityStartDate
@@ -335,7 +272,6 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
               onAvailabilityChange={handleDateChange}
             />
           </div>
-
           {/* Checkboxes */}
           <div className="flex gap-6">
             <label className="flex items-center gap-2">
@@ -345,7 +281,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
                 checked={formData.isAvailable}
                 onChange={handleChange}
               />
-              Is Available
+              {t("fields.isAvailable")}
             </label>
             <label className="flex items-center gap-2">
               <input
@@ -354,15 +290,14 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
                 checked={formData.isTravelWithPets}
                 onChange={handleChange}
               />
-              Travel with Pets Allowed?
+              {t("fields.travelWithPets")}
             </label>
           </div>
-
           {/* Amenities */}
           <div>
-            <Label className="mb-5">Amenities</Label>
+            <Label className="mb-5">{t("sections.amenities")}</Label>
             {loading ? (
-              <p>Loading amenities...</p>
+              <p>{t("loading")}</p>
             ) : error ? (
               <p className="text-red-500">{error}</p>
             ) : (
@@ -388,10 +323,9 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
               </div>
             )}
           </div>
-
           {/* Transport */}
           <div>
-            <Label className="mb-5">Transport</Label>
+            <Label className="mb-5">{t("sections.transport")}</Label>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
               {transport.map((item: AmenityItem) => (
                 <div
@@ -413,10 +347,9 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
               ))}
             </div>
           </div>
-
           {/* Surroundings */}
           <div>
-            <Label className="mb-5">Surroundings</Label>
+            <Label className="mb-5">{t("sections.surroundings")}</Label>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
               {surrounding.map((item: AmenityItem) => (
                 <div
@@ -438,10 +371,9 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
               ))}
             </div>
           </div>
-
           {/* File Upload with preview */}
           <div>
-            <Label>Upload Images (max 5)</Label>
+            <Label>{t("fields.uploadImages")}</Label>
             <input
               type="file"
               multiple
@@ -468,7 +400,6 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
               ))}
             </div>
           </div>
-
           {/* Buttons */}
           <div className="flex justify-end gap-3 pt-4">
             <button
@@ -476,13 +407,13 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
               onClick={onClose}
               className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400"
             >
-              Cancel
+              {t("buttons.cancel")}
             </button>
             <button
               type="submit"
               className="px-4 py-2 rounded bg-primary-blue text-white hover:brightness-90"
             >
-              Save
+              {t("buttons.save")}
             </button>
           </div>
         </form>

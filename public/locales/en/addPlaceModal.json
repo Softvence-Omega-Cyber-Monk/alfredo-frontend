@@ -1,0 +1,38 @@
+{
+  "title": "Add Place",
+  "successMessage": "Property added successfully!",
+  "loading": "Loading amenities...",
+  "countryValue": "Greece",
+  "fields": {
+    "title": "Title",
+    "propertyType": "Property Type",
+    "description": "Description",
+    "country": "Country",
+    "city": "City",
+    "cityPlaceholder": "Enter your city",
+    "size": "Size (sqm)",
+    "maxPeople": "Max People",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "availabilityDates": "Availability Dates",
+    "isAvailable": "Is Available",
+    "travelWithPets": "Travel with Pets Allowed?",
+    "uploadImages": "Upload Images (max 5)"
+  },
+  "propertyTypes": {
+    "home": "Home",
+    "apartment": "Apartment",
+    "room": "Room",
+    "boat": "Boat",
+    "van": "Van"
+  },
+  "sections": {
+    "amenities": "Amenities",
+    "transport": "Transport",
+    "surroundings": "Surroundings"
+  },
+  "buttons": {
+    "cancel": "Cancel",
+    "save": "Save"
+  }
+}
