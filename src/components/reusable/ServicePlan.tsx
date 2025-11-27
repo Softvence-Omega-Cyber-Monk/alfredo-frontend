@@ -131,7 +131,7 @@ const ServicePlan: FC = () => {
     };
 
     try {
-      console.log("Payload:", payload);
+      // console.log("Payload:", payload);
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/stripe-payment/checkout`,
         payload,
@@ -148,8 +148,6 @@ const ServicePlan: FC = () => {
       console.error("Error creating checkout:", err);
     }
   };
-
-  console.log("plans:", plans);
 
   return (
     <>

@@ -229,7 +229,7 @@ const ChatModal: React.FC<ChatModalProps> = ({
   // };
   const sendMessage = async () => {
     if (!input.trim() || !receiverId) {
-      console.log("Input or receiverId is empty");
+      // console.log("Input or receiverId is empty");
       return;
     }
 
@@ -238,7 +238,7 @@ const ChatModal: React.FC<ChatModalProps> = ({
       return;
     }
 
-    console.log("Sending message:", input, "to:", receiverId);
+    // console.log("Sending message:", input, "to:", receiverId);
 
     // Send the message via socket
     socketRef.current.emit("send_message", {
@@ -254,7 +254,7 @@ const ChatModal: React.FC<ChatModalProps> = ({
         `New message from ${user?.name || user?.username || "User"}`,
         input.length > 50 ? input.substring(0, 50) + "..." : input
       );
-      console.log("Notification sent successfully");
+      // console.log("Notification sent successfully");
     } catch (error) {
       console.error("Failed to send notification:", error);
     }

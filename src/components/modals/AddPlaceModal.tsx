@@ -177,7 +177,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
     onClose();
   };
 
-  console.log(formData, "form data in add place");
+  // console.log(formData, "form data in add place");
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50">

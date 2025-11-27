@@ -27,7 +27,7 @@ const token = localStorage.getItem("token");
 // Fetch conversations from /chat/partners/{userId}
 const fetchConversations = async (userId: string): Promise<Conversation[]> => {
   try {
-    console.log("Fetching conversations for userId:", userId);
+    // console.log("Fetching conversations for userId:", userId);
     const res = await axios.get(
       `${import.meta.env.VITE_API_URL}/chat/partners/${userId}`,
       {
@@ -68,7 +68,7 @@ const Messages = () => {
   useEffect(() => {
     if (userId) {
       fetchConversations(userId).then((data) => {
-        console.log("Fetched conversationssss:", data);
+        // console.log("Fetched conversationssss:", data);
         setConversations(data);
         if (data.length > 0 && !selectedConversation) {
           setSelectedConversation(data[0]);
@@ -144,7 +144,7 @@ const Messages = () => {
       return;
     }
 
-    console.log("Sending message to:", selectedConversation.id);
+    // console.log("Sending message to:", selectedConversation.id);
 
     try {
       const socket = getSocket();

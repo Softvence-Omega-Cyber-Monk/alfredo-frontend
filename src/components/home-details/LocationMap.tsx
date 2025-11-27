@@ -30,7 +30,7 @@ const MapUpdater = ({
   const map = useMap();
 
   useEffect(() => {
-    console.log("Updating map center to:", location);
+    // console.log("Updating map center to:", location);
     map.setView([location.lat, location.lng], 13);
   }, [location, map]);
 
@@ -39,7 +39,7 @@ const MapUpdater = ({
 
 const LocationMap = ({ location, isLoggedIn }: LocationMapProps) => {
   useEffect(() => {
-    console.log("LocationMap rendered with:", { location, isLoggedIn });
+    // console.log("LocationMap rendered with:", { location, isLoggedIn });
   }, [location, isLoggedIn]);
 
   return (

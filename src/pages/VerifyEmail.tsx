@@ -67,7 +67,7 @@ const VerifyEmail = () => {
     const res = await dispatch(resendOtp({ userId, method: "email" }));
 
     if (resendOtp.fulfilled.match(res)) {
-      console.log("OTP resent:", res.payload.message);
+      // console.log("OTP resent:", res.payload.message);
       setCounter(60); // Restart timer
       setCanResend(false);
     } else {

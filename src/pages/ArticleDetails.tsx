@@ -30,7 +30,7 @@ const ArticleDetails = () => {
   const article = articles.find((a) => a.id === id) ?? articles[0];
   const { t } = useTranslation("articles");
 
-  console.log(article, "article details");
+  // console.log(article, "article details");
 
   return (
     <div>

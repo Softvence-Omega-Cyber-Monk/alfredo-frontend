@@ -38,7 +38,7 @@ const NotificationBell = () => {
   const fetchUnreadCount = async () => {
     try {
       const response = await getUnreadCount();
-      console.log("📊 Unread count response:", response);
+      // console.log("📊 Unread count response:", response);
 
       let count = 0;
       if (typeof response?.data === "number") {
@@ -51,7 +51,7 @@ const NotificationBell = () => {
         count = response.count;
       }
 
-      console.log("📊 Setting unread count:", count);
+      // console.log("📊 Setting unread count:", count);
       setUnreadCount(count);
     } catch (error) {
       console.error("Failed to fetch unread count:", error);
@@ -63,7 +63,7 @@ const NotificationBell = () => {
     setLoading(true);
     try {
       const response = await getUserNotifications();
-      console.log("📥 Full API response:", response);
+      // console.log("📥 Full API response:", response);
 
       let notificationsArray: Notification[] = [];
 
@@ -83,11 +83,11 @@ const NotificationBell = () => {
         notificationsArray = response;
       }
 
-      console.log(
-        "📋 Setting notifications:",
-        notificationsArray.length,
-        "items"
-      );
+      // console.log(
+      //   "📋 Setting notifications:",
+      //   notificationsArray.length,
+      //   "items"
+      // );
       setNotifications(notificationsArray);
     } catch (error) {
       console.error("Failed to fetch notifications:", error);
@@ -166,7 +166,7 @@ const NotificationBell = () => {
       });
 
       socket.on("receive_message", () => {
-        console.log("💬 Message received, updating notifications");
+        // console.log("💬 Message received, updating notifications");
         fetchUnreadCount();
         if (isOpen) {
           fetchNotifications();

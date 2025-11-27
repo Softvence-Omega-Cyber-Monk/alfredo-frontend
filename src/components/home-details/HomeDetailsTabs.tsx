@@ -19,7 +19,7 @@ const HomeDetailsTabs = ({
   data: HomeDetailsType;
   singlePropertyData: PropertyDetails;
 }) => {
-  console.log(singlePropertyData, "dddddddd");
+  // console.log(singlePropertyData, "dddddddd");
   const { id } = useParams();
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
@@ -59,7 +59,7 @@ const HomeDetailsTabs = ({
         return;
       }
 
-      console.log("🗺️ Geocoding location:", locationString);
+      // console.log("🗺️ Geocoding location:", locationString);
 
       try {
         // Using Nominatim (OpenStreetMap) - free and no API key required
@@ -79,7 +79,7 @@ const HomeDetailsTabs = ({
         }
 
         const geocodeData = await response.json();
-        console.log("📍 Geocoding response:", geocodeData);
+        // console.log("📍 Geocoding response:", geocodeData);
 
         if (geocodeData && geocodeData.length > 0) {
           const coordinates = {
@@ -87,7 +87,7 @@ const HomeDetailsTabs = ({
             lng: parseFloat(geocodeData[0].lon),
           };
 
-          console.log("✅ Setting coordinates:", coordinates);
+          // console.log("✅ Setting coordinates:", coordinates);
           setLocationCoordinates(coordinates);
         } else {
           console.warn("❌ No geocoding results found for:", locationString);
