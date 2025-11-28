@@ -33,12 +33,12 @@ const UploadPhoto = ({ photos, onDataChange }: UploadPhotoProps) => {
 
       {/* Section */}
       <div className="mt-10">
-        <h3 className="text-lg text-primary-blue font-semibold ">
+        {/* <h3 className="text-lg text-primary-blue font-semibold ">
           {t("onboarding.part6.title4")}
-        </h3>
-        <p className="text-base text-dark-3 font-regular mt-3 ">
+        </h3> */}
+        {/* <p className="text-base text-dark-3 font-regular mt-3 ">
           {t("onboarding.part6.subtitle4")}
-        </p>
+        </p> */}
 
         <PhotoUpload
           photos={photos}

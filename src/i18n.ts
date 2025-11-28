@@ -11,7 +11,15 @@ i18n
     lng: "el", // Default to Greek
     fallbackLng: "en", // Fallback to English
     supportedLngs: ["el", "en"], // Supported languages
-    ns: ["translation", "banner", "article", "faq", "navigation", "articles"],
+    ns: [
+      "translation",
+      "banner",
+      "article",
+      "faq",
+      "navigation",
+      "articles",
+      "addPlaceModal",
+    ],
     defaultNS: "translation",
     backend: {
       loadPath: "/locales/{{lng}}/{{ns}}.json",
