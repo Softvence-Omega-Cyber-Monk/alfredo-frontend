@@ -8,7 +8,7 @@ interface ReviewsProps {
   propertyId: string;
   isOwner: boolean;
   userId: string | null;
-  isExchanged: boolean | null; // Add this prop
+  isExchanged: boolean | null;
 }
 
 const Reviews = ({
@@ -16,7 +16,7 @@ const Reviews = ({
   propertyId,
   isOwner,
   userId,
-  isExchanged, // Add this parameter
+  isExchanged,
 }: ReviewsProps) => {
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [rating, setRating] = useState(0);
@@ -25,10 +25,17 @@ const Reviews = ({
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+  const isSubscribed = user?.isSubscribed || false;
+
   // Handler for Add Review button click
   const handleAddReviewClick = () => {
     if (isExchanged !== true) {
       toast.error("You need to exchange first to give review");
+      return;
+    }
+    if (isSubscribed !== true) {
+      toast.error("You need to subscribe first to give review");
       return;
     }
     setShowReviewForm(!showReviewForm);

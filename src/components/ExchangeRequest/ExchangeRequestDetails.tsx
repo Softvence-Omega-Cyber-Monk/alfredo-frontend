@@ -19,6 +19,8 @@ const ExchangeRequestDetails = () => {
     (state) => state.exchangeRequest
   );
 
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+
   useEffect(() => {
     if (id) {
       dispatch(fetchExchangeRequestDetails(id));
@@ -88,15 +90,16 @@ const ExchangeRequestDetails = () => {
             </div>
           </div>
           <div className="flex flex-wrap gap-4 mt-8">
-            {currentRequest.status === "PENDING" && (
-              <>
-                <PrimaryButton
-                  title="Accept Request"
-                  className="bg-green-600 hover:bg-blue-900"
-                  onClick={() => handleAcceptRequest(id)}
-                />
-              </>
-            )}
+            {currentRequest.status === "PENDING" &&
+              currentRequest.fromUserId !== user?.id && (
+                <>
+                  <PrimaryButton
+                    title="Accept Request"
+                    className="bg-green-600 hover:bg-blue-900"
+                    onClick={() => handleAcceptRequest(id)}
+                  />
+                </>
+              )}
             <PrimaryButton
               title="Delete Request"
               className="bg-red-700 hover:bg-red-900"
