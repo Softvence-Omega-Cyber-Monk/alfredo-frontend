@@ -1,19 +1,11 @@
 import { useState } from "react";
 import { MoveLeft, MoveRight } from "lucide-react";
-
 import star1 from "../../assets/icons/Star22.svg";
 import star2 from "../../assets/icons/starBlue.svg";
-
 import GetStarted from "./GetStarted";
 import VerificationProcess from "./VerificationProcess";
-// import SelectType from "./SelectType";
-// import SelectAmenities from "./SelectAmenities";
-// import AboutYourHome from "./AboutYourHome";
 import UploadPhoto from "./UploadPhoto";
-// import HomeAvailability from "./HomeAvailability";
-
 import { AddPlaceData } from "@/types";
-// import { Amenity } from "@/lib/data/amenities";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
@@ -39,11 +31,6 @@ export type TravelGroup = "BY_MYSELF" | "FAMILY" | "COUPLE" | "FRIENDS";
 export type TravelWithPets = boolean;
 export type HomeApartmentType = "HOME" | "APARTMENT" | "BOAT" | "VAN" | "ROOM";
 
-// const propertyTypeLabels: Record<string, string> = {
-//   home: "Home",
-//   apartment: "Apartment",
-// };
-
 interface OnboardingData extends AddPlaceData {
   personalInformation: {
     age: AgeGroup;
@@ -61,11 +48,7 @@ interface OnboardingData extends AddPlaceData {
 const steps = [
   { number: 1, title: "onboarding.step1", subtitle: "onboarding.step1s" },
   { number: 2, title: "onboarding.step2", subtitle: "onboarding.step2s" },
-  // { number: 3, title: "onboarding.step3", subtitle: "onboarding.step3s" },
-  // { number: 4, title: "onboarding.step4", subtitle: "onboarding.step4s" },
-  // { number: 5, title: "onboarding.step5", subtitle: "onboarding.step5s" },
   { number: 3, title: "onboarding.step6", subtitle: "onboarding.step6s" },
-  // { number: 7, title: "onboarding.step7", subtitle: "onboarding.step7s" },
 ];
 
 const MultiStepForm = () => {
@@ -74,6 +57,7 @@ const MultiStepForm = () => {
   const dispatch = useAppDispatch();
 
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [addPlaceData, setAddPlaceData] = useState<
     OnboardingData & {
       homeAddress?: string;
@@ -110,19 +94,99 @@ const MultiStepForm = () => {
       notes: "",
     },
   });
+
   const handleDataUpdate = (updates: Partial<OnboardingData>) => {
     setAddPlaceData((prev) => ({ ...prev, ...updates }));
+    if (validationErrors.length > 0) {
+      setValidationErrors([]);
+    }
+  };
+
+  // Validation functions for each step
+  const validateStep1 = () => {
+    const errors: string[] = [];
+    if (!addPlaceData.homeAddress || addPlaceData.homeAddress.trim() === "") {
+      errors.push("Home location is required");
+    }
+    if (
+      !addPlaceData.destinationAddress ||
+      addPlaceData.destinationAddress.trim() === ""
+    ) {
+      errors.push("Destination is required");
+    }
+    if (!addPlaceData.location) {
+      errors.push("Please select home location on the map");
+    }
+    if (!addPlaceData.destination) {
+      errors.push("Please select destination on the map");
+    }
+    return errors;
+  };
+
+  const validateStep2 = () => {
+    const errors: string[] = [];
+    const pi = addPlaceData.personalInformation;
+
+    if (!pi.age) {
+      errors.push("Age group is required");
+    }
+    if (!pi.gender || pi.gender === "NOT_SPECIFIED") {
+      errors.push("Gender is required");
+    }
+    if (!pi.role) {
+      errors.push("Role/Occupation is required");
+    }
+    if (pi.travelType.length === 0) {
+      errors.push("At least one travel type is required");
+    }
+    if (pi.favoriteDestinations.length === 0) {
+      errors.push("At least one favorite destination is required");
+    }
+    if (!pi.travelGroup) {
+      errors.push("Travel group preference is required");
+    }
+
+    return errors;
+  };
+
+  const validateStep3 = () => {
+    const errors: string[] = [];
+    if (addPlaceData.photos.length === 0) {
+      errors.push("At least one photo is required");
+    }
+    return errors;
+  };
+
+  const validateCurrentStep = () => {
+    let errors: string[] = [];
+
+    switch (currentStep) {
+      case 1:
+        errors = validateStep1();
+        break;
+      case 2:
+        errors = validateStep2();
+        break;
+      case 3:
+        errors = validateStep3();
+        break;
+      default:
+        break;
+    }
+
+    setValidationErrors(errors);
+    return errors.length === 0;
   };
 
   const handleSubmitData = async () => {
+    if (!validateCurrentStep()) {
+      return;
+    }
+
     try {
-      // console.log("Starting form submission...");
       const user = localStorage.getItem("user");
-      // console.log("Raw user from localStorage:", user); // What does this log?
 
       const parsedUser = user ? JSON.parse(user) : null;
-      // console.log("Parsed user object:", parsedUser); // What does this log?
-      // console.log("User ID to be sent:", parsedUser?.id); // What does this log?
       const userId = parsedUser?.id;
 
       if (!userId) {
@@ -133,11 +197,6 @@ const MultiStepForm = () => {
       const formData = new FormData();
 
       const payload = {
-        // userId: parsedUser ? parsedUser?.id : null,
-        // location: addPlaceData.location,
-        // destinationCoords: addPlaceData.destination,
-
-        // first step (location)
         homeAddress: addPlaceData.homeAddress,
         destination: addPlaceData.destinationAddress,
 
@@ -180,7 +239,6 @@ const MultiStepForm = () => {
           ? new Date(addPlaceData.availabilityDates.end).toISOString()
           : null,
       };
-      // console.log("Onboarding Data to send to backend:", addPlaceData);
       formData.append("data", JSON.stringify(payload));
       addPlaceData.photos.forEach((file) => {
         formData.append("homeImages", file);
@@ -191,14 +249,12 @@ const MultiStepForm = () => {
         toast.success("Onboarding successful!");
         navigate("/dashboard");
       } else {
-        // result.error will contain the rejected value from the thunk
         console.error("Submission failed with error:", result.error);
         toast.error(
           "Error submitting property. " + (result.error.message || "")
         );
       }
     } catch (error) {
-      // This catches sync errors in handleSubmitData itself
       console.error("Unexpected error in handleSubmitData:", error);
       toast.error("An unexpected error occurred.");
     }
@@ -234,42 +290,6 @@ const MultiStepForm = () => {
             }
           />
         );
-      // case 3:
-      //   return (
-      //     <SelectType
-      //       homeType={addPlaceData.homeType}
-      //       residenceType={addPlaceData.residenceType}
-      //       onHomeTypeChange={(homeType: HomeApartmentType) =>
-      //         handleDataUpdate({
-      //           homeType,
-      //         })
-      //       }
-      //       onResidenceTypeChange={(residenceType: boolean) =>
-      //         handleDataUpdate({ residenceType })
-      //       }
-      //     />
-      //   );
-      // case 4:
-      //   return (
-      //     <SelectAmenities
-      //       selectedAmenities={addPlaceData.selectedAmenities}
-      //       onAmenitiesChange={(selectedAmenities: {
-      //         main: Amenity[];
-      //         transport: Amenity[];
-      //         surrounding: Amenity[];
-      //       }) => handleDataUpdate({ selectedAmenities })}
-      //     />
-      //   );
-      // case 5:
-      //   return (
-      //     <AboutYourHome
-      //       homeName={addPlaceData.homeName}
-      //       homeDescription={addPlaceData.homeDescription}
-      //       areaDescription={addPlaceData.areaDescription}
-      //       availabilityType={addPlaceData.availabilityType}
-      //       onDataChange={handleDataUpdate}
-      //     />
-      //   );
       case 3:
         return (
           <UploadPhoto
@@ -277,17 +297,7 @@ const MultiStepForm = () => {
             onDataChange={handleDataUpdate}
           />
         );
-      // case 7:
-      //   return (
-      //     <HomeAvailability
-      //       onDataChange={handleDataUpdate}
-      //       availabilityType={addPlaceData.availabilityType}
-      //       availabilityDates={addPlaceData.availabilityDates}
-      //       onAvailabilityChange={(availabilityDates) =>
-      //         handleDataUpdate({ availabilityDates })
-      //       }
-      //     />
-      //   );
+
       default:
         return <div className="text-center">Invalid step</div>;
     }
@@ -296,7 +306,10 @@ const MultiStepForm = () => {
   const renderButtons = () => {
     const cancelBtn = (
       <button
-        onClick={() => setCurrentStep(1)}
+        onClick={() => {
+          setCurrentStep(1);
+          setValidationErrors([]);
+        }}
         className="relative overflow-hidden rounded-full border border-[#80808080] transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer bg-white px-6 py-2 text-[#80808080] flex items-center justify-center gap-2.5 w-full md:w-auto"
       >
         <p className="relative z-10">{t("onboarding.stepButton1")}</p>
@@ -308,7 +321,10 @@ const MultiStepForm = () => {
 
     const backBtn = (
       <button
-        onClick={() => setCurrentStep((prev) => prev - 1)}
+        onClick={() => {
+          setCurrentStep((prev) => prev - 1);
+          setValidationErrors([]);
+        }}
         className="relative overflow-hidden rounded-full border border-[#A0BFE8] transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 text-[#A0BFE8] flex items-center justify-center gap-2.5 w-full md:w-auto"
       >
         <MoveLeft className="relative z-10 w-5 h-5" />
@@ -321,7 +337,11 @@ const MultiStepForm = () => {
 
     const continueBtn = (
       <button
-        onClick={() => setCurrentStep((prev) => prev + 1)}
+        onClick={() => {
+          if (validateCurrentStep()) {
+            setCurrentStep((prev) => prev + 1);
+          }
+        }}
         className="relative overflow-hidden rounded-full transition-colors text-sm md:text-base lg:text-lg font-medium cursor-pointer px-6 py-2 bg-primary-blue text-white flex items-center justify-center gap-2.5 w-full md:w-auto"
       >
         <p className="relative z-10">{t("onboarding.stepButton3")}</p>
@@ -439,6 +459,21 @@ const MultiStepForm = () => {
           );
         })}
       </div>
+
+      {/* Validation Errors */}
+      {validationErrors.length > 0 && (
+        <div className="my-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <h4 className="text-red-800 font-semibold mb-2">
+            Please fix the following errors:
+          </h4>
+          <ul className="list-disc list-inside text-red-700 text-sm space-y-1">
+            {validationErrors.map((error, index) => (
+              <li key={index}>{error}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {/* Step Content */}
       <div>{renderStepContent()}</div>
 

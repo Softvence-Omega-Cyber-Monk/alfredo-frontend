@@ -10,6 +10,8 @@ import {
   PropertyListItem,
 } from "@/store/Slices/PropertySlice/propertySlice";
 import { PropertyDetails } from "@/types/PropertyDetails";
+import CalendarRangePicker from "../onboarding/CalendarRangePicker";
+import { Label } from "../ui/label";
 
 const PropertiesGrid = () => {
   const navigate = useNavigate();
@@ -47,6 +49,8 @@ const PropertiesGrid = () => {
         location: singleProperty.location,
         country: singleProperty.country,
         isAvailable: singleProperty.isAvailable,
+        availabilityStartDate: singleProperty.availabilityStartDate || "",
+        availabilityEndDate: singleProperty.availabilityEndDate || "",
       });
     }
   }, [singleProperty, selectedProperty]);
@@ -91,6 +95,25 @@ const PropertiesGrid = () => {
     setDeleteModalOpen(true);
   };
 
+  const handleDateChange = (dates: {
+    start: Date | null;
+    end: Date | null;
+  }) => {
+    const formatDate = (date: Date | null): string => {
+      if (!date) return "";
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
+
+    setFormData((prev) => ({
+      ...prev,
+      availabilityStartDate: formatDate(dates.start),
+      availabilityEndDate: formatDate(dates.end),
+    }));
+  };
+
   const handleUpdateSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedProperty) return;
@@ -110,15 +133,17 @@ const PropertiesGrid = () => {
         location: formData.location || "",
         country: formData.country || "",
         isAvailable: formData.isAvailable || false,
+        availabilityStartDate: formData.availabilityStartDate || "",
+        availabilityEndDate: formData.availabilityEndDate || "",
         // Include other required fields with defaults
-        propertyType: formData.propertyType || "APARTMENT", // You might want to make this dynamic
+        propertyType: formData.propertyType || "APARTMENT",
         maxPeople: formData.maxPeople || 4,
         isTravelWithPets: formData.isTravelWithPets || false,
         // Add empty arrays for relationships if needed
         amenities: [],
         transports: [],
         surroundings: [],
-        removeImages: [], // Empty array since we're not removing any images
+        removeImages: [],
       };
 
       let updatedData: FormData = new FormData();
@@ -164,7 +189,7 @@ const PropertiesGrid = () => {
       await dispatch(deleteProperty(selectedProperty.id)).unwrap();
       setDeleteModalOpen(false);
       setSelectedProperty(null);
-      dispatch(fetchMyProperties()); // Refresh list
+      dispatch(fetchMyProperties());
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "Failed to delete property";
@@ -254,7 +279,7 @@ const PropertiesGrid = () => {
       {/* Edit Modal */}
       {editModalOpen && (
         <div className="fixed inset-0 backdrop-blur-lg flex items-center justify-center z-50 p-4">
-          <div className="bg-white p-6 rounded-lg max-w-2xl w-full max-h-[70vh] overflow-y-auto">
+          <div className="bg-white p-6 rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto">
             <h2 className="text-2xl font-bold mb-4">Edit Property</h2>
 
             {actionError && (
@@ -362,6 +387,24 @@ const PropertiesGrid = () => {
                     onChange={handleInputChange}
                     rows={4}
                     className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                {/* Availability Dates Section - NEW */}
+                <div className="mb-4">
+                  <Label className="block mb-2 font-medium">
+                    Availability Dates
+                  </Label>
+                  <CalendarRangePicker
+                    availabilityDates={{
+                      start: formData.availabilityStartDate
+                        ? new Date(formData.availabilityStartDate)
+                        : null,
+                      end: formData.availabilityEndDate
+                        ? new Date(formData.availabilityEndDate)
+                        : null,
+                    }}
+                    onAvailabilityChange={handleDateChange}
                   />
                 </div>
 

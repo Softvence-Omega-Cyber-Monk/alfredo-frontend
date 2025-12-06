@@ -39,7 +39,7 @@ const ArticleDetails = () => {
           <div className="mt-8 md:mt-12 lg:mt-16 mb-6 md:mb-8 lg:mb-10 text-center">
             <Breadcrumb
               items={[
-                { label: "Article", href: "/articles" },
+                { label: "Articles", href: "/articles" },
                 { label: "Details" },
               ]}
             />
