@@ -16,7 +16,6 @@ interface ArticleProps {
 const ArticleCard: FC<ArticleProps> = ({
   id,
   image,
-  lastUpdate,
   title,
   excerpt,
   isLocked = false,
@@ -64,7 +63,7 @@ const ArticleCard: FC<ArticleProps> = ({
         {/* Text content */}
         <div className="flex flex-col justify-between gap-8 text-dark-3 p-4 lg:p-6">
           <div>
-            <p className="text-base mb-4">Last Update: {lastUpdate}</p>
+            {/* <p className="text-base mb-4">Last Update: {lastUpdate}</p> */}
             <h2 className="text-2xl font-medium mb-3 text-primary-blue line-clamp-2 h-[60px]">
               {t(title)}
             </h2>

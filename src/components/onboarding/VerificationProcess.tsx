@@ -125,11 +125,11 @@ const VerificationProcess = ({
     { value: false, key: "no" },
   ];
 
-  const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // Convert the string input to a number, use 1 as a fallback if conversion fails
-    const value = parseInt(e.target.value, 10) || 1;
-    handleChange("maxPeople", value);
-  };
+  // const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   // Convert the string input to a number, use 1 as a fallback if conversion fails
+  //   const value = parseInt(e.target.value, 10) || 1;
+  //   handleChange("maxPeople", value);
+  // };
 
   return (
     <div className="w-full py-6 md:py-10 space-y-6">
@@ -356,7 +356,7 @@ const VerificationProcess = ({
             />
           </div> */}
 
-          <div>
+          {/* <div>
             <Label
               htmlFor="maxPeople"
               className="block text-lg text-[#3174CD] mb-2 font-semibold"
@@ -372,7 +372,7 @@ const VerificationProcess = ({
               className="border border-gray-300 w-full rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="e.g., 4"
             />
-          </div>
+          </div> */}
         </div>
 
         {/* Notes */}

@@ -5,82 +5,121 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
-import { fetchUser, updateUser } from "@/store/Slices/Profile/ProfileSlice";
+import { fetchUser } from "@/store/Slices/Profile/ProfileSlice";
 import penIcon from "@/assets/icons/pen-icon.svg";
 import { Textarea } from "@/components/ui/textarea";
 import NotificationPreferences from "../reusable/NotificationPreferences";
+import axios from "axios";
+
+type AgeGroup = "AGE_18_30" | "AGE_30_50" | "AGE_50_65" | "AGE_65_PLUS";
+type Gender = "MALE" | "FEMALE" | "NOT_SPECIFIED";
+type Role = "WORKER" | "RETIRED" | "STUDENT" | "UNEMPLOYED";
+type TravelGroup = "BY_MYSELF" | "FAMILY" | "COUPLE" | "FRIENDS";
 
 const ProfileForm = () => {
   const { t } = useTranslation("profile");
   const dispatch = useAppDispatch();
   const { data: user, loading } = useAppSelector((state) => state.user);
+  const [onboardingData, setOnboardingData] = useState<any>(null);
 
   const [formData, setFormData] = useState({
     fullName: "",
     phoneNumber: "",
-    city: "",
-    age: "",
+    homeAddress: "",
+    ageRange: "AGE_18_30" as AgeGroup,
+    gender: "NOT_SPECIFIED" as Gender,
+    employmentStatus: "RETIRED" as Role,
     travelType: [] as string[],
-    travelMostlyWith: "",
     favoriteDestinations: [] as string[],
+    travelMostlyWith: "BY_MYSELF" as TravelGroup,
     isTravelWithPets: false,
     notes: "",
-    aboutNeighborhood: "",
     photo: null as File | null,
   });
 
   const [preview, setPreview] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // swear word list
-  const bannedWords = ["Groot", "Fine", "Good", "Nice"];
-
   useEffect(() => {
-    dispatch(fetchUser());
+    const loadData = async () => {
+      await dispatch(fetchUser());
+      await fetchOnboardingData();
+      const userProfile = await fetchUserProfile();
+      if (userProfile) {
+        setPreview(userProfile.photo || "");
+      }
+    };
+    loadData();
   }, [dispatch]);
 
+  const fetchOnboardingData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        "https://vacanzagreece.gr/api/onboarding/user",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.data.success) {
+        setOnboardingData(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching onboarding data:", error);
+    }
+  };
+
+  const fetchUserProfile = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        "https://vacanzagreece.gr/api/user/my-profile",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+      return null;
+    }
+  };
+
   useEffect(() => {
-    if (user) {
+    if (user && onboardingData) {
       setFormData({
         fullName: user.fullName || "",
         phoneNumber: user.phoneNumber || "",
-        city: (user as any).city || "",
-        age:
-          typeof user.age === "number" ? user.age.toString() : user.age || "",
-        travelType: user.onboarding?.travelType || [],
-        travelMostlyWith: user.onboarding?.travelMostlyWith || "",
-        favoriteDestinations: user.onboarding?.favoriteDestinations || [],
-        isTravelWithPets: user.onboarding?.isTravelWithPets || false,
-        notes: user.onboarding?.notes || "",
-        aboutNeighborhood: user.onboarding?.aboutNeighborhood || "",
+        homeAddress: onboardingData.homeAddress || "",
+        ageRange: onboardingData.ageRange || "AGE_18_30",
+        gender: onboardingData.gender || "NOT_SPECIFIED",
+        employmentStatus: onboardingData.employmentStatus || "RETIRED",
+        travelType: onboardingData.travelType || [],
+        favoriteDestinations: onboardingData.favoriteDestinations || [],
+        travelMostlyWith: onboardingData.travelMostlyWith || "BY_MYSELF",
+        isTravelWithPets: onboardingData.isTravelWithPets || false,
+        notes: onboardingData.notes || "",
         photo: null,
       });
       setPreview(user.photo || "");
     }
-  }, [user]);
+  }, [user, onboardingData]);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value, type } = e.target;
+  const handleCheckboxChange = (name: string, value: string) => {
+    setFormData((prev) => {
+      const currentValues = prev[name as keyof typeof prev] as string[];
+      const isChecked = currentValues.includes(value);
 
-    if (type === "checkbox") {
-      const target = e.target as HTMLInputElement;
-      const checked = target.checked;
-
-      setFormData((prev) => {
-        const currentValues = prev[name as keyof typeof prev] as string[];
-        if (checked) {
-          return { ...prev, [name]: [...currentValues, value] };
-        } else {
-          return { ...prev, [name]: currentValues.filter((v) => v !== value) };
-        }
-      });
-    } else if (type === "radio") {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+      if (isChecked) {
+        return { ...prev, [name]: currentValues.filter((v) => v !== value) };
+      } else {
+        return { ...prev, [name]: [...currentValues, value] };
+      }
+    });
   };
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,77 +130,76 @@ const ProfileForm = () => {
     }
   };
 
-  const containsBannedWord = (text: string) => {
-    return bannedWords.some((word) => text.toLowerCase().includes(word));
-  };
-
-  const isFormComplete = () => {
-    const {
-      fullName,
-      phoneNumber,
-      city,
-      age,
-      travelType,
-      travelMostlyWith,
-      favoriteDestinations,
-      notes,
-      aboutNeighborhood,
-    } = formData;
-    return (
-      fullName &&
-      phoneNumber &&
-      city &&
-      age &&
-      travelType.length > 0 &&
-      travelMostlyWith &&
-      favoriteDestinations.length > 0 &&
-      notes.trim() !== "" &&
-      aboutNeighborhood.trim() !== ""
-    );
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (containsBannedWord(formData.notes)) {
-      toast.error("Please remove inappropriate words from notes.");
-      return;
-    }
-
+  const handleSubmit = async () => {
     setIsSubmitting(true);
 
+    console.log("Form Data State:", formData);
+    console.log("isTravelWithPets:", formData.isTravelWithPets);
+
     try {
+      const token = localStorage.getItem("token");
+
+      // ONE SINGLE REQUEST TO /api/user/me
       const payload = new FormData();
 
-      Object.entries(formData).forEach(([key, value]) => {
-        if (Array.isArray(value)) {
-          // Send array items as individual form fields
-          value.forEach((item) => {
-            payload.append(key, item);
-          });
-        } else if (typeof value === "boolean") {
-          payload.append(key, value ? "true" : "false");
-        } else if (value !== null && value !== "") {
-          payload.append(key, value as any);
-        }
-      });
-
-      if (isFormComplete()) {
-        payload.append("verified", "true"); // unlock verified badge
+      // User fields
+      payload.append("fullName", formData.fullName);
+      payload.append("phoneNumber", formData.phoneNumber);
+      if (formData.photo) {
+        payload.append("photo", formData.photo);
       }
 
-      await dispatch(updateUser(payload)).unwrap();
+      // Onboarding fields — ALL accepted by /user/me
+      payload.append("homeAddress", formData.homeAddress);
+      payload.append("ageRange", formData.ageRange);
+      payload.append("gender", formData.gender);
+      payload.append("employmentStatus", formData.employmentStatus);
+
+      // Arrays
+      formData.travelType.forEach((type) => payload.append("travelType", type));
+      formData.favoriteDestinations.forEach((dest) =>
+        payload.append("favoriteDestinations", dest)
+      );
+
+      payload.append("travelMostlyWith", formData.travelMostlyWith);
+
+      // THIS NOW WORKS PERFECTLY
+      payload.append(
+        "isTravelWithPets",
+        formData.isTravelWithPets ? "true" : "false"
+      );
+
+      payload.append("notes", formData.notes);
+
+      console.log("Sending full payload to /api/user/me");
+
+      const response = await axios.patch(
+        "https://vacanzagreece.gr/api/user/me",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("Update successful:", response.data);
+
+      // Refresh everything
       await dispatch(fetchUser());
+      await fetchOnboardingData();
 
       toast.success("Profile updated successfully!");
-    } catch (error) {
-      toast.error("Error updating profile.");
+    } catch (error: any) {
+      console.error("Error updating profile:", error);
+      toast.error(error.response?.data?.message || "Failed to update profile.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (loading) return <p>{t("profile.loading")}</p>;
+  if (loading || !onboardingData) return <p>{t("profile.loading")}</p>;
 
   return (
     <div className="w-full max-w-5xl mx-auto px-6 py-10 font-sans">
@@ -203,7 +241,7 @@ const ProfileForm = () => {
                         alt={badge.displayName}
                         className="w-7 h-7 object-contain"
                       />
-                    )}{" "}
+                    )}
                     {badge.displayName}
                   </div>
                 ))}
@@ -217,20 +255,30 @@ const ProfileForm = () => {
               Profile Information
             </h1>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-6">
               {/* Full Name */}
               <div>
-                <Label className="mb-2">Full Name</Label>
+                <Label className="mb-2 text-sm font-medium text-gray-700">
+                  Full Name
+                </Label>
                 <Input
                   name="fullName"
                   value={formData.fullName}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      fullName: e.target.value,
+                    }))
+                  }
+                  className="h-12 border-gray-300 rounded-lg"
                 />
               </div>
 
               {/* Phone Number */}
               <div>
-                <Label className="mb-2">Phone Number</Label>
+                <Label className="mb-2 text-sm font-medium text-gray-700">
+                  Phone Number
+                </Label>
                 <div className="flex gap-2">
                   <select
                     disabled
@@ -242,91 +290,224 @@ const ProfileForm = () => {
                   <Input
                     name="phoneNumber"
                     value={formData.phoneNumber}
-                    onChange={handleInputChange}
-                    className="flex-1 h-[40px]"
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        phoneNumber: e.target.value,
+                      }))
+                    }
+                    className="flex-1 h-12 border-gray-300 rounded-lg"
                     placeholder="Enter phone number"
                   />
                 </div>
               </div>
 
-              {/* City */}
+              {/* City/Home Address */}
               <div>
-                <Label className="mb-2">City</Label>
+                <Label className="mb-2 text-sm font-medium text-gray-700">
+                  City / Home Address
+                </Label>
                 <Input
-                  name="city"
-                  value={formData.city}
-                  onChange={handleInputChange}
+                  name="homeAddress"
+                  value={formData.homeAddress}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      homeAddress: e.target.value,
+                    }))
+                  }
+                  className="h-12 border-gray-300 rounded-lg"
+                  placeholder="Enter your home address"
                 />
               </div>
 
-              {/* Age */}
+              {/* Age Range - Radio */}
               <div>
-                <Label className="mb-2">Age</Label>
-                <Input
-                  name="age"
-                  value={formData.age}
-                  onChange={handleInputChange}
-                />
-              </div>
-
-              {/* Travel Type */}
-              <div>
-                <Label className="mb-2">I travel for</Label>
-                <div className="flex gap-3 flex-wrap">
+                <Label className="mb-3 text-sm font-medium text-gray-700 block">
+                  Age Range
+                </Label>
+                <div className="grid grid-cols-2 gap-3">
                   {[
-                    { value: "RELAX", label: "Relax" },
-                    { value: "ADVENTURE", label: "Adventure" },
-                    { value: "WORK", label: "Work" },
+                    { value: "AGE_18_30", label: "18-30" },
+                    { value: "AGE_30_50", label: "30-50" },
+                    { value: "AGE_50_65", label: "50-65" },
+                    { value: "AGE_65_PLUS", label: "65+" },
+                  ].map((age) => (
+                    <label
+                      key={age.value}
+                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                        formData.ageRange === age.value
+                          ? "border-[#3174CD] bg-[#EAF1FA]"
+                          : "border-gray-200 hover:border-gray-300"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="ageRange"
+                        value={age.value}
+                        checked={formData.ageRange === age.value}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            ageRange: e.target.value as AgeGroup,
+                          }))
+                        }
+                        className="w-5 h-5 text-[#3174CD]"
+                      />
+                      <span className="font-medium text-gray-700">
+                        {age.label}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Gender - Display Only (Not Editable) */}
+              <div>
+                <Label className="mb-3 text-sm font-medium text-gray-700 block">
+                  Gender
+                </Label>
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { value: "MALE", label: "Male" },
+                    { value: "FEMALE", label: "Female" },
+                    { value: "NOT_SPECIFIED", label: "Not Specified" },
+                  ].map((gender) => (
+                    <div
+                      key={gender.value}
+                      className={`flex items-center gap-3 p-4 border-2 rounded-lg transition-all ${
+                        formData.gender === gender.value
+                          ? "border-[#3174CD] bg-[#EAF1FA]"
+                          : "border-gray-200 bg-gray-50"
+                      }`}
+                    >
+                      {/* Fake radio button (just for looks) */}
+                      <div className="relative">
+                        <div
+                          className={`w-5 h-5 rounded-full border-2 ${
+                            formData.gender === gender.value
+                              ? "border-[#3174CD] bg-[#3174CD]"
+                              : "border-gray-300 bg-white"
+                          }`}
+                        >
+                          {formData.gender === gender.value && (
+                            <div className="absolute inset-1.5 bg-white rounded-full" />
+                          )}
+                        </div>
+                      </div>
+                      <span className="font-medium text-gray-700">
+                        {gender.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                {/* Optional: small note */}
+                <p className="text-xs text-gray-500 mt-2">
+                  Gender cannot be changed after registration.
+                </p>
+              </div>
+
+              {/* Employment Status - Radio */}
+              <div>
+                <Label className="mb-3 text-sm font-medium text-gray-700 block">
+                  Employment Status
+                </Label>
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { value: "WORKER", label: "Worker" },
+                    { value: "RETIRED", label: "Retired" },
+                    { value: "STUDENT", label: "Student" },
+                    { value: "UNEMPLOYED", label: "Unemployed" },
+                  ].map((status) => (
+                    <label
+                      key={status.value}
+                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                        formData.employmentStatus === status.value
+                          ? "border-[#3174CD] bg-[#EAF1FA]"
+                          : "border-gray-200 hover:border-gray-300"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="employmentStatus"
+                        value={status.value}
+                        checked={formData.employmentStatus === status.value}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            employmentStatus: e.target.value as Role,
+                          }))
+                        }
+                        className="w-5 h-5 text-[#3174CD]"
+                      />
+                      <span className="font-medium text-gray-700">
+                        {status.label}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Travel Type - Checkbox */}
+              <div>
+                <Label className="mb-3 text-sm font-medium text-gray-700 block">
+                  I travel for
+                </Label>
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { value: "Business", label: "Business" },
+                    { value: "Leisure", label: "Leisure" },
+                    { value: "Adventure", label: "Adventure" },
+                    { value: "Family", label: "Family" },
+                    { value: "Solo", label: "Solo" },
+                    { value: "Cultural", label: "Cultural" },
                   ].map((type) => (
-                    <label key={type.value} className="flex items-center gap-2">
+                    <label
+                      key={type.value}
+                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                        formData.travelType.includes(type.value)
+                          ? "border-[#3174CD] bg-[#EAF1FA]"
+                          : "border-gray-200 hover:border-gray-300"
+                      }`}
+                    >
                       <input
                         type="checkbox"
                         name="travelType"
                         value={type.value}
                         checked={formData.travelType.includes(type.value)}
-                        onChange={handleInputChange}
+                        onChange={() =>
+                          handleCheckboxChange("travelType", type.value)
+                        }
+                        className="w-5 h-5 text-[#3174CD] rounded"
                       />
-                      {type.label}
+                      <span className="font-medium text-gray-700">
+                        {type.label}
+                      </span>
                     </label>
                   ))}
                 </div>
               </div>
 
-              {/* Travel mostly with */}
+              {/* Favourite Destinations - Checkbox */}
               <div>
-                <Label className="mb-2">I travel mostly with</Label>
-                <div className="flex gap-3 flex-wrap">
+                <Label className="mb-3 text-sm font-medium text-gray-700 block">
+                  Favourite Destinations
+                </Label>
+                <div className="grid grid-cols-2 gap-3">
                   {[
-                    { value: "BY_MYSELF", label: "By Myself" },
-                    { value: "FAMILY", label: "Family" },
-                    { value: "COUPLE", label: "Couple" },
-                    { value: "FRIENDS", label: "Friends" },
-                  ].map((opt) => (
-                    <label key={opt.value} className="flex items-center gap-2">
-                      <input
-                        type="radio"
-                        name="travelMostlyWith"
-                        value={opt.value}
-                        checked={formData.travelMostlyWith === opt.value}
-                        onChange={handleInputChange}
-                      />
-                      {opt.label}
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Favourite destinations */}
-              <div>
-                <Label className="mb-2">Favourite destinations</Label>
-                <div className="flex gap-3 flex-wrap">
-                  {[
-                    { value: "BIG_CITIES", label: "Big Cities" },
-                    { value: "SMALL_CITIES", label: "Small Cities" },
-                    { value: "SEASIDE", label: "Sea side" },
-                    { value: "MOUNTAIN", label: "Mountain" },
+                    { value: "Big Cities", label: "Big Cities" },
+                    { value: "Small Cities", label: "Small Cities" },
+                    { value: "Seaside", label: "Seaside" },
+                    { value: "Mountain", label: "Mountain" },
                   ].map((dest) => (
-                    <label key={dest.value} className="flex items-center gap-2">
+                    <label
+                      key={dest.value}
+                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                        formData.favoriteDestinations.includes(dest.value)
+                          ? "border-[#3174CD] bg-[#EAF1FA]"
+                          : "border-gray-200 hover:border-gray-300"
+                      }`}
+                    >
                       <input
                         type="checkbox"
                         name="favoriteDestinations"
@@ -334,19 +515,76 @@ const ProfileForm = () => {
                         checked={formData.favoriteDestinations.includes(
                           dest.value
                         )}
-                        onChange={handleInputChange}
+                        onChange={() =>
+                          handleCheckboxChange(
+                            "favoriteDestinations",
+                            dest.value
+                          )
+                        }
+                        className="w-5 h-5 text-[#3174CD] rounded"
                       />
-                      {dest.label}
+                      <span className="font-medium text-gray-700">
+                        {dest.label}
+                      </span>
                     </label>
                   ))}
                 </div>
               </div>
 
-              {/* Travel with pets */}
+              {/* Travel Mostly With - Radio */}
               <div>
-                <Label className="mb-2">Traveling with pets</Label>
-                <div className="flex gap-4">
-                  <label className="flex items-center gap-2">
+                <Label className="mb-3 text-sm font-medium text-gray-700 block">
+                  I travel mostly with
+                </Label>
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { value: "BY_MYSELF", label: "By Myself" },
+                    { value: "FAMILY", label: "Family" },
+                    { value: "COUPLE", label: "Couple" },
+                    { value: "FRIENDS", label: "Friends" },
+                  ].map((opt) => (
+                    <label
+                      key={opt.value}
+                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                        formData.travelMostlyWith === opt.value
+                          ? "border-[#3174CD] bg-[#EAF1FA]"
+                          : "border-gray-200 hover:border-gray-300"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="travelMostlyWith"
+                        value={opt.value}
+                        checked={formData.travelMostlyWith === opt.value}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            travelMostlyWith: e.target.value as TravelGroup,
+                          }))
+                        }
+                        className="w-5 h-5 text-[#3174CD]"
+                      />
+                      <span className="font-medium text-gray-700">
+                        {opt.label}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Travel with Pets - Radio */}
+              <div>
+                <Label className="mb-3 text-sm font-medium text-gray-700 block">
+                  Traveling with pets
+                </Label>
+                <div className="grid grid-cols-2 gap-3">
+                  <label
+                    className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                      formData.isTravelWithPets === true
+                        ? "border-[#3174CD] bg-[#EAF1FA]"
+                        : "border-gray-200 hover:border-gray-300"
+                    }`}
+                  >
                     <input
                       type="radio"
                       name="isTravelWithPets"
@@ -358,10 +596,17 @@ const ProfileForm = () => {
                           isTravelWithPets: true,
                         }))
                       }
+                      className="w-5 h-5 text-[#3174CD]"
                     />
-                    Yes
+                    <span className="font-medium text-gray-700">Yes</span>
                   </label>
-                  <label className="flex items-center gap-2">
+                  <label
+                    className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                      formData.isTravelWithPets === false
+                        ? "border-[#3174CD] bg-[#EAF1FA]"
+                        : "border-gray-200 hover:border-gray-300"
+                    }`}
+                  >
                     <input
                       type="radio"
                       name="isTravelWithPets"
@@ -373,31 +618,26 @@ const ProfileForm = () => {
                           isTravelWithPets: false,
                         }))
                       }
+                      className="w-5 h-5 text-[#3174CD]"
                     />
-                    No
+                    <span className="font-medium text-gray-700">No</span>
                   </label>
                 </div>
               </div>
 
               {/* Notes */}
               <div>
-                <Label className="mb-2">Notes about yourself</Label>
+                <Label className="mb-2 text-sm font-medium text-gray-700">
+                  Notes about yourself
+                </Label>
                 <Textarea
                   name="notes"
                   value={formData.notes}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, notes: e.target.value }))
+                  }
                   placeholder="Tell us about yourself..."
-                />
-              </div>
-
-              {/* About Neighborhood */}
-              <div>
-                <Label className="mb-2">About Neighborhood</Label>
-                <Textarea
-                  name="aboutNeighborhood"
-                  value={formData.aboutNeighborhood}
-                  onChange={handleInputChange}
-                  placeholder="Tell us about your neighborhood..."
+                  className="min-h-[120px] border-gray-300 rounded-lg"
                 />
               </div>
 
@@ -407,20 +647,14 @@ const ProfileForm = () => {
               {/* Submit */}
               <div>
                 <Button
-                  type="submit"
+                  onClick={handleSubmit}
                   disabled={isSubmitting}
-                  className="w-full h-14 rounded-lg bg-[var(--color-primary-blue)] hover:bg-[#255DA8] text-white text-lg disabled:opacity-70"
+                  className="w-full h-14 rounded-lg bg-[#3174CD] hover:bg-[#255DA8] text-white text-lg disabled:opacity-70"
                 >
                   {isSubmitting ? "Saving..." : "Save Changes"}
                 </Button>
               </div>
-            </form>
-
-            {isFormComplete() && (
-              <p className="text-green-600 text-sm mt-3">
-                🎉 100% completed — Verified badge unlocked!
-              </p>
-            )}
+            </div>
           </div>
         </div>
       </div>
