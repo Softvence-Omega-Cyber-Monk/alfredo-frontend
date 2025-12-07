@@ -304,8 +304,8 @@
 
     "firstBonus": {
       "title": "12",
-      "content": "Total referrals",
-      "content1": "made."
+      "content": "Total referrals made",
+      "content1": ""
     },
     "secondBonus": {
       "title": "48",

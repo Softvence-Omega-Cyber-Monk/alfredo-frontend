@@ -2,7 +2,6 @@ import { Bell, Check, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { initSocket } from "@/services/socket";
 import {
-  getUnreadCount,
   getUserNotifications,
   markAsRead,
   markAllAsRead,
@@ -14,7 +13,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-// import { formatDistanceToNow } from "date-fns";
 import { toast } from "sonner";
 
 interface Notification {
@@ -34,39 +32,16 @@ const NotificationBell = () => {
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
-  // Fetch unread count
-  const fetchUnreadCount = async () => {
-    try {
-      const response = await getUnreadCount();
-      // console.log("📊 Unread count response:", response);
-
-      let count = 0;
-      if (typeof response?.data === "number") {
-        count = response.data;
-      } else if (response?.data?.unreadCount) {
-        count = response.data.unreadCount;
-      } else if (response?.unreadCount) {
-        count = response.unreadCount;
-      } else if (response?.count) {
-        count = response.count;
-      }
-
-      // console.log("📊 Setting unread count:", count);
-      setUnreadCount(count);
-    } catch (error) {
-      console.error("Failed to fetch unread count:", error);
-    }
-  };
-
-  // Fetch all notifications
+  // Fetch notifications and unread count from single API
   const fetchNotifications = async () => {
     setLoading(true);
     try {
       const response = await getUserNotifications();
-      // console.log("📥 Full API response:", response);
 
       let notificationsArray: Notification[] = [];
+      let count = 0;
 
+      // Extract notifications array
       if (
         response?.data?.notifications &&
         Array.isArray(response.data.notifications)
@@ -83,15 +58,22 @@ const NotificationBell = () => {
         notificationsArray = response;
       }
 
-      // console.log(
-      //   "📋 Setting notifications:",
-      //   notificationsArray.length,
-      //   "items"
-      // );
+      // Extract unread count from the same response
+      if (response?.data?.unreadCount !== undefined) {
+        count = response.data.unreadCount;
+      } else if (response?.unreadCount !== undefined) {
+        count = response.unreadCount;
+      } else {
+        // Fallback: calculate from notifications array
+        count = notificationsArray.filter((n) => !n.isRead).length;
+      }
+
       setNotifications(notificationsArray);
+      setUnreadCount(count);
     } catch (error) {
       console.error("Failed to fetch notifications:", error);
       setNotifications([]);
+      setUnreadCount(0);
     } finally {
       setLoading(false);
     }
@@ -106,10 +88,13 @@ const NotificationBell = () => {
           notif.id === id ? { ...notif, isRead: true } : notif
         )
       );
-      fetchUnreadCount();
+      // Decrease unread count locally
+      setUnreadCount((prev) => Math.max(0, prev - 1));
       toast.success("Notification marked as read");
     } catch (error) {
       toast.error("Failed to mark as read");
+      // Refresh to get accurate count
+      fetchNotifications();
     }
   };
 
@@ -124,18 +109,31 @@ const NotificationBell = () => {
       toast.success("All notifications marked as read");
     } catch (error) {
       toast.error("Failed to mark all as read");
+      // Refresh to get accurate count
+      fetchNotifications();
     }
   };
 
   // Delete single notification
   const handleDelete = async (id: string) => {
     try {
+      // Check if the notification being deleted is unread
+      const deletedNotif = notifications.find((n) => n.id === id);
+      const wasUnread = deletedNotif && !deletedNotif.isRead;
+
       await deleteNotification(id);
       setNotifications((prev) => prev.filter((notif) => notif.id !== id));
-      fetchUnreadCount();
+
+      // Decrease unread count if deleted notification was unread
+      if (wasUnread) {
+        setUnreadCount((prev) => Math.max(0, prev - 1));
+      }
+
       toast.success("Notification deleted");
     } catch (error) {
       toast.error("Failed to delete notification");
+      // Refresh to get accurate count
+      fetchNotifications();
     }
   };
 
@@ -148,29 +146,27 @@ const NotificationBell = () => {
       toast.success("All notifications deleted");
     } catch (error) {
       toast.error("Failed to delete all notifications");
+      // Refresh to get accurate count
+      fetchNotifications();
     }
   };
 
   useEffect(() => {
-    fetchUnreadCount();
+    // Initial fetch
+    fetchNotifications();
 
     if (user?.id) {
       const socket = initSocket(user.id);
 
       socket.on("new_notification", (data: any) => {
         console.log("🔔 New notification received:", data);
-        setUnreadCount((prev) => prev + 1);
-        if (isOpen) {
-          fetchNotifications();
-        }
+        // Refresh notifications to get updated list and count
+        fetchNotifications();
       });
 
       socket.on("receive_message", () => {
-        // console.log("💬 Message received, updating notifications");
-        fetchUnreadCount();
-        if (isOpen) {
-          fetchNotifications();
-        }
+        // Refresh notifications when message received
+        fetchNotifications();
       });
 
       return () => {
@@ -178,7 +174,7 @@ const NotificationBell = () => {
         socket.off("receive_message");
       };
     }
-  }, [user?.id, isOpen]);
+  }, [user?.id]);
 
   useEffect(() => {
     if (isOpen) {
@@ -255,11 +251,6 @@ const NotificationBell = () => {
                     <p className="text-sm text-gray-600 mb-2">
                       {notification.message}
                     </p>
-                    {/* <p className="text-xs text-gray-400">
-                      {formatDistanceToNow(new Date(notification.createdAt), {
-                        addSuffix: true,
-                      })}
-                    </p> */}
                   </div>
                   <div className="flex items-center gap-1">
                     {!notification.isRead && (

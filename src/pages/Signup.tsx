@@ -25,7 +25,7 @@ const signupSchema = z
     firstName: z.string().min(2, "First name must be at least 2 characters"),
     lastName: z.string().min(2, "Last name must be at least 2 characters"),
     email: z.string().email("Invalid email format"),
-    mobile: z.string().min(10, "Mobile number must be at least 10 digits"),
+    phoneNumber: z.string().min(10, "Mobile number must be at least 10 digits"),
     password: z
       .string()
       .min(6, "Password must be at least 6 characters")
@@ -71,7 +71,7 @@ const Signup = () => {
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
-        mobile: data.mobile,
+        phoneNumber: data.phoneNumber,
         password: data.password,
         referralCode: data.referralCode,
       })
@@ -166,15 +166,15 @@ const Signup = () => {
                 <input
                   type="text"
                   placeholder={t("auth.signup.phoneNumber")}
-                  {...register("mobile")}
+                  {...register("phoneNumber")}
                   className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2
                     [&::-webkit-outer-spin-button]:appearance-none 
                     [&::-webkit-inner-spin-button]:appearance-none 
                     [-moz-appearance:textfield]"
                 />
-                {errors.mobile && (
+                {errors.phoneNumber && (
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.mobile.message}
+                    {errors.phoneNumber.message}
                   </p>
                 )}
               </div>

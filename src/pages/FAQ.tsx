@@ -13,18 +13,32 @@ import {
 import { useTranslation } from "react-i18next";
 
 const FAQ = () => {
-  const { t } = useTranslation("faq");
+  const { t, i18n } = useTranslation("faq");
+  const currentLanguage = i18n.language;
+
   return (
     <div>
       <CommonWrapper>
         <div className="mt-[64px] max-[767px]:mt-[34px] max-[767px]:text-center border-b border-[#BFD4F0] pb-3 mb-6">
-          {/* <ClientHeading headingText="Frequently ask" spanText="questions" /> */}
-          <ClientHeading
-            headingText={t("faq.title")}
-            spanText={t("faq.highlight")}
-          />
+          {/*  Dynamic Heading */}
+          {currentLanguage === "el" ? (
+            <h1 className="text-center font-Grand-Hotel text-4xl lg:text-[60px] text-primary-blue mb-2">
+              Ερωτήσεις
+              <span className="text-3xl lg:text-[60px] text-[#505050] text-center font-sans">
+                {" "}
+                σχετικά με την Vacanza
+              </span>
+            </h1>
+          ) : (
+            <ClientHeading
+              headingText={t("faq.title")} // "About Vacanza"
+              spanText={t("faq.highlight")} // "questions"
+            />
+          )}
+
           <p className="text-[24px] py-6 font-normal text-basic-dark max-[767px]:text-base text-center">
-            {t("faq.subtitle")} <br className="max-[767px]:hidden" />
+            {t("faq.subtitle")}
+            <br className="max-[767px]:hidden" />
             {t("faq.subtitle1")}
           </p>
         </div>
@@ -80,7 +94,7 @@ const FAQ = () => {
         </div>
 
         {/* Plans Section */}
-        <div className="">
+        <div>
           <ClientHeading headingText="Our" spanText="plans" />
           <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-base py-6 text-center">
             Flexible membership options designed to fit every traveler’s needs—

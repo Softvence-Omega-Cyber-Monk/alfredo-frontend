@@ -60,7 +60,7 @@ export const signupUser = createAsyncThunk<
     firstName: string;
     lastName: string;
     email: string;
-    mobile: string;
+    phoneNumber: string;
     password: string;
     referralCode?: string;
   },
