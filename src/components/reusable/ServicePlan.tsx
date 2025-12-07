@@ -159,7 +159,7 @@ const ServicePlan: FC = () => {
             plans?.map((plan) => (
               <div
                 key={plan.id}
-                className={`relative p-[40px] flex flex-col w-full max-w-[384px] border border-primary-border-color rounded-[24px] text-center min-h-[680px] duration-300 transition-all ease-in-out
+                className={`relative p-[40px] flex flex-col w-full max-w-[394px] border border-primary-border-color rounded-[24px] text-center min-h-[680px] duration-300 transition-all ease-in-out
     ${
       plan.is_populer
         ? "bg-[#EAF1FA] shadow-2xl shadow-[#bfd4f0]"
@@ -167,7 +167,7 @@ const ServicePlan: FC = () => {
     }`}
               >
                 {/* Tag */}
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary-blue text-white text-[16px] px-6 py-[10px] rounded-full shadow-md">
+                <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary-blue text-white text-[16px] px-4 py-[10px] rounded-full shadow-md">
                   {plan.plan_duration} {plan.is_populer ? "(Popular)" : ""}
                 </div>
 
