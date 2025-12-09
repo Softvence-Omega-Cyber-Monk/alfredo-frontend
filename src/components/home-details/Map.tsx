@@ -19,7 +19,7 @@ const Map: React.FC<MapProps> = ({
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   return (
-    <div className="relative w-full h-[526px] rounded-2xl overflow-hidden border border-[#BFD4F0]">
+    <div className="relative w-full h-[526px] rounded-2xl overflow-hidden border border-[#BFD4F0] z-50">
       {/* Leaflet Map */}
       <LocationMap location={location} isLoggedIn={isLoggedIn} />
 

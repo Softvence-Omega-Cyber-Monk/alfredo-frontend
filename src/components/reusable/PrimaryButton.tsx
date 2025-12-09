@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 interface PrimaryButtonProps {
   title: string | ReactNode; // Changed to accept both string and ReactNode
@@ -13,7 +14,6 @@ interface PrimaryButtonProps {
 }
 
 const PrimaryButton: React.FC<PrimaryButtonProps> = ({
-  title,
   bgImage = "/buttonHomeIcon.svg",
   textColor = "text-white",
   bgColor = "bg-primary-blue",
@@ -22,6 +22,8 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
   onClick,
   className,
 }) => {
+  const { t } = useTranslation("homeDetails");
+
   return (
     <button
       onClick={onClick}
@@ -34,7 +36,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
         className
       )}
     >
-      <span className="relative z-10">{title}</span>
+      <span className="relative z-10">{t("contact")}</span>
       {bgImage && (
         <div className="absolute bottom-0 right-0 opacity-20 items-center justify-center overflow-hidden">
           <img

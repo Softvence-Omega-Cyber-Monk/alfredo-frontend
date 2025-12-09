@@ -50,7 +50,7 @@ const HomeDetails = () => {
               city={singleProperty?.location || ""}
               ownerDetails={singleProperty?.owner as OwnerDetails}
               callToAction={callToAction}
-              isPremiumMember={true} // You can replace this with actual premium status
+              isPremiumMember={true}
               onViewDetails={handleViewOwnerDetails}
             />
           </div>

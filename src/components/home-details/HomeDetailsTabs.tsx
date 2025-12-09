@@ -59,8 +59,6 @@ const HomeDetailsTabs = ({
         return;
       }
 
-      // console.log("🗺️ Geocoding location:", locationString);
-
       try {
         // Using Nominatim (OpenStreetMap) - free and no API key required
         const response = await fetch(
@@ -87,15 +85,15 @@ const HomeDetailsTabs = ({
             lng: parseFloat(geocodeData[0].lon),
           };
 
-          // console.log("✅ Setting coordinates:", coordinates);
+          // console.log(" Setting coordinates:", coordinates);
           setLocationCoordinates(coordinates);
         } else {
-          console.warn("❌ No geocoding results found for:", locationString);
+          console.warn(" No geocoding results found for:", locationString);
           // Set fallback coordinates
           setLocationCoordinates({ lat: 37.9838, lng: 23.7275 }); // Athens, Greece as fallback
         }
       } catch (error) {
-        console.error("❌ Geocoding failed:", error);
+        console.error(" Geocoding failed:", error);
         // Set fallback coordinates
         setLocationCoordinates({ lat: 37.9838, lng: 23.7275 }); // Athens, Greece as fallback
       } finally {

@@ -125,7 +125,7 @@ const OwnerInfo = ({
       {/* Call to Action */}
       <div className="py-6">
         <h4 className="text-sm font-regular text-dark-2">
-          {callToAction.message}
+          {t("startExchange")}
         </h4>
       </div>
       {/* <PrimaryButton {...callToAction.button} onClick={handleButtonClickTest} /> */}
@@ -138,7 +138,7 @@ const OwnerInfo = ({
           title={
             <div className="flex items-center justify-center gap-2">
               <Lock className="w-4 h-4" />
-              <span>{callToAction.button.title}</span>
+              <span>{t("homeDetails")}</span>
             </div>
           }
           textColor="text-[#8B8B8B]"

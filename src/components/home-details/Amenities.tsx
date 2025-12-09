@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import AmenityCard from "../reusable/AmenityCard";
 
 interface AmenitySection {
@@ -22,11 +23,13 @@ const Amenities: React.FC<AmenitiesProps> = ({ amenities }) => {
     amenities.transport.length > 0 ||
     amenities.surrounding.length > 0;
 
+  const { t } = useTranslation("homeDetails");
+
   if (!hasAmenities) {
     return (
       <div className="py-8">
         <h2 className="font-semibold text-primary-blue text-xl md:text-2xl font-regular mb-6">
-          Amenities
+          {t("amenities")}
         </h2>
         <p className="text-dark-3">No amenities information available.</p>
       </div>
@@ -38,7 +41,7 @@ const Amenities: React.FC<AmenitiesProps> = ({ amenities }) => {
       {amenities.main.length > 0 && (
         <>
           <h2 className="font-semibold text-primary-blue text-xl md:text-2xl font-regular mb-6">
-            Amenities
+            {t("amenities")}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
             {amenities.main.map((amenity, index) => (
@@ -51,7 +54,7 @@ const Amenities: React.FC<AmenitiesProps> = ({ amenities }) => {
       {amenities.transport.length > 0 && (
         <>
           <h2 className="font-semibold text-primary-blue text-xl md:text-2xl font-regular mt-10 mb-6">
-            Means of Transport
+            {t("transport")}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
             {amenities.transport.map((amenity, index) => (
@@ -64,7 +67,7 @@ const Amenities: React.FC<AmenitiesProps> = ({ amenities }) => {
       {amenities.surrounding.length > 0 && (
         <>
           <h2 className="font-semibold text-primary-blue text-xl md:text-2xl font-regular mt-10 mb-6">
-            What's surrounding your home?
+            {t("surrounding")}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
             {amenities.surrounding.map((amenity, index) => (
