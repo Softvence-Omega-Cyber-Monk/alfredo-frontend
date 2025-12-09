@@ -26,7 +26,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
     <button
       onClick={onClick}
       className={clsx(
-        "relative overflow-hidden rounded-full transition-colors text-lg hover:brightness-90 font-medium cursor-pointer",
+        "relative overflow-hidden rounded-full transition-colors text-lg hover:brightness-90 font-medium cursor-pointer flex items-center justify-center",
         padding,
         textColor,
         bgColor,
@@ -34,14 +34,13 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
         className
       )}
     >
-      <span className="relative z-10">{title}</span>
+      <div className="relative z-10 flex items-center justify-center gap-2">
+        {title}
+      </div>
+
       {bgImage && (
-        <div className="absolute bottom-0 right-0 opacity-20 items-center justify-center overflow-hidden">
-          <img
-            src={bgImage}
-            alt="icon"
-            className="w-full hover:text-primary-blue"
-          />
+        <div className="absolute bottom-0 right-0 opacity-20 pointer-events-none">
+          <img src={bgImage} alt="icon" />
         </div>
       )}
     </button>
