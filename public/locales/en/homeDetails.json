@@ -6,13 +6,17 @@
     "baths": "Baths",
     "area": "sqm"
   },
+  "availableFrom": "Available from",
   "photos": "Photos",
   "description": "Description",
   "amenities": "Amenities",
+  "transport": "Transport",
+  "surrounding": "Surrounding",
   "map": "Map",
   "reviews": "Reviews",
   "faq": "FAQ",
   "chatWith": "Chat with",
   "achievementBadge": "Achievement Badge",
-  "startExchange": "Start exchanging your home! Create a VACANZA account to start contacting members."
+  "startExchange": "Start exchanging your home! Create a VACANZA account to start contacting members.",
+  "contact": "Contact"
 }
