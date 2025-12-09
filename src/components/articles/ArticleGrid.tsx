@@ -11,7 +11,7 @@ const ArticleGrid = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 md:mt-16 lg:mt-20">
-      {filteredArticles.map((article, index) => {
+      {filteredArticles.map((article) => {
         const translatedTitle = t(article.title);
         const isReserved =
           translatedTitle.includes("(RESERVED TO MEMBERS)") ||
@@ -19,7 +19,7 @@ const ArticleGrid = () => {
 
         return (
           <ArticleCard
-            key={index}
+            key={article.id}
             {...article}
             isReserved={isReserved}
             isLocked={isReserved && !isSubscribed}
