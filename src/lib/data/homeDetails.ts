@@ -186,7 +186,7 @@ export const homeDetailsData: HomeDetailsType = {
     message:
       "Start exchanging your home! Create a VACANZA account to start contacting members.",
     button: {
-      title: "Contact",
+      title: "contact",
       textColor: "text-white",
       bgColor: "bg-primary-blue w-full",
       borderColor: "border-none",
