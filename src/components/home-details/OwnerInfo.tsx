@@ -11,8 +11,11 @@ interface OwnerInfoProps {
   ownerDetails?: OwnerDetails;
   callToAction: {
     message: string;
-    button: React.ComponentProps<typeof PrimaryButton>;
+    button: Omit<React.ComponentProps<typeof PrimaryButton>, "title"> & {
+      title: string; // translation key ONLY
+    };
   };
+
   isPremiumMember?: boolean;
   onViewDetails?: () => void; // Add this prop
 }
@@ -132,13 +135,17 @@ const OwnerInfo = ({
 
       {/* Conditional Button based on subscription */}
       {isUserSubscribed ? (
-        <PrimaryButton {...callToAction.button} onClick={handleButtonClick} />
+        <PrimaryButton
+          {...callToAction.button}
+          title={t(callToAction.button.title)}
+          onClick={handleButtonClick}
+        />
       ) : (
         <PrimaryButton
           title={
             <div className="flex items-center justify-center gap-2">
               <Lock className="w-4 h-4" />
-              <span>{t("homeDetails")}</span>
+              <span>{t("contact")}</span>
             </div>
           }
           textColor="text-[#8B8B8B]"
