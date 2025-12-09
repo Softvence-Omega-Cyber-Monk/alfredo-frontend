@@ -1,13 +1,15 @@
 import articleImage from "@/assets/articles/article-top.jpg";
-// import testimonailPerson from "@/assets/testimonailPerson.jpg";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import MarkdownContent from "@/components/reusable/MarkdownContent"; // ADD THIS
+
 const TopArticle = () => {
   const { t } = useTranslation("articles");
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 relative">
       <div className="absolute top-6 left-6">
-        <p className=" bg-[#001C4233] bg-blur-[8px] border border-[#F4F7FC] px-4 py-2 rounded-lg text-white">
+        <p className="bg-[#001C4233] bg-blur-[8px] border border-[#F4F7FC] px-4 py-2 rounded-lg text-white">
           Latest Article
         </p>
       </div>
@@ -24,23 +26,24 @@ const TopArticle = () => {
               {t("articles.showcaseArticle.title")}
             </h2>
           </Link>
-          <p className="text-xl lg:text-2xl font-normal mb-3 line-clamp-8">
-            {t("articles.showcaseArticle.description")}
-          </p>
-        </div>
-        {/* <div className="flex items-center gap-4">
-          <img
-            src={testimonailPerson}
-            className="w-16 h-16 rounded-full object-cover object-center"
-            alt="Author Avatar"
-          />
-          <div className="flex flex-col gap-1">
-            <h3 className="text-[20px] font-bold text-primary-blue">
-              Abraham Sulivann
-            </h3>
-            <p className="text-sm font-normal">Manager of IT</p>
+          {/* REPLACE THIS SECTION */}
+          <div className="line-clamp-4 overflow-hidden">
+            <MarkdownContent
+              content={
+                t("articles.showcaseArticle.description").split(
+                  "other person."
+                )[0]
+              }
+            />
           </div>
-        </div> */}
+
+          {/* <div className="line-clamp-8 overflow-hidden">
+            <MarkdownContent
+              content={t("articles.showcaseArticle.description")}
+            />
+          </div> */}
+          {/* END REPLACE */}
+        </div>
       </div>
     </div>
   );

@@ -1,74 +1,78 @@
 import { useParams } from "react-router-dom";
-// import PrimaryButton from "../components/reusable/PrimaryButton";
-// import RelatedArticles from "../components/articles/RelatedArticles";
-import CommonWrapper from "@/common/CommonWrapper";
-import Testimonial from "@/components/reusable/Testimonial";
-import Breadcrumb from "../components/articles/Breadcrumb";
 import { useTranslation } from "react-i18next";
-import { articles } from "@/lib/data/articles";
-import ArticleDescription from "@/components/articles/ArticleDescription";
+import CommonWrapper from "@/common/CommonWrapper";
+import MarkdownContent from "@/components/reusable/MarkdownContent";
+import { articleImages } from "@/services/articleAssets";
 
-// const allArticles = [
-//   {
-//     id: "1",
-//     image: articleImage,
-//     lastUpdate: "20-June-2024",
-//     title: "Vacanza 101: How to travel without paying for accommodation",
-//     excerpt:
-//       "Vacanza is the first greek platform that brings to Greece exclusively the home exchange model. It has been proved to be very successful in other countries of Europe mainly for traveling without paying for accommodation, but also for forming bonds with new people...",
-//     author: {
-//       name: "Mr. Jhon Don",
-//       role: "Manager of IT",
-//       avatar: testimonealPerson,
-//     },
-//   },
-//   // ...other articles
-// ];
-
-const ArticleDetails = () => {
-  const { id } = useParams();
-  const article = articles.find((a) => a.id === id) ?? articles[0];
+const ArticleDetail = () => {
+  const { id } = useParams<{ id: string }>();
   const { t } = useTranslation("articles");
 
-  // console.log(article, "article details");
+  // Get the article key based on ID
+  // Since your JSON has "showcaseArticle", "firstArticle", "secondArticle"
+  // Map the ID to the correct key
+  const getArticleKey = (articleId: string | undefined) => {
+    switch (articleId) {
+      case "0":
+        return "showcaseArticle";
+      case "1":
+        return "firstArticle";
+      case "2":
+        return "secondArticle";
+      case "3":
+        return "thirdArticle";
+      case "4":
+        return "fourthArticle";
+      case "5":
+        return "fifthArticle";
+      case "6":
+        return "sixthArticle";
+      case "7":
+        return "seventhArticle";
+      case "8":
+        return "eighthArticle";
+      case "9":
+        return "ninthArticle";
+      case "10":
+        return "tenthArticle";
+      case "11":
+        return "eleventhArticle";
+      case "12":
+        return "twelfthArticle";
+      case "13":
+        return "thirteenthArticle";
+      case "14":
+        return "fourteenthArticle";
+      default:
+        return "showcaseArticle";
+    }
+  };
+
+  const articleKey = getArticleKey(id);
+  const articleTitle = t(`articles.${articleKey}.title`);
+  const articleContent = t(`articles.${articleKey}.description`);
+
+  const image = articleImages[articleKey];
 
   return (
-    <div>
-      <CommonWrapper>
-        <div className="max-w-[996px] mx-auto px-4">
-          <div className="mt-8 md:mt-12 lg:mt-16 mb-6 md:mb-8 lg:mb-10 text-center">
-            <Breadcrumb
-              items={[
-                { label: "Articles", href: "/articles" },
-                { label: "Details" },
-              ]}
-            />
-          </div>
-          <h1 className="text-2xl lg:text-[32px] font-medium text-primary-blue mb-6 lg:mb-8 max-w-[700px] mx-auto text-center">
-            {t(article.title)}
-          </h1>
-          <div className="relative">
-            <img
-              src={article.image}
-              alt={article.title}
-              className="rounded-2xl w-full"
-            />
-          </div>
-          <div className="text-base lg:text-lg text-dark-3 font-normal py-6 md:py-8 lg:py-10">
-            <ArticleDescription text={t(article.excerpt)} />
-          </div>
+    <CommonWrapper>
+      <div className="max-w-4xl mx-auto p-4 lg:p-8">
+        <h1 className="text-4xl font-bold text-primary-blue mb-12">
+          {articleTitle}
+        </h1>
 
-          {/* <div className="text-center">
-            <PrimaryButton title="Read More" />
-          </div> */}
-        </div>
-        <div className=" mt-24 md:mt-32 lg:mt-36">
-          {/* <RelatedArticles /> */}
-        </div>
-        <Testimonial />
-      </CommonWrapper>
-    </div>
+        {/* RENDER MARKDOWN CONTENT */}
+        {image && (
+          <img
+            src={image}
+            alt={articleTitle}
+            className="w-full rounded-2xl mb-8"
+          />
+        )}
+        <MarkdownContent content={articleContent} />
+      </div>
+    </CommonWrapper>
   );
 };
 
-export default ArticleDetails;
+export default ArticleDetail;

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Lock } from "lucide-react";
+import MarkdownContent from "./MarkdownContent"; // ADD THIS
 
 interface ArticleProps {
   id: string;
@@ -21,8 +22,6 @@ const ArticleCard: FC<ArticleProps> = ({
   isLocked = false,
 }) => {
   const { t } = useTranslation("articles");
-
-  // If locked → redirect to plan page
   const targetLink = isLocked ? "/plans" : `/articles/${id}`;
 
   return (
@@ -36,12 +35,10 @@ const ArticleCard: FC<ArticleProps> = ({
         }
         bg-transparent`}
       >
-        {/* Decorative background */}
         <div className="absolute bottom-0 right-0 -z-10">
           <img src="/articleHomeIcon.svg" alt="" />
         </div>
 
-        {/* Image */}
         <div className="rounded-xl lg:rounded-3xl overflow-hidden relative">
           <img
             src={image}
@@ -49,7 +46,6 @@ const ArticleCard: FC<ArticleProps> = ({
             alt={title}
           />
 
-          {/*  Lock overlay for locked articles */}
           {isLocked && (
             <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white text-center p-4">
               <Lock className="w-10 h-10 mb-2" />
@@ -60,14 +56,16 @@ const ArticleCard: FC<ArticleProps> = ({
           )}
         </div>
 
-        {/* Text content */}
         <div className="flex flex-col justify-between gap-8 text-dark-3 p-4 lg:p-6">
           <div>
-            {/* <p className="text-base mb-4">Last Update: {lastUpdate}</p> */}
             <h2 className="text-2xl font-medium mb-3 text-primary-blue line-clamp-2 h-[60px]">
               {t(title)}
             </h2>
-            <p className="text-base mb-3 line-clamp-4">{t(excerpt)}</p>
+            {/* REPLACE THIS SECTION */}
+            <div className="line-clamp-4 overflow-hidden">
+              <MarkdownContent content={t(excerpt)} />
+            </div>
+            {/* END REPLACE */}
           </div>
         </div>
       </div>
