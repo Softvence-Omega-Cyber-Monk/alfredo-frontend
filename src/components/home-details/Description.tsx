@@ -16,7 +16,7 @@ const Description = ({ dates, description }: DescriptionProps) => {
         <span className="font-semibold text-primary-blue pr-3">
           {t("availableFrom")}
         </span>
-        {dates.from} to {dates.to}
+        {dates.from} {t("to")} {dates.to}
       </h2>
 
       <h2 className="font-semibold text-primary-blue text-lg md:text-xl pb-1 md:pb-3 border-b border-[#BFD4F0] font-regular mb-3 md:mb-6">
