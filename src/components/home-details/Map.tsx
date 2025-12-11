@@ -3,6 +3,7 @@ import { useState } from "react";
 import mapImage from "@/assets/home/mapOverlay.png";
 import PrimaryButton from "../reusable/PrimaryButton";
 import LocationMap from "./LocationMap";
+import { useTranslation } from "react-i18next";
 
 interface MapProps {
   isLoggedIn?: boolean;
@@ -17,6 +18,8 @@ const Map: React.FC<MapProps> = ({
   location = { lat: 23.8103, lng: 90.4125 },
 }) => {
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+
+  const { t } = useTranslation("homeDetails");
 
   return (
     <div className="relative w-full h-[526px] rounded-2xl overflow-hidden border border-[#BFD4F0] z-50">
@@ -33,14 +36,13 @@ const Map: React.FC<MapProps> = ({
             <img src={mapImage} alt="Map Overlay" />
           </div>
           <h3 className="text-xl font-medium text-primary-blue mb-2">
-            Become a member to view location
+            {t("becomeMember")}
           </h3>
           <p className="text-center text-lg max-w-xl text-dark-2">
-            Create your account to view the map, connect with fellow members,
-            and join our trusted community of like-minded travellers!
+            {t("becomeMemberDesc")}
           </p>
           <PrimaryButton
-            title="Join"
+            title={t("join")}
             textColor="text-white mt-4"
             bgColor="bg-primary-blue"
           />
@@ -58,11 +60,9 @@ const Map: React.FC<MapProps> = ({
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-2xl font-semibold text-dark-3 mb-4">
-              Choose a plan
+              {t("chooseAPlan")}
             </h2>
-            <p className="text-gray-600 mb-6">
-              Please buy a plan to access the map and connect with the
-            </p>
+            <p className="text-gray-600 mb-6">{t("chooseAPlanDesc")}</p>
             <div className="flex gap-4">
               <button
                 className="flex-1 py-3 px-6 bg-primary-blue text-white rounded-lg hover:bg-blue-600 transition-colors"
@@ -71,7 +71,7 @@ const Map: React.FC<MapProps> = ({
                   window.location.href = "/plans";
                 }}
               >
-                Plan
+                {t("plan")}
               </button>
               {/* <button
                 className="flex-1 py-3 px-6 border border-primary-blue text-primary-blue rounded-lg hover:bg-blue-50 transition-colors"

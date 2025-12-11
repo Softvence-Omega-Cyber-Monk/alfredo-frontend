@@ -19,5 +19,11 @@
   "achievementBadge": "Achievement Badge",
   "startExchange": "Start exchanging your home! Create a VACANZA account to start contacting members.",
   "contact": "Contact",
- "to": "to" 
+  "to": "to",
+  "becomeMember": "Become a member to view location",
+  "becomeMemberDesc": "Create your account to view the map, connect with fellow members and join our trusted community of like-minded travellers",
+  "chooseAPlan": "Choose a plan",
+  "chooseAPlanDesc": "Please buy a plan to access the map and connect with the",
+  "join": "Join",
+  "plan": "Plan"
 }
