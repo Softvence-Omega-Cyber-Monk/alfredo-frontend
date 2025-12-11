@@ -33,7 +33,7 @@ const Map: React.FC<MapProps> = ({
             <img src={mapImage} alt="Map Overlay" />
           </div>
           <h3 className="text-xl font-medium text-primary-blue mb-2">
-            Unlock This Home’s Location
+            Become a member to view location
           </h3>
           <p className="text-center text-lg max-w-xl text-dark-2">
             Create your account to view the map, connect with fellow members,
