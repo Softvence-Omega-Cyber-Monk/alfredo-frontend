@@ -18,9 +18,9 @@ const TopArticle = () => {
       </div>
       <div className="lg:col-span-7 flex flex-col gap-8 lg:gap-4 justify-between text-dark-3">
         <div>
-          <p className="text-sm lg:text-base font-normal mb-3">
+          {/* <p className="text-sm lg:text-base font-normal mb-3">
             Last Update: 20-June-2024
-          </p>
+          </p> */}
           <Link to="/articles/0">
             <h2 className="text-2xl lg:text-[32px] font-medium mb-4 text-primary-blue line-clamp-2">
               {t("articles.showcaseArticle.title")}

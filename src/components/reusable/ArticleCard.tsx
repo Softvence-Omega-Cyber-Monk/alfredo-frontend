@@ -58,7 +58,7 @@ const ArticleCard: FC<ArticleProps> = ({
 
         <div className="flex flex-col justify-between gap-8 text-dark-3 p-4 lg:p-6">
           <div>
-            <h2 className="text-2xl font-medium mb-3 text-primary-blue line-clamp-2 h-[60px]">
+            <h2 className="text-2xl font-medium mb-3 text-primary-blue line-clamp-2 h-[64px]">
               {t(title)}
             </h2>
             {/* REPLACE THIS SECTION */}
