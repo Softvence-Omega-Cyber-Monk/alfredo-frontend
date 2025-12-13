@@ -66,7 +66,7 @@ const ArticleDetail = () => {
           <img
             src={image}
             alt={articleTitle}
-            className="w-full rounded-2xl mb-8"
+            className="w-full h-[600px] object-cover rounded-2xl mb-8"
           />
         )}
         <MarkdownContent content={articleContent} />
