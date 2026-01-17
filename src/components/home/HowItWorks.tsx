@@ -10,6 +10,7 @@ import bg3 from "@/assets/home/htwBg3.svg";
 
 import HowItWorksCard from "./HowItWorksCard";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const HowItWorks = () => {
   const { t } = useTranslation("howItWorks");
@@ -56,15 +57,17 @@ const HowItWorks = () => {
         {/* How it works Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10">
           {cardsData.map((card, index) => (
-            <HowItWorksCard
-              key={index}
-              mainImage={card.mainImage}
-              backgroundImage={card.backgroundImage}
-              title={card.title}
-              description={card.description}
-              backgroundColor={card.backgroundColor}
-              titleColor={card.titleColor}
-            />
+            <Link to="/plans">
+              <HowItWorksCard
+                key={index}
+                mainImage={card.mainImage}
+                backgroundImage={card.backgroundImage}
+                title={card.title}
+                description={card.description}
+                backgroundColor={card.backgroundColor}
+                titleColor={card.titleColor}
+              />
+            </Link>
           ))}
         </div>
       </CommonWrapper>

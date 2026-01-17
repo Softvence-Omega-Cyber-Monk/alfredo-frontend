@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 interface PhotoType {
   src: string;
@@ -11,12 +12,42 @@ interface PhotosProps {
 
 const Photos = ({ photos }: PhotosProps) => {
   const [showPreview, setShowPreview] = useState(false);
-  const [selectedImage, setSelectedImage] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleImageClick = (imageSrc: string) => {
-    setSelectedImage(imageSrc);
+  const handleImageClick = (index: number) => {
+    setCurrentIndex(index);
     setShowPreview(true);
   };
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev + 1) % photos.length);
+  };
+
+  const handlePrevious = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (!showPreview) return;
+
+    if (e.key === "ArrowRight") {
+      setCurrentIndex((prev) => (prev + 1) % photos.length);
+    } else if (e.key === "ArrowLeft") {
+      setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length);
+    } else if (e.key === "Escape") {
+      setShowPreview(false);
+    }
+  };
+
+  // Add keyboard event listener
+  useState(() => {
+    if (showPreview) {
+      window.addEventListener("keydown", handleKeyDown as any);
+      return () => window.removeEventListener("keydown", handleKeyDown as any);
+    }
+  });
 
   if (!photos || photos.length === 0) {
     return (
@@ -31,7 +62,7 @@ const Photos = ({ photos }: PhotosProps) => {
       {/* Main Image */}
       <div
         className="rounded-lg md:rounded-xl lg:rounded-3xl overflow-hidden cursor-pointer"
-        onClick={() => handleImageClick(photos[0]?.src)}
+        onClick={() => handleImageClick(0)}
       >
         <img
           src={photos[0]?.src}
@@ -50,7 +81,7 @@ const Photos = ({ photos }: PhotosProps) => {
             <div
               key={index}
               className="rounded-lg md:rounded-xl lg:rounded-3xl overflow-hidden cursor-pointer relative group"
-              onClick={() => handleImageClick(photo.src)}
+              onClick={() => handleImageClick(index + 1)}
             >
               <img
                 src={photo.src}
@@ -69,24 +100,90 @@ const Photos = ({ photos }: PhotosProps) => {
       {/* Image Preview Overlay */}
       {showPreview && (
         <div
-          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center"
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
           onClick={() => setShowPreview(false)}
         >
-          <div className="relative max-w-6xl mx-auto p-4 rounded-2xl overflow-hidden">
-            <img
-              src={selectedImage}
-              className="w-full h-auto max-h-[80vh] object-contain rounded-2xl overflow-hidden"
-              alt=""
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "/placeholder-image.jpg";
-              }}
-            />
+          <div className="relative w-full h-full flex items-center justify-center p-4">
+            {/* Close Button */}
             <button
-              className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-2 m-2 hover:bg-black/75 transition-colors cursor-pointer"
-              onClick={() => setShowPreview(false)}
+              className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-3 hover:bg-black/75 transition-colors cursor-pointer z-10"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowPreview(false);
+              }}
             >
-              ×
+              <X size={24} />
             </button>
+
+            {/* Image Counter */}
+            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-white bg-black/50 px-4 py-2 rounded-full">
+              {currentIndex + 1} / {photos.length}
+            </div>
+
+            {/* Previous Button */}
+            {photos.length > 1 && (
+              <button
+                className="absolute left-4 text-white bg-black/50 rounded-full p-3 hover:bg-black/75 transition-colors cursor-pointer z-10"
+                onClick={handlePrevious}
+              >
+                <ChevronLeft size={32} />
+              </button>
+            )}
+
+            {/* Main Image */}
+            <div
+              className="max-w-6xl max-h-[85vh] flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={photos[currentIndex]?.src}
+                className="max-w-full max-h-[85vh] object-contain rounded-2xl"
+                alt={photos[currentIndex]?.alt}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = "/placeholder-image.jpg";
+                }}
+              />
+            </div>
+
+            {/* Next Button */}
+            {photos.length > 1 && (
+              <button
+                className="absolute right-4 text-white bg-black/50 rounded-full p-3 hover:bg-black/75 transition-colors cursor-pointer z-10"
+                onClick={handleNext}
+              >
+                <ChevronRight size={32} />
+              </button>
+            )}
+
+            {/* Thumbnail Strip */}
+            {photos.length > 1 && (
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 max-w-[90vw] overflow-x-auto px-4 py-2 bg-black/50 rounded-lg">
+                {photos.map((photo, index) => (
+                  <div
+                    key={index}
+                    className={`flex-shrink-0 w-16 h-16 rounded cursor-pointer transition-all ${
+                      index === currentIndex
+                        ? "ring-2 ring-white scale-110"
+                        : "opacity-60 hover:opacity-100"
+                    }`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCurrentIndex(index);
+                    }}
+                  >
+                    <img
+                      src={photo.src}
+                      className="w-full h-full object-cover rounded"
+                      alt={photo.alt}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src =
+                          "/placeholder-image.jpg";
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}

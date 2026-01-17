@@ -16,7 +16,7 @@ const UploadPhoto = ({ photos, onDataChange }: UploadPhotoProps) => {
       {/* Header */}
       <div className="flex flex-col lg:flex-row justify-between items-center mb-10 w-full gap-4">
         <div className="w-full lg:w-auto flex-1">
-          <Title title={t("onboarding.part6.headTitle")} />
+          <Title title={t("onboarding.part6.fileTitle")} />
         </div>
         <div className="w-full lg:w-auto flex justify-center md:justify-end">
           <Button
