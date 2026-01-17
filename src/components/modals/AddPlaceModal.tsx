@@ -1,15 +1,10 @@
-import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import { useAppDispatch } from "@/hooks/useRedux";
 import { addProperty } from "@/store/Slices/PropertySlice/propertySlice";
 import { Property } from "@/types/property";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Label } from "../ui/label";
-import {
-  fetchMainAmenities,
-  fetchTransportAmenities,
-  fetchSurroundingAmenities,
-  AmenityItem,
-} from "@/store/Slices/OnboardingSlice/AmenitySlice";
+import { getAmenities, getTransports, getSurroundings } from "@/services/api";
 import { X } from "lucide-react";
 import CalendarRangePicker from "../onboarding/CalendarRangePicker";
 import { MdCancel } from "react-icons/md";
@@ -19,6 +14,13 @@ import { useTranslation } from "react-i18next";
 interface AddPlaceModalProps {
   isOpen: boolean;
   onClose: () => void;
+}
+
+interface AmenityItem {
+  id: string;
+  name: string;
+  greek_name?: string;
+  icon?: string;
 }
 
 type PropertyForm = Omit<
@@ -34,10 +36,15 @@ type PropertyForm = Omit<
 
 const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
   const dispatch = useAppDispatch();
-  const { t } = useTranslation("addPlaceModal");
-  const { main, transport, surrounding, loading, error } = useAppSelector(
-    (state) => state.amenities
-  );
+  const { t, i18n } = useTranslation("addPlaceModal");
+  const currentLanguage = i18n.language;
+
+  // State for fetched data
+  const [amenities, setAmenities] = useState<AmenityItem[]>([]);
+  const [transports, setTransports] = useState<AmenityItem[]>([]);
+  const [surroundings, setSurroundings] = useState<AmenityItem[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<PropertyForm>({
     title: "",
@@ -60,13 +67,34 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
   });
   const [files, setFiles] = useState<File[]>([]);
 
+  // Fetch data from backend when modal opens or language changes
   useEffect(() => {
-    if (isOpen) {
-      dispatch(fetchMainAmenities());
-      dispatch(fetchTransportAmenities());
-      dispatch(fetchSurroundingAmenities());
-    }
-  }, [isOpen, dispatch]);
+    const fetchData = async () => {
+      if (!isOpen) return;
+
+      setLoading(true);
+      setError(null);
+
+      try {
+        const [aRes, tRes, sRes] = await Promise.all([
+          getAmenities(),
+          getTransports(),
+          getSurroundings(),
+        ]);
+
+        setAmenities(aRes);
+        setTransports(tRes);
+        setSurroundings(sRes);
+      } catch (err) {
+        console.error("Failed to load filter options:", err);
+        setError("Failed to load amenities");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [isOpen, currentLanguage]);
 
   if (!isOpen) return null;
 
@@ -302,7 +330,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
               <p className="text-red-500">{error}</p>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-                {main.map((item: AmenityItem) => (
+                {amenities.map((item: AmenityItem) => (
                   <div
                     key={item.id}
                     onClick={() => toggleSelection("amenities", item.id)}
@@ -317,7 +345,11 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
                       alt={item.name}
                       className="w-6 h-6 mb-1"
                     />
-                    <span className="text-sm">{item.name}</span>
+                    <span className="text-sm">
+                      {currentLanguage === "el" && item.greek_name
+                        ? item.greek_name
+                        : item.name}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -327,7 +359,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
           <div>
             <Label className="mb-5">{t("sections.transport")}</Label>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-              {transport.map((item: AmenityItem) => (
+              {transports.map((item: AmenityItem) => (
                 <div
                   key={item.id}
                   onClick={() => toggleSelection("transports", item.id)}
@@ -342,7 +374,11 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
                     alt={item.name}
                     className="w-6 h-6 mb-1"
                   />
-                  <span className="text-sm">{item.name}</span>
+                  <span className="text-sm">
+                    {currentLanguage === "el" && item.greek_name
+                      ? item.greek_name
+                      : item.name}
+                  </span>
                 </div>
               ))}
             </div>
@@ -351,7 +387,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
           <div>
             <Label className="mb-5">{t("sections.surroundings")}</Label>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-              {surrounding.map((item: AmenityItem) => (
+              {surroundings.map((item: AmenityItem) => (
                 <div
                   key={item.id}
                   onClick={() => toggleSelection("surroundings", item.id)}
@@ -366,7 +402,11 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
                     alt={item.name}
                     className="w-6 h-6 mb-1"
                   />
-                  <span className="text-sm">{item.name}</span>
+                  <span className="text-sm">
+                    {currentLanguage === "el" && item.greek_name
+                      ? item.greek_name
+                      : item.name}
+                  </span>
                 </div>
               ))}
             </div>

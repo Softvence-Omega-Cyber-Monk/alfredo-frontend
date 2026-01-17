@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { format } from "date-fns";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -9,13 +8,13 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
 import PrimaryButton from "../reusable/PrimaryButton";
+import CalendarRangePicker from "../onboarding/CalendarRangePicker";
 
 import map from "@/assets/icons/Location.svg";
 import user from "@/assets/icons/userRounded.svg";
@@ -23,7 +22,6 @@ import home from "@/assets/icons/homeType.svg";
 import calendar from "@/assets/icons/Calendar.svg";
 
 import { useTranslation } from "react-i18next";
-import { DateRange } from "react-day-picker";
 import { useSearch } from "@/contexts/SearchContext";
 import { SearchParams } from "@/services/api";
 import SearchCombinedFilter from "./SearchCombinedFilter";
@@ -34,7 +32,14 @@ interface PropertyType {
 }
 
 const SearchFilter = () => {
-  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const [availabilityDates, setAvailabilityDates] = useState<{
+    start: Date | null;
+    end: Date | null;
+  }>({
+    start: null,
+    end: null,
+  });
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [availablePropertyTypes, setAvailablePropertyTypes] = useState<
     PropertyType[]
   >([]);
@@ -46,7 +51,6 @@ const SearchFilter = () => {
   });
 
   const { t } = useTranslation("banner");
-  // const { t } = useTranslation("sbanner");
   const { setSearchParams, performSearch } = useSearch();
 
   // Hardcoded property types
@@ -60,6 +64,25 @@ const SearchFilter = () => {
     ]);
   }, [t]);
 
+  // Handle date changes from CalendarRangePicker
+  const handleDateChange = (dates: {
+    start: Date | null;
+    end: Date | null;
+  }) => {
+    setAvailabilityDates(dates);
+  };
+
+  // Format date for display
+  const formatDateDisplay = (date: Date | null): string => {
+    if (!date) return "";
+    const options: Intl.DateTimeFormatOptions = {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    };
+    return date.toLocaleDateString("en-US", options);
+  };
+
   // Build and run search
   const runSearch = async (override?: Partial<SearchParams>) => {
     const params: SearchParams = {};
@@ -69,9 +92,10 @@ const SearchFilter = () => {
       params.maxPeople = parseInt(localSearch.maxPeople);
     if (localSearch.propertyType)
       params.propertyType = localSearch.propertyType;
-    if (dateRange?.from)
-      params.availabilityStartDate = dateRange.from.toISOString();
-    if (dateRange?.to) params.availabilityEndDate = dateRange.to.toISOString();
+    if (availabilityDates.start)
+      params.availabilityStartDate = availabilityDates.start.toISOString();
+    if (availabilityDates.end)
+      params.availabilityEndDate = availabilityDates.end.toISOString();
     if (localSearch.isTravelWithPets) params.isTravelWithPets = true;
 
     Object.assign(params, override);
@@ -167,28 +191,28 @@ const SearchFilter = () => {
             </div>
           </div>
 
-          {/* Dates */}
+          {/* Dates - Using CalendarRangePicker in Popover */}
           <div className="flex-1">
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.dates")}
             </label>
-            <div className="flex items-center -gap-4 border border-[#C4D7F1] px-2 p-0.5  rounded-lg">
+            <div className="flex items-center gap-1 border border-[#C4D7F1] px-2 p-0.5 rounded-lg">
               <img src={calendar} alt="calendar icon" className="w-5 h-5" />
-              <Popover>
+              <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
-                    className="w-full text-left font-normal bg-transparent border-none text-xs focus:ring-0 shadow-none"
+                    className="w-full text-left font-normal bg-transparent border-none text-xs focus:ring-0 shadow-none hover:bg-transparent"
                   >
-                    {dateRange?.from ? (
-                      dateRange.to ? (
-                        <>
-                          {format(dateRange.from, "LLL dd, y")} -{" "}
-                          {format(dateRange.to, "LLL dd, y")}
-                        </>
-                      ) : (
-                        format(dateRange.from, "LLL dd, y")
-                      )
+                    {availabilityDates.start && availabilityDates.end ? (
+                      <span className="text-dark-3">
+                        {formatDateDisplay(availabilityDates.start)} -{" "}
+                        {formatDateDisplay(availabilityDates.end)}
+                      </span>
+                    ) : availabilityDates.start ? (
+                      <span className="text-dark-3">
+                        {formatDateDisplay(availabilityDates.start)}
+                      </span>
                     ) : (
                       <span className="text-dark-3 flex items-center mr-auto justify-start">
                         {t("search.pickADateRange")}
@@ -196,13 +220,19 @@ const SearchFilter = () => {
                     )}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 bg-white border">
-                  <Calendar
-                    mode="range"
-                    selected={dateRange}
-                    onSelect={setDateRange}
-                    numberOfMonths={1}
-                    className=" [--rdp-accent-color:#3174cd] [--rdp-background-color:theme(colors.blue.200)]"
+                <PopoverContent
+                  className="w-auto p-4 bg-white border"
+                  align="start"
+                >
+                  <CalendarRangePicker
+                    availabilityDates={availabilityDates}
+                    onAvailabilityChange={(dates) => {
+                      handleDateChange(dates);
+                      // Close popover when both dates are selected
+                      if (dates.start && dates.end) {
+                        setIsCalendarOpen(false);
+                      }
+                    }}
                   />
                 </PopoverContent>
               </Popover>

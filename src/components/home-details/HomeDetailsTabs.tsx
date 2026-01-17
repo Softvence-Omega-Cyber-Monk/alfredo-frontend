@@ -77,7 +77,6 @@ const HomeDetailsTabs = ({
         }
 
         const geocodeData = await response.json();
-        // console.log("📍 Geocoding response:", geocodeData);
 
         if (geocodeData && geocodeData.length > 0) {
           const coordinates = {
@@ -233,9 +232,9 @@ const HomeDetailsTabs = ({
         <Reviews
           reviews={singlePropertyData.Review || []}
           propertyId={id || ""}
-          isOwner={user?.id === singlePropertyData.owner.id}
+          isOwner={user?.id === singlePropertyData?.owner?.id}
           userId={user?.id}
-          isExchanged={singlePropertyData.isExchanged}
+          isExchanged={singlePropertyData?.isExchanged}
         />
       ),
     },
