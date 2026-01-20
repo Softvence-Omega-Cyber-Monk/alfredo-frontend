@@ -36,54 +36,76 @@ const GetStarted = ({
 
   const [locationAddress, setLocationAddress] = useState("");
   const [destinationAddress, setDestinationAddress] = useState("");
+  const [isReverseGeocoding, setIsReverseGeocoding] = useState(false);
+  // const [isManualInput, setIsManualInput] = useState(false);
+  const [isLocationManualInput, setIsLocationManualInput] = useState(false);
+  const [isDestinationManualInput, setIsDestinationManualInput] = useState(false);
 
+  // Sync reverse geocoding from coordinates to address (only when NOT manually typing)
   useEffect(() => {
+    // CRITICAL: Don't reverse geocode if user is manually typing
+    if (isLocationManualInput) return;
+
     let active = true;
     (async () => {
-      if (location && !locationAddress) {
+      if (location && !isReverseGeocoding) {
+        setIsReverseGeocoding(true);
         const addr = await reverseGeocode(location.lat, location.lng);
         if (active && addr) {
           setLocationAddress(addr);
           onLocationAddressChange(addr);
         }
+        setIsReverseGeocoding(false);
       }
     })();
     return () => {
       active = false;
     };
-  }, [location]);
+  }, [location, isLocationManualInput]); // Added isManualInput to dependencies
 
   useEffect(() => {
+    // CRITICAL: Don't reverse geocode if user is manually typing
+    if (isDestinationManualInput) return;
+
     let active = true;
     (async () => {
-      if (destination && !destinationAddress) {
+      if (destination && !isReverseGeocoding) {
+        setIsReverseGeocoding(true);
         const addr = await reverseGeocode(destination.lat, destination.lng);
         if (active && addr) {
           setDestinationAddress(addr);
           onDestinationAddressChange(addr);
         }
+        setIsReverseGeocoding(false);
       }
     })();
     return () => {
       active = false;
     };
-  }, [destination]);
+  }, [destination, isDestinationManualInput]); // Added isManualInput to dependencies
 
   const handleMapSelect = async (lat: number, lng: number) => {
     const coords = { lat, lng };
     const addr = await reverseGeocode(lat, lng);
+
+    // Map selection is not manual input
+    // setIsManualInput(false);
     if (mapType === "location") {
-      setLocationAddress(
-        addr || `Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}`
-      );
+      setIsLocationManualInput(false);
+    } else if (mapType === "destination") {
+      setIsDestinationManualInput(false);
+    }
+
+    if (mapType === "location") {
+      const finalAddr = addr || `Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}`;
+      setLocationAddress(finalAddr);
       onLocationChange(coords);
-      if (addr) onLocationAddressChange(addr);
+      onLocationAddressChange(finalAddr);
     } else {
-      setDestinationAddress(
-        addr || `Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}`
-      );
+      const finalAddr = addr || `Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}`;
+      setDestinationAddress(finalAddr);
       onDestinationChange(coords);
-      if (addr) onDestinationAddressChange(addr);
+      onDestinationAddressChange(finalAddr);
     }
     setShowMap(false);
   };
@@ -98,24 +120,47 @@ const GetStarted = ({
     setShowMap(true);
   };
 
-  // Debounced forward geocoding when user types address (keeps coords in sync)
+  // Handle manual address input with debounced forward geocoding
+  const handleLocationAddressChange = (value: string) => {
+    setIsLocationManualInput(true);
+    setLocationAddress(value);
+    onLocationAddressChange(value);
+  };
+
+  const handleDestinationAddressChange = (value: string) => {
+    setIsDestinationManualInput(true);
+    setDestinationAddress(value);
+    onDestinationAddressChange(value);
+  };
+
+  // Debounced forward geocoding when user types address
   useEffect(() => {
     const id = setTimeout(async () => {
       if (!locationAddress || locationAddress.trim().length < 4) return;
+      // Don't geocode if we're currently doing reverse geocoding
+      if (isReverseGeocoding) return;
+
       const coords = await forwardGeocode(locationAddress.trim());
-      if (coords) onLocationChange(coords);
-    }, 700);
+      if (coords) {
+        onLocationChange(coords);
+      }
+    }, 1000);
     return () => clearTimeout(id);
-  }, [locationAddress, onLocationChange]);
+  }, [locationAddress]);
 
   useEffect(() => {
     const id = setTimeout(async () => {
       if (!destinationAddress || destinationAddress.trim().length < 4) return;
+      // Don't geocode if we're currently doing reverse geocoding
+      if (isReverseGeocoding) return;
+
       const coords = await forwardGeocode(destinationAddress.trim());
-      if (coords) onDestinationChange(coords);
-    }, 700);
+      if (coords) {
+        onDestinationChange(coords);
+      }
+    }, 1000);
     return () => clearTimeout(id);
-  }, [destinationAddress, onDestinationChange]);
+  }, [destinationAddress]);
 
   const { t } = useTranslation("onboarding");
   return (
@@ -186,22 +231,23 @@ const GetStarted = ({
 
                   <div className="relative mt-4 w-full">
                     {/* Left Icon */}
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2">
-                      <img src={map} className="w-6 h-6" />
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                      <img src={map} className="w-6 h-6" alt="Location icon" />
                     </div>
 
                     {/* Input Field */}
                     <input
                       type="text"
                       value={locationAddress}
-                      onChange={(e) => setLocationAddress(e.target.value)}
+                      onChange={(e) => handleLocationAddressChange(e.target.value)}
                       placeholder={t("onboarding.part1.location1")}
-                      className="w-full pl-10 pr-10 py-4 border border-dark-3 text-dark-3 rounded-lg focus:outline-none"
+                      className="w-full pl-10 pr-20 py-4 border border-dark-3 text-dark-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue"
                     />
 
                     {/* Right Icon */}
-                    <div
-                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 w-16 h-10 flex items-center justify-center rounded overflow-hidden"
+                    <button
+                      type="button"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 w-16 h-10 flex items-center justify-center rounded overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
                       style={{
                         backgroundImage: `url('/mapBg.svg')`,
                         backgroundSize: "cover",
@@ -209,8 +255,8 @@ const GetStarted = ({
                       }}
                       onClick={openLocationMap}
                     >
-                      <img src={mapUp} alt="" />
-                    </div>
+                      <img src={mapUp} alt="Open map" />
+                    </button>
                   </div>
                 </div>
 
@@ -224,34 +270,36 @@ const GetStarted = ({
 
                   <div className="relative mt-4 w-full">
                     {/* Left Icon */}
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2">
-                      <img src={map} className="w-6 h-6" />
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                      <img src={map} className="w-6 h-6" alt="Location icon" />
                     </div>
 
                     {/* Input Field */}
                     <input
                       type="text"
                       value={destinationAddress}
-                      onChange={(e) => setDestinationAddress(e.target.value)}
+                      onChange={(e) => handleDestinationAddressChange(e.target.value)}
                       placeholder={t("onboarding.part1.location2")}
-                      className="w-full pl-10 pr-10 py-4 border border-dark-3 text-dark-3 rounded-lg focus:outline-none"
+                      className="w-full pl-10 pr-20 py-4 border border-dark-3 text-dark-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue"
                     />
 
                     {/* Right Icon */}
-                    <div
-                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 w-16 h-10 rounded overflow-hidden"
+                    <button
+                      type="button"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 w-16 h-10 flex items-center justify-center rounded overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
                       style={{
                         backgroundImage: `url('/mapBg.svg')`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                       }}
                       onClick={openDestinationMap}
-                    />
+                    >
+                      <img src={mapUp} alt="Open map" />
+                    </button>
                   </div>
                 </div>
                 <p className="flex justify-baseline items-center gap-2 text-[#808080] text-base font-DM-sans">
                   <span>
-                    {" "}
                     <AiOutlineExclamationCircle />
                   </span>{" "}
                   {t("onboarding.part1.note")}
@@ -263,6 +311,11 @@ const GetStarted = ({
                 isOpen={showMap}
                 onClose={() => setShowMap(false)}
                 onSelect={handleMapSelect}
+                initialCenter={
+                  mapType === "location"
+                    ? location
+                    : destination
+                }
               />
             </div>
           </div>
