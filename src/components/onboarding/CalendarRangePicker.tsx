@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   addMonths,
   format,
@@ -7,6 +7,7 @@ import {
   eachDayOfInterval,
   isSameDay,
   isWithinInterval,
+  differenceInMonths,
 } from "date-fns";
 import clsx from "clsx";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
@@ -28,6 +29,15 @@ const CalendarRangePicker = ({
   const [currentMonth] = useState(new Date());
   const [monthOffset, setMonthOffset] = useState(0);
 
+  // Update monthOffset when availabilityDates change to show the selected month
+  useEffect(() => {
+    if (availabilityDates.start) {
+      // Calculate the offset from current month to the selected start date's month
+      const offset = differenceInMonths(availabilityDates.start, currentMonth);
+      setMonthOffset(offset);
+    }
+  }, [availabilityDates.start, currentMonth]);
+
   const handleDayClick = (day: Date) => {
     if (
       !availabilityDates.start ||
@@ -42,8 +52,6 @@ const CalendarRangePicker = ({
       }
     }
   };
-
-  // console.log("Selected Range:", availabilityDates);
 
   const renderCalendar = (offset: number) => {
     const monthDate = addMonths(currentMonth, monthOffset + offset);
@@ -75,6 +83,7 @@ const CalendarRangePicker = ({
 
           {!isFirstCalendar ? (
             <button
+              type="button"
               onClick={() => setMonthOffset((prev) => prev + 1)}
               className="p-1 rounded hover:bg-[#808080]"
             >
@@ -132,6 +141,7 @@ const CalendarRangePicker = ({
       </div>
     );
   };
+
   const { t } = useTranslation("onboarding");
 
   return (
