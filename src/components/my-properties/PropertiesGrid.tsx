@@ -12,6 +12,22 @@ import {
 import { PropertyDetails } from "@/types/PropertyDetails";
 import CalendarRangePicker from "../onboarding/CalendarRangePicker";
 import { Label } from "../ui/label";
+import { getAmenities, getTransports, getSurroundings } from "@/services/api";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+
+interface AmenityItem {
+  id: string;
+  name: string;
+  greek_name?: string;
+  icon?: string;
+}
+
+interface PropertyFormData extends Omit<PropertyDetails, "amenities" | "transports" | "surroundings"> {
+  amenities: string[];
+  transports: string[];
+  surroundings: string[];
+}
 
 const PropertiesGrid = () => {
   const navigate = useNavigate();
@@ -19,6 +35,8 @@ const PropertiesGrid = () => {
   const { myProperties, singleProperty, loading } = useAppSelector(
     (state) => state.property
   );
+  const { i18n } = useTranslation();
+  const currentLanguage = i18n.language;
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -27,8 +45,14 @@ const PropertiesGrid = () => {
   const [actionLoading, setActionLoading] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
 
+  // Amenities state
+  const [amenities, setAmenities] = useState<AmenityItem[]>([]);
+  const [transports, setTransports] = useState<AmenityItem[]>([]);
+  const [surroundings, setSurroundings] = useState<AmenityItem[]>([]);
+  const [amenitiesLoading, setAmenitiesLoading] = useState(false);
+
   // Form state for edit modal
-  const [formData, setFormData] = useState<Partial<PropertyDetails>>({});
+  const [formData, setFormData] = useState<Partial<PropertyFormData>>({});
   const [newImages, setNewImages] = useState<File[]>([]);
 
   // 1. Initial fetch of properties
@@ -36,7 +60,34 @@ const PropertiesGrid = () => {
     dispatch(fetchMyProperties());
   }, [dispatch]);
 
-  // 2. Populate form data when singleProperty is fetched
+  // 2. Fetch amenities when edit modal opens
+  useEffect(() => {
+    const fetchAmenities = async () => {
+      if (!editModalOpen) return;
+
+      setAmenitiesLoading(true);
+      try {
+        const [aRes, tRes, sRes] = await Promise.all([
+          getAmenities(),
+          getTransports(),
+          getSurroundings(),
+        ]);
+
+        setAmenities(aRes);
+        setTransports(tRes);
+        setSurroundings(sRes);
+      } catch (err) {
+        console.error("Failed to load amenities:", err);
+        setActionError("Failed to load amenities");
+      } finally {
+        setAmenitiesLoading(false);
+      }
+    };
+
+    fetchAmenities();
+  }, [editModalOpen, currentLanguage]);
+
+  // 3. Populate form data when singleProperty is fetched
   useEffect(() => {
     if (singleProperty && selectedProperty?.id === singleProperty.id) {
       setFormData({
@@ -51,27 +102,26 @@ const PropertiesGrid = () => {
         isAvailable: singleProperty.isAvailable,
         availabilityStartDate: singleProperty.availabilityStartDate || "",
         availabilityEndDate: singleProperty.availabilityEndDate || "",
+        amenities: singleProperty.amenities?.map((a) => a.id) || [],
+        transports: singleProperty.transports?.map((t) => t.id) || [],
+        surroundings: singleProperty.surroundings?.map((s) => s.id) || [],
       });
     }
   }, [singleProperty, selectedProperty]);
 
-  // 3. 🛑 EFFECT TO DISABLE/ENABLE BODY SCROLLING 🛑
+  // 4. Disable/enable body scrolling
   useEffect(() => {
     const isModalOpen = editModalOpen || deleteModalOpen;
     if (isModalOpen) {
-      // Disable scrolling
       document.body.style.overflow = "hidden";
     } else {
-      // Enable scrolling
       document.body.style.overflow = "unset";
     }
 
-    // Cleanup function: ensures scrolling is re-enabled when the component unmounts
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [editModalOpen, deleteModalOpen]);
-  // 🛑 END OF SCROLLING EFFECT 🛑
 
   const handleEditClick = async (property: PropertyListItem) => {
     setSelectedProperty(property);
@@ -114,6 +164,22 @@ const PropertiesGrid = () => {
     }));
   };
 
+  const toggleSelection = (
+    category: "amenities" | "transports" | "surroundings",
+    id: string
+  ) => {
+    setFormData((prev) => {
+      const current = (prev[category] as string[]) || [];
+      const updated = current.includes(id)
+        ? current.filter((item) => item !== id)
+        : [...current, id];
+      return {
+        ...prev,
+        [category]: updated,
+      };
+    });
+  };
+
   const handleUpdateSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedProperty) return;
@@ -122,7 +188,6 @@ const PropertiesGrid = () => {
     setActionError(null);
 
     try {
-      // Create the data object according to API requirements
       const updateData = {
         title: formData.title || "",
         description: formData.description || "",
@@ -135,23 +200,18 @@ const PropertiesGrid = () => {
         isAvailable: formData.isAvailable || false,
         availabilityStartDate: formData.availabilityStartDate || "",
         availabilityEndDate: formData.availabilityEndDate || "",
-        // Include other required fields with defaults
         propertyType: formData.propertyType || "APARTMENT",
         maxPeople: formData.maxPeople || 4,
         isTravelWithPets: formData.isTravelWithPets || false,
-        // Add empty arrays for relationships if needed
-        amenities: [],
-        transports: [],
-        surroundings: [],
+        amenities: (formData.amenities as string[]) || [],
+        transports: (formData.transports as string[]) || [],
+        surroundings: (formData.surroundings as string[]) || [],
         removeImages: [],
       };
 
       let updatedData: FormData = new FormData();
-
-      // Append the data as a JSON string in the 'data' field
       updatedData.append("data", JSON.stringify(updateData));
 
-      // Append new images if any
       if (newImages.length > 0) {
         newImages.forEach((file) => {
           updatedData.append("files", file);
@@ -164,7 +224,7 @@ const PropertiesGrid = () => {
           updatedData,
         })
       ).unwrap();
-
+      toast.success("Property updated successfully");
       setEditModalOpen(false);
       setNewImages([]);
       setFormData({});
@@ -279,7 +339,7 @@ const PropertiesGrid = () => {
       {/* Edit Modal */}
       {editModalOpen && (
         <div className="fixed inset-0 backdrop-blur-lg flex items-center justify-center z-50 p-4">
-          <div className="bg-white p-6 rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+          <div className="bg-white p-6 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <h2 className="text-2xl font-bold mb-4">Edit Property</h2>
 
             {actionError && (
@@ -390,7 +450,7 @@ const PropertiesGrid = () => {
                   />
                 </div>
 
-                {/* Availability Dates Section - NEW */}
+                {/* Availability Dates Section */}
                 <div className="mb-4">
                   <Label className="block mb-2 font-medium">
                     Availability Dates
@@ -406,6 +466,94 @@ const PropertiesGrid = () => {
                     }}
                     onAvailabilityChange={handleDateChange}
                   />
+                </div>
+
+                {/* Amenities Section */}
+                <div className="mb-6">
+                  <Label className="block mb-3 font-medium text-lg">Amenities</Label>
+                  {amenitiesLoading ? (
+                    <p className="text-gray-500">Loading amenities...</p>
+                  ) : (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+                      {amenities.map((item: AmenityItem) => (
+                        <div
+                          key={item.id}
+                          onClick={() => toggleSelection("amenities", item.id)}
+                          className={`p-3 border border-primary-blue rounded-lg cursor-pointer flex flex-col items-center transition-all ${(formData.amenities as string[])?.includes(item.id)
+                            ? "bg-blue-100 border-blue-500"
+                            : "hover:bg-blue-50 hover:shadow-lg"
+                            }`}
+                        >
+                          <img
+                            src={item.icon}
+                            alt={item.name}
+                            className="w-6 h-6 mb-1"
+                          />
+                          <span className="text-sm text-center">
+                            {currentLanguage === "el" && item.greek_name
+                              ? item.greek_name
+                              : item.name}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Transport Section */}
+                <div className="mb-6">
+                  <Label className="block mb-3 font-medium text-lg">Transport</Label>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+                    {transports.map((item: AmenityItem) => (
+                      <div
+                        key={item.id}
+                        onClick={() => toggleSelection("transports", item.id)}
+                        className={`p-3 border border-primary-blue rounded-lg cursor-pointer flex flex-col items-center transition-all ${(formData.transports as string[])?.includes(item.id)
+                          ? "bg-blue-100 border-blue-500"
+                          : "hover:bg-blue-50 hover:shadow-lg"
+                          }`}
+                      >
+                        <img
+                          src={item.icon}
+                          alt={item.name}
+                          className="w-6 h-6 mb-1"
+                        />
+                        <span className="text-sm text-center">
+                          {currentLanguage === "el" && item.greek_name
+                            ? item.greek_name
+                            : item.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Surroundings Section */}
+                <div className="mb-6">
+                  <Label className="block mb-3 font-medium text-lg">Surroundings</Label>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+                    {surroundings.map((item: AmenityItem) => (
+                      <div
+                        key={item.id}
+                        onClick={() => toggleSelection("surroundings", item.id)}
+                        className={`p-3 border border-primary-blue rounded-lg cursor-pointer flex flex-col items-center transition-all ${(formData.surroundings as string[])?.includes(item.id)
+                          ? "bg-blue-100 border-blue-500"
+                          : "hover:bg-blue-50 hover:shadow-lg"
+                          }`}
+                      >
+                        <img
+                          src={item.icon}
+                          alt={item.name}
+                          className="w-6 h-6 mb-1"
+                        />
+                        <span className="text-sm text-center">
+                          {currentLanguage === "el" && item.greek_name
+                            ? item.greek_name
+                            : item.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="mb-4">
@@ -426,7 +574,7 @@ const PropertiesGrid = () => {
                   )}
                 </div>
 
-                <div className="flex justify-end gap-4">
+                <div className="flex justify-end gap-4 pt-4 border-t">
                   <button
                     type="button"
                     onClick={closeEditModal}
