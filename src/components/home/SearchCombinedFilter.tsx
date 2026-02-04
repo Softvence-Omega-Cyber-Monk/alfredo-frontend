@@ -19,7 +19,7 @@ interface Item {
 }
 
 const SearchCombinedFilter = () => {
-  const { t, i18n } = useTranslation("sbanner"); // ✅ same namespace as SearchFilter
+  const { t, i18n } = useTranslation("sbanner");
   const currentLanguage = i18n.language;
 
   const [amenities, setAmenities] = useState<Item[]>([]);
@@ -136,7 +136,7 @@ const SearchCombinedFilter = () => {
       <PopoverTrigger asChild className="bg-white">
         <Button
           variant="outline"
-          className="w-full border-gray-300 text-gray-700 cursor-pointer flex justify-start text-xs"
+          className="w-full border-[#C4D7F1] py-4.5 text-dark-3 cursor-pointer flex justify-start text-xs"
         >
           {t("search.filtersButton")}
         </Button>

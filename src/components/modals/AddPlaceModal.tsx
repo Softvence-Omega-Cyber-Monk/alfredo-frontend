@@ -6,10 +6,11 @@ import { toast } from "sonner";
 import { Label } from "../ui/label";
 import { getAmenities, getTransports, getSurroundings } from "@/services/api";
 import { X } from "lucide-react";
-import CalendarRangePicker from "../onboarding/CalendarRangePicker";
+// import CalendarRangePicker from "../onboarding/CalendarRangePicker";
 import { MdCancel } from "react-icons/md";
 import CountryCitySelect from "../reusable/CountryCitySelect";
 import { useTranslation } from "react-i18next";
+import CalendarRangePickerNew from "../home/CalendarRangePickerNew";
 
 interface AddPlaceModalProps {
   isOpen: boolean;
@@ -182,35 +183,41 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-4xl max-h-[600px] overflow-y-auto p-6">
+    <div className="fixed inset-0 lg:top-24 flex items-center justify-center bg-black/50 backdrop-blur-sm z-100">
+      <div className="bg-[#f9f9f9] rounded-lg shadow-lg w-full max-w-4xl max-h-[600px] overflow-y-auto scrollbar-hide [&::-webkit-scrollbar]:w-2
+  [&::-webkit-scrollbar-track]:bg-transparent
+  /* Thumb */
+  [&::-webkit-scrollbar-thumb]:bg-blue-300
+  [&::-webkit-scrollbar-thumb]:rounded-full
+  /* Hover effect */
+  hover:[&::-webkit-scrollbar-thumb]:bg-blue-400  p-6">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-semibold mb-6">{t("title")}</h2>
-          <button type="button" onClick={onClose} className="">
-            <MdCancel className="w-8 h-8" />
+          <button type="button" onClick={onClose} className="cursor-pointer">
+            <MdCancel className="w-8 h-8 hover:text-blue-600 transition-colors duration-300" />
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 ">
           {/* Basic Info */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label>{t("fields.title")}</Label>
+              <Label className="text-sm font-medium text-gray-700">{t("fields.title")}</Label>
               <input
                 type="text"
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-                className="w-full border p-2 rounded mt-1"
+                className="w-full border p-2 rounded mt-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
                 required
               />
             </div>
             <div>
-              <Label>{t("fields.propertyType")}</Label>
+              <Label className="text-sm font-medium text-gray-700">{t("fields.propertyType")}</Label>
               <select
                 name="propertyType"
                 value={formData.propertyType}
                 onChange={handleChange}
-                className="w-full border p-2 rounded mt-1"
+                className="w-full border p-2 rounded mt-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
               >
                 <option value="HOME">{t("propertyTypes.home")}</option>
                 <option value="APARTMENT">
@@ -223,12 +230,12 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
             </div>
           </div>
           <div>
-            <Label>{t("fields.description")}</Label>
+            <Label className="text-sm font-medium text-gray-700">{t("fields.description")}</Label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
-              className="w-full border p-2 rounded mt-1"
+              className="w-full border p-2 rounded mt-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
               required
             />
           </div>
@@ -238,24 +245,24 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
           {/* Numeric Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label>{t("fields.size")}</Label>
+              <Label className="text-sm font-medium text-gray-700">{t("fields.size")}</Label>
               <input
                 type="number"
                 name="size"
                 value={formData.size}
                 onChange={handleChange}
-                className="w-full border p-2 rounded mt-1"
+                className="w-full border p-2 rounded mt-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
                 required
               />
             </div>
             <div>
-              <Label>{t("fields.maxPeople")}</Label>
+              <Label className="text-sm font-medium text-gray-700">{t("fields.maxPeople")}</Label>
               <input
                 type="number"
                 name="maxPeople"
                 value={formData.maxPeople}
                 onChange={handleChange}
-                className="w-full border p-2 rounded mt-1"
+                className="w-full border p-2 rounded mt-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
                 min={1}
                 required
               />
@@ -263,32 +270,32 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label>{t("fields.bedrooms")}</Label>
+              <Label className="text-sm font-medium text-gray-700">{t("fields.bedrooms")}</Label>
               <input
                 type="number"
                 name="bedrooms"
                 value={formData.bedrooms}
                 onChange={handleChange}
-                className="w-full border p-2 rounded mt-1"
+                className="w-full border p-2 rounded mt-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
                 required
               />
             </div>
             <div>
-              <Label>{t("fields.bathrooms")}</Label>
+              <Label className="text-sm font-medium text-gray-700">{t("fields.bathrooms")}</Label>
               <input
                 type="number"
                 name="bathrooms"
                 value={formData.bathrooms}
                 onChange={handleChange}
-                className="w-full border p-2 rounded mt-1"
+                className="w-full border p-2 rounded mt-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
                 required
               />
             </div>
           </div>
           {/* Availability Dates */}
           <div>
-            <Label>{t("fields.availabilityDates")}</Label>
-            <CalendarRangePicker
+            <Label className="text-sm font-medium text-gray-700 mb-4">{t("fields.availabilityDates")}</Label>
+            <CalendarRangePickerNew
               availabilityDates={{
                 start: formData.availabilityStartDate
                   ? new Date(formData.availabilityStartDate)
@@ -334,11 +341,10 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
                   <div
                     key={item.id}
                     onClick={() => toggleSelection("amenities", item.id)}
-                    className={`p-3 border border-primary-blue rounded-lg cursor-pointer flex flex-col items-center ${
-                      formData.amenities?.includes(item.id)
-                        ? "bg-blue-100 border-blue-500"
-                        : "hover:bg-blue-100 hover:shadow-lg"
-                    }`}
+                    className={`p-3 border border-primary-blue rounded-lg cursor-pointer flex flex-col items-center ${formData.amenities?.includes(item.id)
+                      ? "bg-blue-100 border-blue-500"
+                      : "hover:bg-blue-100 hover:shadow-lg"
+                      }`}
                   >
                     <img
                       src={item.icon}
@@ -363,11 +369,10 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
                 <div
                   key={item.id}
                   onClick={() => toggleSelection("transports", item.id)}
-                  className={`p-3 border border-primary-blue rounded-lg cursor-pointer flex flex-col items-center ${
-                    formData.transports?.includes(item.id)
-                      ? "bg-blue-100 border-blue-500"
-                      : "hover:bg-blue-100 hover:shadow-lg"
-                  }`}
+                  className={`p-3 border border-primary-blue rounded-lg cursor-pointer flex flex-col items-center ${formData.transports?.includes(item.id)
+                    ? "bg-blue-100 border-blue-500"
+                    : "hover:bg-blue-100 hover:shadow-lg"
+                    }`}
                 >
                   <img
                     src={item.icon}
@@ -391,11 +396,10 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
                 <div
                   key={item.id}
                   onClick={() => toggleSelection("surroundings", item.id)}
-                  className={`p-3 border border-primary-blue rounded-lg cursor-pointer flex flex-col items-center ${
-                    formData.surroundings?.includes(item.id)
-                      ? "bg-blue-100 border-blue-500"
-                      : "hover:bg-blue-100 hover:shadow-lg"
-                  }`}
+                  className={`p-3 border border-primary-blue rounded-lg cursor-pointer flex flex-col items-center ${formData.surroundings?.includes(item.id)
+                    ? "bg-blue-100 border-blue-500"
+                    : "hover:bg-blue-100 hover:shadow-lg"
+                    }`}
                 >
                   <img
                     src={item.icon}
@@ -418,7 +422,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
               type="file"
               multiple
               onChange={handleFileChange}
-              className="w-full border p-2 rounded mt-2"
+              className="w-full border p-2 rounded mt-2 border-gray-300"
               accept="image/*"
             />
             <div className="flex flex-wrap gap-4 mt-3">
@@ -445,13 +449,13 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400"
+              className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 cursor-pointer"
             >
               {t("buttons.cancel")}
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded bg-primary-blue text-white hover:brightness-90"
+              className="px-4 py-2 rounded bg-primary-blue text-white hover:brightness-90 cursor-pointer"
             >
               {t("buttons.save")}
             </button>

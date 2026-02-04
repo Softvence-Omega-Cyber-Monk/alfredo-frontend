@@ -14,7 +14,7 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import PrimaryButton from "../reusable/PrimaryButton";
-import CalendarRangePicker from "../onboarding/CalendarRangePicker";
+// import CalendarRangePicker from "../onboarding/CalendarRangePicker";
 
 import map from "@/assets/icons/Location.svg";
 import user from "@/assets/icons/userRounded.svg";
@@ -25,6 +25,7 @@ import { useTranslation } from "react-i18next";
 import { useSearch } from "@/contexts/SearchContext";
 import { SearchParams } from "@/services/api";
 import SearchCombinedFilter from "./SearchCombinedFilter";
+import CalendarRangePickerNew from "./CalendarRangePickerNew";
 
 interface PropertyType {
   value: string;
@@ -196,7 +197,7 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.dates")}
             </label>
-            <div className="flex items-center gap-1 border border-[#C4D7F1] px-2 p-0.5 rounded-lg">
+            <div className="flex items-center border border-[#C4D7F1] gap-0 p-0.5 px-2 rounded-lg">
               <img src={calendar} alt="calendar icon" className="w-5 h-5" />
               <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                 <PopoverTrigger asChild>
@@ -221,16 +222,16 @@ const SearchFilter = () => {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
-                  className="w-auto p-4 bg-white border"
-                  align="start"
+                  className="w-auto border-none shadow-none"
+                // align="start"
                 >
-                  <CalendarRangePicker
+                  <CalendarRangePickerNew
                     availabilityDates={availabilityDates}
                     onAvailabilityChange={(dates) => {
                       handleDateChange(dates);
                       // Close popover when both dates are selected
                       if (dates.start && dates.end) {
-                        setIsCalendarOpen(false);
+                        // setIsCalendarOpen(false);
                       }
                     }}
                   />

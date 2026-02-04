@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import fb from "@/assets/footer/fb.svg";
 import insta from "@/assets/footer/instagram.svg";
-import linkedin from "@/assets/footer/linkedin.svg";
+// import linkedin from "@/assets/footer/linkedin.svg";
 
 const Social = () => {
   const { t } = useTranslation("bonus");
@@ -39,7 +39,7 @@ const Social = () => {
             />
           </a>
         </li>
-        <li>
+        {/* <li>
           <Link
             to="/"
             className="font-regular lg:text-xl flex gap-2 items-center"
@@ -50,7 +50,7 @@ const Social = () => {
               className="w-8 h-8 max-[767px]:w-6 max-[767px]:h-6"
             />
           </Link>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

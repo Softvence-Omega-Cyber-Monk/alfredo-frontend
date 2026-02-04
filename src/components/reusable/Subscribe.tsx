@@ -3,7 +3,7 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Parallax } from "react-parallax";
 import subscribeBg from "@/assets/subscribeBg.jpg";
-import location from "@/assets/location.svg";
+// import location from "@/assets/location.svg";
 import emailIcon from "@/assets/email.svg";
 import ReusableButton from "./ReusableButton";
 
@@ -80,10 +80,10 @@ const Subscribe = () => {
             <div className="flex flex-col gap-6 md:gap-10 text-white w-full md:w-auto">
               <div className="flex flex-col gap-2 font-extralight">
                 <h1 className="text-xl font-bold">{t("contact")}</h1>
-                <p className="flex items-center gap-2">
+                {/* <p className="flex items-center gap-2">
                   <img src={location} alt="" className="w-4 h-4" />
-                  Athens, Greece
-                </p>
+                  Greece
+                </p> */}
 
                 <p className="flex items-center gap-2">
                   <img src={emailIcon} alt="" className="w-4 h-4" />

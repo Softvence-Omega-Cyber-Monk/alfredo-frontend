@@ -20,10 +20,10 @@ const CountryCitySelect = <T extends CountryCityFields>({
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {/* Country Locked to Greece */}
       <div>
-        <label className="block mb-1 font-medium">{t("fields.country")}</label>
+        <label className="block mb-1 font-medium text-sm text-gray-700">{t("fields.country")}</label>
         <input
           type="text"
-          className="w-full border p-2 rounded bg-gray-100 cursor-pointer"
+          className="w-full border p-2 rounded bg-gray-100 cursor-pointer border-gray-300 text-gray-700"
           value={t("countryValue")}
           disabled
         />
@@ -31,7 +31,7 @@ const CountryCitySelect = <T extends CountryCityFields>({
 
       {/* Manual City Input */}
       <div>
-        <label className="block mb-1 font-medium">{t("fields.city")}</label>
+        <label className="block mb-1 font-medium text-sm text-gray-700">{t("fields.city")}</label>
         <input
           type="text"
           name="location"
@@ -43,7 +43,7 @@ const CountryCitySelect = <T extends CountryCityFields>({
               country: "Greece", // Ensure backend always receives Greece
             }))
           }
-          className="w-full border p-2 rounded"
+          className="w-full border p-2 rounded border-gray-300 text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-400"
           placeholder={t("fields.cityPlaceholder")}
           required
         />
