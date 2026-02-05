@@ -16,7 +16,7 @@ export const initSocket = (userId: string): Socket => {
     console.log("🔌 Creating new socket connection for user:", userId);
     currentUserId = userId;
 
-    socket = io(`${import.meta.env.VITE_BASE_URL}`, {
+    socket = io(`${import.meta.env.VITE_BASE_URL || window.location.origin}`, {
       query: { userId },
       transports: ["websocket"],
       reconnection: true,
