@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
-
-const baseURL = import.meta.env.VITE_API_URL;
+import api from "@/services/api";
 
 export interface OnboardingPayload {
   userId: string | null;
@@ -43,33 +41,14 @@ const initialState: OnboardingState = {
   error: null,
 };
 
-// const token = localStorage.getItem("token");
-
-// const config = {
-//   headers: {
-//     Authorization: `Bearer ${token}`,
-//     "Content-Type": "multipart/form-data",
-//   },
-// };
-
 //  POST: submit onboarding data
 export const postOnboarding = createAsyncThunk(
   "onboarding/postOnboarding",
   async (payload: FormData, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      // console.log("Sending request to:", `${baseURL}/onboarding`);
-      const response = await axios.post(
-        `${baseURL}/onboarding`,
-        payload,
-        config
-      );
+      const response = await api.post("/onboarding", payload, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       return response.data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data || "Error posting onboarding");
@@ -82,14 +61,7 @@ export const getOnboarding = createAsyncThunk(
   "onboarding/getOnboarding",
   async (_, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      const response = await axios.get(`${baseURL}/onboarding/user`, config);
+      const response = await api.get("/onboarding/user");
       return response.data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data || "Error fetching onboarding");
