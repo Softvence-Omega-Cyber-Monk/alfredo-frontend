@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { useEffect } from "react";
 import {
-  fetchAllProperties,
+  fetchFeaturedProperties,
   fetchMyProperties,
 } from "@/store/Slices/PropertySlice/propertySlice";
 import { fetchFavorites } from "@/store/Slices/FavoritesSlice/favoritesSlice";
@@ -16,17 +16,13 @@ import { fetchFavorites } from "@/store/Slices/FavoritesSlice/favoritesSlice";
 const FutureList = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { allProperties, myProperties } = useAppSelector(
+  const { featuredProperties } = useAppSelector(
     (state) => state.property
   );
 
-  const filteredProperties = allProperties.filter(
-    (property) => !myProperties.some((myProp) => myProp.id === property.id)
-  );
+  const displayProperties = featuredProperties;
 
-  // console.log("mahim", myProperties);
 
-  // console.log("All data ", filteredProperties);
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const { t } = useTranslation("futureList");
 
@@ -35,14 +31,14 @@ const FutureList = () => {
   const isUserSubscribed = currentUser?.isSubscribed || false;
 
   useEffect(() => {
-    dispatch(fetchAllProperties());
+    dispatch(fetchFeaturedProperties());
     dispatch(fetchMyProperties());
 
-    // Fetch favorites if user is authenticated
     if (isAuthenticated) {
       dispatch(fetchFavorites());
     }
   }, [dispatch, isAuthenticated]);
+
 
   return (
     <div className="mt-16">
@@ -53,7 +49,7 @@ const FutureList = () => {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-          {filteredProperties.map((card) => (
+          {displayProperties.map((card: any) => (
             <CommonCard
               key={card.id}
               id={card.id}
@@ -73,6 +69,7 @@ const FutureList = () => {
             />
           ))}
         </div>
+
         <div className="mt-8 flex justify-center">
           <PrimaryButton
             title={t("exploreMore")}

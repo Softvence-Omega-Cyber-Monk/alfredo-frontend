@@ -62,6 +62,7 @@ export interface PropertyListItem {
 
 interface PropertyState {
   allProperties: PropertyListItem[];
+  featuredProperties: PropertyListItem[];
   myProperties: PropertyListItem[];
   singleProperty: PropertyDetails | null;
   loading: boolean;
@@ -70,6 +71,7 @@ interface PropertyState {
 
 const initialState: PropertyState = {
   allProperties: [],
+  featuredProperties: [],
   myProperties: [],
   singleProperty: null,
   loading: false,
@@ -104,6 +106,17 @@ export const fetchMyProperties = createAsyncThunk<PropertyListItem[]>(
       getAuthConfig()
     );
     return response.data.data || response.data || [];
+  }
+);
+
+// ✅ Fetch featured properties
+export const fetchFeaturedProperties = createAsyncThunk<PropertyListItem[]>(
+  "properties/fetchFeatured",
+  async () => {
+    const response = await axios.get(`${baseURL}/featured-property`, getAuthConfig());
+    // The API returns { data: [ { property: { ... }, ... } ] }
+    const items = response.data.data || [];
+    return items.map((item: any) => item.property).filter(Boolean);
   }
 );
 
@@ -181,6 +194,18 @@ const propertySlice = createSlice({
         state.myProperties = Array.isArray(action.payload)
           ? action.payload
           : [];
+      })
+
+      // Fetch Featured
+      .addCase(fetchFeaturedProperties.fulfilled, (state, action) => {
+        state.loading = false;
+        state.featuredProperties = Array.isArray(action.payload)
+          ? action.payload
+          : [];
+      })
+      .addCase(fetchFeaturedProperties.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Failed to fetch featured properties";
       })
 
       // Fetch Single

@@ -19,7 +19,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
 });
 
-const SearchControl = () => {
+const SearchControl = ({ onSearchSelect }: { onSearchSelect: (lat: number, lng: number) => void }) => {
   const map = useMap();
 
   useEffect(() => {
@@ -45,10 +45,19 @@ const SearchControl = () => {
 
     map.addControl(searchControl);
 
+    // Listen for search result selection
+    map.on('geosearch/showlocation', (result: any) => {
+      if (result.location) {
+        const { x: lng, y: lat } = result.location;
+        onSearchSelect(lat, lng);
+      }
+    });
+
     return () => {
+      map.off('geosearch/showlocation');
       map.removeControl(searchControl);
     };
-  }, [map]);
+  }, [map, onSearchSelect]);
 
   return null;
 };
@@ -91,29 +100,17 @@ const TouchConfigController = () => {
 };
 
 const LocationMarker = ({
-  onSelect,
-  initialPosition,
+  position,
+  onMapClick,
 }: {
-  onSelect: (lat: number, lng: number) => void;
-  initialPosition?: { lat: number; lng: number } | null;
+  position: L.LatLng | null;
+  onMapClick: (lat: number, lng: number) => void;
 }) => {
-  const [position, setPosition] = useState<L.LatLng | null>(
-    initialPosition ? L.latLng(initialPosition.lat, initialPosition.lng) : null
-  );
-
   useMapEvents({
     click(e) {
-      setPosition(e.latlng);
-      onSelect(e.latlng.lat, e.latlng.lng);
+      onMapClick(e.latlng.lat, e.latlng.lng);
     },
   });
-
-  // Update position when initialPosition changes
-  useEffect(() => {
-    if (initialPosition) {
-      setPosition(L.latLng(initialPosition.lat, initialPosition.lng));
-    }
-  }, [initialPosition]);
 
   return position === null ? null : <Marker position={position} />;
 };
@@ -125,8 +122,24 @@ const LeafletInputMap = ({
   onSelect: (lat: number, lng: number) => void;
   initialCenter?: { lat: number; lng: number };
 }) => {
+  const [markerPosition, setMarkerPosition] = useState<L.LatLng | null>(
+    initialCenter ? L.latLng(initialCenter.lat, initialCenter.lng) : null
+  );
+
   // Default to Athens, Greece coordinates
   const center = initialCenter || { lat: 37.9838, lng: 23.7275 };
+
+  const handleLocationSelect = (lat: number, lng: number) => {
+    setMarkerPosition(L.latLng(lat, lng));
+    onSelect(lat, lng);
+  };
+
+  // Update marker position when initialCenter changes
+  useEffect(() => {
+    if (initialCenter) {
+      setMarkerPosition(L.latLng(initialCenter.lat, initialCenter.lng));
+    }
+  }, [initialCenter]);
 
   return (
     <MapContainer
@@ -134,7 +147,6 @@ const LeafletInputMap = ({
       zoom={13}
       scrollWheelZoom={true}
       style={{ height: "400px", width: "100%" }}
-      // Pass touch options through the whenCreated or via MapOptions
       touchZoom={true}
       dragging={true}
       zoomControl={true}
@@ -143,10 +155,13 @@ const LeafletInputMap = ({
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      <SearchControl />
+      <SearchControl onSearchSelect={handleLocationSelect} />
       <TouchConfigController />
       <MapCenterController center={center} />
-      <LocationMarker onSelect={onSelect} initialPosition={initialCenter} />
+      <LocationMarker
+        position={markerPosition}
+        onMapClick={handleLocationSelect}
+      />
     </MapContainer>
   );
 };
