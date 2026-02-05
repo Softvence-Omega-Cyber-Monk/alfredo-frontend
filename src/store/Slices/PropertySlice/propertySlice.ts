@@ -1,7 +1,7 @@
 // src/redux/slices/propertySlice.ts
+import api from "@/services/api";
 import { PropertyDetails, PropertyImage } from "@/types/PropertyDetails";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 
 function toListItem(details: PropertyDetails): PropertyListItem {
   return {
@@ -37,10 +37,6 @@ export interface Owner {
   createdAt: string;
   updatedAt: string;
 }
-// export interface PropertyImage {
-//   url: string;
-//   publicId: string;
-// }
 
 export interface PropertyListItem {
   id: string;
@@ -78,21 +74,11 @@ const initialState: PropertyState = {
   error: null,
 };
 
-const baseURL = import.meta.env.VITE_API_URL;
-
-const getAuthConfig = (isMultipart = false) => ({
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-    ...(isMultipart ? {} : { "Content-Type": "application/json" }),
-  },
-});
-
 // ✅ Fetch all properties
 export const fetchAllProperties = createAsyncThunk<PropertyListItem[]>(
   "properties/fetchAll",
   async () => {
-    const response = await axios.get(`${baseURL}/property`, getAuthConfig());
-    // ✅ adjust based on API response structure
+    const response = await api.get("/property");
     return response.data.data || response.data || [];
   }
 );
@@ -101,10 +87,7 @@ export const fetchAllProperties = createAsyncThunk<PropertyListItem[]>(
 export const fetchMyProperties = createAsyncThunk<PropertyListItem[]>(
   "properties/fetchMine",
   async () => {
-    const response = await axios.get(
-      `${baseURL}/property/my-properties`,
-      getAuthConfig()
-    );
+    const response = await api.get("/property/my-properties");
     return response.data.data || response.data || [];
   }
 );
@@ -113,8 +96,7 @@ export const fetchMyProperties = createAsyncThunk<PropertyListItem[]>(
 export const fetchFeaturedProperties = createAsyncThunk<PropertyListItem[]>(
   "properties/fetchFeatured",
   async () => {
-    const response = await axios.get(`${baseURL}/featured-property`, getAuthConfig());
-    // The API returns { data: [ { property: { ... }, ... } ] }
+    const response = await api.get("/featured-property");
     const items = response.data.data || [];
     return items.map((item: any) => item.property).filter(Boolean);
   }
@@ -124,10 +106,7 @@ export const fetchFeaturedProperties = createAsyncThunk<PropertyListItem[]>(
 export const fetchSingleProperty = createAsyncThunk<PropertyDetails, string>(
   "properties/fetchSingle",
   async (id) => {
-    const response = await axios.get(
-      `${baseURL}/property/${id}`,
-      getAuthConfig()
-    );
+    const response = await api.get(`/property/${id}`);
     return response.data.data || response.data;
   }
 );
@@ -136,11 +115,9 @@ export const fetchSingleProperty = createAsyncThunk<PropertyDetails, string>(
 export const addProperty = createAsyncThunk<PropertyListItem, FormData>(
   "properties/add",
   async (newProperty) => {
-    const response = await axios.post(
-      `${baseURL}/property`,
-      newProperty,
-      getAuthConfig(true)
-    );
+    const response = await api.post("/property", newProperty, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data.data || response.data;
   }
 );
@@ -150,11 +127,10 @@ export const updateProperty = createAsyncThunk<
   PropertyDetails,
   { id: string; updatedData: Partial<PropertyDetails> | FormData }
 >("properties/update", async ({ id, updatedData }) => {
-  const response = await axios.patch(
-    `${baseURL}/property/${id}`,
-    updatedData,
-    getAuthConfig(updatedData instanceof FormData)
-  );
+  const isMultipart = updatedData instanceof FormData;
+  const response = await api.patch(`/property/${id}`, updatedData, {
+    headers: isMultipart ? { "Content-Type": "multipart/form-data" } : {},
+  });
   return response.data.data || response.data;
 });
 
@@ -162,7 +138,7 @@ export const updateProperty = createAsyncThunk<
 export const deleteProperty = createAsyncThunk<string, string>(
   "properties/delete",
   async (id) => {
-    await axios.delete(`${baseURL}/property/${id}`, getAuthConfig());
+    await api.delete(`/property/${id}`);
     return id;
   }
 );

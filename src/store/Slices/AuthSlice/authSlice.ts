@@ -1,6 +1,7 @@
 // /store/Slices/AuthSlice/authSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axios, { AxiosError } from "axios";
+import api from "@/services/api";
+import { AxiosError } from "axios";
 
 const storedUser = localStorage.getItem("user");
 const storedToken = localStorage.getItem("token");
@@ -45,12 +46,6 @@ const initialState: AuthState = {
   loading: false,
   error: null,
 };
-
-// ========== Axios Instance ==========
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-  headers: { "Content-Type": "application/json" },
-});
 
 //Signup User
 

@@ -1,4 +1,5 @@
 import { FC, useState, useEffect } from "react";
+import api from "@/services/api";
 import axios from "axios";
 import * as Dialog from "@radix-ui/react-dialog";
 import check from "../../assets/check.svg";
@@ -54,18 +55,15 @@ const ServicePlan: FC = () => {
 
   const { t, i18n } = useTranslation("ourplan");
   const currentLanguage = i18n.language;
-  // console.log(currentLanguage, "currentLanguage");
 
   useEffect(() => {
     const fetchPlans = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/plans`);
+        const res = await api.get("/plans");
 
-        // Process the plans to get the correct translation based on current language
         const processedPlans: ProcessedPlan[] = res.data.data
           .map((plan: Plan) => {
-            // Find the translation for current language, fallback to English if not found
             const translation =
               plan.translations.find(
                 (t: Translation) => t.language === currentLanguage
@@ -90,7 +88,7 @@ const ServicePlan: FC = () => {
               is_populer: plan.is_populer,
             };
           })
-          .filter(Boolean); // Remove any null values
+          .filter(Boolean);
 
         setPlans(processedPlans);
       } catch (error) {
@@ -101,9 +99,8 @@ const ServicePlan: FC = () => {
     };
 
     fetchPlans();
-  }, [currentLanguage]); // Re-fetch when language changes
+  }, [currentLanguage]);
 
-  // Handle Submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedPlan) return;
@@ -114,14 +111,6 @@ const ServicePlan: FC = () => {
       return;
     }
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    };
-
-    // Map plan duration
     const planDuration = selectedPlan.planType === "TWO_YEARLY" ? 2 : 1;
 
     const payload = {
@@ -131,13 +120,10 @@ const ServicePlan: FC = () => {
     };
 
     try {
-      // console.log("Payload:", payload);
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/stripe-payment/checkout`,
-        payload,
-        config
+      const res = await api.post(
+        "/stripe-payment/checkout",
+        payload
       );
-      console.log("Checkout response:", res.data);
       window.location.href = res.data.url;
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -160,11 +146,10 @@ const ServicePlan: FC = () => {
               <div
                 key={plan.id}
                 className={`relative p-[40px] flex flex-col w-full max-w-[394px] border border-primary-border-color rounded-[24px] text-center min-h-[680px] duration-300 transition-all ease-in-out
-    ${
-      plan.is_populer
-        ? "bg-[#EAF1FA] shadow-2xl shadow-[#bfd4f0]"
-        : "bg-white hover:shadow-2xl hover:shadow-[#bfd4f0] hover:bg-[#EAF1FA]"
-    }`}
+    ${plan.is_populer
+                    ? "bg-[#EAF1FA] shadow-2xl shadow-[#bfd4f0]"
+                    : "bg-white hover:shadow-2xl hover:shadow-[#bfd4f0] hover:bg-[#EAF1FA]"
+                  }`}
               >
                 {/* Tag */}
                 <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary-blue text-white text-[16px] px-4 py-[10px] rounded-full shadow-md">
