@@ -1,8 +1,6 @@
 // features/amenities/amenitiesSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
-
-const baseURL = import.meta.env.VITE_API_URL;
+import api from "@/services/api";
 
 export interface AmenityItem {
   id: string;
@@ -27,17 +25,11 @@ const initialState: AmenitiesState = {
   error: null,
 };
 
-const config = {
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
-};
-
 // Define thunks for each API
 export const fetchMainAmenities = createAsyncThunk(
   "amenities/fetchMain",
   async () => {
-    const res = await axios.get(`${baseURL}/onboarding/amenities`, config);
+    const res = await api.get("/onboarding/amenities");
     return res.data.data as AmenityItem[];
   }
 );
@@ -45,7 +37,7 @@ export const fetchMainAmenities = createAsyncThunk(
 export const fetchTransportAmenities = createAsyncThunk(
   "amenities/fetchTransport",
   async () => {
-    const res = await axios.get(`${baseURL}/onboarding/transports`, config);
+    const res = await api.get("/onboarding/transports");
     return res.data.data as AmenityItem[];
   }
 );
@@ -53,7 +45,7 @@ export const fetchTransportAmenities = createAsyncThunk(
 export const fetchSurroundingAmenities = createAsyncThunk(
   "amenities/fetchSurrounding",
   async () => {
-    const res = await axios.get(`${baseURL}/onboarding/surroundings`, config);
+    const res = await api.get("/onboarding/surroundings");
     return res.data.data as AmenityItem[];
   }
 );

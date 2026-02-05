@@ -1,6 +1,6 @@
 // store/Slices/ExchangeSlice/exchangeSlice.ts
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "@/services/api";
 
 // Types
 export interface ExchangeRequest {
@@ -48,17 +48,7 @@ export const sendExchangeRequest = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/exchange-request`,
-        requestData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await api.post("/exchange-request", requestData);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
@@ -72,16 +62,8 @@ export const fetchExchangeRequests = createAsyncThunk(
   "exchange/fetchRequests",
   async (_, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/exchange-request`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      return response.data;
+      const response = await api.get("/exchange-request");
+      return response.data.data || response.data;
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to fetch exchange requests"
@@ -94,20 +76,12 @@ export const fetchExchangeRequestDetails = createAsyncThunk(
   "exchange/fetchRequestDetails",
   async (requestId: string, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/exchange-request/${requestId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      return response.data;
+      const response = await api.get(`/exchange-request/${requestId}`);
+      return response.data.data || response.data;
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data?.message ||
-          "Failed to fetch exchange request details"
+        "Failed to fetch exchange request details"
       );
     }
   }
@@ -117,16 +91,7 @@ export const acceptExchangeRequest = createAsyncThunk(
   "exchange/acceptRequest",
   async (requestId: string, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.patch(
-        `${import.meta.env.VITE_API_URL}/exchange-request/aceept/${requestId}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.patch(`/exchange-request/aceept/${requestId}`, {});
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
@@ -140,15 +105,7 @@ export const deleteExchangeRequest = createAsyncThunk(
   "exchange/deleteRequest",
   async (requestId: string, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
-      await axios.delete(
-        `${import.meta.env.VITE_API_URL}/exchange-request/${requestId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await api.delete(`/exchange-request/${requestId}`);
       return requestId;
     } catch (error: any) {
       return rejectWithValue(

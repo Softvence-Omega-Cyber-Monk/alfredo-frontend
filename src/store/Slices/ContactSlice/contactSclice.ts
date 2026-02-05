@@ -1,6 +1,7 @@
 // /store/Slices/ContactSlice/contactSlice.ts
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios, { AxiosError } from "axios";
+import api from "@/services/api";
+import { AxiosError } from "axios";
 
 // ========== Types ==========
 export interface Contact {
@@ -28,12 +29,6 @@ const initialState: ContactState = {
   loading: false,
   error: null,
 };
-
-// ========== Axios Instance ==========
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-  headers: { "Content-Type": "application/json" },
-});
 
 // CREATE contact
 export const createContact = createAsyncThunk<

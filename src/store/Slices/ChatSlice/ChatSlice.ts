@@ -1,6 +1,6 @@
 // src/store/chatSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "@/services/api";
 
 interface ChatMessage {
   id: string;
@@ -23,13 +23,6 @@ const initialState: ChatState = {
   error: null,
 };
 
-const config = {
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-    "Content-Type": "application/json",
-  },
-};
-
 // Async thunk to fetch chat history
 export const fetchChatHistory = createAsyncThunk<
   ChatMessage[],
@@ -38,10 +31,7 @@ export const fetchChatHistory = createAsyncThunk<
 >("chat/fetchHistory", async (userId: string, { rejectWithValue }) => {
   try {
     console.log("📜 Fetching chat history for user:", userId);
-    const res = await axios.get(
-      `${import.meta.env.VITE_API_URL}/chat/history/user/${userId}`,
-      config
-    );
+    const res = await api.get(`/chat/history/user/${userId}`);
     console.log("📜 Chat history fetched:", res.data?.length, "messages");
     // Ensure returned data is an array of ChatMessage
     return Array.isArray(res.data) ? (res.data as ChatMessage[]) : [];
