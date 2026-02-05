@@ -32,9 +32,9 @@ const FutureList = () => {
 
   useEffect(() => {
     dispatch(fetchFeaturedProperties());
-    dispatch(fetchMyProperties());
 
     if (isAuthenticated) {
+      dispatch(fetchMyProperties());
       dispatch(fetchFavorites());
     }
   }, [dispatch, isAuthenticated]);
