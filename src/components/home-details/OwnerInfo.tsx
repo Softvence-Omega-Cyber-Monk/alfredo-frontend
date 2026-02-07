@@ -82,7 +82,7 @@ const OwnerInfo = ({
       {/* Owner Info */}
       <img
         src={ownerDetails?.photo || "/defaultAvatar.png"}
-        className="h-48 w-full object-cover object-top rounded-lg"
+        className="h-48 w-full object-cover rounded-lg"
         alt={ownerDetails?.fullName || "Owner Image"}
       />
       <div className="flex flex-col gap-4 pt-4 pb-6 border-b border-[#F4F7FC]">
