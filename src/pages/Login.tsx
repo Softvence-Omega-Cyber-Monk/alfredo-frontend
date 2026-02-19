@@ -115,7 +115,7 @@ const Login = () => {
         }
       }
     } catch (error) {
-      console.error("Google login error:", error);
+      console.error("Google login error::", error);
     }
   };
 
