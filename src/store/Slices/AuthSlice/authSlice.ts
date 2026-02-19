@@ -14,6 +14,7 @@ export interface User {
   role: string;
   email: string;
   hasOnboarded: boolean;
+  photo?: string | null;
 }
 export interface RegisterResponse {
   status: string; // e.g. "pending"

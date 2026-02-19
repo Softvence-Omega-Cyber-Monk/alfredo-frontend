@@ -5,9 +5,10 @@ import { useEffect } from "react";
 
 interface UserAvatarProps {
   userName: string;
+  photo?: string | null;
 }
 
-const UserAvatar: React.FC<UserAvatarProps> = ({ userName }) => {
+const UserAvatar: React.FC<UserAvatarProps> = ({ userName, photo }) => {
   const dispatch = useAppDispatch();
   const { data } = useAppSelector((state) => state.user);
 
@@ -16,7 +17,7 @@ const UserAvatar: React.FC<UserAvatarProps> = ({ userName }) => {
   }, [dispatch]);
   return (
     <Avatar className="w-8 h-8 md:w-10 md:h-10">
-      <AvatarImage src={data?.photo || undefined} />
+      <AvatarImage src={photo || data?.photo || undefined} />
       <AvatarFallback>{userName}</AvatarFallback>
     </Avatar>
   );

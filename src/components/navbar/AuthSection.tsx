@@ -108,7 +108,10 @@ const AuthSection: React.FC<Props> = ({
 
         <PopoverTrigger>
           <div className="flex items-center gap-2 md:gap-3">
-            <UserAvatar userName={user ? `${user.firstName}` : "Guest"} />
+            <UserAvatar
+              userName={user ? `${user.firstName}` : "Guest"}
+              photo={user?.photo}
+            />
 
             {/* <p className="text-primary-blue font-medium text-sm sm:text-base md:text-lg">
               {user?.name.split(" ")[0]}

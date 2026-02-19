@@ -9,9 +9,11 @@ import CommonWrapper from "@/common/CommonWrapper";
 import AuthenticateHeading from "@/components/reusable/AuthenticateHeading";
 import AuthButton from "@/components/reusable/AuthButton";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "@/store/Slices/AuthSlice/authSlice";
+import { loginUser, setCredentials } from "@/store/Slices/AuthSlice/authSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { useTranslation } from "react-i18next";
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "@/lib/firebase";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email format"),
@@ -61,6 +63,59 @@ const Login = () => {
       } else {
         navigate("/dashboard");
       }
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+
+      const user = result.user;
+
+      // 🔑 Get Firebase ID Token
+      const idToken = await user.getIdToken();
+
+      // Send token to backend
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/auth/google`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ idToken }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Store user and token just like regular login
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("token", data.accessToken);
+
+        const formattedUser = {
+          ...data.user,
+          firstName: data.user.fullName.split(" ")[0] || "",
+          lastName: data.user.fullName.split(" ").slice(1).join(" ") || "",
+        };
+
+        dispatch(
+          setCredentials({
+            user: formattedUser,
+            token: data.accessToken,
+          })
+        );
+
+        if (!data.user.hasOnboarded) {
+          navigate("/onboarding");
+        } else {
+          navigate("/dashboard");
+        }
+      }
+    } catch (error) {
+      console.error("Google login error:", error);
     }
   };
 
@@ -147,6 +202,26 @@ const Login = () => {
               }
               type="submit"
             />
+            <div className="flex items-center gap-3 my-4">
+              <div className="flex-1 h-[1px] bg-gray-300"></div>
+              <span className="text-sm text-gray-500 font-medium">OR</span>
+              <div className="flex-1 h-[1px] bg-gray-300"></div>
+            </div>
+
+            {/* Google Button */}
+            <button
+              type="button"
+              onClick={handleGoogleLogin}
+              className="w-full flex items-center cursor-pointer justify-center gap-3 border border-gray-300 py-3 rounded-[8px] bg-white hover:bg-gray-50 transition duration-200 font-semibold text-basic-dark shadow-sm"
+            >
+              <img
+                src="https://www.svgrepo.com/show/475656/google-color.svg"
+                alt="Google"
+                className="w-5 h-5"
+              />
+              Continue with Google
+            </button>
+
           </form>
 
           {/* Footer */}
