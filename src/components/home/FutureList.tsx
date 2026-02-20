@@ -39,6 +39,8 @@ const FutureList = () => {
     }
   }, [dispatch, isAuthenticated]);
 
+  console.log(displayProperties, "cardData")
+
 
   return (
     <div className="mt-16">
@@ -54,7 +56,7 @@ const FutureList = () => {
               key={card.id}
               id={card.id}
               image={card.images?.[0]?.url || "/placeholder.jpg"}
-              avatarImage={card.images?.[0]?.url || "/avatar-placeholder.png"}
+              avatarImage={card?.owner?.photo || "/avatar-placeholder.png"}
               rating={"5.0"}
               ownerName={card.owner?.fullName || "Unknown"}
               location={card.location}
