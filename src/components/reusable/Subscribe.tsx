@@ -56,7 +56,7 @@ const Subscribe = () => {
         width: "100%",
       }}
     >
-      <div className="relative min-h-[448px] md:h-[448px] w-full flex items-center">
+      <div className="relative min-h-[548px] md:h-[448px] w-full flex items-center">
         {/* Overlay */}
         <div className="absolute inset-0 bg-[#3174CD] opacity-70 brightness-40"></div>
 

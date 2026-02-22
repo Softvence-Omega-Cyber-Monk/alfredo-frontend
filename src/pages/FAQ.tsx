@@ -14,6 +14,8 @@ import { useTranslation } from "react-i18next";
 
 const FAQ = () => {
   const { t, i18n } = useTranslation("faq");
+  const { t: t2 } = useTranslation("ourplan");
+
   const currentLanguage = i18n.language;
 
   return (
@@ -95,11 +97,14 @@ const FAQ = () => {
 
         {/* Plans Section */}
         <div>
-          <ClientHeading headingText="Our" spanText="plans" />
-          <p className="text-[24px] font-normal text-basic-dark max-[767px]:text-base py-6 text-center">
-            Flexible membership options designed to fit every traveler’s needs—
-            <br className="max-[767px]:hidden" />
-            whether you exchange once a year or every month.
+          <ClientHeading
+            headingText={t2("ourplan.title")}
+            spanText={t2("ourplan.highlight")}
+          />
+          <p className="text-[24px] sm:text-[24px] py-6 text-center text-basic-dark max-sm:text-[16px] max-sm:leading-[24px]">
+            {t2("ourplan.subtitle1")}
+            <br className="hidden sm:block" />
+            {t2("ourplan.subtitle2")}
           </p>
         </div>
 

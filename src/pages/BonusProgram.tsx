@@ -4,7 +4,7 @@ import { cardData, inviteData } from "@/lib/bonusData";
 import { FiCopy, FiCheckCircle } from "react-icons/fi"; // updated
 import fb from "@/assets/footer/fb.svg";
 import insta from "@/assets/footer/instagram.svg";
-import linkedin from "@/assets/footer/linkedin.svg";
+// import linkedin from "@/assets/footer/linkedin.svg";
 import { Link } from "react-router-dom";
 import Conversation from "@/components/reusable/Conversation";
 import Subscribe from "@/components/reusable/Subscribe";
@@ -40,31 +40,28 @@ const BonusProgram: FC = () => {
         {/* Heading */}
         <div className="mt-[64px] mb-[40px] text-center">
           <h1
-            className={`text-[#505050] leading-22 max-[767px]:leading-tight ${
-              currentLanguage === "el"
-                ? "text-[40px] max-[767px]:text-[28px]" // smaller font for Greek
-                : "text-[64px] max-[767px]:text-[36px]" // default size
-            }`}
+            className={`text-[#505050] leading-22 max-[767px]:leading-tight ${currentLanguage === "el"
+              ? "text-[40px] max-[767px]:text-[28px]" // smaller font for Greek
+              : "text-[64px] max-[767px]:text-[36px]" // default size
+              }`}
           >
             {t("bonus.title")} <br />
             <span>{t("bonus.title1")} </span>
             <span
-              className={`font-Grand-Hotel text-primary-blue ${
-                currentLanguage === "el"
-                  ? "text-[50px] ml-0 max-[767px]:text-[40px] max-[767px]:ml-0" // smaller + no left margin for Greek
-                  : "text-[96px] ml-4 max-[767px]:text-[60px] max-[767px]:ml-2" // default
-              }`}
+              className={`font-Grand-Hotel text-primary-blue ${currentLanguage === "el"
+                ? "text-[50px] ml-0 max-[767px]:text-[40px] max-[767px]:ml-0" // smaller + no left margin for Greek
+                : "text-[96px] ml-4 max-[767px]:text-[60px] max-[767px]:ml-2" // default
+                }`}
             >
               {t("bonus.highlight")}
             </span>
           </h1>
 
           <p
-            className={`font-normal text-basic-dark py-4 ${
-              currentLanguage === "el"
-                ? "text-[18px] max-[767px]:text-xs" // smaller for Greek
-                : "text-[24px] max-[767px]:text-sm" // default
-            }`}
+            className={`font-normal text-basic-dark py-4 ${currentLanguage === "el"
+              ? "text-[18px] max-[767px]:text-xs" // smaller for Greek
+              : "text-[24px] max-[767px]:text-sm" // default
+              }`}
           >
             {t("bonus.subtitle")}
             <br className="max-[767px]:hidden" />
@@ -219,7 +216,7 @@ const BonusProgram: FC = () => {
                 />
               </a>
             </li>
-            <li>
+            {/* <li>
               <Link
                 to="/"
                 className="font-regular lg:text-xl flex gap-2 items-center"
@@ -230,7 +227,7 @@ const BonusProgram: FC = () => {
                   className="w-8 h-8 max-[767px]:w-6 max-[767px]:h-6"
                 />
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className="">

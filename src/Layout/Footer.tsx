@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import facebook from "../assets/footer/fb.svg";
 import instagram from "../assets/footer/instagram.svg";
-import linkedin from "../assets/footer/linkedin.svg";
+// import linkedin from "../assets/footer/linkedin.svg";
 
 import { Link } from "react-router-dom";
 
@@ -96,25 +96,33 @@ const Footer = () => {
                 {t("socialMedia")}
               </h3>
               <ul className="space-y-3">
-                <li>
-                  <Link
-                    to="/"
-                    className="font-regular lg:text-xl flex gap-2 items-center"
-                  >
-                    <img src={facebook} alt="" className="w-5 h-5" />
-                    <p>Facebook</p>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/"
-                    className="font-regular lg:text-xl flex gap-2 items-center"
-                  >
-                    <img src={instagram} alt="" className="w-5 h-5" />
-                    <p>Instagram</p>
-                  </Link>
-                </li>
-                <li>
+                <a
+                  href="https://www.facebook.com/share/1SdgouDHKL/?mibextid=wwXIfr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-regular lg:text-md flex gap-2 items-center"
+                >
+                  <img
+                    src={facebook}
+                    alt="facebook"
+                    className="w-6 h-6 max-[767px]:w-6 max-[767px]:h-6"
+                  />
+                  Facebook
+                </a>
+                <a
+                  href="https://www.instagram.com/vacanzagreece/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-regular lg:text-md flex gap-2 items-center"
+                >
+                  <img
+                    src={instagram}
+                    alt="instagram"
+                    className="w-6 h-6 max-[767px]:w-6 max-[767px]:h-6"
+                  />
+                  Instagram
+                </a>
+                {/* <li>
                   <Link
                     to="/"
                     className="font-regular lg:text-xl flex gap-2 items-center"
@@ -122,7 +130,7 @@ const Footer = () => {
                     <img src={linkedin} alt="" className="w-5 h-5" />
                     <p>Linkedin</p>
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

@@ -15,7 +15,9 @@ const Social = () => {
       <ul className="flex flex-row items-center gap-[15px] justify-center sm:mt-0">
         <li>
           <Link
-            to="/"
+            to="https://www.facebook.com/share/1SdgouDHKL/?mibextid=wwXIfr"
+            target="_blank"
+            rel="noopener noreferrer"
             className="font-regular lg:text-xl flex gap-2 items-center"
           >
             <img
