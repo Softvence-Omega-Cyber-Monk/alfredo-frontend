@@ -1,10 +1,8 @@
 name: Deploy React App to VPS
-
 on:
   push:
     branches:
-      - main  # or the branch you want to deploy from
-
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -35,18 +33,16 @@ jobs:
         with: 
           host: ${{ secrets.VPS_HOST }}
           username: root
-          password: ${{ secrets.VPS_PASSWORD }}
+          key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /var/www/frontend || exit
-            rm -rf *
-            # Exit to continue the action
-            exit
+            mkdir -p /var/www/frontend/dist
+            rm -rf /var/www/frontend/dist/*
 
       - name: Upload build files to VPS
         uses: appleboy/scp-action@v0.1.5
         with:
           host: ${{ secrets.VPS_HOST }}
           username: root
-          password: ${{ secrets.VPS_PASSWORD }}
+          key: ${{ secrets.VPS_SSH_KEY }}
           source: "dist/*"
           target: "/var/www/frontend"
