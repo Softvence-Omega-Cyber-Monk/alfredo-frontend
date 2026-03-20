@@ -134,12 +134,22 @@ const LeafletInputMap = ({
     onSelect(lat, lng);
   };
 
-  // Update marker position when initialCenter changes
+  // Update marker position only when initialCenter values actually change
+  // (not on re-renders with the same values)
   useEffect(() => {
     if (initialCenter) {
-      setMarkerPosition(L.latLng(initialCenter.lat, initialCenter.lng));
+      setMarkerPosition((prev) => {
+        if (
+          prev &&
+          prev.lat === initialCenter.lat &&
+          prev.lng === initialCenter.lng
+        ) {
+          return prev; // Same position, don't update
+        }
+        return L.latLng(initialCenter.lat, initialCenter.lng);
+      });
     }
-  }, [initialCenter]);
+  }, [initialCenter?.lat, initialCenter?.lng]);
 
   return (
     <MapContainer

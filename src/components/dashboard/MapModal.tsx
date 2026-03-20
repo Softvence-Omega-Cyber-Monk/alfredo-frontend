@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import LeafletInputMap from "./LeafletInputMap";
 
@@ -9,14 +9,20 @@ type MapModalProps = {
   initialCenter?: { lat: number; lng: number } | null;
 };
 
+const DEFAULT_CENTER = { lat: 37.9838, lng: 23.7275 }; // Athens, Greece
+
 const MapModal = ({ isOpen, onClose, onSelect, initialCenter }: MapModalProps) => {
   const { t } = useTranslation("dashboard");
   const [tempSelection, setTempSelection] = useState<{ lat: number; lng: number } | null>(null);
 
-  if (!isOpen) return null;
+  // Memoize center so it doesn't create a new object on every re-render,
+  // which would reset the marker position in LeafletInputMap
+  const center = useMemo(
+    () => initialCenter || DEFAULT_CENTER,
+    [initialCenter?.lat, initialCenter?.lng]
+  );
 
-  // Default to Athens, Greece if no initial center provided
-  const center = initialCenter || { lat: 37.9838, lng: 23.7275 };
+  if (!isOpen) return null;
 
   const handleTempSelect = (lat: number, lng: number) => {
     // Store the selection temporarily, don't close modal yet
