@@ -39,6 +39,7 @@ const SupportModal = ({ isOpen, onClose }: SupportModalProps) => {
       email: data.email,
       phoneNumber: data.phone,
       opinion: data.message,
+      targetEmail: "info@vacanzagreece.gr",
     };
 
     dispatch(createContact(contactPayload))
@@ -66,7 +67,10 @@ const SupportModal = ({ isOpen, onClose }: SupportModalProps) => {
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-300 bg-white z-10">
-          <h2 className="text-2xl font-semibold text-primary-blue">Contact Support</h2>
+          <div>
+            <h2 className="text-2xl font-semibold text-primary-blue">Contact Support</h2>
+            <p className="text-sm text-gray-500">info@vacanzagreece.gr</p>
+          </div>
           <button
             onClick={onClose}
             className="p-2 rounded-full hover:bg-gray-100 transition"

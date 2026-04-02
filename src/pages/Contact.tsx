@@ -26,6 +26,7 @@ const Contact = () => {
       email: data.email,
       phoneNumber: data.phone,
       opinion: data.message,
+      targetEmail: "info@vacanzagreece.gr",
     };
 
     dispatch(createContact(contactPayload))

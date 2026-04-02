@@ -10,6 +10,7 @@ export interface Contact {
   email: string;
   phoneNumber: string;
   opinion: string;
+  targetEmail?: string;
   createdAt: string;
 }
 
