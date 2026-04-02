@@ -9,7 +9,7 @@ import { LuEyeOff } from "react-icons/lu";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { sendOtp, signupUser } from "@/store/Slices/AuthSlice/authSlice";
+import { sendOtp, signupUser, setCredentials } from "@/store/Slices/AuthSlice/authSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import CustomModal from "@/components/modals/CustomModal";
 import {
@@ -19,6 +19,8 @@ import {
 } from "@/lib/data/termsAndCondition";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "@/lib/firebase";
 
 const signupSchema = z
   .object({
@@ -94,6 +96,59 @@ const Signup = () => {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+
+      const user = result.user;
+
+      // 🔑 Get Firebase ID Token
+      const idToken = await user.getIdToken();
+
+      // Send token to backend
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/auth/google`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ idToken }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Store user and token just like regular login
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("token", data.accessToken);
+
+        const formattedUser = {
+          ...data.user,
+          firstName: data.user.fullName.split(" ")[0] || "",
+          lastName: data.user.fullName.split(" ").slice(1).join(" ") || "",
+        };
+
+        dispatch(
+          setCredentials({
+            user: formattedUser,
+            token: data.accessToken,
+          })
+        );
+
+        if (!data.user.hasOnboarded) {
+          navigate("/onboarding");
+        } else {
+          navigate("/dashboard");
+        }
+      }
+    } catch (error) {
+      console.error("Google login error::", error);
+    }
+  };
+
   return (
     <CommonWrapper>
       <div className="flex items-center justify-center mx-auto my-[64px] max-[767px]:mt-[40px]">
@@ -111,6 +166,7 @@ const Signup = () => {
                   type="text"
                   placeholder={t("auth.signup.firstName")}
                   {...register("firstName")}
+                  autoComplete="given-name"
                   className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
                 />
                 {errors.firstName && (
@@ -128,6 +184,7 @@ const Signup = () => {
                   type="text"
                   placeholder={t("auth.signup.lastName")}
                   {...register("lastName")}
+                  autoComplete="family-name"
                   className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
                 />
                 {errors.lastName && (
@@ -148,6 +205,7 @@ const Signup = () => {
                   type="email"
                   placeholder={t("auth.signup.emailAddress")}
                   {...register("email")}
+                  autoComplete="email"
                   className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
                 />
                 {errors.email && (
@@ -167,6 +225,7 @@ const Signup = () => {
                   type="text"
                   placeholder={t("auth.signup.phoneNumber")}
                   {...register("phoneNumber")}
+                  autoComplete="tel"
                   className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2
                     [&::-webkit-outer-spin-button]:appearance-none 
                     [&::-webkit-inner-spin-button]:appearance-none 
@@ -211,6 +270,7 @@ const Signup = () => {
                     type={showPassword ? "text" : "password"}
                     placeholder={t("auth.signup.password")}
                     {...register("password")}
+                    autoComplete="new-password"
                     className="w-full px-4 py-3 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue pr-12"
                   />
                   <button
@@ -242,6 +302,7 @@ const Signup = () => {
                     type={showConfirmPassword ? "text" : "password"}
                     placeholder={t("auth.signup.confirmPassword")}
                     {...register("confirmPassword")}
+                    autoComplete="new-password"
                     className="w-full px-4 py-3 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue pr-12"
                   />
                   <button
@@ -346,6 +407,26 @@ const Signup = () => {
               }
               onClick={handleSubmit(onSubmit)}
             />
+            <div className="flex items-center gap-3 my-4">
+              <div className="flex-1 h-[1px] bg-gray-300"></div>
+              <span className="text-sm text-gray-500 font-medium">OR</span>
+              <div className="flex-1 h-[1px] bg-gray-300"></div>
+            </div>
+
+            {/* Google Button */}
+            <button
+              type="button"
+              onClick={handleGoogleLogin}
+              className="w-full flex items-center cursor-pointer justify-center gap-3 border border-gray-300 py-3 rounded-[8px] bg-white hover:bg-gray-50 transition duration-200 font-semibold text-basic-dark shadow-sm"
+            >
+              <img
+                src="https://www.svgrepo.com/show/475656/google-color.svg"
+                alt="Google"
+                className="w-5 h-5"
+              />
+              Continue with Google
+            </button>
+
           </form>
 
           {/* Already have account */}

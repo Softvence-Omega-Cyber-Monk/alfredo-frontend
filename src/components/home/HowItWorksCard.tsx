@@ -18,8 +18,8 @@ const HowItWorksCard: React.FC<HowItWorksCardProps> = ({
   titleColor,
 }) => {
   return (
-    <div 
-      className="relative rounded-xl md:rounded-2xl lg:rounded-[40px] p-4 sm:p-6 md:p-8 lg:p-10"
+    <div
+      className="relative rounded-xl lg:h-[300px] md:rounded-2xl lg:rounded-[40px] p-4 sm:p-6 md:p-8 lg:p-10"
       style={{ backgroundColor }}
     >
       {/* Background Image */}

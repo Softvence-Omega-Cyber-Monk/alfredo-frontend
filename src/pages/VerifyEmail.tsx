@@ -3,13 +3,14 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CommonWrapper from "@/common/CommonWrapper";
 import AuthenticateHeading from "@/components/reusable/AuthenticateHeading";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AuthButton from "@/components/reusable/AuthButton";
 import time from "../assets/time.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { verifyOtp, resendOtp } from "@/store/Slices/AuthSlice/authSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { useEffect, useState } from "react";
+import SupportModal from "@/components/modals/SupportModal";
 
 const verifySchema = z.object({
   otp: z.string().min(4, "OTP must be at least 4 digits"),
@@ -34,6 +35,7 @@ const VerifyEmail = () => {
   // Countdown timer state
   const [counter, setCounter] = useState(60);
   const [canResend, setCanResend] = useState(false);
+  const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
 
   // Timer effect
   useEffect(() => {
@@ -118,11 +120,10 @@ const VerifyEmail = () => {
             </div>
 
             <button
-              className={`${
-                canResend
+              className={`${canResend
                   ? "text-primary-blue hover:border-b border-primary-blue"
                   : "text-gray-400 cursor-not-allowed"
-              } duration-200`}
+                } duration-200`}
               onClick={canResend ? handleResend : undefined}
               disabled={!canResend}
             >
@@ -132,13 +133,18 @@ const VerifyEmail = () => {
 
           <p className="text-[18px] text-basic-dark text-center mt-16">
             Didn't receive an email? Check your spam folder or{" "}
-            <Link
-              to="#"
+            <button
+              onClick={() => setIsSupportModalOpen(true)}
               className="text-[#009DE8] hover:border-b border-primary-blue duration-200 font-semibold"
             >
               Contact Support
-            </Link>
+            </button>
           </p>
+
+          <SupportModal
+            isOpen={isSupportModalOpen}
+            onClose={() => setIsSupportModalOpen(false)}
+          />
         </div>
       </div>
     </CommonWrapper>

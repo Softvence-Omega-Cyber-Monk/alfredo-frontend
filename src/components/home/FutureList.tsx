@@ -32,14 +32,12 @@ const FutureList = () => {
 
   useEffect(() => {
     dispatch(fetchFeaturedProperties());
+    dispatch(fetchMyProperties());
 
     if (isAuthenticated) {
-      dispatch(fetchMyProperties());
       dispatch(fetchFavorites());
     }
   }, [dispatch, isAuthenticated]);
-
-  console.log(displayProperties, "cardData")
 
 
   return (
@@ -56,7 +54,7 @@ const FutureList = () => {
               key={card.id}
               id={card.id}
               image={card.images?.[0]?.url || "/placeholder.jpg"}
-              avatarImage={card?.owner?.photo || "/avatar-placeholder.png"}
+              avatarImage={card.images?.[0]?.url || "/avatar-placeholder.png"}
               rating={"5.0"}
               ownerName={card.owner?.fullName || "Unknown"}
               location={card.location}

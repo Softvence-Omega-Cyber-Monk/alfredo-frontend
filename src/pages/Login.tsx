@@ -136,6 +136,7 @@ const Login = () => {
                 type="email"
                 placeholder={t("auth.login.emailAddress")}
                 {...register("email")}
+                autoComplete="email"
                 className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
               />
               {errors.email && (
@@ -155,6 +156,7 @@ const Login = () => {
                   type={showPassword ? "text" : "password"}
                   placeholder={t("auth.login.password")}
                   {...register("password")}
+                  autoComplete="current-password"
                   className="w-full px-4 py-3 border border-[#808080] rounded-[8px] focus:ring-1 focus:ring-primary-blue pr-12"
                 />
                 <div
