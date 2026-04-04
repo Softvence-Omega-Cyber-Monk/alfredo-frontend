@@ -25,12 +25,12 @@ const Banner = () => {
             <h1
               className={`capitalize max-w-[700px] mx-auto leading-[1.2] ${currentLanguage === "el"
                 ? "text-2xl md:text-4xl lg:text-[50px]" // smaller for Greek
-                : "text-3xl md:text-5xl lg:text-[70px]" // default for English and others
+                : "text-3xl md:text-4xl lg:text-[50px]" // default for English and others
                 }`}
             >
               {t("banner.title")}{" "}
               <span
-                className={`font-Grand-Hotel text-primary-blue ${currentLanguage === "el" ? "" : ""
+                className={`font-Grand-Hotel text-primary-blue text-[50px] lg:text-[70px] ${currentLanguage === "el" ? "" : ""
                   }`}
               >
                 {t("banner.highlight")}
