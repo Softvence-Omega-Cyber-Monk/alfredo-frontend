@@ -61,7 +61,7 @@ const Subscribe = () => {
         <div className="absolute inset-0 bg-[#3174CD] opacity-70 brightness-40"></div>
 
         {/* Content */}
-        <div className="relative z-10 w-full h-full backdrop-blur-[3px]">
+        <div className="relative z-10 w-full h-full px-4 backdrop-blur-[3px]">
           <div className="flex flex-col md:flex-row max-w-[1000px] h-full mx-auto items-center gap-12 px-4 py-10 md:py-0">
             {/* Left text */}
             <div className="text-white text-center md:text-left">

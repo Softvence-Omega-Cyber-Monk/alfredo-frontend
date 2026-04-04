@@ -11,6 +11,7 @@ import bg3 from "@/assets/home/htwBg3.svg";
 import HowItWorksCard from "./HowItWorksCard";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import CtaButton from "../reusable/CtaButton/CtaButton";
 
 const HowItWorks = () => {
   const { t } = useTranslation("howItWorks");
@@ -66,9 +67,13 @@ const HowItWorks = () => {
                 description={card.description}
                 backgroundColor={card.backgroundColor}
                 titleColor={card.titleColor}
+                index={index}
               />
             </Link>
           ))}
+        </div>
+        <div className="flex items-center justify-center mt-10 md:mt-16 lg:mt-24">
+          <CtaButton />
         </div>
       </CommonWrapper>
     </div>

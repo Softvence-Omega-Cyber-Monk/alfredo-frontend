@@ -1,8 +1,9 @@
 {
   "banner": {
-    "title": "Find your perfect home",
-    "highlight": "exchange partner",
-    "subtitle": "Exchange your home with travelers from around the world — safe, easy, and flexible."
+    "title": "The ",
+    "highlight": "Future of Travelling ",
+    "title2": "in Greece!",
+    "subtitle": "Make new friends today and swap accommodations for free!"
   },
   "search": {
     "selectFilters": "Select Filters",
@@ -22,7 +23,8 @@
     "room": "Room",
     "boat": "Boat",
     "van": "Van",
-    "filters":"search.filters",
-    "selectpet":"Travel with Pets"
+    "filters": "search.filters",
+    "selectpet": "Travel with Pets",
+    "cta": "Start Here"
   }
 }

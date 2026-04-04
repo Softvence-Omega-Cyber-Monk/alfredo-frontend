@@ -1,8 +1,10 @@
 import CommonWrapper from "@/common/CommonWrapper";
-import SearchFilter from "./SearchFilter";
+// import SearchFilter from "./SearchFilter";
 import { useTranslation } from "react-i18next";
-import { SearchProvider } from "@/contexts/SearchContext";
-import SearchResults from "../Search/SearchResults";
+// import { SearchProvider } from "@/contexts/SearchContext";
+// import SearchResults from "../Search/SearchResults";
+// import { Button } from "../ui/button";
+import CtaButton from "../reusable/CtaButton/CtaButton";
 
 const Banner = () => {
   const { t } = useTranslation("banner");
@@ -22,8 +24,8 @@ const Banner = () => {
           <div className="text-center font-normal text-dark-3 px-4 md:px-6">
             <h1
               className={`capitalize max-w-[700px] mx-auto leading-[1.2] ${currentLanguage === "el"
-                  ? "text-2xl md:text-4xl lg:text-[50px]" // smaller for Greek
-                  : "text-3xl md:text-5xl lg:text-[70px]" // default for English and others
+                ? "text-2xl md:text-4xl lg:text-[50px]" // smaller for Greek
+                : "text-3xl md:text-5xl lg:text-[70px]" // default for English and others
                 }`}
             >
               {t("banner.title")}{" "}
@@ -33,23 +35,24 @@ const Banner = () => {
               >
                 {t("banner.highlight")}
               </span>
+              {currentLanguage === "en" ? t("banner.title2") : ""}
             </h1>
 
             <p className="text-base md:text-lg lg:text-xl font-medium mt-3 md:mt-4 lg:mt-6">
               {t("banner.subtitle")}
             </p>
           </div>
-          {/* <div className="mt-6 md:mt-8 lg:mt-10 w-full">
-            <SearchFilter />
-          </div> */}
-          <SearchProvider>
+          <div className="mt-3 md:mt-4 lg:mt-6 w-full flex items-center justify-center">
+            <CtaButton />
+          </div>
+          {/* <SearchProvider>
             <div className="mt-6 md:mt-8 lg:mt-10 w-full">
               <SearchFilter />
             </div>
             <div>
               <SearchResults />
             </div>
-          </SearchProvider>
+          </SearchProvider> */}
         </div>
       </CommonWrapper>
     </div>

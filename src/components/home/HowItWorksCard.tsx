@@ -7,6 +7,7 @@ interface HowItWorksCardProps {
   description: string;
   backgroundColor: string;
   titleColor: string;
+  index: number;
 }
 
 const HowItWorksCard: React.FC<HowItWorksCardProps> = ({
@@ -16,6 +17,7 @@ const HowItWorksCard: React.FC<HowItWorksCardProps> = ({
   description,
   backgroundColor,
   titleColor,
+  index
 }) => {
   return (
     <div
@@ -42,7 +44,7 @@ const HowItWorksCard: React.FC<HowItWorksCardProps> = ({
           className="font-semibold text-base sm:text-lg md:text-xl lg:text-2xl"
           style={{ color: titleColor }}
         >
-          {title}
+          {index + 1}. {title}
         </h3>
         <p className="text-dark-3 font-normal text-sm sm:text-base md:text-base px-2 md:px-0">
           {description}

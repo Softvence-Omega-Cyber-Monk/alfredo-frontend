@@ -8,7 +8,8 @@ import { useTranslation } from "react-i18next";
 const CommunityStats = () => {
   const { t } = useTranslation("joinCommunity");
   return (
-    <div className="border-b-3 border-[#EAF1FA] py-8 md:py-12 lg:py-16">
+    <div className="border-b-3 border-[#EAF1FA] py-8 md:py-12 lg:py-16 mb-12">
+
       <CommonWrapper>
         <div className="flex flex-col md:flex-row justify-center items-center gap-10 md:gap-6 text-center text-dark-3 font-medium text-lg md:text-xl lg:text-2xl">
           <p>{t("community.first")}</p>

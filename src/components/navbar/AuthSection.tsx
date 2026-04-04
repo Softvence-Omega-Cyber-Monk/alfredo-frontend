@@ -93,8 +93,8 @@ const AuthSection: React.FC<Props> = ({
           className="px-2 py-2" 
         /> */}
         <PrimaryButton
-          title="Login"
-          onClick={() => navigate("/login")}
+          title={t("navigation.Join")}
+          onClick={() => navigate("/signup")}
           textColor="text-white text-sm md:text-base"
           bgColor="bg-primary-blue"
         />

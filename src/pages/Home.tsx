@@ -13,8 +13,8 @@ const Home = () => {
   return (
     <>
       <Banner />
-      <CommunityStats />
       <HowItWorks />
+      <CommunityStats />
       <Discover />
       <WhyChooseUs />
       <ChooseYourPlan />
