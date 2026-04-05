@@ -160,7 +160,7 @@ const Signup = () => {
             <div className="flex flex-col md:flex-row gap-6">
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
-                  {t("auth.signup.firstName")}
+                  {t("auth.signup.firstName")} <span className="text-red-400">*</span>
                 </label>
                 <input
                   type="text"
@@ -178,7 +178,7 @@ const Signup = () => {
 
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
-                  {t("auth.signup.lastName")}
+                  {t("auth.signup.lastName")} <span className="text-red-400">*</span>
                 </label>
                 <input
                   type="text"
@@ -199,7 +199,7 @@ const Signup = () => {
             <div className="flex flex-col md:flex-row gap-6">
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
-                  {t("auth.signup.emailAddress")}
+                  {t("auth.signup.emailAddress")} <span className="text-red-400">*</span>
                 </label>
                 <input
                   type="email"
@@ -219,7 +219,7 @@ const Signup = () => {
             <div className="flex flex-col md:flex-row gap-6">
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
-                  {t("auth.signup.phoneNumber")}
+                  {t("auth.signup.phoneNumber")} <span className="text-red-400">*</span>
                 </label>
                 <input
                   type="text"
@@ -263,7 +263,7 @@ const Signup = () => {
               {/* Password */}
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
-                  {t("auth.signup.password")}
+                  {t("auth.signup.password")} <span className="text-red-400">*</span>
                 </label>
                 <div className="relative mt-2">
                   <input
@@ -295,7 +295,7 @@ const Signup = () => {
               {/* Confirm Password */}
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
-                  {t("auth.signup.confirmPassword")}
+                  {t("auth.signup.confirmPassword")} <span className="text-red-400">*</span>
                 </label>
                 <div className="relative mt-2">
                   <input
