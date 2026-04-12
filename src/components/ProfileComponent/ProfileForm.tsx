@@ -335,11 +335,10 @@ const ProfileForm = () => {
                   ].map((age) => (
                     <label
                       key={age.value}
-                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                        formData.ageRange === age.value
-                          ? "border-[#3174CD] bg-[#EAF1FA]"
-                          : "border-gray-200 hover:border-gray-300"
-                      }`}
+                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${formData.ageRange === age.value
+                        ? "border-[#3174CD] bg-[#EAF1FA]"
+                        : "border-gray-200 hover:border-gray-300"
+                        }`}
                     >
                       <input
                         type="radio"
@@ -367,7 +366,7 @@ const ProfileForm = () => {
                 <Label className="mb-3 text-sm font-medium text-gray-700 block">
                   Gender
                 </Label>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {[
                     { value: "MALE", label: "Male" },
                     { value: "FEMALE", label: "Female" },
@@ -375,20 +374,18 @@ const ProfileForm = () => {
                   ].map((gender) => (
                     <div
                       key={gender.value}
-                      className={`flex items-center gap-3 p-4 border-2 rounded-lg transition-all ${
-                        formData.gender === gender.value
-                          ? "border-[#3174CD] bg-[#EAF1FA]"
-                          : "border-gray-200 bg-gray-50"
-                      }`}
+                      className={`flex items-center gap-3 p-4 border-2 rounded-lg transition-all ${formData.gender === gender.value
+                        ? "border-[#3174CD] bg-[#EAF1FA]"
+                        : "border-gray-200 bg-gray-50"
+                        }`}
                     >
                       {/* Fake radio button (just for looks) */}
                       <div className="relative">
                         <div
-                          className={`w-5 h-5 rounded-full border-2 ${
-                            formData.gender === gender.value
-                              ? "border-[#3174CD] bg-[#3174CD]"
-                              : "border-gray-300 bg-white"
-                          }`}
+                          className={`w-5 h-5 rounded-full border-2 ${formData.gender === gender.value
+                            ? "border-[#3174CD] bg-[#3174CD]"
+                            : "border-gray-300 bg-white"
+                            }`}
                         >
                           {formData.gender === gender.value && (
                             <div className="absolute inset-1.5 bg-white rounded-full" />
@@ -421,11 +418,10 @@ const ProfileForm = () => {
                   ].map((status) => (
                     <label
                       key={status.value}
-                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                        formData.employmentStatus === status.value
-                          ? "border-[#3174CD] bg-[#EAF1FA]"
-                          : "border-gray-200 hover:border-gray-300"
-                      }`}
+                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${formData.employmentStatus === status.value
+                        ? "border-[#3174CD] bg-[#EAF1FA]"
+                        : "border-gray-200 hover:border-gray-300"
+                        }`}
                     >
                       <input
                         type="radio"
@@ -464,11 +460,10 @@ const ProfileForm = () => {
                   ].map((type) => (
                     <label
                       key={type.value}
-                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                        formData.travelType.includes(type.value)
-                          ? "border-[#3174CD] bg-[#EAF1FA]"
-                          : "border-gray-200 hover:border-gray-300"
-                      }`}
+                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${formData.travelType.includes(type.value)
+                        ? "border-[#3174CD] bg-[#EAF1FA]"
+                        : "border-gray-200 hover:border-gray-300"
+                        }`}
                     >
                       <input
                         type="checkbox"
@@ -502,11 +497,10 @@ const ProfileForm = () => {
                   ].map((dest) => (
                     <label
                       key={dest.value}
-                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                        formData.favoriteDestinations.includes(dest.value)
-                          ? "border-[#3174CD] bg-[#EAF1FA]"
-                          : "border-gray-200 hover:border-gray-300"
-                      }`}
+                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${formData.favoriteDestinations.includes(dest.value)
+                        ? "border-[#3174CD] bg-[#EAF1FA]"
+                        : "border-gray-200 hover:border-gray-300"
+                        }`}
                     >
                       <input
                         type="checkbox"
@@ -545,11 +539,10 @@ const ProfileForm = () => {
                   ].map((opt) => (
                     <label
                       key={opt.value}
-                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                        formData.travelMostlyWith === opt.value
-                          ? "border-[#3174CD] bg-[#EAF1FA]"
-                          : "border-gray-200 hover:border-gray-300"
-                      }`}
+                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${formData.travelMostlyWith === opt.value
+                        ? "border-[#3174CD] bg-[#EAF1FA]"
+                        : "border-gray-200 hover:border-gray-300"
+                        }`}
                     >
                       <input
                         type="radio"
@@ -579,11 +572,10 @@ const ProfileForm = () => {
                 </Label>
                 <div className="grid grid-cols-2 gap-3">
                   <label
-                    className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                      formData.isTravelWithPets === true
-                        ? "border-[#3174CD] bg-[#EAF1FA]"
-                        : "border-gray-200 hover:border-gray-300"
-                    }`}
+                    className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${formData.isTravelWithPets === true
+                      ? "border-[#3174CD] bg-[#EAF1FA]"
+                      : "border-gray-200 hover:border-gray-300"
+                      }`}
                   >
                     <input
                       type="radio"
@@ -601,11 +593,10 @@ const ProfileForm = () => {
                     <span className="font-medium text-gray-700">Yes</span>
                   </label>
                   <label
-                    className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                      formData.isTravelWithPets === false
-                        ? "border-[#3174CD] bg-[#EAF1FA]"
-                        : "border-gray-200 hover:border-gray-300"
-                    }`}
+                    className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${formData.isTravelWithPets === false
+                      ? "border-[#3174CD] bg-[#EAF1FA]"
+                      : "border-gray-200 hover:border-gray-300"
+                      }`}
                   >
                     <input
                       type="radio"

@@ -128,7 +128,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const newFiles = Array.from(e.target.files);
-      const totalFiles = [...files, ...newFiles].slice(0, 5);
+      const totalFiles = [...files, ...newFiles].slice(0, 30);
       setFiles(totalFiles);
     }
   };
