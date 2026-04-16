@@ -7,9 +7,9 @@
     "ageRange": "Ηλικιακή ομάδα",
     "gender": {
       "title": "Φύλο",
-      "male": "αρσενικό",
-      "female": "θηλυκό",
-      "notSpecified": "δεν διευκρινίζεται"
+      "male": "Άντρας",
+      "female": "Γυναίκα",
+      "notSpecified": "Δεν διευκρινίζεται"
     },
     "employmentStatus": {
       "title": "Εργασιακή κατάσταση",

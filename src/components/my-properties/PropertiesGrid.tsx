@@ -15,6 +15,7 @@ import { Label } from "../ui/label";
 import { getAmenities, getTransports, getSurroundings } from "@/services/api";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { RiDeleteBin5Fill } from "react-icons/ri";
 
 interface AmenityItem {
   id: string;
@@ -587,9 +588,9 @@ const PropertiesGrid = () => {
                             <button
                               type="button"
                               onClick={() => removeExistingImage(img.publicId)}
-                              className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+                              className="absolute -top-2 -right-2 bg-red-500 text-white text-md rounded-full w-7 h-7 flex items-center justify-center cursor-pointer transition-opacity shadow-lg"
                             >
-                              &times;
+                              <RiDeleteBin5Fill />
                             </button>
                           </div>
                         ))}

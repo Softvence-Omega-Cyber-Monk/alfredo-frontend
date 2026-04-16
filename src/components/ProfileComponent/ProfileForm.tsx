@@ -366,7 +366,7 @@ const ProfileForm = () => {
                 <Label className="mb-3 text-sm font-medium text-gray-700 block">
                   {t("profile.gender.title")}
                 </Label>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <div className="grid grid-cols-2 gap-2">
                   {[
                     { value: "MALE", label: t("profile.gender.male") },
                     { value: "FEMALE", label: t("profile.gender.female") },
