@@ -15,8 +15,8 @@ export type TravelType =
   | "Business"
   | "Leisure"
   | "Adventure"
-  | "Family"
-  | "Solo"
+  // | "Family"
+  // | "Solo"
   | "Cultural";
 export type DestinationType =
   | "Big Cities"

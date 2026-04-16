@@ -19,8 +19,8 @@ export type TravelType =
   | "Business"
   | "Leisure"
   | "Adventure"
-  | "Family"
-  | "Solo"
+  // | "Family"
+  // | "Solo"
   | "Cultural";
 export type DestinationType =
   | "Big Cities"
@@ -424,11 +424,10 @@ const MultiStepForm = () => {
                     <div
                       className={`absolute top-1/2 left-full h-0.5 border-t-2 border-dashed z-0 translate-y-[-50%] 
       transition-all duration-500 ease-in-out 
-      ${
-        currentStep > step.number
-          ? "border-[#3174CD] w-20 sm:w-26 md:w-28 lg:w-24"
-          : "border-[#EAF1FA] w-20 sm:w-26 md:w-28 lg:w-24"
-      }`}
+      ${currentStep > step.number
+                          ? "border-[#3174CD] w-20 sm:w-26 md:w-28 lg:w-24"
+                          : "border-[#EAF1FA] w-20 sm:w-26 md:w-28 lg:w-24"
+                        }`}
                     ></div>
                   )}
                 </div>
@@ -436,20 +435,18 @@ const MultiStepForm = () => {
                 {/* Step title + subtitle */}
                 <div className="text-center mt-2">
                   <p
-                    className={`text-xs sm:text-sm font-medium ${
-                      isActive || isCompleted
+                    className={`text-xs sm:text-sm font-medium ${isActive || isCompleted
                         ? "text-[#3174CD]"
                         : "text-gray-400"
-                    }`}
+                      }`}
                   >
                     {t(step.title)}
                   </p>
                   <p
-                    className={`text-xs sm:text-sm font-medium ${
-                      isActive || isCompleted
+                    className={`text-xs sm:text-sm font-medium ${isActive || isCompleted
                         ? "text-[#3174CD]"
                         : "text-gray-400"
-                    }`}
+                      }`}
                   >
                     {t(step.subtitle)}
                   </p>

@@ -202,7 +202,7 @@ const ProfileForm = () => {
   if (loading || !onboardingData) return <p>{t("profile.loading")}</p>;
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-6 py-10 font-sans">
+    <div className="w-full max-w-5xl mx-auto px-2 py-10 font-sans">
       <div className="bg-white shadow-md rounded-2xl p-6 md:p-10">
         <div className="flex flex-col md:flex-row gap-10">
           {/* Profile Image */}
@@ -252,14 +252,14 @@ const ProfileForm = () => {
           {/* Profile Form */}
           <div className="flex-1">
             <h1 className="text-primary-blue font-semibold text-xl md:text-2xl border-b border-[#EAF1FA] pb-3 mb-6">
-              Profile Information
+              {t("profile.title")}
             </h1>
 
             <div className="space-y-6">
               {/* Full Name */}
               <div>
                 <Label className="mb-2 text-sm font-medium text-gray-700">
-                  Full Name
+                  {t("profile.fullName")}
                 </Label>
                 <Input
                   name="fullName"
@@ -270,14 +270,14 @@ const ProfileForm = () => {
                       fullName: e.target.value,
                     }))
                   }
-                  className="h-12 border-gray-300 rounded-lg"
+                  className="h-12 border-gray-300 rounded-lg text-[12px] lg:text-base"
                 />
               </div>
 
               {/* Phone Number */}
               <div>
                 <Label className="mb-2 text-sm font-medium text-gray-700">
-                  Phone Number
+                  {t("profile.phone")}
                 </Label>
                 <div className="flex gap-2">
                   <select
@@ -296,7 +296,7 @@ const ProfileForm = () => {
                         phoneNumber: e.target.value,
                       }))
                     }
-                    className="flex-1 h-12 border-gray-300 rounded-lg"
+                    className="flex-1 h-12 border-gray-300 text-[12px] lg:text-base rounded-lg"
                     placeholder="Enter phone number"
                   />
                 </div>
@@ -305,7 +305,7 @@ const ProfileForm = () => {
               {/* City/Home Address */}
               <div>
                 <Label className="mb-2 text-sm font-medium text-gray-700">
-                  City / Home Address
+                  {t("profile.homeAddress")}
                 </Label>
                 <Input
                   name="homeAddress"
@@ -316,15 +316,15 @@ const ProfileForm = () => {
                       homeAddress: e.target.value,
                     }))
                   }
-                  className="h-12 border-gray-300 rounded-lg"
-                  placeholder="Enter your home address"
+                  className="h-12 border-gray-300 text-[12px] lg:text-base rounded-lg"
+                  placeholder={t("profile.homeAddress")}
                 />
               </div>
 
               {/* Age Range - Radio */}
               <div>
                 <Label className="mb-3 text-sm font-medium text-gray-700 block">
-                  Age Range
+                  {t("profile.ageRange")}
                 </Label>
                 <div className="grid grid-cols-2 gap-3">
                   {[
@@ -335,7 +335,7 @@ const ProfileForm = () => {
                   ].map((age) => (
                     <label
                       key={age.value}
-                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${formData.ageRange === age.value
+                      className={`flex items-center gap-3 p-4 text-[12px] lg:text-base border-2 rounded-lg cursor-pointer transition-all ${formData.ageRange === age.value
                         ? "border-[#3174CD] bg-[#EAF1FA]"
                         : "border-gray-200 hover:border-gray-300"
                         }`}
@@ -364,17 +364,17 @@ const ProfileForm = () => {
               {/* Gender - Display Only (Not Editable) */}
               <div>
                 <Label className="mb-3 text-sm font-medium text-gray-700 block">
-                  Gender
+                  {t("profile.gender.title")}
                 </Label>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {[
-                    { value: "MALE", label: "Male" },
-                    { value: "FEMALE", label: "Female" },
-                    { value: "NOT_SPECIFIED", label: "Not Specified" },
+                    { value: "MALE", label: t("profile.gender.male") },
+                    { value: "FEMALE", label: t("profile.gender.female") },
+                    { value: "NOT_SPECIFIED", label: t("profile.gender.notSpecified") },
                   ].map((gender) => (
                     <div
                       key={gender.value}
-                      className={`flex items-center gap-3 p-4 border-2 rounded-lg transition-all ${formData.gender === gender.value
+                      className={`flex items-center gap-2 p-4 border-2 rounded-lg text-[12px] lg:text-base transition-all ${formData.gender === gender.value
                         ? "border-[#3174CD] bg-[#EAF1FA]"
                         : "border-gray-200 bg-gray-50"
                         }`}
@@ -399,26 +399,26 @@ const ProfileForm = () => {
                   ))}
                 </div>
                 {/* Optional: small note */}
-                <p className="text-xs text-gray-500 mt-2">
+                {/* <p className="text-xs text-gray-500 mt-2">
                   Gender cannot be changed after registration.
-                </p>
+                </p> */}
               </div>
 
               {/* Employment Status - Radio */}
               <div>
                 <Label className="mb-3 text-sm font-medium text-gray-700 block">
-                  Employment Status
+                  {t("profile.employmentStatus.title")}
                 </Label>
                 <div className="grid grid-cols-2 gap-3">
                   {[
-                    { value: "WORKER", label: "Worker" },
-                    { value: "RETIRED", label: "Retired" },
-                    { value: "STUDENT", label: "Student" },
-                    { value: "UNEMPLOYED", label: "Unemployed" },
+                    { value: "WORKER", label: t("profile.employmentStatus.worker") },
+                    { value: "RETIRED", label: t("profile.employmentStatus.retired") },
+                    { value: "STUDENT", label: t("profile.employmentStatus.student") },
+                    { value: "UNEMPLOYED", label: t("profile.employmentStatus.unemployed") },
                   ].map((status) => (
                     <label
                       key={status.value}
-                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${formData.employmentStatus === status.value
+                      className={`flex items-center gap-3 p-4 text-[12px] lg:text-base border-2 rounded-lg cursor-pointer transition-all ${formData.employmentStatus === status.value
                         ? "border-[#3174CD] bg-[#EAF1FA]"
                         : "border-gray-200 hover:border-gray-300"
                         }`}
@@ -447,20 +447,20 @@ const ProfileForm = () => {
               {/* Travel Type - Checkbox */}
               <div>
                 <Label className="mb-3 text-sm font-medium text-gray-700 block">
-                  I travel for
+                  {t("profile.iTravelFor.title")}
                 </Label>
                 <div className="grid grid-cols-2 gap-3">
                   {[
-                    { value: "Business", label: "Business" },
-                    { value: "Leisure", label: "Leisure" },
-                    { value: "Adventure", label: "Adventure" },
-                    { value: "Family", label: "Family" },
-                    { value: "Solo", label: "Solo" },
-                    { value: "Cultural", label: "Cultural" },
+                    { value: "Business", label: t("profile.iTravelFor.business") },
+                    { value: "Leisure", label: t("profile.iTravelFor.leisure") },
+                    { value: "Adventure", label: t("profile.iTravelFor.adventure") },
+                    // { value: "Family", label: "Family" },
+                    // { value: "Solo", label: "Solo" },
+                    { value: "Cultural", label: t("profile.iTravelFor.cultural") },
                   ].map((type) => (
                     <label
                       key={type.value}
-                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${formData.travelType.includes(type.value)
+                      className={`flex items-center gap-3 p-4 text-[12px] lg:text-base border-2 rounded-lg cursor-pointer transition-all ${formData.travelType.includes(type.value)
                         ? "border-[#3174CD] bg-[#EAF1FA]"
                         : "border-gray-200 hover:border-gray-300"
                         }`}
@@ -486,18 +486,18 @@ const ProfileForm = () => {
               {/* Favourite Destinations - Checkbox */}
               <div>
                 <Label className="mb-3 text-sm font-medium text-gray-700 block">
-                  Favourite Destinations
+                  {t("profile.favoriteDestinations.title")}
                 </Label>
                 <div className="grid grid-cols-2 gap-3">
                   {[
-                    { value: "Big Cities", label: "Big Cities" },
-                    { value: "Small Cities", label: "Small Cities" },
-                    { value: "Seaside", label: "Seaside" },
-                    { value: "Mountain", label: "Mountain" },
+                    { value: "Big Cities", label: t("profile.favoriteDestinations.bigCities") },
+                    { value: "Small Cities", label: t("profile.favoriteDestinations.smallCities") },
+                    { value: "Seaside", label: t("profile.favoriteDestinations.seaside") },
+                    { value: "Mountain", label: t("profile.favoriteDestinations.mountains") },
                   ].map((dest) => (
                     <label
                       key={dest.value}
-                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${formData.favoriteDestinations.includes(dest.value)
+                      className={`flex items-center gap-3 p-4 text-[12px] lg:text-base border-2 rounded-lg cursor-pointer transition-all ${formData.favoriteDestinations.includes(dest.value)
                         ? "border-[#3174CD] bg-[#EAF1FA]"
                         : "border-gray-200 hover:border-gray-300"
                         }`}
@@ -528,18 +528,18 @@ const ProfileForm = () => {
               {/* Travel Mostly With - Radio */}
               <div>
                 <Label className="mb-3 text-sm font-medium text-gray-700 block">
-                  I travel mostly with
+                  {t("profile.iTravelMostlyWith.title")}
                 </Label>
                 <div className="grid grid-cols-2 gap-3">
                   {[
-                    { value: "BY_MYSELF", label: "By Myself" },
-                    { value: "FAMILY", label: "Family" },
-                    { value: "COUPLE", label: "Couple" },
-                    { value: "FRIENDS", label: "Friends" },
+                    { value: "BY_MYSELF", label: t("profile.iTravelMostlyWith.byMyself") },
+                    { value: "FAMILY", label: t("profile.iTravelMostlyWith.family") },
+                    { value: "COUPLE", label: t("profile.iTravelMostlyWith.couple") },
+                    { value: "FRIENDS", label: t("profile.iTravelMostlyWith.friends") },
                   ].map((opt) => (
                     <label
                       key={opt.value}
-                      className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${formData.travelMostlyWith === opt.value
+                      className={`flex items-center gap-3 p-4 text-[12px] lg:text-base border-2 rounded-lg cursor-pointer transition-all ${formData.travelMostlyWith === opt.value
                         ? "border-[#3174CD] bg-[#EAF1FA]"
                         : "border-gray-200 hover:border-gray-300"
                         }`}
@@ -568,11 +568,11 @@ const ProfileForm = () => {
               {/* Travel with Pets - Radio */}
               <div>
                 <Label className="mb-3 text-sm font-medium text-gray-700 block">
-                  Traveling with pets
+                  {t("profile.doYouTravelWithPets.title")}
                 </Label>
                 <div className="grid grid-cols-2 gap-3">
                   <label
-                    className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${formData.isTravelWithPets === true
+                    className={`flex items-center gap-3 p-4 text-[12px] lg:text-base border-2 rounded-lg cursor-pointer transition-all ${formData.isTravelWithPets === true
                       ? "border-[#3174CD] bg-[#EAF1FA]"
                       : "border-gray-200 hover:border-gray-300"
                       }`}
@@ -590,7 +590,7 @@ const ProfileForm = () => {
                       }
                       className="w-5 h-5 text-[#3174CD]"
                     />
-                    <span className="font-medium text-gray-700">Yes</span>
+                    <span className="font-medium text-gray-700">{t("profile.doYouTravelWithPets.yes")}</span>
                   </label>
                   <label
                     className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${formData.isTravelWithPets === false
@@ -611,7 +611,7 @@ const ProfileForm = () => {
                       }
                       className="w-5 h-5 text-[#3174CD]"
                     />
-                    <span className="font-medium text-gray-700">No</span>
+                    <span className="font-medium text-gray-700 text-[12px] lg:text-base">{t("profile.doYouTravelWithPets.no")}</span>
                   </label>
                 </div>
               </div>
@@ -619,7 +619,7 @@ const ProfileForm = () => {
               {/* Notes */}
               <div>
                 <Label className="mb-2 text-sm font-medium text-gray-700">
-                  Notes about yourself
+                  {t("profile.notesOnYourself.title")}
                 </Label>
                 <Textarea
                   name="notes"
@@ -627,12 +627,12 @@ const ProfileForm = () => {
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, notes: e.target.value }))
                   }
-                  placeholder="Tell us about yourself..."
-                  className="min-h-[120px] border-gray-300 rounded-lg"
+                  placeholder={t("profile.notesOnYourself.placeHolder")}
+                  className="min-h-[120px] border-gray-300 rounded-lg text-[14px] lg:text-base"
                 />
               </div>
 
-              <h3 className="text-lg font-medium mt-8 mb-3">Notifications</h3>
+              <h3 className="text-lg font-medium mt-8 mb-3">{t("profile.notifications")}</h3>
               <NotificationPreferences />
 
               {/* Submit */}
@@ -642,7 +642,7 @@ const ProfileForm = () => {
                   disabled={isSubmitting}
                   className="w-full h-14 rounded-lg bg-[#3174CD] hover:bg-[#255DA8] text-white text-lg disabled:opacity-70"
                 >
-                  {isSubmitting ? "Saving..." : "Save Changes"}
+                  {isSubmitting ? "Saving..." : t("profile.saveChanges")}
                 </Button>
               </div>
             </div>

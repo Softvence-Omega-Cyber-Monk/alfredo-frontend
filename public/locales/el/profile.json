@@ -1,75 +1,55 @@
 {
   "profile": {
-    "title": "Προφίλ",
-    "firstName": "Όνομα",
-    "lastName": "Επώνυμο",
-    "phone": "Τηλέφωνο (Whatsapp)",
-    "dob": "Ημερομηνία Γέννησης",
-    "email": "Email",
-    "identificationType": {
-      "label": "Τύπος Ταυτότητας",
-      "nid": "Δελτίο Ταυτότητας",
-      "passport": "Διαβατήριο",
-      "birthCertificate": "Πιστοποιητικό Γέννησης"
-    },
-    "number": "Νούμερο",
-    "numberPlaceholder": "Εισάγετε τον αριθμό ταυτότητας",
-    "age": "Ηλικία",
+    "title": "Πληροφορίες Προφίλ",
+    "fullName": "Ονοματεπώνυμο",
+    "phone": "Κινητό",
+    "homeAddress": "Πόλη / διεύθυνση",
+    "ageRange": "Ηλικιακή ομάδα",
     "gender": {
       "title": "Φύλο",
-      "male": "Αρσενικό",
-      "female": "Θηλυκό",
-      "notSpecified": "Δεν διευκρινίζεται"
+      "male": "αρσενικό",
+      "female": "θηλυκό",
+      "notSpecified": "δεν διευκρινίζεται"
     },
-    "iAmA": {
-      "title": "Είμαι",
-      "worker": "Υπάλληλος",
-      "retired": "Συνταξιούχος",
+    "employmentStatus": {
+      "title": "Εργασιακή κατάσταση",
+      "worker": "Εργαζόμενος",
+      "retired": "Συνταξιούχους",
       "student": "Φοιτητής",
       "unemployed": "Άνεργος"
     },
-    "iMostlyTravelWith": {
-      "title": "Κυρίως ταξιδεύω μαζί με",
-      "byMyself": "Μόνος μου",
-      "family": "Οικογένεια",
-      "friends": "Φίλους",
-      "couples": "Ζευγάρι"
-    },
-    "travelPreferences": {
-      "title": "Προτιμήσεις Ταξιδιού",
-      "subTitle": "Ταξιδεύω κυρίως (διάλεξε έως 2 επιλογές)",
-      "business": "Επιχειρηματικά",
-      "leisure": "Χαλάρωση",
+    "iTravelFor": {
+      "title": "Ταξιδεύω για",
+      "business": "Δουλειά",
       "adventure": "Περιπέτεια",
-      "family": "Οικογένεια",
-      "solo": "Μόνος",
-      "cultural": "Πολιτισμός"
+      "leisure": "Χαλάρωση",
+      "cultural": "Πολιτισμό"
+    },
+    "favoriteDestinations": {
+      "title": "Αγαπημένοι προορισμοί",
+      "bigCities": "Μεγάλες πόλεις",
+      "smallCities": "Χωριά",
+      "seaside": "Παραθαλάσσιες περιοχές",
+      "mountains": "Βουνά"
+    },
+    "iTravelMostlyWith": {
+      "title": "Ταξιδεύω κυρίως",
+      "byMyself": "Μόνος/ η",
+      "family": "Με οικογένεια",
+      "couple": "Ζευγάρι",
+      "friends": "Με φίλους"
     },
     "doYouTravelWithPets": {
-      "title": "Ταξιδεύετε με κατοικίδια;",
+      "title": "Ταξιδεύοντας με κατοικίδια",
       "yes": "Ναι",
       "no": "Όχι"
     },
-    "favoriteDestinations": {
-      "title": "Αγαπημένοι προορισμοί (διάλεξε όσους ισχύουν)",
-      "bigCities": "Μεγάλες πόλεις",
-      "smallCities": "Μικρές πόλεις",
-      "seaside": "Κοντά στην θάλασσα",
-      "mountains": "Βουνό"
-    },
-    "iTravelFor": {
-      "title": "Ταξιδεύω για (διάλεξε όσους ισχύουν)",
-      "relaxation": "Χαλάρωση",
-      "adventure": "Περιπέτεια",
-      "work": "Εργασία"
-    },
     "notesOnYourself": {
       "title": "Σημειώσεις για εσένα",
-      "placeHolder": "Γράψε κάτι για τον εαυτό σου"
+      "placeHolder": "Πες μας λίγα λόγια για εσένα..."
     },
-    "accountVerificationStatus": "Κατάσταση επαλήθευσης λογαριασμού",
-    "verified": "Επαληθευμένος",
-    "notVerified": "Δεν έχει επαληθευτεί",
-    "saveChanges": "Αποθήκευση αλλαγών"
+    "notifications": "Ειδοποιήσεις",
+    "saveChanges": "Αποθήκευση αλλαγών",
+    "loading": "Φόρτωση προφίλ..."
   }
 }

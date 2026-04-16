@@ -1,0 +1,13 @@
+{
+    "title": "My Exchange Requests",
+    "search": "Search requests...",
+    "clearFilters": "Clear filters",
+    "status": "Status",
+    "fromProperty": "From Property",
+    "toProperty": "To Property",
+    "message": "Message",
+    "date": "Date",
+    "actions": "Actions",
+    "noRequests": "No exchange requests found",
+    "back": "Back"
+}

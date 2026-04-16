@@ -13,8 +13,10 @@ import {
 import CommonWrapper from "@/common/CommonWrapper";
 import { useNavigate } from "react-router-dom";
 import Loader from "@/components/reusable/Loader";
+import { useTranslation } from "react-i18next";
 
 const ExchangeRequest = () => {
+  const { t } = useTranslation("myExchange");
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { requests, loading, error } = useAppSelector(
@@ -171,7 +173,7 @@ const ExchangeRequest = () => {
     <CommonWrapper>
       <div className="p-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-          <h1 className="text-2xl font-bold">My Exchange Requests</h1>
+          <h1 className="text-2xl font-bold">{t("title")}</h1>
 
           <div className="flex items-center gap-2">
             {/* Search Input */}
@@ -182,7 +184,7 @@ const ExchangeRequest = () => {
               />
               <input
                 type="text"
-                placeholder="Search requests..."
+                placeholder={t("search")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -192,9 +194,8 @@ const ExchangeRequest = () => {
             {/* Filter Toggle */}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className={`p-2 rounded-lg ${
-                showFilters ? "bg-blue-100 text-blue-600" : "bg-gray-100"
-              }`}
+              className={`p-2 rounded-lg ${showFilters ? "bg-blue-100 text-blue-600" : "bg-gray-100"
+                }`}
             >
               <Filter size={20} />
             </button>
@@ -203,21 +204,19 @@ const ExchangeRequest = () => {
             <div className="flex space-x-2">
               <button
                 onClick={() => setViewMode("grid")}
-                className={`p-2 rounded-lg ${
-                  viewMode === "grid"
-                    ? "bg-blue-100 text-blue-600"
-                    : "bg-gray-100"
-                }`}
+                className={`p-2 rounded-lg ${viewMode === "grid"
+                  ? "bg-blue-100 text-blue-600"
+                  : "bg-gray-100"
+                  }`}
               >
                 <Grid size={20} />
               </button>
               <button
                 onClick={() => setViewMode("list")}
-                className={`p-2 rounded-lg ${
-                  viewMode === "list"
-                    ? "bg-blue-100 text-blue-600"
-                    : "bg-gray-100"
-                }`}
+                className={`p-2 rounded-lg ${viewMode === "list"
+                  ? "bg-blue-100 text-blue-600"
+                  : "bg-gray-100"
+                  }`}
               >
                 <List size={20} />
               </button>
@@ -315,13 +314,13 @@ const ExchangeRequest = () => {
               fromPropertyFilter ||
               toPropertyFilter ||
               searchTerm) && (
-              <button
-                onClick={resetFilters}
-                className="mt-2 text-blue-600 hover:text-blue-800"
-              >
-                Clear filters
-              </button>
-            )}
+                <button
+                  onClick={resetFilters}
+                  className="mt-2 text-blue-600 hover:text-blue-800"
+                >
+                  Clear filters
+                </button>
+              )}
           </div>
         ) : viewMode === "grid" ? (
           // Grid View
@@ -337,15 +336,14 @@ const ExchangeRequest = () => {
                 <p className="text-gray-600 text-sm mb-2">
                   Status:{" "}
                   <span
-                    className={`font-medium ${
-                      request.status === "ACCEPTED"
-                        ? "text-green-600"
-                        : request.status === "REJECTED"
+                    className={`font-medium ${request.status === "ACCEPTED"
+                      ? "text-green-600"
+                      : request.status === "REJECTED"
                         ? "text-red-600"
                         : request.status === "PENDING"
-                        ? "text-yellow-600"
-                        : "text-gray-600"
-                    }`}
+                          ? "text-yellow-600"
+                          : "text-gray-600"
+                      }`}
                   >
                     {request.status}
                   </span>
@@ -381,15 +379,14 @@ const ExchangeRequest = () => {
                         {request.toProperty.title}
                       </h3>
                       <span
-                        className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          request.status === "ACCEPTED"
-                            ? "bg-green-100 text-green-800"
-                            : request.status === "REJECTED"
+                        className={`px-2 py-1 rounded-full text-xs font-medium ${request.status === "ACCEPTED"
+                          ? "bg-green-100 text-green-800"
+                          : request.status === "REJECTED"
                             ? "bg-red-100 text-red-800"
                             : request.status === "PENDING"
-                            ? "bg-yellow-100 text-yellow-600"
-                            : "bg-gray-100 text-gray-800"
-                        }`}
+                              ? "bg-yellow-100 text-yellow-600"
+                              : "bg-gray-100 text-gray-800"
+                          }`}
                       >
                         {request.status}
                       </span>
@@ -431,11 +428,10 @@ const ExchangeRequest = () => {
               <button
                 key={page}
                 onClick={() => handlePageChange(page)}
-                className={`w-10 h-10 rounded-lg border ${
-                  currentPage === page
-                    ? "bg-[#3072c9] text-white border-[#3072c9]"
-                    : "border-gray-300 text-gray-800 hover:bg-gray-50"
-                }`}
+                className={`w-10 h-10 rounded-lg border ${currentPage === page
+                  ? "bg-[#3072c9] text-white border-[#3072c9]"
+                  : "border-gray-300 text-gray-800 hover:bg-gray-50"
+                  }`}
               >
                 {page}
               </button>

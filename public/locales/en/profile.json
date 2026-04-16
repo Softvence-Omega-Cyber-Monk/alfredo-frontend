@@ -1,76 +1,55 @@
 {
   "profile": {
-    "title": "Profile",
-    "firstName": "First Name",
-    "lastName": "Last Name",
-    "fullName": "Full Name",
-    "phone": "Phone (Whatsapp)",
-    "dob": "Date of Birth",
-    "email": "Email",
-    "identificationType": {
-      "label": "Identification Type",
-      "nid": "NID",
-      "passport": "Passport",
-      "birthCertificate": "Birth Certificate"
-    },
-    "number": "Number",
-    "numberPlaceholder": "Enter identification number",
-    "age": "Age",
+    "title": "Profile Information",
+    "fullName": "Full name",
+    "phone": "Phone number",
+    "homeAddress": "City/home address",
+    "ageRange": "Age range",
     "gender": {
       "title": "Gender",
       "male": "Male",
       "female": "Female",
-      "notSpecified": "Not Specified"
+      "notSpecified": "Not specified"
     },
-    "iAmA": {
-      "title": "I am a",
+    "employmentStatus": {
+      "title": "Employment status",
       "worker": "Worker",
       "retired": "Retired",
       "student": "Student",
       "unemployed": "Unemployed"
     },
-    "iMostlyTravelWith": {
-      "title": "I mostly travel with",
-      "byMyself": "By myself",
-      "family": "Family",
-      "friends": "Friends",
-      "couples": "Couples"
-    },
-    "travelPreferences": {
-      "title": "Travel Preferences",
-      "subTitle": "I travel mostly (select up to 2 options)",
+    "iTravelFor": {
+      "title": "I travel for",
       "business": "Business",
-      "leisure": "Leisure",
       "adventure": "Adventure",
-      "family": "Family",
-      "solo": "Solo",
+      "leisure": "Leisure",
       "cultural": "Cultural"
     },
+    "favoriteDestinations": {
+      "title": "Favorite destinations",
+      "bigCities": "Big cities",
+      "smallCities": "Small cities",
+      "seaside": "Sea side",
+      "mountains": "Mountain"
+    },
+    "iTravelMostlyWith": {
+      "title": "I travel mostly with",
+      "byMyself": "By myself",
+      "family": "Family",
+      "couple": "Couple",
+      "friends": "Friends"
+    },
     "doYouTravelWithPets": {
-      "title": "Do you travel with pets?",
+      "title": "Traveling with pets",
       "yes": "Yes",
       "no": "No"
     },
-    "favoriteDestinations": {
-      "title": "Favorite Destinations (Select all that apply)",
-      "bigCities": "Big Cities",
-      "smallCities": "Small Cities",
-      "seaside": "Sea side",
-      "mountains": "Mountains"
-    },
-    "iTravelFor": {
-      "title": "I travel for (Select all that apply)",
-      "relaxation": "Relaxation",
-      "adventure": "Adventure",
-      "work": "Work"
-    },
     "notesOnYourself": {
-      "title": "Notes on yourself",
-      "placeHolder": "Write something about yourself"
+      "title": "Notes about yourself",
+      "placeHolder": "Tell us about yourself..."
     },
-    "accountVerificationStatus": "Account verification status",
-    "verified": "Verified",
-    "notVerified": "Not verified",
-    "saveChanges": "Save changes"
+    "notifications": "Notifications",
+    "saveChanges": "Save Changes",
+    "loading": "Loading profile..."
   }
 }

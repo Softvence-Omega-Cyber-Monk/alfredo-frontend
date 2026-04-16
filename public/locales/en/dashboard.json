@@ -6,20 +6,17 @@
     "button2": "Favorite Places",
     "button3": "Exchange Request",
     "button4": "My Places",
-
     "part1": {
       "title1": "Preview Your Home Listing",
       "miniTitle1": "Where is your home?",
       "subtitle1": "Tell guests where your home is located so they can plan their stay with confidence.",
       "inputText1": "Select from Google Map",
-
       "miniTitle2": "Where would you like to go?",
       "subtitle2": "Choose your destination and start planning your next adventure with Vacanza.",
       "inputText2": "Select from Google Map",
       "location": "Pick a Location",
       "button": "Cancel"
     },
-
     "part2": {
       "title1": "What is your home like?",
       "title2": "Is it your main residence?",
@@ -29,7 +26,6 @@
         "miniTitle2": "Apartment",
         "subtitle2": "our home is in a building shared by several apartments."
       },
-
       "card2": {
         "miniTitle1": "Yes, I live there all year round",
         "subtitle1": "Your home is an independent property.",
@@ -39,7 +35,6 @@
       "placeholder1": "Enter your Home address",
       "placeholder2": "Enter your Destination"
     },
-
     "part3": {
       "title1": "Main",
       "title2": "Transport",
@@ -94,22 +89,17 @@
       "title1": "Give your home a Name",
       "subtitle1": "Pick a name that reflects the personality or charm of your home — it’s the first thing guests will see!",
       "subtitle1p": "Type your home name",
-
       "title2": "Describe your home",
       "subtitle2": "Tell guests what makes your home inviting — mention the style, atmosphere, and anything that makes it feel special.",
       "subtitle2p": "Describe it here",
-
       "title3": "Tell us about the area around your home",
       "subtitle3": "Help guests get a feel for your location — share nearby attractions, dining spots, transport options, and the overall vibe of your neighborhood.",
       "subtitle3p": "Describe it here",
-
       "title4": "Add at least 5 pictures",
       "subtitle4": "Showcase your home from every angle by uploading at least 5 high-quality photos — include key spaces like the living area, kitchen, bedroom, and bathroom.",
-
       "fileTitle": "Upload Picture",
       "fileSubtitle": "Upload your profile picture (JPG or PNG format supported)",
       "image": "No Image Selected",
-
       "titleAvailability": "Add your home's availability",
       "titleDate": "Select Your Available Dates",
       "date1": "Start date",

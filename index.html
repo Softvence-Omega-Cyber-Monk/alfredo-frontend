@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8" />
 
+
+
   <!-- Cookiebot (must be first) -->
   <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="a32fe13f-7b9d-4abd-a4b9-b71739ee1fce"
     data-blockingmode="auto" data-georegions="EU" type="text/javascript"></script>
@@ -21,6 +23,22 @@
   </script>
   <!-- End Google Tag Manager -->
 
+  <!-- Meta Pixel Code -->
+  <script type="text/plain" data-cookieconsent="marketing">
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '932269729512998');
+fbq('track', 'PageView');
+</script>
+  <!-- End Meta Pixel Code -->
+
   <!-- (Remove direct GA here if using GTM instead) -->
 
   <link rel="icon" type="image/svg+xml" href="/vacanza-logo.png" />
@@ -29,6 +47,10 @@
 </head>
 
 <body>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=932269729512998&ev=PageView&noscript=1" />
+  </noscript>
   <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VSSFH5D" height="0" width="0"
       style="display:none;visibility:hidden"></iframe>

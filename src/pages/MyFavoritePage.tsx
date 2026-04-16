@@ -16,7 +16,7 @@ const MyFavoritePage = () => {
     (state) => state.favorites
   );
   const { isAuthenticated } = useAppSelector((state) => state.auth);
-  const { t } = useTranslation("favorites");
+  const { t } = useTranslation("myFavorite");
 
   useEffect(() => {
     if (!isAuthenticated) {

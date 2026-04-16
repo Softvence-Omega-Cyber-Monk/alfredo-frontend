@@ -54,6 +54,8 @@ const PropertiesGrid = () => {
   // Form state for edit modal
   const [formData, setFormData] = useState<Partial<PropertyFormData>>({});
   const [newImages, setNewImages] = useState<File[]>([]);
+  const [existingImages, setExistingImages] = useState<{ url: string; publicId: string }[]>([]);
+  const [imagesToRemove, setImagesToRemove] = useState<string[]>([]);
 
   // 1. Initial fetch of properties
   useEffect(() => {
@@ -106,6 +108,8 @@ const PropertiesGrid = () => {
         transports: singleProperty.transports?.map((t) => t.id) || [],
         surroundings: singleProperty.surroundings?.map((s) => s.id) || [],
       });
+      setExistingImages(singleProperty.images || []);
+      setImagesToRemove([]);
     }
   }, [singleProperty, selectedProperty]);
 
@@ -180,6 +184,15 @@ const PropertiesGrid = () => {
     });
   };
 
+  const removeExistingImage = (publicId: string) => {
+    setExistingImages((prev) => prev.filter((img) => img.publicId !== publicId));
+    setImagesToRemove((prev) => [...prev, publicId]);
+  };
+
+  const removeNewImage = (index: number) => {
+    setNewImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const handleUpdateSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedProperty) return;
@@ -206,7 +219,7 @@ const PropertiesGrid = () => {
         amenities: (formData.amenities as string[]) || [],
         transports: (formData.transports as string[]) || [],
         surroundings: (formData.surroundings as string[]) || [],
-        removeImages: [],
+        removeImages: imagesToRemove,
       };
 
       let updatedData: FormData = new FormData();
@@ -228,6 +241,8 @@ const PropertiesGrid = () => {
       setEditModalOpen(false);
       setNewImages([]);
       setFormData({});
+      setExistingImages([]);
+      setImagesToRemove([]);
       dispatch(fetchMyProperties());
     } catch (err) {
       const errorMessage =
@@ -279,16 +294,13 @@ const PropertiesGrid = () => {
     }));
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setNewImages(Array.from(e.target.files));
-    }
-  };
 
   const closeEditModal = () => {
     setEditModalOpen(false);
     setNewImages([]);
     setFormData({});
+    setExistingImages([]);
+    setImagesToRemove([]);
     setActionError(null);
   };
 
@@ -556,36 +568,103 @@ const PropertiesGrid = () => {
                   </div>
                 </div>
 
-                <div className="mb-4">
-                  <label className="block mb-2 font-medium">
-                    Upload New Images (will replace existing ones)
-                  </label>
-                  <input
-                    type="file"
-                    multiple
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className="w-full border border-gray-300 p-2 rounded"
-                  />
-                  {newImages.length > 0 && (
-                    <p className="text-sm text-gray-600 mt-2">
-                      {newImages.length} image(s) selected
-                    </p>
+                {/* Images Section */}
+                <div className="mb-6">
+                  <Label className="block mb-3 font-medium text-lg">Images</Label>
+
+                  {/* Existing Images */}
+                  {existingImages.length > 0 && (
+                    <div className="mb-4">
+                      <p className="text-sm font-medium text-gray-700 mb-2">Existing Images</p>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        {existingImages.map((img) => (
+                          <div key={img.publicId} className="relative group aspect-square">
+                            <img
+                              src={img.url}
+                              alt="Property"
+                              className="w-full h-full object-cover rounded-lg border border-gray-200"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removeExistingImage(img.publicId)}
+                              className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+                            >
+                              &times;
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   )}
+
+                  {/* New Image Previews */}
+                  {newImages.length > 0 && (
+                    <div className="mb-4">
+                      <p className="text-sm font-medium text-gray-700 mb-2">New Images</p>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        {newImages.map((file, index) => (
+                          <div key={index} className="relative group aspect-square">
+                            <img
+                              src={URL.createObjectURL(file)}
+                              alt="New Upload"
+                              className="w-full h-full object-cover rounded-lg border border-blue-200"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removeNewImage(index)}
+                              className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+                            >
+                              &times;
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Upload Button */}
+                  <div className="mt-2">
+                    <label className="block mb-2 font-medium text-sm text-gray-600">
+                      Add More Images
+                    </label>
+                    <div className="flex items-center justify-center w-full">
+                      <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                          <svg className="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                          </svg>
+                          <p className="mb-2 text-sm text-gray-500">
+                            <span className="font-semibold">Click to upload</span> or drag and drop
+                          </p>
+                        </div>
+                        <input
+                          type="file"
+                          multiple
+                          accept="image/*"
+                          onChange={(e) => {
+                            if (e.target.files) {
+                              setNewImages((prev) => [...prev, ...Array.from(e.target.files!)]);
+                            }
+                          }}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="flex justify-end gap-4 pt-4 border-t">
+                <div className="flex justify-end gap-4 pt-4 ">
                   <button
                     type="button"
                     onClick={closeEditModal}
-                    className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 transition-colors"
+                    className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 cursor-pointer transition-colors"
                     disabled={actionLoading}
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors disabled:opacity-50"
+                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer transition-colors disabled:opacity-50"
                     disabled={actionLoading}
                   >
                     {actionLoading ? "Updating..." : "Update Property"}
