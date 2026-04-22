@@ -18,41 +18,33 @@
     "stepButton2": "Back",
     "stepButton3": "Continue",
     "stepButton4": "Finish",
-
     "part1": {
       "step": "Welcome State",
       "headTitle": "Get started with Vacanza.",
       "headButton": "Save Draft",
-
-      "bigtitle1": "Create your home listing",
-      "subtitle1": "Add your property details, photos to start attracting guests.",
-      "bigtitle2": "Introduce yourself.",
-      "subtitle2": "Share a bit about who you are to build trust with potential guests.",
-      "bigtitle3": "Become a member for 59 EUR",
-      "subtitle3": " Unlock full platform benefits and connect with a global community..",
-
+      "bigtitle1": "Complete your profile",
+      "subtitle1": "Click on Continue below to complete your profile and build trust in your guests.",
+      "bigtitle2": "Upload and manage your properties",
+      "subtitle2": "Access your control panel after registration to manage your places, exchanges and favourites.",
+      "bigtitle3": "Become a Member for 59€",
+      "subtitle3": " Unlock full platform benefits and start exchanging with the community.",
       "minititle1": "Where is your home?",
       "minisubtitle1": "Tell guests where your home is located so they can plan their stay with confidence.",
       "location1": "Lat: 23.81018, Lng: 90.42713",
-
       "minititle2": "Where would you like to go?",
       "minisubtitle2": "Choose your destination and start planning your next adventure with Vacanza.",
       "location2": "Lat: 23.81018, Lng: 90.42713",
-
       "button1": "Cancel",
       "button2": "Continue",
       "note": "You'll be able to modify this information later"
     },
-
     "part2": {
       "step": "Travel Verification",
       "headTitle": "Welcome!",
       "headButton": "Save Draft",
-
       "button1": "Cancel",
       "button2": "Back",
       "button3": "Continue",
-
       "age": "Age",
       "gender": {
         "title": "Gender",
@@ -67,7 +59,6 @@
         "student": "Student",
         "unemployed": "Unemployed"
       },
-
       "travelType": {
         "title": "Your Travel Type",
         "subTitle": " (select up to 2 options)",
@@ -92,7 +83,6 @@
         "withPartner": "With A Partner",
         "withFrends": "With Friends"
       },
-
       "TravelWithPet": {
         "title": "Do You Travel With Pets?",
         "yes": "Yes",
@@ -101,17 +91,19 @@
       "maxNoOfPeople": {
         "title": "Max no. Of People?"
       },
+      "address": {
+        "title": "Address",
+        "placeHolder": "Enter your address"
+      },
       "notesOnYourself": {
         "title": "Notes on yourself",
         "placeHolder": "Write something about yourself"
       }
     },
-
     "part3": {
       "step": "Select Type",
       "headTitle": "Select Type",
       "headButton": "Save Draft",
-
       "title1": "What is your home like?",
       "card1": {
         "miniTitle1": "Home",
@@ -137,7 +129,6 @@
       "step": "Select Amenities",
       "headTitle": "Select Amenities",
       "headButton": "Save Draft",
-
       "title1": "Main",
       "title2": "Transport",
       "title3": "Surrounding",
@@ -189,28 +180,22 @@
       "step": "About Your Home",
       "headTitle": "About Your Home",
       "headButton": "Save Draft",
-
       "title1": "Give your home a Name",
       "subtitle1": "Pick a name that reflects the personality or charm of your home — it’s the first thing guests will see!",
       "subtitle1p": "Type your home name",
-
       "title2": "Describe your home",
       "subtitle2": "Tell guests what makes your home inviting — mention the style, atmosphere, and anything that makes it feel special.",
       "subtitle2p": "Describe it here",
-
       "title3": "Tell us about the area around your home",
       "subtitle3": "Help guests get a feel for your location — share nearby attractions, dining spots, transport options, and the overall vibe of your neighborhood.",
       "subtitle3p": "Describe it here"
     },
-
     "part6": {
       "step": "upload photo",
       "headTitle": "Upload Your Photo",
       "headButton": "Save Draft",
-
       "title4": "Add at least 5 pictures",
       "subtitle4": "Showcase your home from every angle by uploading at least 5 high-quality photos — include key spaces like the living area, kitchen, bedroom, and bathroom.",
-
       "fileTitle": "Add a profile picture",
       "fileSubtitle": "Upload an image of your propertUpload your profile picture (JPG or PNG format supported)",
       "image": "No Image Selected"
@@ -219,7 +204,6 @@
       "step": "Home's Availability",
       "headTitle": "Add your home's availability",
       "headButton": "Save Draft",
-
       "titleAvailability": "Add your home's availability",
       "titleDate": "Select Your Available Dates",
       "date1": "Start date",

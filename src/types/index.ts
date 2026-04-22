@@ -163,6 +163,7 @@ export interface OnboardingPayload {
   favoriteDestinations?: DestinationType[];
   travelMostlyWith?: TravelGroup;
   isTravelWithPets?: boolean;
+  address?: string;
   notes?: string;
   propertyType?: "home" | "apartment";
   isMainResidence?: boolean | null;

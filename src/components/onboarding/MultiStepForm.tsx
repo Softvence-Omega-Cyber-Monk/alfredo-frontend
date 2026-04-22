@@ -41,6 +41,7 @@ interface OnboardingData extends AddPlaceData {
     travelGroup: TravelGroup;
     travelWithPets: TravelWithPets;
     maxPeople: number | null;
+    address: string;
     notes: string;
   };
 }
@@ -91,6 +92,7 @@ const MultiStepForm = () => {
       travelGroup: "FRIENDS",
       travelWithPets: true,
       maxPeople: null,
+      address: "",
       notes: "",
     },
   });
@@ -105,6 +107,7 @@ const MultiStepForm = () => {
   // Validation functions for each step
   const validateStep1 = () => {
     const errors: string[] = [];
+    /*
     if (!addPlaceData.homeAddress || addPlaceData.homeAddress.trim() === "") {
       errors.push("Home location is required");
     }
@@ -120,6 +123,7 @@ const MultiStepForm = () => {
     if (!addPlaceData.destination) {
       errors.push("Please select destination on the map");
     }
+    */
     return errors;
   };
 
@@ -197,8 +201,8 @@ const MultiStepForm = () => {
       const formData = new FormData();
 
       const payload = {
-        homeAddress: addPlaceData.homeAddress,
-        destination: addPlaceData.destinationAddress,
+        // homeAddress: addPlaceData.homeAddress,
+        // destination: addPlaceData.destinationAddress,
 
         //next step (personal info)
         ageRange: addPlaceData.personalInformation.age,
@@ -210,6 +214,7 @@ const MultiStepForm = () => {
         travelMostlyWith: addPlaceData.personalInformation.travelGroup,
         isTravelWithPets: addPlaceData.personalInformation.travelWithPets,
         maxPeople: addPlaceData.personalInformation.maxPeople || 1,
+        address: addPlaceData.personalInformation.address,
         notes: addPlaceData.personalInformation.notes,
 
         //next step (property type)
@@ -436,16 +441,16 @@ const MultiStepForm = () => {
                 <div className="text-center mt-2">
                   <p
                     className={`text-xs sm:text-sm font-medium ${isActive || isCompleted
-                        ? "text-[#3174CD]"
-                        : "text-gray-400"
+                      ? "text-[#3174CD]"
+                      : "text-gray-400"
                       }`}
                   >
                     {t(step.title)}
                   </p>
                   <p
                     className={`text-xs sm:text-sm font-medium ${isActive || isCompleted
-                        ? "text-[#3174CD]"
-                        : "text-gray-400"
+                      ? "text-[#3174CD]"
+                      : "text-gray-400"
                       }`}
                   >
                     {t(step.subtitle)}
@@ -458,7 +463,7 @@ const MultiStepForm = () => {
       </div>
 
       {/* Validation Errors */}
-      {validationErrors.length > 0 && (
+      {/* {validationErrors.length > 0 && (
         <div className="my-6 p-4 bg-red-50 border border-red-200 rounded-lg">
           <h4 className="text-red-800 font-semibold mb-2">
             Please fix the following errors:
@@ -469,7 +474,7 @@ const MultiStepForm = () => {
             ))}
           </ul>
         </div>
-      )}
+      )} */}
 
       {/* Step Content */}
       <div>{renderStepContent()}</div>

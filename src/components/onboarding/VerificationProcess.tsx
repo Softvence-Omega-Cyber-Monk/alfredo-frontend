@@ -43,6 +43,7 @@ interface VerificationProps {
     travelGroup: TravelGroup;
     travelWithPets: TravelWithPets;
     maxPeople: number | null;
+    address: string;
     notes: string;
   };
   onDataChange: (
@@ -86,7 +87,11 @@ const VerificationProcess = ({
     });
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
+    handleChange("address", e.target.value);
+  };
+
+  const handleNotesChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     handleChange("notes", e.target.value);
   };
 
@@ -101,8 +106,8 @@ const VerificationProcess = ({
     "Business",
     "Leisure",
     "Adventure",
-    "Family",
-    "Solo",
+    // "Family",
+    // "Solo",
     "Cultural",
   ] as TravelType[];
 
@@ -130,6 +135,8 @@ const VerificationProcess = ({
   //   const value = parseInt(e.target.value, 10) || 1;
   //   handleChange("maxPeople", value);
   // };
+
+
 
   return (
     <div className="w-full py-6 md:py-10 space-y-6">
@@ -375,6 +382,19 @@ const VerificationProcess = ({
           </div> */}
         </div>
 
+        <div>
+          <Label className="block text-lg text-[#3174CD] mb-2">
+            {t("onboarding.part2.address.title")}
+          </Label>
+          <input
+            type="text"
+            value={personalInformation.address}
+            onChange={handleAddressChange}
+            className="border border-[#D2D2D2] w-full rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder={t("onboarding.part2.address.placeHolder")}
+          />
+        </div>
+
         {/* Notes */}
         <div>
           <Label className="block text-lg text-[#3174CD] mb-2">
@@ -382,7 +402,7 @@ const VerificationProcess = ({
           </Label>
           <Textarea
             value={personalInformation.notes}
-            onChange={handleInputChange}
+            onChange={handleNotesChange}
             placeholder={t("onboarding.part2.notesOnYourself.placeHolder")}
             className="min-h-[120px] border border-[#D2D2D2] focus:border-blue-500 focus:ring-blue-500"
           />
