@@ -6,6 +6,12 @@
     "button2": "Favorite Places",
     "button3": "Exchange Request",
     "button4": "My Places",
+    "part0": {
+      "currentPlan": "Current Plan",
+      "no": "None",
+      "plan1": "Upgrade to Base Plan",
+      "plan2": "Upgrade to Premium Plan"
+    },
     "part1": {
       "title1": "Preview Your Home Listing",
       "miniTitle1": "Where is your home?",

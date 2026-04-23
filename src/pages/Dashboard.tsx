@@ -14,6 +14,9 @@ import {
 import { useTranslation } from "react-i18next";
 import DashboardHeading from "@/components/dashboard/DashboardHeading";
 import Loader from "@/components/reusable/Loader";
+import api from "@/services/api";
+import axios from "axios";
+import { toast } from "sonner";
 
 // import { MoveRight } from "lucide-react";
 // import { Link } from "react-router-dom";
@@ -23,11 +26,27 @@ import { FaHandshake } from "react-icons/fa";
 import { PiHeartbeatLight } from "react-icons/pi";
 import { GiHouse } from "react-icons/gi";
 import { FaHouseChimneyMedical } from "react-icons/fa6";
+import { SearchProvider } from "@/contexts/SearchContext";
+import SearchFilter from "@/components/home/SearchFilter";
+import SearchResults from "@/components/Search/SearchResults";
+import { fetchUser } from "@/store/Slices/Profile/ProfileSlice";
+import { Button } from "@/components/ui/button";
+// import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
-  const { t } = useTranslation("dashboard");
+  const { t, i18n } = useTranslation("dashboard");
+  const currentLanguage = i18n.language;
   const { data, loading, error } = useAppSelector((state) => state.onboarding);
+  const { data: user } = useAppSelector((state) => state.user);
+  const [plans, setPlans] = useState<any[]>([]);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
+
+  console.log("user in dashboard", user);
   console.log("dasdadfadsfa", data);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -69,6 +88,57 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getOnboarding());
   }, [dispatch]);
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const res = await api.get("/plans");
+        setPlans(res.data.data);
+      } catch (error) {
+        console.error("Error fetching plans:", error);
+      }
+    };
+    fetchPlans();
+  }, []);
+
+  const handleCheckout = async (planType: "BASE" | "PREMIUM") => {
+    try {
+      setCheckoutLoading(true);
+      // Find the plan that matches the type
+      // We look for plans where the translation name or planType matches our target
+      const targetPlan = plans.find((p) => {
+        const translation = p.translations.find((tr: any) => tr.language === currentLanguage) || p.translations.find((tr: any) => tr.language === "en");
+        return translation?.name?.toLowerCase().includes(planType.toLowerCase());
+      });
+
+      if (!targetPlan) {
+        toast.error(`Could not find ${planType} plan details`);
+        return;
+      }
+
+      const planTranslation = targetPlan.translations.find((tr: any) => tr.language === currentLanguage) || targetPlan.translations.find((tr: any) => tr.language === "en");
+      const planDuration = planTranslation?.planType === "TWO_YEARLY" ? 2 : 1;
+
+      const payload = {
+        priceId: targetPlan.priceId,
+        planId: targetPlan.id,
+        planDuration,
+      };
+
+      const res = await api.post("/stripe-payment/checkout", payload);
+      if (res.data.url) {
+        window.location.href = res.data.url;
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        toast.error(err.response?.data?.message || "Checkout failed");
+      } else {
+        toast.error("Unexpected error occurred");
+      }
+    } finally {
+      setCheckoutLoading(false);
+    }
+  };
 
   // useEffect(() => {
   //   if (list && (list as any).data) {
@@ -133,7 +203,7 @@ const Dashboard = () => {
   // };
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="p-6 max-w-7xl mx-auto">
       {/* <h1 className="text-3xl font-bold text-primary-blue mb-6">
         {t("dashboard.title")}
       </h1> */}
@@ -201,6 +271,44 @@ const Dashboard = () => {
             },
           ]}
         />
+
+        {
+          user?.isSubscribed === false && (
+            <div className="mt-22">
+              <p className="text-sm text-dark-3 font-regular text-center">{t("dashboard.part0.currentPlan")} : <span className="text-primary-blue capitalize">{t("dashboard.part0.no")}</span></p>
+              <div className="mt-12 w-[90%] sm:w-[80%] md:w-[50%] lg:w-[40%] mx-auto flex flex-col md:flex-row items-center gap-4 justify-center">
+                <Button
+                  onClick={() => handleCheckout("BASE")}
+                  disabled={checkoutLoading}
+                  variant="secondary"
+                  className="w-full cursor-pointer bg-primary-blue text-white px-6 py-7 hover:bg-[#114480]"
+                >
+                  {checkoutLoading ? "Processing..." : t("dashboard.part0.plan1")}
+                </Button>
+                <Button
+                  onClick={() => handleCheckout("PREMIUM")}
+                  disabled={checkoutLoading}
+                  variant="secondary"
+                  className="w-full cursor-pointer bg-primary-blue text-white px-6 py-7 hover:bg-[#114480]"
+                >
+                  {checkoutLoading ? "Processing..." : t("dashboard.part0.plan2")}
+                </Button>
+              </div>
+            </div>
+
+          )
+        }
+
+        <SearchProvider>
+          <div className="mt-6 md:mt-8 lg:mt-10 w-full">
+            <SearchFilter />
+          </div>
+          <div>
+            <SearchResults />
+          </div>
+        </SearchProvider>
+
+
         <AddPlaceModal isOpen={isModalOpen} onClose={handleModalClose} />
       </div>
 

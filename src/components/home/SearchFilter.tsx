@@ -17,7 +17,7 @@ import PrimaryButton from "../reusable/PrimaryButton";
 // import CalendarRangePicker from "../onboarding/CalendarRangePicker";
 
 import map from "@/assets/icons/Location.svg";
-import user from "@/assets/icons/userRounded.svg";
+import userIcon from "@/assets/icons/userRounded.svg";
 import home from "@/assets/icons/homeType.svg";
 import calendar from "@/assets/icons/Calendar.svg";
 
@@ -26,6 +26,9 @@ import { useSearch } from "@/contexts/SearchContext";
 import { SearchParams } from "@/services/api";
 import SearchCombinedFilter from "./SearchCombinedFilter";
 import CalendarRangePickerNew from "./CalendarRangePickerNew";
+import { useAppSelector } from "@/hooks/useRedux";
+import { useNavigate } from "react-router-dom";
+import { FaLock } from "react-icons/fa";
 
 interface PropertyType {
   value: string;
@@ -53,6 +56,8 @@ const SearchFilter = () => {
 
   const { t } = useTranslation("banner");
   const { setSearchParams, performSearch } = useSearch();
+  const { data: user } = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
 
   // Hardcoded property types
   useEffect(() => {
@@ -145,7 +150,7 @@ const SearchFilter = () => {
               {t("search.guest")}
             </label>
             <div className="flex items-center gap-1 border border-[#C4D7F1] px-2 rounded-lg">
-              <img src={user} alt="user icon" className="w-5 h-5" />
+              <img src={userIcon} alt="user icon" className="w-5 h-5" />
               <Input
                 type="text"
                 inputMode="numeric"
@@ -267,11 +272,23 @@ const SearchFilter = () => {
           {/* Search Button */}
           <div className="flex-1 flex items-end">
             <PrimaryButton
-              onClick={() => runSearch()}
-              title={t("search.search")}
+              onClick={() => {
+                if (user?.isSubscribed === false) {
+                  navigate("/plans");
+                } else {
+                  runSearch();
+                }
+              }}
+              title={
+                <div className="flex items-center gap-2">
+                  {t("search.search")}
+                  {user?.isSubscribed === false && <FaLock className="w-3 h-3 text-white/70" />}
+                </div>
+              }
               textColor="text-white w-full text-sm md:text-base text-center lg:text-lg"
-              bgColor="bg-primary-blue hover:brightness-90"
+              bgColor={user?.isSubscribed === false ? "bg-gray-400" : "bg-primary-blue hover:brightness-90"}
               bgImage="/buttonHomeIcon.svg"
+              className={user?.isSubscribed === false ? "grayscale opacity-80" : ""}
             />
           </div>
         </div>
