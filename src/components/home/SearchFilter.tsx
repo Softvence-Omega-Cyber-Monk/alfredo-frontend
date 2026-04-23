@@ -29,6 +29,9 @@ import CalendarRangePickerNew from "./CalendarRangePickerNew";
 import { useAppSelector } from "@/hooks/useRedux";
 import { useNavigate } from "react-router-dom";
 import { FaLock } from "react-icons/fa";
+import api from "@/services/api";
+import axios from "axios";
+import { toast } from "sonner";
 
 interface PropertyType {
   value: string;
@@ -54,10 +57,12 @@ const SearchFilter = () => {
     isTravelWithPets: false,
   });
 
-  const { t } = useTranslation("banner");
+  const { t, i18n } = useTranslation("banner");
+  const currentLanguage = i18n.language;
   const { setSearchParams, performSearch } = useSearch();
-  const { data: user } = useAppSelector((state) => state.user);
+  const { data: userData } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   // Hardcoded property types
   useEffect(() => {
@@ -108,6 +113,49 @@ const SearchFilter = () => {
 
     setSearchParams(params);
     await performSearch(params);
+  };
+
+  const handleBasePlanCheckout = async () => {
+    try {
+      setCheckoutLoading(true);
+      // Fetch plans to find the Base plan ID/PriceID
+      const res = await api.get("/plans");
+      const plans = res.data.data;
+      
+      const basePlan = plans.find((p: any) => {
+        const translation = p.translations.find((tr: any) => tr.language === (currentLanguage === "en" ? "en" : "el")) || p.translations.find((tr: any) => tr.language === "en");
+        return translation?.name?.toLowerCase().includes("base");
+      });
+
+      if (!basePlan) {
+        // Fallback to plans page if base plan not found
+        navigate("/plans");
+        return;
+      }
+
+      const planTranslation = basePlan.translations.find((tr: any) => tr.language === (currentLanguage === "en" ? "en" : "el")) || basePlan.translations.find((tr: any) => tr.language === "en");
+      const planDuration = planTranslation?.planType === "TWO_YEARLY" ? 2 : 1;
+
+      const payload = {
+        priceId: basePlan.priceId,
+        planId: basePlan.id,
+        planDuration,
+      };
+
+      const response = await api.post("/stripe-payment/checkout", payload);
+      if (response.data.url) {
+        window.location.href = response.data.url;
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        toast.error(err.response?.data?.message || "Checkout failed");
+      } else {
+        toast.error("Unexpected error occurred");
+      }
+      navigate("/plans"); // Fallback
+    } finally {
+      setCheckoutLoading(false);
+    }
   };
 
   const handleInputChange = (field: string, value: string | boolean) => {
@@ -273,22 +321,23 @@ const SearchFilter = () => {
           <div className="flex-1 flex items-end">
             <PrimaryButton
               onClick={() => {
-                if (user?.isSubscribed === false) {
-                  navigate("/plans");
+                if (!userData?.subscriptions?.some(sub => sub.status === "ACTIVE")) {
+                  handleBasePlanCheckout();
                 } else {
                   runSearch();
                 }
               }}
+              disabled={checkoutLoading}
               title={
                 <div className="flex items-center gap-2">
-                  {t("search.search")}
-                  {user?.isSubscribed === false && <FaLock className="w-3 h-3 text-white/70" />}
+                  {checkoutLoading ? "..." : t("search.search")}
+                  {!userData?.subscriptions?.some(sub => sub.status === "ACTIVE") && !checkoutLoading && <FaLock className="w-3 h-3 text-white/70" />}
                 </div>
               }
               textColor="text-white w-full text-sm md:text-base text-center lg:text-lg"
-              bgColor={user?.isSubscribed === false ? "bg-gray-400" : "bg-primary-blue hover:brightness-90"}
+              bgColor={!userData?.subscriptions?.some(sub => sub.status === "ACTIVE") ? "bg-gray-400" : "bg-primary-blue hover:brightness-90"}
               bgImage="/buttonHomeIcon.svg"
-              className={user?.isSubscribed === false ? "grayscale opacity-80" : ""}
+              className={!userData?.subscriptions?.some(sub => sub.status === "ACTIVE") ? "grayscale opacity-80" : ""}
             />
           </div>
         </div>

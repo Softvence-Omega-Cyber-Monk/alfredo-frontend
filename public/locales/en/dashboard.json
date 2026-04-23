@@ -10,7 +10,11 @@
       "currentPlan": "Current Plan",
       "no": "None",
       "plan1": "Upgrade to Base Plan",
-      "plan2": "Upgrade to Premium Plan"
+      "plan2": "Upgrade to Premium Plan",
+      "base": "Base",
+      "premium": "Premium",
+      "baseUpgrade": "Discount Codes (Upgrade to Premium)",
+      "premiumUnlock": "Discount Codes"
     },
     "part1": {
       "title1": "Preview Your Home Listing",

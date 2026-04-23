@@ -10,6 +10,28 @@ export interface achievementBadges {
   updatedAt: string;
 }
 
+export interface PlanTranslation {
+  language: string;
+  name: string;
+  description?: string;
+  features: string[];
+}
+
+export interface Plan {
+  id: string;
+  price: number;
+  priceId: string;
+  translations: PlanTranslation[];
+}
+
+export interface Subscription {
+  id: string;
+  status: string;
+  startDate: string;
+  endDate: string;
+  plan: Plan;
+}
+
 export interface User {
   id: string;
   fullName: string;
@@ -48,6 +70,7 @@ export interface User {
     availabilityStartDate?: string | null;
     availabilityEndDate?: string | null;
   };
+  subscriptions?: Subscription[];
 }
 
 interface UserState {

@@ -17,7 +17,7 @@ const UserAvatar: React.FC<UserAvatarProps> = ({ userName, photo }) => {
   }, [dispatch]);
   return (
     <Avatar className="w-8 h-8 md:w-10 md:h-10">
-      <AvatarImage src={photo || data?.photo || undefined} />
+      <AvatarImage src={photo || data?.photo || undefined} className="object-cover" />
       <AvatarFallback>{userName}</AvatarFallback>
     </Avatar>
   );

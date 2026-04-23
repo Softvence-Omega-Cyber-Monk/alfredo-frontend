@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { ReactNode } from "react";
 
 interface PrimaryButtonProps {
-  title: string | ReactNode; // Changed to accept both string and ReactNode
+  title: string | ReactNode;
   bgImage?: string;
   textColor?: string;
   bgColor?: string;
@@ -10,6 +10,7 @@ interface PrimaryButtonProps {
   padding?: string;
   onClick?: () => void;
   className?: string;
+  disabled?: boolean;
 }
 
 const PrimaryButton: React.FC<PrimaryButtonProps> = ({
@@ -21,12 +22,15 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
   padding = "px-8 py-2",
   onClick,
   className,
+  disabled,
 }) => {
   return (
     <button
-      onClick={onClick}
+      onClick={!disabled ? onClick : undefined}
+      disabled={disabled}
       className={clsx(
-        "relative overflow-hidden rounded-full transition-colors text-lg hover:brightness-90 font-medium cursor-pointer flex items-center justify-center",
+        "relative overflow-hidden rounded-full transition-all text-lg font-medium flex items-center justify-center",
+        disabled ? "opacity-50 cursor-not-allowed" : "hover:brightness-90 cursor-pointer",
         padding,
         textColor,
         bgColor,

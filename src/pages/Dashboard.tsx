@@ -273,7 +273,7 @@ const Dashboard = () => {
         />
 
         {
-          user?.isSubscribed === false && (
+          !user?.subscriptions?.some(sub => sub.status === "ACTIVE") ? (
             <div className="mt-22">
               <p className="text-sm text-dark-3 font-regular text-center">{t("dashboard.part0.currentPlan")} : <span className="text-primary-blue capitalize">{t("dashboard.part0.no")}</span></p>
               <div className="mt-12 w-[90%] sm:w-[80%] md:w-[50%] lg:w-[40%] mx-auto flex flex-col md:flex-row items-center gap-4 justify-center">
@@ -295,8 +295,43 @@ const Dashboard = () => {
                 </Button>
               </div>
             </div>
+          ) : (() => {
+            const activeSub = user?.subscriptions?.find(sub => sub.status === "ACTIVE");
+            const activePlanName = activeSub?.plan?.translations?.find(tr => tr.language === "en")?.name || "";
+            const isBase = activePlanName.toLowerCase().includes("base");
+            const isPremium = activePlanName.toLowerCase().includes("premium");
 
-          )
+            return (
+              <div className="mt-10 flex flex-col items-center">
+                <p className="text-sm text-dark-3 font-regular text-center">
+                  {t("dashboard.part0.currentPlan")} : 
+                  <span className="text-primary-blue capitalize ml-1 font-semibold">
+                    {isBase ? t("dashboard.part0.base") : isPremium ? t("dashboard.part0.premium") : activePlanName}
+                  </span>
+                </p>
+                
+                <div className="mt-6 flex flex-col md:flex-row items-center gap-4">
+                  {isBase && (
+                    <Button 
+                      onClick={() => window.open("https://buy.stripe.com/28E7sL0L43GK5aT9LWdIA01?prefilled_promo_code=UPREMIUM", "_blank")}
+                      variant="secondary" 
+                      className="w-full cursor-pointer bg-primary-blue text-white px-8 py-6 hover:bg-[#114480] rounded-full"
+                    >
+                      {t("dashboard.part0.baseUpgrade")}
+                    </Button>
+                  )}
+                  {isPremium && (
+                    <Button 
+                      variant="secondary" 
+                      className="w-full cursor-pointer bg-primary-blue text-white px-8 py-6 hover:bg-[#114480] rounded-full"
+                    >
+                      {t("dashboard.part0.premiumUnlock")}
+                    </Button>
+                  )}
+                </div>
+              </div>
+            );
+          })()
         }
 
         <SearchProvider>

@@ -143,7 +143,7 @@ const ProfileForm = () => {
       const payload = new FormData();
 
       // User fields
-      payload.append("fullName", formData.fullName);
+      // payload.append("fullName", formData.fullName);
       payload.append("phoneNumber", formData.phoneNumber);
       if (formData.photo) {
         payload.append("photo", formData.photo);
@@ -270,7 +270,8 @@ const ProfileForm = () => {
                       fullName: e.target.value,
                     }))
                   }
-                  className="h-12 border-gray-300 rounded-lg text-[12px] lg:text-base"
+                  disabled
+                  className="h-12 cursor-not-allowed border-gray-300 rounded-lg text-[12px] lg:text-base"
                 />
               </div>
 
