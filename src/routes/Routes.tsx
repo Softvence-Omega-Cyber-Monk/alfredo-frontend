@@ -16,8 +16,11 @@ import Test from "@/pages/Test";
 import Chat from "@/pages/Chat";
 import HomeDetails from "@/pages/HomeDetails";
 import Profile from "../pages/Profile";
-import OTP from "@/pages/OTP";
-import VerifyEmail from "@/pages/VerifyEmail";
+// OLD OTP FLOW - imports commented out, keeping for future use
+// import OTP from "@/pages/OTP";
+// import VerifyEmail from "@/pages/VerifyEmail";
+import CheckEmail from "@/pages/CheckEmail";
+import EmailVerificationCallback from "@/pages/EmailVerificationCallback";
 import ForgotPassword from "@/pages/ForgotPassword";
 import SetNewPassword from "@/pages/SetNewPassword";
 import SettingPassword from "@/pages/SettingPassword";
@@ -79,13 +82,24 @@ const routes = createBrowserRouter([
         path: "/signup",
         element: <Signup />,
       },
+      // --- OLD OTP ROUTES (commented out for future use) ---
+      // {
+      //   path: "/otp",
+      //   element: <OTP />,
+      // },
+      // {
+      //   path: "/verify-otp/:userId",
+      //   element: <VerifyEmail />,
+      // },
+
+      // --- NEW EMAIL VERIFICATION ROUTES ---
       {
-        path: "/otp",
-        element: <OTP />,
+        path: "/check-email",
+        element: <CheckEmail />,
       },
       {
-        path: "/verify-otp/:userId",
-        element: <VerifyEmail />,
+        path: "/verify-email",
+        element: <EmailVerificationCallback />,
       },
       {
         path: "/forgot-password",

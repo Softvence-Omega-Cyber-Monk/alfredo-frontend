@@ -20,7 +20,6 @@
       "title": "Achievement",
       "highlight": "Badges",
       "subtitle": "Unlock badges by completing activities and milestones.",
-
       "card1": {
         "cardtitle1": "Promotional",
         "firstBonus": {
@@ -43,7 +42,6 @@
           "content": "1 year active"
         }
       },
-
       "card4": {
         "cardtitle4": "REVIEWS",
         "firstBonus": {
@@ -137,7 +135,6 @@
           "title": "Winter Expert Traveler",
           "content": "10 exchanges completed during winter."
         },
-
         "sixthBonus": {
           "title": "Spring Traveler",
           "content": "1 exchange completed during spring."
@@ -273,7 +270,6 @@
           "content": "10 exchanges completed in Macedonia."
         }
       },
-
       "card12": {
         "cardtitle12": "DISCOUNT USAGE",
         "firstBonus": {
@@ -282,11 +278,10 @@
         }
       }
     },
-
     "terms": {
       "title": "Terms and Conditions",
       "firstBonus": {
-        "content": "The referral bonus is granted only when the referred friend signs up through your unique referral link."
+        "content": "The referral bonus is granted only when the referred friend signs up and  subscribes to a plan through your unique referral code."
       },
       "secondBonus": {
         "content": "Your friend must be a new member of Vacanza."
@@ -301,7 +296,6 @@
         "content": "Any fraudulent activity will result in the suspension of accounts and removal of bonuses."
       }
     },
-
     "firstBonus": {
       "title": "12",
       "content": "Total referrals made",
@@ -318,7 +312,6 @@
       "content1": "bonuses."
     }
   },
-
   "invite": {
     "title": "About my profile",
     "firstBonus": {

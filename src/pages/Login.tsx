@@ -13,7 +13,7 @@ import { loginUser, setCredentials } from "@/store/Slices/AuthSlice/authSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { useTranslation } from "react-i18next";
 import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "@/lib/firebase";
+import { auth, googleProvider, facebookProvider } from "@/lib/firebase";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email format"),
@@ -119,6 +119,55 @@ const Login = () => {
     }
   };
 
+  const handleFacebookLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, facebookProvider);
+      const user = result.user;
+      const idToken = await user.getIdToken();
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/auth/facebook`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ idToken }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("token", data.accessToken);
+
+        const formattedUser = {
+          ...data.user,
+          firstName: data.user.fullName.split(" ")[0] || "",
+          lastName: data.user.fullName.split(" ").slice(1).join(" ") || "",
+        };
+
+        dispatch(
+          setCredentials({
+            user: formattedUser,
+            token: data.accessToken,
+          })
+        );
+
+        if (!data.user.hasOnboarded) {
+          navigate("/onboarding");
+        } else {
+          navigate("/dashboard");
+        }
+      }
+    } catch (error) {
+      console.error("Facebook login error::", error);
+    }
+  };
+
+
   return (
     <CommonWrapper>
       <div className="flex items-center justify-center mx-auto my-[64px] max-[767px]:mt-[40px]">
@@ -221,7 +270,20 @@ const Login = () => {
                 alt="Google"
                 className="w-5 h-5"
               />
-              Continue with Google
+              {t("auth.continueWithGoogle")}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleFacebookLogin}
+              className="w-full mt-4 flex items-center cursor-pointer justify-center gap-3 border border-gray-300 py-3 rounded-[8px] bg-white hover:bg-gray-50 transition duration-200 font-semibold text-basic-dark shadow-sm"
+            >
+              <img
+                src="https://www.svgrepo.com/show/475647/facebook-color.svg"
+                alt="Facebook"
+                className="w-5 h-5"
+              />
+              {t("auth.continueWithFacebook")}
             </button>
 
           </form>

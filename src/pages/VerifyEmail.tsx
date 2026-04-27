@@ -3,12 +3,15 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CommonWrapper from "@/common/CommonWrapper";
 import AuthenticateHeading from "@/components/reusable/AuthenticateHeading";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+// import { useNavigate } from "react-router-dom"; // OLD OTP FLOW
 import AuthButton from "@/components/reusable/AuthButton";
 import time from "../assets/time.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { verifyOtp, resendOtp } from "@/store/Slices/AuthSlice/authSlice";
-import { AppDispatch, RootState } from "@/store/store";
+import { useSelector } from "react-redux";
+// import { useDispatch } from "react-redux"; // OLD OTP FLOW
+// import { verifyOtp, resendOtp } from "@/store/Slices/AuthSlice/authSlice";
+import { RootState } from "@/store/store";
+// import { AppDispatch } from "@/store/store"; // OLD OTP FLOW
 import { useEffect, useState } from "react";
 import SupportModal from "@/components/modals/SupportModal";
 
@@ -20,8 +23,8 @@ type VerifyFormInputs = z.infer<typeof verifySchema>;
 
 const VerifyEmail = () => {
   const { userId } = useParams<{ userId: string }>(); // From /verify-otp/:userId
-  const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
+  // const dispatch = useDispatch<AppDispatch>(); // OLD OTP FLOW
+  // const navigate = useNavigate(); // OLD OTP FLOW
   const { loading, error } = useSelector((state: RootState) => state.auth);
 
   const {
@@ -47,34 +50,35 @@ const VerifyEmail = () => {
     }
   }, [counter]);
 
-  const onSubmit = async (data: VerifyFormInputs) => {
+  // OLD OTP FLOW - commented out, keeping for future use
+  const onSubmit = async (_data: VerifyFormInputs) => {
     if (!userId) {
       console.error("No userId found");
       return;
     }
 
-    const res = await dispatch(verifyOtp({ userId, otp: data.otp }));
-
-    if (verifyOtp.fulfilled.match(res)) {
-      navigate("/login");
-    }
+    // const res = await dispatch(verifyOtp({ userId, otp: _data.otp }));
+    //
+    // if (verifyOtp.fulfilled.match(res)) {
+    //   navigate("/login");
+    // }
   };
 
+  // OLD OTP FLOW - commented out, keeping for future use
   const handleResend = async () => {
     if (!userId) {
       console.error("No userId found");
       return;
     }
 
-    const res = await dispatch(resendOtp({ userId, method: "email" }));
-
-    if (resendOtp.fulfilled.match(res)) {
-      // console.log("OTP resent:", res.payload.message);
-      setCounter(60); // Restart timer
-      setCanResend(false);
-    } else {
-      console.error("Resend OTP failed:", res.payload);
-    }
+    // const res = await dispatch(resendOtp({ userId, method: "email" }));
+    //
+    // if (resendOtp.fulfilled.match(res)) {
+    //   setCounter(60); // Restart timer
+    //   setCanResend(false);
+    // } else {
+    //   console.error("Resend OTP failed:", res.payload);
+    // }
   };
 
   return (

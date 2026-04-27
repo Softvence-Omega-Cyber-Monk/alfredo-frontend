@@ -95,36 +95,16 @@ export const loginUser = createAsyncThunk<
   }
 });
 
-// Send OTP
+// ========== EMAIL LINK VERIFICATION (New Flow) ==========
 
-export const sendOtp = createAsyncThunk<
-  { message: string },
-  { userId: string; method: string },
+// Verify Email Token (from verification link)
+export const verifyEmailToken = createAsyncThunk<
+  AuthResponse,
+  { token: string },
   { rejectValue: string }
->("auth/send-otp", async ({ userId, method }, { rejectWithValue }) => {
+>("auth/verify-email-token", async ({ token }, { rejectWithValue }) => {
   try {
-    const { data } = await api.post<{ message: string }>("/auth/send-otp", {
-      userId,
-      method,
-    });
-    return data;
-  } catch (err) {
-    const error = err as AxiosError<ApiError>;
-    return rejectWithValue(
-      error.response?.data?.message || "OTP sending failed"
-    );
-  }
-});
-
-// Verify OTP
-
-export const verifyOtp = createAsyncThunk<
-  AuthResponse, // Updated return type
-  { userId: string; otp: string }, // Payload type
-  { rejectValue: string }
->("auth/verify-otp", async ({ userId, otp }, { rejectWithValue }) => {
-  try {
-    const { data } = await api.post("/auth/verify-otp", { userId, otp });
+    const { data } = await api.post("/auth/verify-email-token", { token });
 
     const authData: AuthResponse = {
       user: {
@@ -142,31 +122,106 @@ export const verifyOtp = createAsyncThunk<
   } catch (err) {
     const error = err as AxiosError<ApiError>;
     return rejectWithValue(
-      error.response?.data?.message || "OTP verification failed"
+      error.response?.data?.message || "Email verification failed"
     );
   }
 });
 
-//  Resend OTP
-
-export const resendOtp = createAsyncThunk<
+// Resend Verification Email
+export const resendVerificationEmail = createAsyncThunk<
   { message: string },
-  { userId: string; method: string },
+  { email: string },
   { rejectValue: string }
->("auth/resend-otp", async ({ userId, method }, { rejectWithValue }) => {
-  try {
-    const { data } = await api.post<{ message: string }>("/auth/resend-otp", {
-      userId,
-      method,
-    });
-    return data;
-  } catch (err) {
-    const error = err as AxiosError<ApiError>;
-    return rejectWithValue(
-      error.response?.data?.message || "OTP resending failed"
-    );
+>(
+  "auth/resend-verification-email",
+  async ({ email }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.post<{ message: string }>(
+        "/auth/resend-verification-email",
+        { email }
+      );
+      return data;
+    } catch (err) {
+      const error = err as AxiosError<ApiError>;
+      return rejectWithValue(
+        error.response?.data?.message || "Resend verification email failed"
+      );
+    }
   }
-});
+);
+
+// ========== OTP VERIFICATION (Old Flow - Commented Out) ==========
+// Keeping these thunks for potential future use.
+
+// // Send OTP
+// export const sendOtp = createAsyncThunk<
+//   { message: string },
+//   { userId: string; method: string },
+//   { rejectValue: string }
+// >("auth/send-otp", async ({ userId, method }, { rejectWithValue }) => {
+//   try {
+//     const { data } = await api.post<{ message: string }>("/auth/send-otp", {
+//       userId,
+//       method,
+//     });
+//     return data;
+//   } catch (err) {
+//     const error = err as AxiosError<ApiError>;
+//     return rejectWithValue(
+//       error.response?.data?.message || "OTP sending failed"
+//     );
+//   }
+// });
+
+// // Verify OTP
+// export const verifyOtp = createAsyncThunk<
+//   AuthResponse, // Updated return type
+//   { userId: string; otp: string }, // Payload type
+//   { rejectValue: string }
+// >("auth/verify-otp", async ({ userId, otp }, { rejectWithValue }) => {
+//   try {
+//     const { data } = await api.post("/auth/verify-otp", { userId, otp });
+//
+//     const authData: AuthResponse = {
+//       user: {
+//         id: data.user.id,
+//         firstName: data.user.fullName.split(" ")[0],
+//         lastName: data.user.fullName.split(" ").slice(1).join(" "),
+//         email: data.user.email,
+//         role: data.user.role,
+//         hasOnboarded: data.user.hasOnboarded,
+//       },
+//       token: data.accessToken,
+//     };
+//
+//     return authData;
+//   } catch (err) {
+//     const error = err as AxiosError<ApiError>;
+//     return rejectWithValue(
+//       error.response?.data?.message || "OTP verification failed"
+//     );
+//   }
+// });
+
+// // Resend OTP
+// export const resendOtp = createAsyncThunk<
+//   { message: string },
+//   { userId: string; method: string },
+//   { rejectValue: string }
+// >("auth/resend-otp", async ({ userId, method }, { rejectWithValue }) => {
+//   try {
+//     const { data } = await api.post<{ message: string }>("/auth/resend-otp", {
+//       userId,
+//       method,
+//     });
+//     return data;
+//   } catch (err) {
+//     const error = err as AxiosError<ApiError>;
+//     return rejectWithValue(
+//       error.response?.data?.message || "OTP resending failed"
+//     );
+//   }
+// });
 
 // Forgot Password
 
@@ -291,39 +346,62 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(signupUser.fulfilled, (state, action) => {
+      .addCase(signupUser.fulfilled, (state) => {
         state.loading = false;
         state.error = null;
 
-        // Not authenticated yet because OTP verification is pending
+        // Not authenticated yet because email verification is pending
         state.isAuthenticated = false;
         state.user = null;
         state.token = null;
 
+        // --- OLD OTP FLOW (commented out) ---
         // Store userId temporarily in localStorage or state for OTP verification
-        localStorage.setItem("pendingUserId", action.payload.userId);
+        // localStorage.setItem("pendingUserId", action.payload.userId);
       })
       .addCase(signupUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Signup failed";
       })
-      .addCase(verifyOtp.pending, (state) => {
+
+      // ========== EMAIL LINK VERIFICATION (New Flow) ==========
+      .addCase(verifyEmailToken.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(verifyOtp.fulfilled, (state, action) => {
+      .addCase(verifyEmailToken.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;
 
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
         localStorage.setItem("token", action.payload.token);
-        localStorage.removeItem("pendingUserId"); // Clean up temp storage
       })
-      .addCase(verifyOtp.rejected, (state, action) => {
+      .addCase(verifyEmailToken.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload || "OTP verification failed";
+        state.error = action.payload || "Email verification failed";
       })
+
+      // ========== OTP VERIFICATION REDUCERS (Old Flow - Commented Out) ==========
+      // .addCase(verifyOtp.pending, (state) => {
+      //   state.loading = true;
+      //   state.error = null;
+      // })
+      // .addCase(verifyOtp.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.user = action.payload.user;
+      //   state.token = action.payload.token;
+      //   state.isAuthenticated = true;
+      //
+      //   localStorage.setItem("token", action.payload.token);
+      //   localStorage.removeItem("pendingUserId"); // Clean up temp storage
+      // })
+      // .addCase(verifyOtp.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.error = action.payload || "OTP verification failed";
+      // })
+
       .addCase(forgotPassword.pending, (state) => {
         state.loading = true;
         state.error = null;

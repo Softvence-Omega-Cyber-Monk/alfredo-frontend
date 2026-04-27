@@ -9,7 +9,8 @@ import { LuEyeOff } from "react-icons/lu";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { sendOtp, signupUser, setCredentials } from "@/store/Slices/AuthSlice/authSlice";
+import { signupUser, setCredentials } from "@/store/Slices/AuthSlice/authSlice";
+// import { sendOtp } from "@/store/Slices/AuthSlice/authSlice"; // OLD OTP FLOW
 import { AppDispatch, RootState } from "@/store/store";
 import CustomModal from "@/components/modals/CustomModal";
 import {
@@ -20,7 +21,7 @@ import {
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "@/lib/firebase";
+import { auth, googleProvider, facebookProvider } from "@/lib/firebase";
 
 const signupSchema = z
   .object({
@@ -80,17 +81,24 @@ const Signup = () => {
     );
 
     if (signupUser.fulfilled.match(resultAction)) {
-      const userId = resultAction.payload.userId;
-      // Send OTP
-      const otpAction = await dispatch(sendOtp({ userId, method: "email" }));
-      if (sendOtp.fulfilled.match(otpAction)) {
-        // console.log("OTP sent successfully:", otpAction.payload.message);
-        toast("OTP sent successfully to your email. Please check your email.");
-        // Navigate to verify OTP page with userId in URL
-        navigate(`/verify-otp/${userId}`);
-      } else {
-        console.error("OTP sending failed:", otpAction.payload);
-      }
+      // New flow: verification link is sent automatically by the backend
+      toast.success(
+        "Registration successful! A verification link has been sent to your email. Please check your inbox."
+      );
+      // Navigate to a check-email info page
+      navigate(`/check-email?email=${encodeURIComponent(data.email)}`);
+
+      // --- OLD OTP FLOW (commented out for future use) ---
+      // const userId = resultAction.payload.userId;
+      // // Send OTP
+      // const otpAction = await dispatch(sendOtp({ userId, method: "email" }));
+      // if (sendOtp.fulfilled.match(otpAction)) {
+      //   toast("OTP sent successfully to your email. Please check your email.");
+      //   // Navigate to verify OTP page with userId in URL
+      //   navigate(`/verify-otp/${userId}`);
+      // } else {
+      //   console.error("OTP sending failed:", otpAction.payload);
+      // }
     } else {
       console.error("Signup failed:", resultAction.payload);
     }
@@ -148,6 +156,55 @@ const Signup = () => {
       console.error("Google login error::", error);
     }
   };
+
+  const handleFacebookLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, facebookProvider);
+      const user = result.user;
+      const idToken = await user.getIdToken();
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/auth/facebook`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ idToken }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("token", data.accessToken);
+
+        const formattedUser = {
+          ...data.user,
+          firstName: data.user.fullName.split(" ")[0] || "",
+          lastName: data.user.fullName.split(" ").slice(1).join(" ") || "",
+        };
+
+        dispatch(
+          setCredentials({
+            user: formattedUser,
+            token: data.accessToken,
+          })
+        );
+
+        if (!data.user.hasOnboarded) {
+          navigate("/onboarding");
+        } else {
+          navigate("/dashboard");
+        }
+      }
+    } catch (error) {
+      console.error("Facebook login error::", error);
+    }
+  };
+
 
   return (
     <CommonWrapper>
@@ -424,7 +481,20 @@ const Signup = () => {
                 alt="Google"
                 className="w-5 h-5"
               />
-              Continue with Google
+              {t("auth.continueWithGoogle")}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleFacebookLogin}
+              className="w-full mt-4 flex items-center cursor-pointer justify-center gap-3 border border-gray-300 py-3 rounded-[8px] bg-white hover:bg-gray-50 transition duration-200 font-semibold text-basic-dark shadow-sm"
+            >
+              <img
+                src="https://www.svgrepo.com/show/475647/facebook-color.svg"
+                alt="Facebook"
+                className="w-5 h-5"
+              />
+              {t("auth.continueWithFacebook")}
             </button>
 
           </form>
