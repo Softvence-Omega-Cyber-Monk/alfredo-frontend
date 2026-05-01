@@ -275,7 +275,7 @@ const Dashboard = () => {
         {
           !user?.subscriptions?.some(sub => sub.status === "ACTIVE") ? (
             <div className="mt-22">
-              <p className="text-sm text-dark-3 font-regular text-center">{t("dashboard.part0.currentPlan")} : <span className="text-primary-blue capitalize">{t("dashboard.part0.no")}</span></p>
+              <p className="text-sm text-dark-3 font-regular text-center">{t("dashboard.part0.currentPlan")} : <span className="text-red-500 font-semibold capitalize">{t("dashboard.part0.no")}</span></p>
               <div className="mt-12 w-[90%] sm:w-[80%] md:w-[50%] lg:w-[40%] mx-auto flex flex-col md:flex-row items-center gap-4 justify-center">
                 <Button
                   onClick={() => handleCheckout("BASE")}
@@ -289,7 +289,7 @@ const Dashboard = () => {
                   onClick={() => handleCheckout("PREMIUM")}
                   disabled={checkoutLoading}
                   variant="secondary"
-                  className="w-full cursor-pointer bg-primary-blue text-white px-6 py-7 hover:bg-[#114480]"
+                  className="w-full cursor-pointer bg-[#174075] text-white px-6 py-7 hover:bg-[#114480]"
                 >
                   {checkoutLoading ? "Processing..." : t("dashboard.part0.plan2")}
                 </Button>
@@ -304,25 +304,25 @@ const Dashboard = () => {
             return (
               <div className="mt-10 flex flex-col items-center">
                 <p className="text-sm text-dark-3 font-regular text-center">
-                  {t("dashboard.part0.currentPlan")} : 
-                  <span className="text-primary-blue capitalize ml-1 font-semibold">
+                  {t("dashboard.part0.currentPlan")} :
+                  <span className={`${isBase ? "text-green-500" : isPremium ? "text-[#FFB800]" : "text-red-500"} capitalize ml-1 font-semibold`}>
                     {isBase ? t("dashboard.part0.base") : isPremium ? t("dashboard.part0.premium") : activePlanName}
                   </span>
                 </p>
-                
+
                 <div className="mt-6 flex flex-col md:flex-row items-center gap-4">
                   {isBase && (
-                    <Button 
+                    <Button
                       onClick={() => window.open("https://buy.stripe.com/28E7sL0L43GK5aT9LWdIA01?prefilled_promo_code=UPREMIUM", "_blank")}
-                      variant="secondary" 
+                      variant="secondary"
                       className="w-full cursor-pointer bg-primary-blue text-white px-8 py-6 hover:bg-[#114480] rounded-full"
                     >
                       {t("dashboard.part0.baseUpgrade")}
                     </Button>
                   )}
                   {isPremium && (
-                    <Button 
-                      variant="secondary" 
+                    <Button
+                      variant="secondary"
                       className="w-full cursor-pointer bg-primary-blue text-white px-8 py-6 hover:bg-[#114480] rounded-full"
                     >
                       {t("dashboard.part0.premiumUnlock")}

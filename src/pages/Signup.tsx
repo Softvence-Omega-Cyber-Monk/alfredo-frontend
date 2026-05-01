@@ -294,7 +294,7 @@ const Signup = () => {
                   </p>
                 )}
               </div>
-              <div className="w-full">
+              {/* <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
                   {t("auth.signup.referralCode")}
                 </label>
@@ -312,7 +312,7 @@ const Signup = () => {
                     {errors.referralCode.message}
                   </p>
                 )}
-              </div>
+              </div> */}
             </div>
 
             {/* Password Fields */}

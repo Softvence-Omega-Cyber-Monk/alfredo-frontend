@@ -121,7 +121,7 @@ const SearchFilter = () => {
       // Fetch plans to find the Base plan ID/PriceID
       const res = await api.get("/plans");
       const plans = res.data.data;
-      
+
       const basePlan = plans.find((p: any) => {
         const translation = p.translations.find((tr: any) => tr.language === (currentLanguage === "en" ? "en" : "el")) || p.translations.find((tr: any) => tr.language === "en");
         return translation?.name?.toLowerCase().includes("base");
@@ -172,22 +172,22 @@ const SearchFilter = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="bg-white rounded-xl lg:rounded-full px-4 lg:px-8 py-6 shadow-md">
+      <div className="bg-white rounded-xl lg:rounded-full px-4 lg:px-4 py-6 shadow-md">
         <div className="flex flex-col lg:flex-row items-stretch gap-6 flex-wrap">
           {/* Destination */}
           <div className="flex-1">
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.placeholder")}
             </label>
-            <div className="flex items-center gap-1 border border-[#C4D7F1] text-xs px-2 rounded-lg">
-              <img src={map} alt="map icon" className="w-5 h-5" />
+            <div className="flex items-center gap-0 border border-[#C4D7F1] text-xs px-1 rounded-lg">
+              <img src={map} alt="map icon" className="w-5 h-5 mt-[0.5]" />
               <Input
                 value={localSearch.destination}
                 onChange={(e) =>
                   handleInputChange("destination", e.target.value)
                 }
                 placeholder={t("search.placeInGreece")}
-                className="w-full text-sm py-5 md:text-base bg-transparent border-none focus:ring-0 shadow-none placeholder:text-xs"
+                className="w-full text-sm py-3 md:text-base bg-transparent border-none focus:ring-0 shadow-none placeholder:text-xs"
               />
             </div>
           </div>
@@ -250,8 +250,8 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.dates")}
             </label>
-            <div className="flex items-center border border-[#C4D7F1] gap-0 p-0.5 px-2 rounded-lg">
-              <img src={calendar} alt="calendar icon" className="w-5 h-5" />
+            <div className="flex items-center border border-[#C4D7F1] p-0.5 px-2 rounded-lg">
+              <img src={calendar} alt="calendar icon" className="w-5 h-" />
               <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                 <PopoverTrigger asChild>
                   <Button
@@ -268,7 +268,7 @@ const SearchFilter = () => {
                         {formatDateDisplay(availabilityDates.start)}
                       </span>
                     ) : (
-                      <span className="text-dark-3 flex items-center mr-auto justify-start">
+                      <span className="text-dark-3 flex items-center justify-center">
                         {t("search.pickADateRange")}
                       </span>
                     )}

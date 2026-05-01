@@ -105,27 +105,27 @@ const MultiStepForm = () => {
   };
 
   // Validation functions for each step
-  const validateStep1 = () => {
-    const errors: string[] = [];
-    /*
-    if (!addPlaceData.homeAddress || addPlaceData.homeAddress.trim() === "") {
-      errors.push("Home location is required");
-    }
-    if (
-      !addPlaceData.destinationAddress ||
-      addPlaceData.destinationAddress.trim() === ""
-    ) {
-      errors.push("Destination is required");
-    }
-    if (!addPlaceData.location) {
-      errors.push("Please select home location on the map");
-    }
-    if (!addPlaceData.destination) {
-      errors.push("Please select destination on the map");
-    }
-    */
-    return errors;
-  };
+  // const validateStep1 = () => {
+  //   const errors: string[] = [];
+  //   /*
+  //   if (!addPlaceData.homeAddress || addPlaceData.homeAddress.trim() === "") {
+  //     errors.push("Home location is required");
+  //   }
+  //   if (
+  //     !addPlaceData.destinationAddress ||
+  //     addPlaceData.destinationAddress.trim() === ""
+  //   ) {
+  //     errors.push("Destination is required");
+  //   }
+  //   if (!addPlaceData.location) {
+  //     errors.push("Please select home location on the map");
+  //   }
+  //   if (!addPlaceData.destination) {
+  //     errors.push("Please select destination on the map");
+  //   }
+  //   */
+  //   return errors;
+  // };
 
   const validateStep2 = () => {
     const errors: string[] = [];
@@ -133,21 +133,45 @@ const MultiStepForm = () => {
 
     if (!pi.age) {
       errors.push("Age group is required");
+      toast.error("Age group is required", {
+        position: "top-center"
+      })
     }
     if (!pi.gender || pi.gender === "NOT_SPECIFIED") {
       errors.push("Gender is required");
+      toast.error("Gender is required", {
+        position: "top-center"
+      })
     }
     if (!pi.role) {
       errors.push("Role/Occupation is required");
+      toast.error("Role/Occupation is required", {
+        position: "top-center"
+      })
     }
     if (pi.travelType.length === 0) {
       errors.push("At least one travel type is required");
+      toast.error("At least one travel type is required", {
+        position: "top-center"
+      })
     }
     if (pi.favoriteDestinations.length === 0) {
       errors.push("At least one favorite destination is required");
+      toast.error("At least one favorite destination is required", {
+        position: "top-center"
+      })
     }
     if (!pi.travelGroup) {
       errors.push("Travel group preference is required");
+      toast.error("Travel group preference is required", {
+        position: "top-center"
+      })
+    }
+    if (!pi.address) {
+      errors.push("Hometown is required");
+      toast.error("Hometown is required", {
+        position: "top-center"
+      })
     }
 
     return errors;
@@ -165,9 +189,6 @@ const MultiStepForm = () => {
     let errors: string[] = [];
 
     switch (currentStep) {
-      case 1:
-        errors = validateStep1();
-        break;
       case 2:
         errors = validateStep2();
         break;
@@ -463,7 +484,7 @@ const MultiStepForm = () => {
       </div>
 
       {/* Validation Errors */}
-      {/* {validationErrors.length > 0 && (
+      {validationErrors.length > 0 && (
         <div className="my-6 p-4 bg-red-50 border border-red-200 rounded-lg">
           <h4 className="text-red-800 font-semibold mb-2">
             Please fix the following errors:
@@ -474,7 +495,7 @@ const MultiStepForm = () => {
             ))}
           </ul>
         </div>
-      )} */}
+      )}
 
       {/* Step Content */}
       <div>{renderStepContent()}</div>

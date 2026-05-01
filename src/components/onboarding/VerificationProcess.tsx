@@ -1,9 +1,9 @@
 "use client";
 
-import { TbChecklist } from "react-icons/tb";
+// import { TbChecklist } from "react-icons/tb";
 import Title from "./Shared/Title";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { Textarea } from "../ui/textarea";
 import { ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
@@ -145,13 +145,13 @@ const VerificationProcess = ({
           <Title title={t("onboarding.part2.headTitle")} />
         </div>
         <div className="w-full lg:w-auto flex justify-center md:justify-end">
-          <Button
+          {/* <Button
             variant="secondary"
             className="flex items-center gap-2 px-5 py-3 rounded-lg border border-[#CAD2DB] text-[#3174CD] text-base font-medium hover:bg-gray-100"
           >
             {t("onboarding.part2.headButton")}
             <TbChecklist className="w-5 h-5" />
-          </Button>
+          </Button> */}
         </div>
       </div>
 

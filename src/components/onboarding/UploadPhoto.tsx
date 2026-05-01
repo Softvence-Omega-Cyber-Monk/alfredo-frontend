@@ -1,5 +1,5 @@
-import { TbChecklist } from "react-icons/tb";
-import { Button } from "../ui/button";
+// import { TbChecklist } from "react-icons/tb";
+// import { Button } from "../ui/button";
 import Title from "./Shared/Title";
 import PhotoUpload from "../dashboard/PhotoUpload";
 import { useTranslation } from "react-i18next";
@@ -19,13 +19,13 @@ const UploadPhoto = ({ photos, onDataChange }: UploadPhotoProps) => {
           <Title title={t("onboarding.part6.fileTitle")} />
         </div>
         <div className="w-full lg:w-auto flex justify-center md:justify-end">
-          <Button
+          {/* <Button
             variant="secondary"
             className="flex items-center gap-2 px-5 py-3 rounded-lg border border-[#CAD2DB] text-[#3174CD] text-base font-medium hover:bg-gray-100"
           >
             {t("onboarding.part6.headButton")}
             <TbChecklist className="w-5 h-5" />
-          </Button>
+          </Button> */}
         </div>
       </div>
 

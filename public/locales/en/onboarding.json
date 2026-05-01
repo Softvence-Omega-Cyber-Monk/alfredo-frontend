@@ -22,8 +22,8 @@
       "step": "Welcome State",
       "headTitle": "Get started with Vacanza.",
       "headButton": "Save Draft",
-      "bigtitle1": "Complete your profile",
-      "subtitle1": "Click on Continue below to complete your profile and build trust in your guests.",
+      "bigtitle1": "Complete Profile",
+      "subtitle1": "Click on ''Continue'' below to complete your profile and build trust in your guests.",
       "bigtitle2": "Upload and manage your properties",
       "subtitle2": "Access your control panel after registration to manage your places, exchanges and favourites.",
       "bigtitle3": "Become a Member for 59€",
@@ -92,8 +92,8 @@
         "title": "Max no. Of People?"
       },
       "address": {
-        "title": "Address",
-        "placeHolder": "Enter your address"
+        "title": "My hometown",
+        "placeHolder": "Enter your hometown"
       },
       "notesOnYourself": {
         "title": "Notes on yourself",
