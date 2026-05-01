@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -47,9 +47,7 @@ const SearchFilter = () => {
     end: null,
   });
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [availablePropertyTypes, setAvailablePropertyTypes] = useState<
-    PropertyType[]
-  >([]);
+
   const [localSearch, setLocalSearch] = useState({
     destination: "",
     maxPeople: "",
@@ -64,16 +62,14 @@ const SearchFilter = () => {
   const navigate = useNavigate();
   const [checkoutLoading, setCheckoutLoading] = useState(false);
 
-  // Hardcoded property types
-  useEffect(() => {
-    setAvailablePropertyTypes([
-      { value: "HOME", label: t("search.home") },
-      { value: "APARTMENT", label: t("search.apartment") },
-      { value: "ROOM", label: t("search.room") },
-      { value: "BOAT", label: t("search.boat") },
-      { value: "VAN", label: t("search.van") },
-    ]);
-  }, [t]);
+  // Memoized property types
+  const availablePropertyTypes = useMemo<PropertyType[]>(() => [
+    { value: "HOME", label: t("search.home") },
+    { value: "APARTMENT", label: t("search.apartment") },
+    { value: "ROOM", label: t("search.room") },
+    { value: "BOAT", label: t("search.boat") },
+    { value: "VAN", label: t("search.van") },
+  ], [t]);
 
   // Handle date changes from CalendarRangePicker
   const handleDateChange = (dates: {
@@ -179,15 +175,15 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.placeholder")}
             </label>
-            <div className="flex items-center gap-0 border border-[#C4D7F1] text-xs px-1 rounded-lg">
-              <img src={map} alt="map icon" className="w-5 h-5 mt-[0.5]" />
+            <div className="flex items-center gap-2 border border-[#C4D7F1] text-xs px-2 rounded-lg">
+              <img src={map} alt="map icon" className="w-5 h-5" />
               <Input
                 value={localSearch.destination}
                 onChange={(e) =>
                   handleInputChange("destination", e.target.value)
                 }
                 placeholder={t("search.placeInGreece")}
-                className="w-full text-sm py-3 md:text-base bg-transparent border-none focus:ring-0 shadow-none placeholder:text-xs"
+                className="w-full text-sm py-5 md:text-base bg-transparent border-none focus:ring-0 shadow-none placeholder:text-xs px-0"
               />
             </div>
           </div>
@@ -197,7 +193,7 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1 ">
               {t("search.guest")}
             </label>
-            <div className="flex items-center gap-1 border border-[#C4D7F1] px-2 rounded-lg">
+            <div className="flex items-center gap-2 border border-[#C4D7F1] px-2 rounded-lg">
               <img src={userIcon} alt="user icon" className="w-5 h-5" />
               <Input
                 type="text"
@@ -206,7 +202,7 @@ const SearchFilter = () => {
                 value={localSearch.maxPeople}
                 onChange={(e) => handleInputChange("maxPeople", e.target.value)}
                 placeholder={t("search.selectHere")}
-                className="w-full text-sm md:text-xs py-5 bg-transparent border-none focus:ring-0 shadow-none placeholder:text-xs"
+                className="w-full text-sm md:text-xs py-5 bg-transparent border-none focus:ring-0 shadow-none placeholder:text-xs px-0"
                 onKeyPress={(e) => {
                   if (!/[0-9]/.test(e.key)) e.preventDefault();
                 }}
@@ -219,29 +215,31 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.propertyType")}
             </label>
-            <div className="flex items-center gap-1 border p-0.5 px-2 rounded-lg border-[#C4D7F1] ">
+            <div className="flex items-center gap-2 border p-0.5 px-2 rounded-lg border-[#C4D7F1] ">
               <img src={home} alt="home icon" className="w-5 h-5" />
-              <Select
-                value={localSearch.propertyType}
-                onValueChange={(value) =>
-                  handleInputChange("propertyType", value)
-                }
-              >
-                <SelectTrigger className="w-full border-none cursor-pointer text-gray-600 text-xs">
-                  <SelectValue placeholder={t("search.home")} />
-                </SelectTrigger>
-                <SelectContent className=" bg-white border-none ">
-                  {availablePropertyTypes.map((type) => (
-                    <SelectItem
-                      key={type.value}
-                      value={type.value}
-                      className="cursor-pointer"
-                    >
-                      {type.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <div className="flex-1">
+                <Select
+                  value={localSearch.propertyType}
+                  onValueChange={(value) =>
+                    handleInputChange("propertyType", value)
+                  }
+                >
+                  <SelectTrigger className="w-full border-none cursor-pointer text-gray-600 text-xs px-0 justify-start">
+                    <SelectValue placeholder={t("search.home")} />
+                  </SelectTrigger>
+                  <SelectContent className=" bg-white border-none ">
+                    {availablePropertyTypes.map((type) => (
+                      <SelectItem
+                        key={type.value}
+                        value={type.value}
+                        className="cursor-pointer"
+                      >
+                        {type.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
 
@@ -250,13 +248,13 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.dates")}
             </label>
-            <div className="flex items-center border border-[#C4D7F1] p-0.5 px-2 rounded-lg">
-              <img src={calendar} alt="calendar icon" className="w-5 h-" />
+            <div className="flex items-center gap-2 border border-[#C4D7F1] p-0.5 px-2 rounded-lg">
+              <img src={calendar} alt="calendar icon" className="w-5 h-5" />
               <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
-                    className="w-full text-left font-normal bg-transparent border-none text-xs focus:ring-0 shadow-none hover:bg-transparent"
+                    className="w-full justify-start text-start font-normal bg-transparent border-none text-xs focus:ring-0 shadow-none hover:bg-transparent px-0"
                   >
                     {availabilityDates.start && availabilityDates.end ? (
                       <span className="text-dark-3">
@@ -268,7 +266,7 @@ const SearchFilter = () => {
                         {formatDateDisplay(availabilityDates.start)}
                       </span>
                     ) : (
-                      <span className="text-dark-3 flex items-center justify-center">
+                      <span className="text-dark-3 flex items-center ">
                         {t("search.pickADateRange")}
                       </span>
                     )}
@@ -294,7 +292,7 @@ const SearchFilter = () => {
           </div>
 
           {/*  Combined Amenities + Transport + Surroundings */}
-          <div className="flex-1 cursor-pointer p-0.5 px-2">
+          <div className="flex-1 cursor-pointer p-0.5">
             <label className="block text-sm text-dark-3 mb-1 ">
               {t("search.amenities")}
             </label>

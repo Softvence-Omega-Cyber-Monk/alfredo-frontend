@@ -315,7 +315,7 @@ const Dashboard = () => {
                     <Button
                       onClick={() => window.open("https://buy.stripe.com/28E7sL0L43GK5aT9LWdIA01?prefilled_promo_code=UPREMIUM", "_blank")}
                       variant="secondary"
-                      className="w-full cursor-pointer bg-primary-blue text-white px-8 py-6 hover:bg-[#114480] rounded-full"
+                      className="w-full cursor-pointer bg-[#174075] text-white px-8 py-6 hover:bg-[#114480] rounded-full"
                     >
                       {t("dashboard.part0.baseUpgrade")}
                     </Button>

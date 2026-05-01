@@ -30,7 +30,7 @@ const TopArticle = () => {
           <div className="line-clamp-4 overflow-hidden">
             <MarkdownContent
               content={
-                t("articles.showcaseArticle.description").split(
+                (t("articles.showcaseArticle.description") || "").split(
                   "other person."
                 )[0]
               }

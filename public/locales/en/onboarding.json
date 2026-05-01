@@ -2,8 +2,8 @@
   "onboarding": {
     "step1": "Welcome ",
     "step1s": "State",
-    "step2": "Travel ",
-    "step2s": "Verification",
+    "step2": "Complete ",
+    "step2s": "Profile",
     "step3": "Select",
     "step3s": "Type",
     "step4": "Select",
@@ -39,7 +39,7 @@
       "note": "You'll be able to modify this information later"
     },
     "part2": {
-      "step": "Travel Verification",
+      "step": "Complete Profile",
       "headTitle": "Welcome!",
       "headButton": "Save Draft",
       "button1": "Cancel",

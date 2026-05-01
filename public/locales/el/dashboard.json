@@ -11,9 +11,9 @@
       "no": "Κανένα",
       "plan1": "Αναβάθμιση σε Base Πρόγραμμα",
       "plan2": "Αναβάθμιση σε Premium Πρόγραμμα",
-      "base": "Base",
+      "base": "Basic",
       "premium": "Premium",
-      "baseUpgrade": "Για εκπτωτικούς κωδικούς (Αναβάθμισε σε Premium)",
+      "baseUpgrade": "Αναβάθμισε σε Premium",
       "premiumUnlock": "Εκπτωτικοί Κωδικοί"
     },
     "part1": {

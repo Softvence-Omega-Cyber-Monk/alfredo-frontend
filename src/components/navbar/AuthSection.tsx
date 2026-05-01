@@ -16,6 +16,7 @@ import { useAppDispatch } from "@/hooks/useRedux";
 import { logout } from "@/store/Slices/AuthSlice/authSlice";
 import LanguageSwitcher from "../LanguageSwitcher";
 import { useTranslation } from "react-i18next";
+import NotificationBell from "../reusable/NotificationBell";
 
 import type { User as AuthUser } from "@/store/Slices/AuthSlice/authSlice";
 
@@ -106,28 +107,32 @@ const AuthSection: React.FC<Props> = ({
       <div className="bg-white rounded-2xl p-2 flex items-center gap-2 md:gap-3 cursor-pointer">
         <LanguageSwitcher />
 
-        <PopoverTrigger>
-          <div className="flex items-center gap-2 md:gap-3">
-            <UserAvatar
-              userName={user ? `${user.firstName}` : "Guest"}
-              photo={user?.photo}
-            />
+        <div className="flex items-center gap-2 md:gap-4">
+          <NotificationBell />
 
-            {/* <p className="text-primary-blue font-medium text-sm sm:text-base md:text-lg">
+          <PopoverTrigger>
+            <div className="flex items-center gap-2 md:gap-3">
+              <UserAvatar
+                userName={user ? `${user.firstName}` : "Guest"}
+                photo={user?.photo}
+              />
+
+              {/* <p className="text-primary-blue font-medium text-sm sm:text-base md:text-lg">
               {user?.name.split(" ")[0]}
             </p> */}
-            <div className="p-1 md:p-2">
-              <img
-                src={arrow}
-                alt=""
-                className={clsx(
-                  "transition-transform duration-300",
-                  popoverOpen ? "rotate-180" : "rotate-0"
-                )}
-              />
+              <div className="p-1 md:p-2">
+                <img
+                  src={arrow}
+                  alt=""
+                  className={clsx(
+                    "transition-transform duration-300",
+                    popoverOpen ? "rotate-180" : "rotate-0"
+                  )}
+                />
+              </div>
             </div>
-          </div>
-        </PopoverTrigger>
+          </PopoverTrigger>
+        </div>
       </div>
 
       <PopoverContent className="bg-white text-dark-3 w-[190px] md:w-[240px] mt-2 mr-12 z-70 border-none rounded-xl p-4">

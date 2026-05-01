@@ -247,18 +247,6 @@ const ChatModal: React.FC<ChatModalProps> = ({
       content: input,
     });
 
-    // Send notification to the receiver
-    try {
-      await sendNotification(
-        receiverId,
-        `New message from ${user?.name || user?.username || "User"}`,
-        input.length > 50 ? input.substring(0, 50) + "..." : input
-      );
-      // console.log("Notification sent successfully");
-    } catch (error) {
-      console.error("Failed to send notification:", error);
-    }
-
     setInput("");
   };
   return (
@@ -293,16 +281,14 @@ const ChatModal: React.FC<ChatModalProps> = ({
               {messages.map((msg, i) => (
                 <div
                   key={i}
-                  className={`flex ${
-                    msg.sender === "me" ? "justify-end" : "justify-start"
-                  }`}
+                  className={`flex ${msg.sender === "me" ? "justify-end" : "justify-start"
+                    }`}
                 >
                   <div
-                    className={`px-3 py-2 rounded-xl text-sm max-w-[70%] ${
-                      msg.sender === "me"
-                        ? "bg-[#3174cd] text-white"
-                        : "bg-gray-200 text-gray-800"
-                    }`}
+                    className={`px-3 py-2 rounded-xl text-sm max-w-[70%] ${msg.sender === "me"
+                      ? "bg-[#3174cd] text-white"
+                      : "bg-gray-200 text-gray-800"
+                      }`}
                   >
                     {msg.text}
                   </div>
@@ -339,7 +325,7 @@ const ChatModal: React.FC<ChatModalProps> = ({
                     className="w-full"
                   />
                 </PopoverTrigger>
-                <PopoverContent className="bg-primary-gray-bg backdrop-blur-lg border border-gray-300 absolute -top-44 -left-64 shadow-lg">
+                <PopoverContent className="bg-primary-gray-bg backdrop-blur-lg border border-gray-300 absolute -top-44 -left-34 lg:-left-64 shadow-lg">
                   <div className="mb-2">
                     <Label className="font-semibold">
                       Select your property to exchange:
@@ -364,7 +350,7 @@ const ChatModal: React.FC<ChatModalProps> = ({
                     title="Send Request"
                     className="w-full mt-4"
                     onClick={handleExchangeRequest}
-                    // disabled={!selectedProperty}
+                  // disabled={!selectedProperty}
                   />
                 </PopoverContent>
               </Popover>

@@ -97,8 +97,8 @@ const Login = () => {
 
         const formattedUser = {
           ...data.user,
-          firstName: data.user.fullName.split(" ")[0] || "",
-          lastName: data.user.fullName.split(" ").slice(1).join(" ") || "",
+          firstName: (data.user.fullName || "").split(" ")[0] || data.user.firstName || "",
+          lastName: (data.user.fullName || "").split(" ").slice(1).join(" ") || data.user.lastName || "",
         };
 
         dispatch(
@@ -145,8 +145,8 @@ const Login = () => {
 
         const formattedUser = {
           ...data.user,
-          firstName: data.user.fullName.split(" ")[0] || "",
-          lastName: data.user.fullName.split(" ").slice(1).join(" ") || "",
+          firstName: (data.user.fullName || "").split(" ")[0] || data.user.firstName || "",
+          lastName: (data.user.fullName || "").split(" ").slice(1).join(" ") || data.user.lastName || "",
         };
 
         dispatch(

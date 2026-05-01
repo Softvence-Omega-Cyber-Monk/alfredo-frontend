@@ -3,7 +3,7 @@
     "title": "Profile Information",
     "fullName": "Full name",
     "phone": "Phone number",
-    "homeAddress": "City/home address",
+    "homeAddress": "City / Home Address",
     "ageRange": "Age range",
     "gender": {
       "title": "Gender",

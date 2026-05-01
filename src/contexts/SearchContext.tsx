@@ -50,8 +50,11 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
         }
       });
 
-      const response = await searchOnboarding(filteredParams);
-      setSearchResults(response.data);
+      // Ensure unique IDs to prevent React reconciliation errors
+      const uniqueResults = response.data.filter((item: PropertyData, index: number, self: PropertyData[]) =>
+        index === self.findIndex((t) => t.id === item.id)
+      );
+      setSearchResults(uniqueResults);
     } catch (err) {
       setError("Failed to fetch search results");
       console.error(err);

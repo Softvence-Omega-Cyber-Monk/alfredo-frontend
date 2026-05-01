@@ -25,7 +25,7 @@ const ProfileForm = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     phoneNumber: "",
-    homeAddress: "",
+    address: "",
     ageRange: "AGE_18_30" as AgeGroup,
     gender: "NOT_SPECIFIED" as Gender,
     employmentStatus: "RETIRED" as Role,
@@ -94,7 +94,7 @@ const ProfileForm = () => {
       setFormData({
         fullName: user.fullName || "",
         phoneNumber: user.phoneNumber || "",
-        homeAddress: onboardingData.homeAddress || "",
+        address: onboardingData.address || "",
         ageRange: onboardingData.ageRange || "AGE_18_30",
         gender: onboardingData.gender || "NOT_SPECIFIED",
         employmentStatus: onboardingData.employmentStatus || "RETIRED",
@@ -133,56 +133,63 @@ const ProfileForm = () => {
   const handleSubmit = async () => {
     setIsSubmitting(true);
 
-    console.log("Form Data State:", formData);
-    console.log("isTravelWithPets:", formData.isTravelWithPets);
-
     try {
       const token = localStorage.getItem("token");
 
-      // ONE SINGLE REQUEST TO /api/user/me
-      const payload = new FormData();
-
-      // User fields
-      // payload.append("fullName", formData.fullName);
-      payload.append("phoneNumber", formData.phoneNumber);
+      let response;
       if (formData.photo) {
+        const payload = new FormData();
+        payload.append("phoneNumber", formData.phoneNumber);
         payload.append("photo", formData.photo);
+        payload.append("address", formData.address);
+        payload.append("ageRange", formData.ageRange);
+        payload.append("employmentStatus", formData.employmentStatus);
+
+        formData.travelType.forEach((type) =>
+          payload.append("travelType", type)
+        );
+        formData.favoriteDestinations.forEach((dest) =>
+          payload.append("favoriteDestinations", dest)
+        );
+
+        payload.append("travelMostlyWith", formData.travelMostlyWith);
+        payload.append("isTravelWithPets", String(formData.isTravelWithPets));
+        payload.append("notes", formData.notes);
+
+        response = await axios.patch(
+          "https://vacanzagreece.gr/api/user/me",
+          payload,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      } else {
+        const jsonPayload = {
+          phoneNumber: formData.phoneNumber,
+          address: formData.address,
+          ageRange: formData.ageRange,
+          employmentStatus: formData.employmentStatus,
+          travelType: formData.travelType,
+          favoriteDestinations: formData.favoriteDestinations,
+          travelMostlyWith: formData.travelMostlyWith,
+          isTravelWithPets: formData.isTravelWithPets,
+          notes: formData.notes,
+        };
+
+        response = await axios.patch(
+          "https://vacanzagreece.gr/api/user/me",
+          jsonPayload,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
       }
-
-      // Onboarding fields — ALL accepted by /user/me
-      payload.append("homeAddress", formData.homeAddress);
-      payload.append("ageRange", formData.ageRange);
-      payload.append("gender", formData.gender);
-      payload.append("employmentStatus", formData.employmentStatus);
-
-      // Arrays
-      formData.travelType.forEach((type) => payload.append("travelType", type));
-      formData.favoriteDestinations.forEach((dest) =>
-        payload.append("favoriteDestinations", dest)
-      );
-
-      payload.append("travelMostlyWith", formData.travelMostlyWith);
-
-      // THIS NOW WORKS PERFECTLY
-      payload.append(
-        "isTravelWithPets",
-        formData.isTravelWithPets ? "true" : "false"
-      );
-
-      payload.append("notes", formData.notes);
-
-      console.log("Sending full payload to /api/user/me");
-
-      const response = await axios.patch(
-        "https://vacanzagreece.gr/api/user/me",
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
 
       console.log("Update successful:", response.data);
 
@@ -309,12 +316,12 @@ const ProfileForm = () => {
                   {t("profile.homeAddress")}
                 </Label>
                 <Input
-                  name="homeAddress"
-                  value={formData.homeAddress}
+                  name="address"
+                  value={formData.address}
                   onChange={(e) =>
                     setFormData((prev) => ({
                       ...prev,
-                      homeAddress: e.target.value,
+                      address: e.target.value,
                     }))
                   }
                   className="h-12 border-gray-300 text-[12px] lg:text-base rounded-lg"

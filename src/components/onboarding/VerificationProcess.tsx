@@ -391,7 +391,7 @@ const VerificationProcess = ({
             value={personalInformation.address}
             onChange={handleAddressChange}
             className="border border-[#D2D2D2] w-full rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder={t("onboarding.part2.address.placeHolder")}
+          // placeholder={t("onboarding.part2.address.placeHolder")}
           />
         </div>
 

@@ -135,8 +135,8 @@ const Signup = () => {
 
         const formattedUser = {
           ...data.user,
-          firstName: data.user.fullName.split(" ")[0] || "",
-          lastName: data.user.fullName.split(" ").slice(1).join(" ") || "",
+          firstName: (data.user.fullName || "").split(" ")[0] || data.user.firstName || "",
+          lastName: (data.user.fullName || "").split(" ").slice(1).join(" ") || data.user.lastName || "",
         };
 
         dispatch(
@@ -183,8 +183,8 @@ const Signup = () => {
 
         const formattedUser = {
           ...data.user,
-          firstName: data.user.fullName.split(" ")[0] || "",
-          lastName: data.user.fullName.split(" ").slice(1).join(" ") || "",
+          firstName: (data.user.fullName || "").split(" ")[0] || data.user.firstName || "",
+          lastName: (data.user.fullName || "").split(" ").slice(1).join(" ") || data.user.lastName || "",
         };
 
         dispatch(
@@ -394,7 +394,7 @@ const Signup = () => {
                 className="mt-1 cursor-pointer"
               />
               <label className="text-[16px] text-basic-dark font-semibold">
-                {t("auth.signup.agreeText").split("terms of service")[0]}
+                {(t("auth.signup.agreeText") || "").split("terms of service")[0]}
                 <button
                   type="button"
                   onClick={() => setIsTermsOpen(true)}

@@ -136,7 +136,7 @@ const SearchCombinedFilter = () => {
       <PopoverTrigger asChild className="bg-white">
         <Button
           variant="outline"
-          className="w-full border-[#C4D7F1] py-4.5 text-dark-3 cursor-pointer flex justify-start text-xs"
+          className="w-full border-[#C4D7F1] py-4.5 text-dark-3 cursor-pointer flex justify-start text-start text-xs px-2"
         >
           {t("search.filtersButton")}
         </Button>

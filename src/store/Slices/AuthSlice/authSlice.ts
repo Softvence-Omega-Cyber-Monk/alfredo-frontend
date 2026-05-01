@@ -11,6 +11,7 @@ export interface User {
   id: string;
   firstName: string;
   lastName: string;
+  fullName?: string;
   role: string;
   email: string;
   hasOnboarded: boolean;
@@ -83,8 +84,13 @@ export const loginUser = createAsyncThunk<
   try {
     const { data } = await api.post("/auth/login", credentials);
 
+    const user = data.user;
     const authData: AuthResponse = {
-      user: data.user,
+      user: {
+        ...user,
+        firstName: user.firstName || (user.fullName || "").split(" ")[0] || "",
+        lastName: user.lastName || (user.fullName || "").split(" ").slice(1).join(" ") || "",
+      },
       token: data.accessToken,
     };
 
@@ -109,8 +115,8 @@ export const verifyEmailToken = createAsyncThunk<
     const authData: AuthResponse = {
       user: {
         id: data.user.id,
-        firstName: data.user.fullName.split(" ")[0],
-        lastName: data.user.fullName.split(" ").slice(1).join(" "),
+        firstName: (data.user.fullName || data.user.firstName || "").split(" ")[0],
+        lastName: (data.user.fullName || data.user.lastName || "").split(" ").slice(1).join(" ") || (data.user.lastName || ""),
         email: data.user.email,
         role: data.user.role,
         hasOnboarded: data.user.hasOnboarded,
