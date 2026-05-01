@@ -51,6 +51,7 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
       });
 
       // Ensure unique IDs to prevent React reconciliation errors
+      const response = await searchOnboarding(filteredParams);
       const uniqueResults = response.data.filter((item: PropertyData, index: number, self: PropertyData[]) =>
         index === self.findIndex((t) => t.id === item.id)
       );

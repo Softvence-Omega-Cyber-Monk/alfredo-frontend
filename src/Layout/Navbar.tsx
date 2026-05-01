@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
 
             {/* Desktop Auth Section */}
             <div className="flex items-center gap-3">
-              {/* <NotificationBell /> */}
+              <NotificationBell />
               {isAuthenticated && (
                 <Link to="/my-favorite">
                   <div className="relative inline-block">
