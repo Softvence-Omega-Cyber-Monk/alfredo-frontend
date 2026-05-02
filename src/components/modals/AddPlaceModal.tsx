@@ -207,7 +207,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-                className="w-full border p-2 rounded mt-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                className="w-full border p-2 rounded mt-2 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-400"
                 required
               />
             </div>
