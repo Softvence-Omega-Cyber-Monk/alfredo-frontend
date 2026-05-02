@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Conversation, Message } from "@/components/messages/types";
 import ConversationsList from "../components/messages/ConversationsList";
 import ChatArea from "../components/messages/ChatArea";
@@ -24,6 +25,10 @@ const mapApiToConversation = (apiConv: any): Conversation => ({
   online: false, // Update if you have online info
   type: "supplier", // Or "support" if needed
   rating: 0, // Update if you have rating info
+  email: apiConv.email || "",
+  location: apiConv.onboarding?.homeAddress || "Location not provided",
+  achievementBadges: apiConv.achievementBadges || [],
+  isSubscribed: apiConv.isSubscribed || false,
 });
 const token = localStorage.getItem("token");
 // Fetch conversations from /chat/partners/{userId}
@@ -59,6 +64,8 @@ const Messages = () => {
   const [currentView, setCurrentView] = useState<"list" | "chat">("list");
   const [showInfoPanel, setShowInfoPanel] = useState(false);
   const [, setSocketReady] = useState(false);
+  const [searchParams] = useSearchParams();
+  const targetUserId = searchParams.get("userId");
 
   const dispatch = useAppDispatch();
   const { messages } = useAppSelector((state) => state.chat);
@@ -69,18 +76,29 @@ const Messages = () => {
   // ADD THIS REF
   const socketRef = useRef<Socket | null>(null);
 
-  // Fetch conversations
   useEffect(() => {
     if (userId) {
       fetchConversations(userId).then((data) => {
         console.log("📋 Fetched conversations:", data);
         setConversations(data);
+        
+        // If we have a targetUserId from URL, select it
+        if (targetUserId) {
+          const targetConv = data.find((c) => c.id === targetUserId);
+          if (targetConv) {
+            setSelectedConversation(targetConv);
+            setCurrentView("chat");
+            return;
+          }
+        }
+
+        // Fallback: select first conversation if none selected
         if (data.length > 0 && !selectedConversation) {
           setSelectedConversation(data[0]);
         }
       });
     }
-  }, [userId]);
+  }, [userId, targetUserId]);
 
   // Initialize WebSocket
   useEffect(() => {
@@ -283,7 +301,7 @@ const Messages = () => {
               onCall={handleCall}
               onCloseChat={handleCloseChat}
               isVisible={true}
-              onToggleInfo={() => setShowInfoPanel(true)}
+              onToggleInfo={() => setShowInfoPanel(!showInfoPanel)}
             />
           ) : null}
 
@@ -302,7 +320,7 @@ const Messages = () => {
                     ✕ Close
                   </button>
                 </div>
-                <ChatInfoPanel />
+                 <ChatInfoPanel conversation={selectedConversation} />
               </div>
             </div>
           )}
@@ -319,17 +337,33 @@ const Messages = () => {
             isVisible={true}
           />
           {selectedConversation ? (
-            <ChatArea
-              selectedConversation={selectedConversation}
-              messages={getCurrentMessages()}
-              messageInput={messageInput}
-              onMessageInputChange={setMessageInput}
-              onSendMessage={handleSendMessage}
-              onCall={handleCall}
-              onCloseChat={handleCloseChat}
-              isVisible={true}
-              onToggleInfo={() => setShowInfoPanel(true)}
-            />
+            <div className="flex-1 flex overflow-hidden">
+              <ChatArea
+                selectedConversation={selectedConversation}
+                messages={getCurrentMessages()}
+                messageInput={messageInput}
+                onMessageInputChange={setMessageInput}
+                onSendMessage={handleSendMessage}
+                onCall={handleCall}
+                onCloseChat={handleCloseChat}
+                isVisible={true}
+                onToggleInfo={() => setShowInfoPanel(!showInfoPanel)}
+              />
+              {showInfoPanel && (
+                <div className="w-80 border-l border-gray-100 bg-white overflow-y-auto animate-in slide-in-from-right duration-300">
+                  <div className="p-4 border-b border-gray-100 flex justify-between items-center">
+                    <h3 className="font-semibold text-gray-700">User Info</h3>
+                    <button
+                      onClick={() => setShowInfoPanel(false)}
+                      className="p-1 hover:bg-gray-100 rounded-full text-gray-400"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <ChatInfoPanel conversation={selectedConversation} />
+                </div>
+              )}
+            </div>
           ) : null}
         </div>
 

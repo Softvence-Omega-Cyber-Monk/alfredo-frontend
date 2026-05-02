@@ -1,5 +1,6 @@
 import { Bell, Check, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { initSocket } from "@/services/socket";
 import {
   getUserNotifications,
@@ -22,6 +23,8 @@ interface Notification {
   message: string;
   isRead: boolean;
   createdAt: string;
+  senderId?: string; // Add this
+  metadata?: any;    // Add this
 }
 
 const NotificationBell = () => {
@@ -29,6 +32,7 @@ const NotificationBell = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
@@ -90,11 +94,37 @@ const NotificationBell = () => {
       );
       // Decrease unread count locally
       setUnreadCount((prev) => Math.max(0, prev - 1));
-      toast.success("Notification marked as read");
+      // toast.success("Notification marked as read");
     } catch (error) {
-      toast.error("Failed to mark as read");
-      // Refresh to get accurate count
-      fetchNotifications();
+      console.error("Failed to mark as read:", error);
+    }
+  };
+
+  const handleNotificationClick = async (notification: Notification) => {
+    if (!notification.isRead) {
+      await handleMarkAsRead(notification.id);
+    }
+    setIsOpen(false);
+
+    // Navigate to messages if it's a message notification
+    // We assume chat notifications have a senderId or specific title/type
+    const isChat = 
+      notification.title.toLowerCase().includes("message") || 
+      notification.senderId || 
+      notification.metadata?.senderId;
+
+    if (isChat) {
+      const chatPartnerId = notification.senderId || notification.metadata?.senderId;
+      if (chatPartnerId) {
+        navigate(`/messages?userId=${chatPartnerId}`);
+      } else {
+        navigate("/messages");
+      }
+    } else {
+      // Default navigation or specific types
+      if (notification.title.toLowerCase().includes("exchange")) {
+        navigate("/exchange-request");
+      }
     }
   };
 
@@ -234,8 +264,9 @@ const NotificationBell = () => {
             notifications.map((notification) => (
               <div
                 key={notification.id}
-                className={`p-4 border-b border-gray-300 hover:bg-gray-50 transition ${
-                  !notification.isRead ? "bg-blue-50" : ""
+                onClick={() => handleNotificationClick(notification)}
+                className={`p-4 border-b border-gray-300 hover:bg-gray-100 cursor-pointer transition ${
+                  !notification.isRead ? "bg-blue-50/50" : ""
                 }`}
               >
                 <div className="flex items-start justify-between gap-2">
@@ -248,14 +279,20 @@ const NotificationBell = () => {
                         <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
                       )}
                     </div>
-                    <p className="text-sm text-gray-600 mb-2">
+                    <p className="text-sm text-gray-600 mb-1 leading-relaxed">
                       {notification.message}
+                    </p>
+                    <p className="text-[10px] text-gray-400">
+                      {new Date(notification.createdAt).toLocaleString()}
                     </p>
                   </div>
                   <div className="flex items-center gap-1">
                     {!notification.isRead && (
                       <button
-                        onClick={() => handleMarkAsRead(notification.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleMarkAsRead(notification.id);
+                        }}
                         className="p-1 hover:bg-gray-200 rounded transition"
                         title="Mark as read"
                       >
@@ -263,7 +300,10 @@ const NotificationBell = () => {
                       </button>
                     )}
                     <button
-                      onClick={() => handleDelete(notification.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(notification.id);
+                      }}
                       className="p-1 hover:bg-gray-200 rounded transition"
                       title="Delete"
                     >

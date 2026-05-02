@@ -10,7 +10,7 @@ import AuthSection from "../components/navbar/AuthSection";
 import MobileMenu from "../components/navbar/MobileMenu";
 import { MdOutlineFavorite } from "react-icons/md";
 import { fetchFavorites } from "@/store/Slices/FavoritesSlice/favoritesSlice";
-import NotificationBell from "@/components/reusable/NotificationBell";
+// import NotificationBell from "@/components/reusable/NotificationBell";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
 
             {/* Desktop Auth Section */}
             <div className="flex items-center gap-3">
-              <NotificationBell />
+              {/* <NotificationBell /> */}
               {isAuthenticated && (
                 <Link to="/my-favorite">
                   <div className="relative inline-block">

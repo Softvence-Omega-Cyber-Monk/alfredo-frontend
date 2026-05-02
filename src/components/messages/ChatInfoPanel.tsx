@@ -1,3 +1,4 @@
+import { Conversation } from "./types";
 import {
   Mail,
   MapPin,
@@ -5,22 +6,22 @@ import {
   ShieldCheck,
   UserCheck,
 } from "lucide-react";
-import PrimaryButton from "../reusable/PrimaryButton";
 import badge from "@/assets/icons/crown2.svg"; // Replace with your real badge path
 
-const ChatInfoPanel = () => {
+interface ChatInfoPanelProps {
+  conversation: Conversation;
+}
+
+const ChatInfoPanel = ({ conversation }: ChatInfoPanelProps) => {
   const owner = {
-    image:
-      "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=500&q=80",
-    name: "Emma Johnson",
-    email: "emma.johnson@example.com",
-    location: "123 Kingsway Blvd, London, UK",
-    badges: [
-      {
-        color: "bg-yellow-500",
-        icon: badge,
-      },
-    ],
+    image: conversation.avatar || "/defaultAvatar.png",
+    name: conversation.name,
+    email: conversation.email || "No email provided",
+    location: conversation.location || "No location provided",
+    badges: conversation.achievementBadges?.map((b: any) => ({
+      color: "bg-yellow-500",
+      icon: b.icon || badge,
+    })) || [],
     verifications: [
       {
         bgColor: "bg-green-100",
@@ -47,34 +48,9 @@ const ChatInfoPanel = () => {
     message: "Start exchanging your home! Create a VACANZA account to start contacting members.",
   };
 
-  const isPremiumMember = true; // Toggle to false to see locked state
 
   return (
     <div className="relative p-6 flex flex-col bg-white">
-      {!isPremiumMember && (
-        <div className="absolute inset-0 z-20 backdrop-blur-[3px] bg-white/60 rounded-lg md:rounded-3xl flex items-center justify-center">
-          <div className="bg-primary-blue p-6 rounded-2xl max-w-[80%] text-center shadow-[0_0_25px_0_rgba(0,0,0,0.5)]">
-            <p className="text-white mb-6">
-              To contact this seller and view their details, please upgrade to
-              our premium membership.
-            </p>
-            <div className="flex flex-col gap-2">
-              <PrimaryButton
-                title="Traveler"
-                textColor="w-full text-primary-blue bg-white text-sm font-semibold"
-                bgImage="/buttonHomeWhite.svg"
-              />
-              <PrimaryButton
-                title="Premium Traveler"
-                textColor="w-full text-white text-sm font-semibold"
-                borderColor="border-white"
-                padding="px-4 py-2"
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Owner Header Image */}
       <img
         src={owner.image}
@@ -101,11 +77,15 @@ const ChatInfoPanel = () => {
           Achievement Badges
         </h2>
         <div className="p-3 flex items-center gap-2">
-          {owner.badges.map((badge, index) => (
-            <div key={index} className={`p-2 rounded-full ${badge.color}`}>
-              <img src={badge.icon} alt="badge" className="w-6 h-6" />
-            </div>
-          ))}
+          {owner.badges.length > 0 ? (
+            owner.badges.map((badge, index) => (
+              <div key={index} className={`p-2 rounded-full ${badge.color}`}>
+                <img src={badge.icon} alt="badge" className="w-6 h-6" />
+              </div>
+            ))
+          ) : (
+            <p className="text-sm text-dark-3 italic">No badges yet</p>
+          )}
         </div>
       </div>
 

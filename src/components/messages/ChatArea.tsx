@@ -1,17 +1,9 @@
 import { FC, useEffect, useRef } from "react";
 import { ChatAreaProps } from "@/components/messages/types";
-// import { X } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-// import {
-//   Popover,
-//   PopoverContent,
-//   PopoverTrigger,
-// } from "@/components/ui/popover";
 import { useAppDispatch } from "@/hooks/useRedux";
 import { fetchMyProperties } from "@/store/Slices/PropertySlice/propertySlice";
-// import { Label } from "@/components/ui/label";
-// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-// import PrimaryButton from "../reusable/PrimaryButton";
 
 const ChatArea: FC<ChatAreaProps> = ({
   selectedConversation,
@@ -20,13 +12,11 @@ const ChatArea: FC<ChatAreaProps> = ({
   onMessageInputChange,
   onSendMessage,
   // onCall,
-  // onCloseChat,
+  onCloseChat,
   isVisible,
   onToggleInfo,
 }) => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
-  // const [selectedProperty, setSelectedProperty] = useState("");
-  // const { myProperties } = useAppSelector((state) => state.property);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -34,39 +24,43 @@ const ChatArea: FC<ChatAreaProps> = ({
       bottomRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
-  if (!isVisible) return null;
 
   useEffect(() => {
     dispatch(fetchMyProperties());
   }, [dispatch]);
 
-  // console.log("mahim properties", myProperties);
-  // console.log("selected property", selectedProperty);
-  // console.log(selectedConversation, "selected conversation.....");
+  if (!isVisible) return null;
 
   return (
     <AnimatePresence>
       <motion.div
-        className="flex-1 flex flex-col bg-gray-50"
+        className="flex-1 flex flex-col bg-gray-50 h-full"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
         {/* Header */}
-        <div className="flex justify-between items-center p-4 mt-2 bg-[#3174cd] text-white">
+        <div className="flex justify-between items-center p-4 bg-[#3174cd] text-white sticky top-0 z-10">
           <div className="flex items-center space-x-2">
-            <h2 className="text-lg font-medium">{selectedConversation.name}</h2>
-            <button onClick={onToggleInfo} className="text-sm">
+            <button 
+              onClick={onCloseChat} 
+              className="md:hidden p-1 -ml-2 hover:bg-white/10 rounded-full transition-colors"
+              aria-label="Back to messages"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <h2 className="text-lg font-medium truncate max-w-[150px] sm:max-w-xs">
+              {selectedConversation.name}
+            </h2>
+            <button 
+              onClick={onToggleInfo} 
+              className="text-xs bg-white/20 px-2 py-1 rounded hover:bg-white/30 transition-colors"
+            >
               Info
             </button>
           </div>
           <div className="flex items-center space-x-2">
-            {/* <button onClick={onCall} className="text-sm">
-              Call
-            </button> */}
-            {/* <button onClick={onCloseChat}>
-              <X className="w-6 h-6" />
-            </button> */}
+            {/* Additional header actions can go here */}
           </div>
         </div>
 

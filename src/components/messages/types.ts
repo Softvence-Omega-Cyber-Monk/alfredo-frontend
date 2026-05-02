@@ -10,6 +10,10 @@ export interface Conversation {
   online: boolean;
   type: ConversationType;
   rating: number;
+  email?: string;
+  location?: string;
+  achievementBadges?: any[];
+  isSubscribed?: boolean;
 }
 
 export interface Message {

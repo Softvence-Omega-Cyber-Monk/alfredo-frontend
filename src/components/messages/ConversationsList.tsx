@@ -1,5 +1,5 @@
 import React from "react";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 
@@ -72,9 +72,17 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
     `}
     >
       {/* Header */}
-      <div className=" mb-2">
-        <div className="relative bg-white rounded-full px-4 py-2  md:p-4">
-          <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 text-dark-2 w-6 rounded-full h-auto" />
+      <div className="mb-2">
+        <div className="flex items-center justify-between px-4 py-2 md:hidden">
+          <h2 className="text-lg font-semibold text-dark-2">Messages</h2>
+          {onClose && (
+            <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-full">
+              <X className="w-6 h-6 text-dark-3" />
+            </button>
+          )}
+        </div>
+        <div className="relative bg-white rounded-full px-4 py-2 md:p-4">
+          <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 text-dark-2 w-6 h-auto" />
           <Input
             placeholder="Search..."
             value={searchTerm}

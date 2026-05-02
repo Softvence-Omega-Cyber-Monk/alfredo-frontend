@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
-import imgUpload from "@/assets/icons/imgUpload.svg";
+import React, { useState, useEffect } from "react";
+// import imgUpload from "@/assets/icons/imgUpload.svg";
 import photoCross from "@/assets/icons/photoCross.svg";
 import { useTranslation } from "react-i18next";
 
@@ -10,7 +10,7 @@ interface PhotoUploadProps {
 
 const PhotoUpload = ({ photos, onPhotosChange }: PhotoUploadProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  // const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (photos.length === 0) {
@@ -20,15 +20,17 @@ const PhotoUpload = ({ photos, onPhotosChange }: PhotoUploadProps) => {
     }
   }, [photos.length, selectedIndex]);
 
-  const handleUploadClick = () => {
-    fileInputRef.current?.click();
-  };
+  // const handleUploadClick = () => {
+  //   fileInputRef.current?.click();
+  // };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (selectedFiles) {
       const newFiles = Array.from(selectedFiles).filter((file) =>
-        ["image/jpeg", "image/png", "image/jpg"].includes(file.type)
+        ["image/jpeg", "image/png", "image/jpg", "image/heic", "image/heif"].includes(file.type.toLowerCase()) ||
+        file.name.toLowerCase().endsWith(".heic") ||
+        file.name.toLowerCase().endsWith(".heif")
       );
       onPhotosChange([...photos, ...newFiles]);
       if (photos.length === 0 && newFiles.length > 0) {
@@ -64,9 +66,8 @@ const PhotoUpload = ({ photos, onPhotosChange }: PhotoUploadProps) => {
               <div
                 key={index}
                 onClick={() => setSelectedIndex(index)}
-                className={`flex justify-between p-2 items-center rounded-lg  cursor-pointer transition hover:bg-blue-50 ${
-                  selectedIndex === index ? "bg-primary-blue/10" : ""
-                }`}
+                className={`flex justify-between p-2 items-center rounded-lg  cursor-pointer transition hover:bg-blue-50 ${selectedIndex === index ? "bg-primary-blue/10" : ""
+                  }`}
               >
                 <div className="flex items-center gap-3">
                   <img
@@ -98,30 +99,46 @@ const PhotoUpload = ({ photos, onPhotosChange }: PhotoUploadProps) => {
           </div>
         )}
 
-        {/* Upload Card */}
-        <div
-          onClick={handleUploadClick}
-          className="flex items-center gap-3 p-4 border border-[#BFD4F0] rounded-xl cursor-pointer hover:bg-[#F1F5FB] transition"
-        >
-          <div className="p-2">
-            <img src={imgUpload} className="w-10 h-10" alt="Upload" />
-          </div>
-          <div>
-            <h3 className="text-lg text-primary-blue font-medium">
-              {t("dashboard.part4.fileTitle")}
-            </h3>
-            <p className="text-sm text-dark-3 font-regular mt-1">
-              {t("dashboard.part4.fileSubtitle")}
-            </p>
-          </div>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/jpeg,image/png,image/jpg"
-            className="hidden"
-            multiple
-            onChange={handleFileChange}
-          />
+        {/* Upload Buttons */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+          {/* File Upload */}
+          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              <svg className="w-8 h-8 mb-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+              </svg>
+              <p className="text-sm text-gray-500">
+                <span className="font-semibold">Upload from File</span>
+              </p>
+            </div>
+            <input
+              type="file"
+              multiple
+              accept="image/*,.heic,.heif,.HEIC,.HEIF"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </label>
+
+          {/* Camera Upload */}
+          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              <svg className="w-8 h-8 mb-2 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <p className="text-sm text-gray-500">
+                <span className="font-semibold">Take a Photo</span>
+              </p>
+            </div>
+            <input
+              type="file"
+              accept="image/*,.heic,.heif,.HEIC,.HEIF"
+              capture="environment"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </label>
         </div>
       </div>
 
