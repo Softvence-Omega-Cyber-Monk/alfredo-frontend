@@ -73,6 +73,7 @@ export interface CardFeatures {
 export interface CommonCard {
   id: string;
   image: string;
+  coverImage?: string;
   avatarImage: string;
   rating: string;
   ownerName: string;

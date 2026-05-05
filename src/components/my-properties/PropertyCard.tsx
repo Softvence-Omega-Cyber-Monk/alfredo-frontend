@@ -17,6 +17,7 @@ interface PropertyFeatures {
 
 interface CommonCardProps {
   image: string;
+  coverImage?: string;
   avatarImage: string;
   rating: string;
   ownerName: string;
@@ -31,6 +32,7 @@ interface CommonCardProps {
 
 const PropertyCard: React.FC<CommonCardProps> = ({
   image,
+  coverImage,
   location,
   title,
   features,
@@ -41,7 +43,7 @@ const PropertyCard: React.FC<CommonCardProps> = ({
   return (
     <div className="p-3 rounded-3xl bg-[#F4F7FC]">
       <div className="rounded-2xl overflow-hidden max-h-64 relative">
-        <img src={image} alt={title} className="w-full h-full object-cover" />
+        <img src={coverImage || image} alt={title} className="w-full h-full object-cover" />
       </div>
 
       <div className="mt-4 px-2">

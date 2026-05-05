@@ -82,6 +82,7 @@ export interface PropertyDetails {
   availabilityEndDate: string;
   createdAt: string;
   updatedAt: string;
+  coverImage?: string;
   owner: OwnerDetails;
   amenities: Array<{
     id: string;

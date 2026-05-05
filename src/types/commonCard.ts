@@ -2,6 +2,7 @@
 export interface CommonCard {
   id: string;
   image: string;
+  coverImage?: string;
   location: string;
   title: string;
   description?: string;

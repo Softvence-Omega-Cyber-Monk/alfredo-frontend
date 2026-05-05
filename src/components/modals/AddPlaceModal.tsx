@@ -47,7 +47,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [formData, setFormData] = useState<PropertyForm>({
+  const [formData, setFormData] = useState<PropertyForm & { coverImage?: number | string }>({
     title: "",
     description: "",
     location: "",
@@ -65,6 +65,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
     amenities: [],
     transports: [],
     surroundings: [],
+    coverImage: 0,
   });
   const [files, setFiles] = useState<File[]>([]);
 
@@ -137,6 +138,13 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
     const updated = [...files];
     updated.splice(index, 1);
     setFiles(updated);
+
+    // Update cover image index if needed
+    if (formData.coverImage === index) {
+      setFormData({ ...formData, coverImage: 0 });
+    } else if (typeof formData.coverImage === 'number' && formData.coverImage > index) {
+      setFormData({ ...formData, coverImage: formData.coverImage - 1 });
+    }
   };
 
   const handleDateChange = (dates: {
@@ -167,7 +175,8 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
       bedrooms: Number(formData.bedrooms),
       bathrooms: Number(formData.bathrooms),
       maxPeople: Number(formData.maxPeople),
-    };
+      coverImage: formData.coverImage,
+    } as any;
 
     const formDataToSend = new FormData();
     formDataToSend.append("data", JSON.stringify(payload));
@@ -423,15 +432,28 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
             {files.length > 0 && (
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-3 mb-4">
                 {files.map((file, index) => (
-                  <div key={index} className="relative group aspect-square">
+                  <div
+                    key={index}
+                    className={`relative group aspect-square cursor-pointer rounded-lg border-2 transition-all ${formData.coverImage === index ? "border-primary-blue shadow-md" : "border-transparent"
+                      }`}
+                    onClick={() => setFormData({ ...formData, coverImage: index })}
+                  >
                     <img
                       src={URL.createObjectURL(file)}
                       alt="preview"
-                      className="w-full h-full object-cover rounded-lg border border-blue-200"
+                      className="w-full h-full object-cover rounded-md"
                     />
+                    {formData.coverImage === index && (
+                      <div className="absolute top-2 left-2 bg-primary-blue text-white text-[10px] px-2 py-0.5 rounded-full">
+                        Cover
+                      </div>
+                    )}
                     <button
                       type="button"
-                      onClick={() => removeFile(index)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        removeFile(index);
+                      }}
                       className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
                     >
                       &times;
@@ -439,6 +461,9 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
                   </div>
                 ))}
               </div>
+            )}
+            {files.length > 0 && (
+              <p className="text-[10px] text-gray-500 mt-1">* Click an image to set it as the property cover</p>
             )}
 
             {/* Upload Buttons */}

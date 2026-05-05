@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
   }, [isAuthenticated, dispatch]);
 
   return (
-    <nav className="bg-[#F4F7FC] text-dark-3 w-full sticky top-0 z-50">
+    <nav className="bg-[#F4F7FC] text-dark-3 w-full sticky top-0 z-999">
       <CommonWrapper>
         <div className="mx-auto px-2 py-2 md:py-4 lg:py-6">
           <div className="flex items-center justify-between relative">

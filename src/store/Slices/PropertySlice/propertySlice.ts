@@ -24,6 +24,7 @@ function toListItem(details: PropertyDetails): PropertyListItem {
     ownerId: details.ownerId,
     createdAt: details.createdAt,
     updatedAt: details.updatedAt,
+    coverImage: details.coverImage,
   };
 }
 
@@ -54,6 +55,7 @@ export interface PropertyListItem {
   ownerId?: string;
   createdAt?: string;
   updatedAt?: string;
+  coverImage?: string;
 }
 
 interface PropertyState {

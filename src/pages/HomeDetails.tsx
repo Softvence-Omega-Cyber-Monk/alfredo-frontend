@@ -10,6 +10,8 @@ import { fetchSingleProperty } from "@/store/Slices/PropertySlice/propertySlice"
 import { OwnerDetails, PropertyDetails } from "@/types/PropertyDetails";
 import Loader from "@/components/reusable/Loader";
 import OwnerDetailsModal from "@/components/reusable/OwnerDetailsModal";
+import AccordionComponent from "@/components/reusable/AccordionComponent";
+import { bonus } from "@/lib/AccordionData/accordionData";
 
 const HomeDetails = () => {
   const { callToAction } = homeDetailsData;
@@ -56,7 +58,10 @@ const HomeDetails = () => {
           </div>
         </div>
         <Testimonial />
+        <AccordionComponent items={bonus} />
       </CommonWrapper>
+
+
 
       {/* Owner Details Modal */}
       {singleProperty?.owner && (

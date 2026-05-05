@@ -182,6 +182,9 @@ const MultiStepForm = () => {
     if (addPlaceData.photos.length === 0) {
       errors.push("At least one photo is required");
     }
+    if (addPlaceData.photos.length > 5) {
+      errors.push("Maximum 5 photos are allowed");
+    }
     return errors;
   };
 

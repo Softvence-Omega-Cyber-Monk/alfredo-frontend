@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // import imgUpload from "@/assets/icons/imgUpload.svg";
 import photoCross from "@/assets/icons/photoCross.svg";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
 interface PhotoUploadProps {
   photos: File[];
@@ -27,6 +28,10 @@ const PhotoUpload = ({ photos, onPhotosChange }: PhotoUploadProps) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (selectedFiles) {
+      if (photos.length + selectedFiles.length > 5) {
+        toast.error("You can upload a maximum of 5 photos");
+        return;
+      }
       const newFiles = Array.from(selectedFiles).filter((file) =>
         ["image/jpeg", "image/png", "image/jpg", "image/heic", "image/heif"].includes(file.type.toLowerCase()) ||
         file.name.toLowerCase().endsWith(".heic") ||

@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { fetchUser } from "@/store/Slices/Profile/ProfileSlice";
 import penIcon from "@/assets/icons/pen-icon.svg";
@@ -35,6 +36,7 @@ const ProfileForm = () => {
     isTravelWithPets: false,
     notes: "",
     photo: null as File | null,
+    photoUrl: "" as string, // For selection from gallery
   });
 
   const [preview, setPreview] = useState<string>("");
@@ -104,6 +106,7 @@ const ProfileForm = () => {
         isTravelWithPets: onboardingData.isTravelWithPets || false,
         notes: onboardingData.notes || "",
         photo: null,
+        photoUrl: "",
       });
       setPreview(user.photo || "");
     }
@@ -125,9 +128,14 @@ const ProfileForm = () => {
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     if (file) {
-      setFormData((prev) => ({ ...prev, photo: file }));
+      setFormData((prev) => ({ ...prev, photo: file, photoUrl: "" }));
       setPreview(URL.createObjectURL(file));
     }
+  };
+
+  const handleGallerySelect = (url: string) => {
+    setFormData((prev) => ({ ...prev, photo: null, photoUrl: url }));
+    setPreview(url);
   };
 
   const handleSubmit = async () => {
@@ -140,7 +148,11 @@ const ProfileForm = () => {
       if (formData.photo) {
         const payload = new FormData();
         payload.append("phoneNumber", formData.phoneNumber);
-        payload.append("photo", formData.photo);
+        if (formData.photo) {
+          payload.append("photo", formData.photo);
+        } else if (formData.photoUrl) {
+          payload.append("photo", formData.photoUrl);
+        }
         payload.append("address", formData.address);
         payload.append("ageRange", formData.ageRange);
         payload.append("employmentStatus", formData.employmentStatus);
@@ -177,6 +189,7 @@ const ProfileForm = () => {
           travelMostlyWith: formData.travelMostlyWith,
           isTravelWithPets: formData.isTravelWithPets,
           notes: formData.notes,
+          photo: formData.photoUrl || undefined,
         };
 
         response = await axios.patch(
@@ -220,12 +233,47 @@ const ProfileForm = () => {
                 className="h-48 w-48 object-cover rounded-full border-4 border-[#A0BFE8]"
                 alt="Profile"
               />
-              <label
-                htmlFor="photoUpload"
-                className="absolute bottom-3 right-3 bg-white p-2 rounded-full shadow-md cursor-pointer"
-              >
-                <img src={penIcon} alt="edit" className="w-6 h-6" />
-              </label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <div className="absolute bottom-3 right-3 bg-white p-2 rounded-full shadow-md cursor-pointer">
+                    <img src={penIcon} alt="edit" className="w-6 h-6" />
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="w-64 p-4 space-y-4 bg-white border-gray-200">
+                  <h3 className="text-sm font-semibold text-gray-700 mb-2">Change Profile Photo</h3>
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="photoUpload"
+                      className="flex items-center gap-3 p-2 hover:bg-gray-100 rounded-lg cursor-pointer transition"
+                    >
+                      <div className="p-2 bg-blue-50 rounded-full">
+                        <svg className="w-4 h-4 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                      </div>
+                      <span className="text-sm">Upload from file</span>
+                    </label>
+
+                    {onboardingData?.homeImages && onboardingData.homeImages.length > 0 && (
+                      <div className="pt-2">
+                        <p className="text-[10px] uppercase text-gray-400 font-bold mb-2">Uploaded Pictures</p>
+                        <div className="grid grid-cols-3 gap-2">
+                          {onboardingData.homeImages.map((img: string, idx: number) => (
+                            <img
+                              key={idx}
+                              src={img}
+                              className={`w-full h-12 object-cover rounded-md cursor-pointer border-2 hover:border-primary-blue transition ${formData.photoUrl === img ? "border-primary-blue" : "border-transparent"
+                                }`}
+                              onClick={() => handleGallerySelect(img)}
+                              alt={`Onboarding ${idx}`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </PopoverContent>
+              </Popover>
               <input
                 id="photoUpload"
                 type="file"

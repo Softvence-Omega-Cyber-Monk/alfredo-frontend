@@ -54,6 +54,7 @@ const FutureList = () => {
               key={card.id}
               id={card.id}
               image={card.images?.[0]?.url || "/placeholder.jpg"}
+              coverImage={card.coverImage}
               avatarImage={card.images?.[0]?.url || "/avatar-placeholder.png"}
               rating={"5.0"}
               ownerName={card.owner?.fullName || "Unknown"}

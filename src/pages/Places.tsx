@@ -29,6 +29,7 @@ const Places = () => {
   const propertyCards = filteredProperties.map((property) => ({
     id: property.id,
     image: property.images?.[0]?.url || "/placeholder-image.jpg",
+    coverImage: property.coverImage,
     location: `${property.location}, ${property.country}`,
     title: property.title,
     description: property.description,

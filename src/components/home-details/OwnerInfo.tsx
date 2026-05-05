@@ -80,15 +80,19 @@ const OwnerInfo = ({
         </div>
       )}
       {/* Owner Info */}
-      <img
-        src={ownerDetails?.photo || "/defaultAvatar.png"}
-        className="h-48 w-full object-cover rounded-lg"
-        alt={ownerDetails?.fullName || "Owner Image"}
-      />
+      <button onClick={handleButtonClick} className="w-full cursor-pointer">
+        <img
+          src={ownerDetails?.photo || "/defaultAvatar.png"}
+          className="h-48 w-full object-cover rounded-lg"
+          alt={ownerDetails?.fullName || "Owner Image"}
+        />
+      </button>
       <div className="flex flex-col gap-4 pt-4 pb-6 border-b border-[#F4F7FC]">
-        <h3 className="text-lg text-dark-2 font-semibold">
-          {ownerDetails?.fullName}
-        </h3>
+        <button onClick={handleButtonClick} className="w-full cursor-pointer">
+          <h3 className="text-lg text-dark-2 font-semibold">
+            {ownerDetails?.fullName}
+          </h3>
+        </button>
         <div className="flex items-start justify-start gap-1.5 text-dark-3 text-base">
           <MapPin className="w-5 h-5 text-primary-blue" />
           <p>{city}</p>

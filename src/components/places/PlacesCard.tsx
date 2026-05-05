@@ -2,7 +2,7 @@ import { CommonCard } from "@/types/commonCard";
 import { MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const PlacesCard: React.FC<CommonCard> = ({ id, image, location, title }) => {
+const PlacesCard: React.FC<CommonCard> = ({ id, image, coverImage, location, title }) => {
   return (
     <Link
       to={`/home-details/${id}`}
@@ -11,7 +11,7 @@ const PlacesCard: React.FC<CommonCard> = ({ id, image, location, title }) => {
       <div className="rounded-2xl overflow-hidden max-h-64 h-64">
         {/* Main Image with fallback */}
         <img
-          src={image}
+          src={coverImage || image}
           alt={title}
           className="w-full h-full object-cover"
           onError={(e) => {

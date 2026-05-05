@@ -19,10 +19,12 @@ import {
 } from "@/store/Slices/FavoritesSlice/favoritesSlice";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
+// import { Button } from "../ui/button";
 
 const CommonCard: React.FC<CommonCardProps> = ({
   id,
   image,
+  coverImage,
   avatarImage,
   rating,
   ownerName,
@@ -72,17 +74,16 @@ const CommonCard: React.FC<CommonCardProps> = ({
   };
 
   return (
-    <div className="p-3 rounded-3xl bg-[#F4F7FC]">
+    <button onClick={onViewDetails} className="p-3 rounded-3xl cursor-pointer bg-[#F4F7FC]">
       <div className="rounded-2xl overflow-hidden max-h-64 relative">
         {/* Main Image */}
-        <img src={image} alt={title} className="w-full h-full object-cover" />
+        <img src={coverImage || image} alt={title} className="w-full h-full object-cover" />
 
         <button
           onClick={toggleFavorite}
           disabled={isLoading}
-          className={`absolute top-3 right-4 transition-transform duration-200 ${
-            isFavorite ? "scale-110" : "scale-110"
-          } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`absolute top-3 right-4 transition-transform duration-200 ${isFavorite ? "scale-110" : "scale-110"
+            } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
         >
           {isFavorite ? (
             <FaHeart className="w-5 h-5 text-red-500" />
@@ -183,7 +184,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
         borderColor="border-2 border-primary-blue"
         onClick={onViewDetails}
       />
-    </div>
+    </button>
   );
 };
 

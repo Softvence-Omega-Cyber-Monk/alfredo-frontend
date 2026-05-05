@@ -131,10 +131,18 @@ const HomeDetailsTabs = ({
   };
 
   const transformedPhotos =
-    singlePropertyData.images?.map((image) => ({
-      src: image.url,
-      alt: singlePropertyData.title,
-    })) || [];
+    singlePropertyData.images
+      ? [...singlePropertyData.images]
+          .sort((a, b) => {
+            if (a.url === singlePropertyData.coverImage) return -1;
+            if (b.url === singlePropertyData.coverImage) return 1;
+            return 0;
+          })
+          .map((image) => ({
+            src: image.url,
+            alt: singlePropertyData.title,
+          }))
+      : [];
 
   const tabsData = [
     {
@@ -147,13 +155,13 @@ const HomeDetailsTabs = ({
             dates={{
               from: singlePropertyData.availabilityStartDate
                 ? new Date(
-                    singlePropertyData.availabilityStartDate
-                  ).toLocaleDateString()
+                  singlePropertyData.availabilityStartDate
+                ).toLocaleDateString()
                 : "N/A",
               to: singlePropertyData.availabilityEndDate
                 ? new Date(
-                    singlePropertyData.availabilityEndDate
-                  ).toLocaleDateString()
+                  singlePropertyData.availabilityEndDate
+                ).toLocaleDateString()
                 : "N/A",
             }}
             description={singlePropertyData.description}
@@ -172,7 +180,7 @@ const HomeDetailsTabs = ({
               <Map location={locationCoordinates} isLoggedIn={isSubscribed} />
             )}
           </div>
-          <AccordionComponent items={bonus} />
+          {/* <AccordionComponent items={bonus} /> */}
         </div>
       ),
     },
@@ -184,13 +192,13 @@ const HomeDetailsTabs = ({
           dates={{
             from: singlePropertyData.availabilityStartDate
               ? new Date(
-                  singlePropertyData.availabilityStartDate
-                ).toLocaleDateString()
+                singlePropertyData.availabilityStartDate
+              ).toLocaleDateString()
               : "N/A",
             to: singlePropertyData.availabilityEndDate
               ? new Date(
-                  singlePropertyData.availabilityEndDate
-                ).toLocaleDateString()
+                singlePropertyData.availabilityEndDate
+              ).toLocaleDateString()
               : "N/A",
           }}
           description={singlePropertyData.description}

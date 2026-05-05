@@ -24,10 +24,11 @@ interface AmenityItem {
   icon?: string;
 }
 
-interface PropertyFormData extends Omit<PropertyDetails, "amenities" | "transports" | "surroundings"> {
+interface PropertyFormData extends Omit<PropertyDetails, "amenities" | "transports" | "surroundings" | "coverImage"> {
   amenities: string[];
   transports: string[];
   surroundings: string[];
+  coverImage?: string | number;
 }
 
 const PropertiesGrid = () => {
@@ -111,6 +112,7 @@ const PropertiesGrid = () => {
       });
       setExistingImages(singleProperty.images || []);
       setImagesToRemove([]);
+      setFormData((prev) => ({ ...prev, coverImage: singleProperty.coverImage }));
     }
   }, [singleProperty, selectedProperty]);
 
@@ -221,6 +223,7 @@ const PropertiesGrid = () => {
         transports: (formData.transports as string[]) || [],
         surroundings: (formData.surroundings as string[]) || [],
         removeImages: imagesToRemove,
+        coverImage: formData.coverImage,
       };
 
       let updatedData: FormData = new FormData();
@@ -325,6 +328,7 @@ const PropertiesGrid = () => {
           <PropertyCard
             key={property.id}
             image={property.images[0]?.url || "/placeholder.jpg"}
+            coverImage={property.coverImage}
             avatarImage={property.owner?.photo || "/avatar-placeholder.png"}
             rating={"5.0"}
             ownerName={property.owner?.fullName || "Unknown"}
@@ -579,15 +583,28 @@ const PropertiesGrid = () => {
                       <p className="text-sm font-medium text-gray-700 mb-2">Existing Images</p>
                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                         {existingImages.map((img) => (
-                          <div key={img.publicId} className="relative group aspect-square">
+                          <div
+                            key={img.publicId}
+                            className={`relative group aspect-square cursor-pointer rounded-lg border-2 transition-all ${formData.coverImage === img.url ? "border-primary-blue shadow-md" : "border-transparent"
+                              }`}
+                            onClick={() => setFormData({ ...formData, coverImage: img.url })}
+                          >
                             <img
                               src={img.url}
                               alt="Property"
-                              className="w-full h-full object-cover rounded-lg border border-gray-200"
+                              className="w-full h-full object-cover rounded-md"
                             />
+                            {formData.coverImage === img.url && (
+                              <div className="absolute top-2 left-2 bg-primary-blue text-white text-[10px] px-2 py-0.5 rounded-full">
+                                Cover
+                              </div>
+                            )}
                             <button
                               type="button"
-                              onClick={() => removeExistingImage(img.publicId)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                removeExistingImage(img.publicId);
+                              }}
                               className="absolute -top-2 -right-2 bg-red-500 text-white text-md rounded-full w-7 h-7 flex items-center justify-center cursor-pointer transition-opacity shadow-lg"
                             >
                               <RiDeleteBin5Fill />
@@ -604,15 +621,28 @@ const PropertiesGrid = () => {
                       <p className="text-sm font-medium text-gray-700 mb-2">New Images</p>
                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                         {newImages.map((file, index) => (
-                          <div key={index} className="relative group aspect-square">
+                          <div
+                            key={index}
+                            className={`relative group aspect-square cursor-pointer rounded-lg border-2 transition-all ${formData.coverImage === index ? "border-primary-blue shadow-md" : "border-transparent"
+                              }`}
+                            onClick={() => setFormData({ ...formData, coverImage: index })}
+                          >
                             <img
                               src={URL.createObjectURL(file)}
                               alt="New Upload"
-                              className="w-full h-full object-cover rounded-lg border border-blue-200"
+                              className="w-full h-full object-cover rounded-md"
                             />
+                            {formData.coverImage === index && (
+                              <div className="absolute top-2 left-2 bg-primary-blue text-white text-[10px] px-2 py-0.5 rounded-full">
+                                Cover
+                              </div>
+                            )}
                             <button
                               type="button"
-                              onClick={() => removeNewImage(index)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                removeNewImage(index);
+                              }}
                               className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
                             >
                               &times;
@@ -621,6 +651,9 @@ const PropertiesGrid = () => {
                         ))}
                       </div>
                     </div>
+                  )}
+                  {(existingImages.length > 0 || newImages.length > 0) && (
+                    <p className="text-[10px] text-gray-500 mt-1">* Click an image to set it as the property cover</p>
                   )}
 
                   {/* Upload Buttons */}

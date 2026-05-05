@@ -1,4 +1,4 @@
-import { X, Mail, MapPin, Phone } from "lucide-react";
+import { X, MapPin } from "lucide-react";
 import { OwnerDetails } from "@/types/PropertyDetails";
 
 interface OwnerDetailsModalProps {
@@ -60,7 +60,7 @@ const OwnerDetailsModal = ({
             </h3>
 
             {/* Email */}
-            <div className="flex items-center gap-3 text-dark-3">
+            {/* <div className="flex items-center gap-3 text-dark-3">
               <div className="p-2 bg-blue-50 rounded-full">
                 <Mail className="w-5 h-5 text-primary-blue" />
               </div>
@@ -68,10 +68,10 @@ const OwnerDetailsModal = ({
                 <p className="text-xs text-dark-2">Email</p>
                 <p className="text-sm font-medium">{ownerDetails?.email}</p>
               </div>
-            </div>
+            </div> */}
 
             {/* Phone */}
-            {ownerDetails?.phoneNumber && (
+            {/* {ownerDetails?.phoneNumber && (
               <div className="flex items-center gap-3 text-dark-3">
                 <div className="p-2 bg-blue-50 rounded-full">
                   <Phone className="w-5 h-5 text-primary-blue" />
@@ -83,7 +83,7 @@ const OwnerDetailsModal = ({
                   </p>
                 </div>
               </div>
-            )}
+            )} */}
 
             {/* Location */}
             {city && (
