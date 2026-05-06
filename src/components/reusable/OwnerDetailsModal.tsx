@@ -48,10 +48,10 @@ const OwnerDetailsModal = ({
         </button>
 
         {/* Owner Image */}
-        <div className="relative">
+        <div className="relative ">
           <img
             src={ownerDetails?.photo || "/defaultAvatar.png"}
-            className="h-64 w-full object-cover object-top rounded-t-2xl"
+            className="h-[40vh] w-full mt-4 object-contain rounded-xl"
             alt={ownerDetails?.fullName || "Owner"}
           />
         </div>
