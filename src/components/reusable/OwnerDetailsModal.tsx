@@ -1,5 +1,6 @@
 import { X, MapPin } from "lucide-react";
 import { OwnerDetails } from "@/types/PropertyDetails";
+import { useEffect } from "react";
 
 interface OwnerDetailsModalProps {
   isOpen: boolean;
@@ -14,10 +15,22 @@ const OwnerDetailsModal = ({
   ownerDetails,
   city,
 }: OwnerDetailsModalProps) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0  z-100 flex items-center justify-center">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
@@ -53,48 +66,112 @@ const OwnerDetailsModal = ({
             <p className="text-sm text-dark-2">Property Owner</p>
           </div>
 
-          {/* Contact Information */}
-          <div className="space-y-3 py-4 border-t border-gray-200">
+          {/* Information Section */}
+          <div className="space-y-4 py-4 border-t border-gray-200">
             <h3 className="text-lg font-semibold text-dark-3 mb-3">
-              Contact Information
+              About the Owner
             </h3>
 
-            {/* Email */}
-            {/* <div className="flex items-center gap-3 text-dark-3">
-              <div className="p-2 bg-blue-50 rounded-full">
-                <Mail className="w-5 h-5 text-primary-blue" />
-              </div>
-              <div>
-                <p className="text-xs text-dark-2">Email</p>
-                <p className="text-sm font-medium">{ownerDetails?.email}</p>
-              </div>
-            </div> */}
-
-            {/* Phone */}
-            {/* {ownerDetails?.phoneNumber && (
-              <div className="flex items-center gap-3 text-dark-3">
-                <div className="p-2 bg-blue-50 rounded-full">
-                  <Phone className="w-5 h-5 text-primary-blue" />
-                </div>
-                <div>
-                  <p className="text-xs text-dark-2">Phone</p>
-                  <p className="text-sm font-medium">
-                    {ownerDetails.phoneNumber}
+            <div className="grid grid-cols-2 gap-4">
+              {/* Age Range */}
+              {ownerDetails?.onboarding?.ageRange && (
+                <div className="flex flex-col">
+                  <p className="text-xs text-dark-2">Age Range</p>
+                  <p className="text-sm font-medium text-dark-3">
+                    {ownerDetails.onboarding.ageRange.replace("AGE_", "").replace("_", "-")}
                   </p>
                 </div>
-              </div>
-            )} */}
+              )}
 
-            {/* Location */}
-            {city && (
-              <div className="flex items-center gap-3 text-dark-3">
-                <div className="p-2 bg-blue-50 rounded-full">
+              {/* Gender */}
+              {ownerDetails?.onboarding?.gender && ownerDetails.onboarding.gender !== "NOT_SPECIFIED" && (
+                <div className="flex flex-col">
+                  <p className="text-xs text-dark-2">Gender</p>
+                  <p className="text-sm font-medium text-dark-3 capitalize">
+                    {ownerDetails.onboarding.gender.toLowerCase()}
+                  </p>
+                </div>
+              )}
+
+              {/* Employment Status */}
+              {ownerDetails?.onboarding?.employmentStatus && (
+                <div className="flex flex-col">
+                  <p className="text-xs text-dark-2">Employment</p>
+                  <p className="text-sm font-medium text-dark-3 capitalize">
+                    {ownerDetails.onboarding.employmentStatus.toLowerCase()}
+                  </p>
+                </div>
+              )}
+
+              {/* Travel Mostly With */}
+              {ownerDetails?.onboarding?.travelMostlyWith && (
+                <div className="flex flex-col">
+                  <p className="text-xs text-dark-2">Travels With</p>
+                  <p className="text-sm font-medium text-dark-3 capitalize">
+                    {ownerDetails.onboarding.travelMostlyWith.toLowerCase().replace("_", " ")}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Favorite Destinations */}
+            {ownerDetails?.onboarding?.favoriteDestinations && ownerDetails.onboarding.favoriteDestinations.length > 0 && (
+              <div className="flex flex-col pt-2">
+                <p className="text-xs text-dark-2 mb-1">Favorite Destinations</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {ownerDetails.onboarding.favoriteDestinations.map((dest, idx) => (
+                    <span key={idx} className="text-[11px] px-2 py-0.5 bg-blue-50 text-primary-blue rounded-md border border-blue-100">
+                      {dest}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Travel Types */}
+            {ownerDetails?.onboarding?.travelType && ownerDetails.onboarding.travelType.length > 0 && (
+              <div className="flex flex-col pt-2">
+                <p className="text-xs text-dark-2 mb-1">Travel Style</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {ownerDetails.onboarding.travelType.map((type, idx) => (
+                    <span key={idx} className="text-[11px] px-2 py-0.5 bg-green-50 text-green-700 rounded-md border border-green-100">
+                      {type}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Pets */}
+            <div className="flex items-center gap-2 pt-2">
+              <p className="text-xs text-dark-2">Travels with pets:</p>
+              <p className="text-sm font-medium text-dark-3">
+                {ownerDetails?.onboarding?.isTravelWithPets ? "Yes" : "No"}
+              </p>
+            </div>
+
+            {/* Location/Address */}
+            {(city || ownerDetails?.onboarding?.address) && (
+              <div className="flex items-start gap-3 text-dark-3 pt-4 border-t border-gray-100">
+                <div className="p-2 bg-blue-50 rounded-full shrink-0">
                   <MapPin className="w-5 h-5 text-primary-blue" />
                 </div>
                 <div>
                   <p className="text-xs text-dark-2">Location</p>
-                  <p className="text-sm font-medium">{city}</p>
+                  <p className="text-sm font-medium">
+                    {ownerDetails?.onboarding?.address || city}
+                  </p>
                 </div>
+              </div>
+            )}
+
+            {/* Notes */}
+            {ownerDetails?.onboarding?.notes && (
+              <div className="pt-4 border-t border-gray-100">
+                <p className="text-xs text-dark-2 mb-1">About</p>
+                <p className="text-sm text-dark-3 italic leading-relaxed">
+                  "{ownerDetails.onboarding.notes}"
+                </p>
               </div>
             )}
           </div>

@@ -17,7 +17,8 @@ interface OwnerInfoProps {
   };
 
   isPremiumMember?: boolean;
-  onViewDetails?: () => void; // Add this prop
+  onViewDetails?: () => void;
+  onContact?: () => void; // Add this prop
 }
 
 const OwnerInfo = ({
@@ -26,6 +27,7 @@ const OwnerInfo = ({
   callToAction,
   isPremiumMember = false,
   onViewDetails,
+  onContact,
 }: OwnerInfoProps) => {
   const { t } = useTranslation("homeDetails");
   const navigate = useNavigate();
@@ -35,7 +37,7 @@ const OwnerInfo = ({
   const currentUser = storedUser ? JSON.parse(storedUser) : null;
   const isUserSubscribed = currentUser?.isSubscribed || false;
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (type: "details" | "contact" = "details") => {
     if (!isUserSubscribed) {
       toast.error("Please subscribe to view owner details");
       // Redirect to plans page after a short delay
@@ -43,8 +45,10 @@ const OwnerInfo = ({
         navigate("/plans"); // Adjust to your actual plans page route
       }, 1000);
     } else {
-      // If subscribed, trigger the view details modal
-      if (onViewDetails) {
+      // If subscribed, trigger the appropriate callback
+      if (type === "contact" && onContact) {
+        onContact();
+      } else if (onViewDetails) {
         onViewDetails();
       }
     }
@@ -80,7 +84,7 @@ const OwnerInfo = ({
         </div>
       )}
       {/* Owner Info */}
-      <button onClick={handleButtonClick} className="w-full cursor-pointer">
+      <button onClick={() => handleButtonClick("details")} className="w-full cursor-pointer">
         <img
           src={ownerDetails?.photo || "/defaultAvatar.png"}
           className="h-48 w-full object-cover rounded-lg"
@@ -88,7 +92,7 @@ const OwnerInfo = ({
         />
       </button>
       <div className="flex flex-col gap-4 pt-4 pb-6 border-b border-[#F4F7FC]">
-        <button onClick={handleButtonClick} className="w-full cursor-pointer">
+        <button onClick={() => handleButtonClick("details")} className="w-full cursor-pointer">
           <h3 className="text-lg text-dark-2 font-semibold">
             {ownerDetails?.fullName}
           </h3>
@@ -142,7 +146,7 @@ const OwnerInfo = ({
         <PrimaryButton
           {...callToAction.button}
           title={t(callToAction.button.title)}
-          onClick={handleButtonClick}
+          onClick={() => handleButtonClick("contact")}
         />
       ) : (
         <PrimaryButton

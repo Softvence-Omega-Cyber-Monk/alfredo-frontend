@@ -12,6 +12,7 @@ import Loader from "@/components/reusable/Loader";
 import OwnerDetailsModal from "@/components/reusable/OwnerDetailsModal";
 import AccordionComponent from "@/components/reusable/AccordionComponent";
 import { bonus } from "@/lib/AccordionData/accordionData";
+import ChatModal from "@/components/modals/ChatModal";
 
 const HomeDetails = () => {
   const { callToAction } = homeDetailsData;
@@ -19,6 +20,7 @@ const HomeDetails = () => {
   const dispatch = useAppDispatch();
   const { singleProperty } = useAppSelector((state) => state.property);
   const [isOwnerModalOpen, setIsOwnerModalOpen] = useState(false);
+  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
 
   // console.log("singleProperty", singleProperty);
 
@@ -29,6 +31,10 @@ const HomeDetails = () => {
 
   const handleViewOwnerDetails = () => {
     setIsOwnerModalOpen(true);
+  };
+
+  const handleContact = () => {
+    setIsChatModalOpen(true);
   };
 
   return (
@@ -54,6 +60,7 @@ const HomeDetails = () => {
               callToAction={callToAction}
               isPremiumMember={true}
               onViewDetails={handleViewOwnerDetails}
+              onContact={handleContact}
             />
           </div>
         </div>
@@ -70,6 +77,16 @@ const HomeDetails = () => {
           onClose={() => setIsOwnerModalOpen(false)}
           ownerDetails={singleProperty.owner as OwnerDetails}
           city={singleProperty?.location}
+        />
+      )}
+
+      {/* Chat Modal */}
+      {singleProperty?.owner && singleProperty && (
+        <ChatModal
+          isOpen={isChatModalOpen}
+          onClose={() => setIsChatModalOpen(false)}
+          owner={singleProperty.owner as OwnerDetails}
+          singlePropertyData={singleProperty as PropertyDetails}
         />
       )}
     </div>

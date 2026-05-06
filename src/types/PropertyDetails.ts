@@ -23,6 +23,22 @@ export interface Badge {
   createdAt: string;
 }
 
+export interface OnboardingData {
+  id: string;
+  userId: string;
+  homeAddress?: string;
+  destination?: string;
+  ageRange: string;
+  gender?: string;
+  employmentStatus?: string;
+  travelType: string[];
+  favoriteDestinations: string[];
+  travelMostlyWith?: string;
+  isTravelWithPets: boolean;
+  address?: string;
+  notes?: string;
+}
+
 export interface OwnerDetails {
   id: string;
   fullName: string;
@@ -48,6 +64,7 @@ export interface OwnerDetails {
   balance: number;
   totalReferrals: number;
   hasOnboarded: boolean;
+  onboarding?: OnboardingData;
 }
 
 export interface PropertyImage {
