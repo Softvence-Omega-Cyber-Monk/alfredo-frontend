@@ -102,9 +102,12 @@ export interface PropertyData {
   isAvailableForExchange: boolean;
   availabilityStartDate: string;
   availabilityEndDate: string;
-  amenities: Array<{ id: string; name: string; icon: string }>;
-  transports: Array<{ id: string; name: string; icon: string }>;
-  surroundings: Array<{ id: string; name: string; icon: string }>;
+  amenities: Amenity[];
+  transports: Amenity[];
+  surroundings: Amenity[];
+  averageRating?: number;
+  reviewCount?: number;
+  location?: string;
 }
 
 export interface ApiResponse {
@@ -117,6 +120,7 @@ export interface ApiResponse {
 export interface Amenity {
   id: string;
   name: string;
+  greek_name?: string;
   icon: string;
 }
 

@@ -39,7 +39,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { t } = useTranslation("futureList");
+  const { t, i18n } = useTranslation("futureList");
 
   // Check if this property is in favorites
   useEffect(() => {
@@ -137,7 +137,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
             <div className="flex flex-col justify-center text-center items-center gap-1">
               <BedDouble className="text-primary-blue w-5 h-5" />
               <p className="text-dark-3 font-regular text-sm">
-                {features.beds} Beds
+                {features.beds} {i18n.language === "el" ? "Κρεβάτια" : "Beds"}
               </p>
             </div>
           )}
@@ -145,7 +145,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
             <div className="flex flex-col justify-center text-center items-center gap-1">
               <Bath className="text-primary-blue w-5 h-5" />
               <p className="text-dark-3 font-regular text-sm">
-                {features.baths} Baths
+                {features.baths} {i18n.language === "el" ? "Μπάνια" : "Baths"}
               </p>
             </div>
           )}
@@ -161,7 +161,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
             <div className="flex flex-col justify-center text-center items-center gap-1">
               <Building className="text-primary-blue w-5 h-5" />
               <p className="text-dark-3 font-regular text-sm">
-                {features.floor} floor
+                {features.floor} {i18n.language === "el" ? "όροφος" : "floor"}
               </p>
             </div>
           )}
@@ -169,7 +169,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
             <div className="flex flex-col justify-center text-center items-center gap-1">
               <User className="text-primary-blue w-5 h-5" />
               <p className="text-dark-3 font-regular text-sm">
-                {features.maxPeople} max people
+                {features.maxPeople} {i18n.language === "el" ? "άτομα" : "max people"}
               </p>
             </div>
           )}

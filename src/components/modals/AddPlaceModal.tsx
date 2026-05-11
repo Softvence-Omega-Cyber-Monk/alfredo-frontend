@@ -11,6 +11,7 @@ import { MdCancel } from "react-icons/md";
 import CountryCitySelect from "../reusable/CountryCitySelect";
 import { useTranslation } from "react-i18next";
 import CalendarRangePickerNew from "../home/CalendarRangePickerNew";
+import { useNavigate } from "react-router-dom";
 
 interface AddPlaceModalProps {
   isOpen: boolean;
@@ -45,7 +46,9 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
   const [transports, setTransports] = useState<AmenityItem[]>([]);
   const [surroundings, setSurroundings] = useState<AmenityItem[]>([]);
   const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<PropertyForm & { coverImage?: number | string }>({
     title: "",
@@ -166,29 +169,39 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const payload: Property = {
-      ...formData,
-      price: Number(formData.price),
-      size: Number(formData.size),
-      bedrooms: Number(formData.bedrooms),
-      bathrooms: Number(formData.bathrooms),
-      maxPeople: Number(formData.maxPeople),
-      coverImage: formData.coverImage,
-    } as any;
+    setIsSubmitting(true);
+    try {
+      const payload: Property = {
+        ...formData,
+        price: Number(formData.price),
+        size: Number(formData.size),
+        bedrooms: Number(formData.bedrooms),
+        bathrooms: Number(formData.bathrooms),
+        maxPeople: Number(formData.maxPeople),
+        coverImage: formData.coverImage,
+      } as any;
 
-    const formDataToSend = new FormData();
-    formDataToSend.append("data", JSON.stringify(payload));
-    if (files.length) {
-      files.forEach((file) => {
-        formDataToSend.append("files", file);
-      });
+      const formDataToSend = new FormData();
+      formDataToSend.append("data", JSON.stringify(payload));
+      if (files.length) {
+        files.forEach((file) => {
+          formDataToSend.append("files", file);
+        });
+      }
+
+      await dispatch(addProperty(formDataToSend)).unwrap();
+      
+      onClose();
+      navigate("/my-properties"); // Or dashboard as requested, but user mentioned my-places
+      toast.success(t("successMessage"));
+    } catch (err: any) {
+      console.error("Failed to add property:", err);
+      toast.error(err.message || "Failed to add property");
+    } finally {
+      setIsSubmitting(false);
     }
-
-    dispatch(addProperty(formDataToSend));
-    toast.success(t("successMessage"));
-    onClose();
   };
 
   return (
@@ -519,9 +532,17 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded bg-primary-blue text-white hover:brightness-90 cursor-pointer"
+              disabled={isSubmitting}
+              className="px-4 py-2 rounded bg-primary-blue text-white hover:brightness-90 cursor-pointer disabled:opacity-70 flex items-center gap-2"
             >
-              {t("buttons.save")}
+              {isSubmitting ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Saving...
+                </>
+              ) : (
+                t("buttons.save")
+              )}
             </button>
           </div>
         </form>

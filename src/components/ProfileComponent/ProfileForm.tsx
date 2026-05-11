@@ -11,6 +11,8 @@ import penIcon from "@/assets/icons/pen-icon.svg";
 import { Textarea } from "@/components/ui/textarea";
 import NotificationPreferences from "../reusable/NotificationPreferences";
 import axios from "axios";
+import { setCredentials } from "@/store/Slices/AuthSlice/authSlice";
+import { fetchMyProperties, updateProperty } from "@/store/Slices/PropertySlice/propertySlice";
 
 type AgeGroup = "AGE_18_30" | "AGE_30_50" | "AGE_50_65" | "AGE_65_PLUS";
 type Gender = "MALE" | "FEMALE" | "NOT_SPECIFIED";
@@ -35,21 +37,20 @@ const ProfileForm = () => {
     travelMostlyWith: "BY_MYSELF" as TravelGroup,
     isTravelWithPets: false,
     notes: "",
-    photo: null as File | null,
     photoUrl: "" as string, // For selection from gallery
+    coverImage: 0,
   });
 
-  const [preview, setPreview] = useState<string>("");
+  const [files, setFiles] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { user: authUser } = useAppSelector((state) => state.auth);
+  const { myProperties } = useAppSelector((state) => state.property);
 
   useEffect(() => {
     const loadData = async () => {
       await dispatch(fetchUser());
       await fetchOnboardingData();
-      const userProfile = await fetchUserProfile();
-      if (userProfile) {
-        setPreview(userProfile.photo || "");
-      }
+      await dispatch(fetchMyProperties());
     };
     loadData();
   }, [dispatch]);
@@ -73,23 +74,6 @@ const ProfileForm = () => {
     }
   };
 
-  const fetchUserProfile = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(
-        "https://vacanzagreece.gr/api/user/my-profile",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching user profile:", error);
-      return null;
-    }
-  };
 
   useEffect(() => {
     if (user && onboardingData) {
@@ -105,10 +89,9 @@ const ProfileForm = () => {
         travelMostlyWith: onboardingData.travelMostlyWith || "BY_MYSELF",
         isTravelWithPets: onboardingData.isTravelWithPets || false,
         notes: onboardingData.notes || "",
-        photo: null,
-        photoUrl: "",
+        photoUrl: user.photo || "",
+        coverImage: 0,
       });
-      setPreview(user.photo || "");
     }
   }, [user, onboardingData]);
 
@@ -126,90 +109,127 @@ const ProfileForm = () => {
   };
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    if (file) {
-      setFormData((prev) => ({ ...prev, photo: file, photoUrl: "" }));
-      setPreview(URL.createObjectURL(file));
+    const newFiles = e.target.files ? Array.from(e.target.files) : [];
+    if (newFiles.length > 0) {
+      setFiles((prev) => [...prev, ...newFiles]);
+      setFormData((prev) => ({ ...prev, photoUrl: "" }));
     }
   };
 
-  const handleGallerySelect = (url: string) => {
-    setFormData((prev) => ({ ...prev, photo: null, photoUrl: url }));
-    setPreview(url);
+  const removeFile = (index: number) => {
+    setFiles((prev) => prev.filter((_, i) => i !== index));
+    if (formData.coverImage === index) {
+      setFormData((prev) => ({ ...prev, coverImage: 0 }));
+    } else if (formData.coverImage > index) {
+      setFormData((prev) => ({ ...prev, coverImage: prev.coverImage - 1 }));
+    }
   };
 
-  const handleSubmit = async () => {
-    setIsSubmitting(true);
+  const handleGallerySelect = async (url: string) => {
+    const newFormData = { ...formData, photoUrl: url };
+    setFormData(newFormData);
+    setFiles([]); // Clear newly uploaded files if picking from gallery
+    await updateUserProfile(newFormData, []);
+  };
 
+  const updateUserProfile = async (currentFormData: typeof formData, currentFiles: File[]) => {
+    setIsSubmitting(true);
     try {
       const token = localStorage.getItem("token");
-
       let response;
-      if (formData.photo) {
+
+      if (currentFiles.length > 0) {
         const payload = new FormData();
-        payload.append("phoneNumber", formData.phoneNumber);
-        if (formData.photo) {
-          payload.append("photo", formData.photo);
-        } else if (formData.photoUrl) {
-          payload.append("photo", formData.photoUrl);
-        }
-        payload.append("address", formData.address);
-        payload.append("ageRange", formData.ageRange);
-        payload.append("employmentStatus", formData.employmentStatus);
+        payload.append("phoneNumber", currentFormData.phoneNumber);
+        
+        // Use the selected file as the profile photo
+        payload.append("photo", currentFiles[currentFormData.coverImage]);
 
-        formData.travelType.forEach((type) =>
-          payload.append("travelType", type)
-        );
-        formData.favoriteDestinations.forEach((dest) =>
-          payload.append("favoriteDestinations", dest)
-        );
+        payload.append("address", currentFormData.address);
+        payload.append("ageRange", currentFormData.ageRange);
+        payload.append("employmentStatus", currentFormData.employmentStatus);
 
-        payload.append("travelMostlyWith", formData.travelMostlyWith);
-        payload.append("isTravelWithPets", String(formData.isTravelWithPets));
-        payload.append("notes", formData.notes);
+        currentFormData.travelType.forEach((type) => payload.append("travelType", type));
+        currentFormData.favoriteDestinations.forEach((dest) => payload.append("favoriteDestinations", dest));
 
-        response = await axios.patch(
-          "https://vacanzagreece.gr/api/user/me",
-          payload,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+        payload.append("travelMostlyWith", currentFormData.travelMostlyWith);
+        payload.append("isTravelWithPets", String(currentFormData.isTravelWithPets));
+        payload.append("notes", currentFormData.notes);
+
+        response = await axios.patch("https://vacanzagreece.gr/api/user/me", payload, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        });
       } else {
         const jsonPayload = {
-          phoneNumber: formData.phoneNumber,
-          address: formData.address,
-          ageRange: formData.ageRange,
-          employmentStatus: formData.employmentStatus,
-          travelType: formData.travelType,
-          favoriteDestinations: formData.favoriteDestinations,
-          travelMostlyWith: formData.travelMostlyWith,
-          isTravelWithPets: formData.isTravelWithPets,
-          notes: formData.notes,
-          photo: formData.photoUrl || undefined,
+          phoneNumber: currentFormData.phoneNumber,
+          address: currentFormData.address,
+          ageRange: currentFormData.ageRange,
+          employmentStatus: currentFormData.employmentStatus,
+          travelType: currentFormData.travelType,
+          favoriteDestinations: currentFormData.favoriteDestinations,
+          travelMostlyWith: currentFormData.travelMostlyWith,
+          isTravelWithPets: currentFormData.isTravelWithPets,
+          notes: currentFormData.notes,
+          photo: currentFormData.photoUrl || undefined,
         };
 
-        response = await axios.patch(
-          "https://vacanzagreece.gr/api/user/me",
-          jsonPayload,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        response = await axios.patch("https://vacanzagreece.gr/api/user/me", jsonPayload, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
       }
 
-      console.log("Update successful:", response.data);
+      if (response.data) {
+        const userData = response.data.data || response.data;
+        const newAuthUser = {
+          ...authUser!,
+          photo: userData.photo,
+          fullName: userData.fullName,
+        };
+        
+        // Update local formData with the new photo URL from server
+        setFormData((prev) => ({ ...prev, photoUrl: userData.photo || "" }));
+        
+        dispatch(setCredentials({ user: newAuthUser, token: token! }));
+        localStorage.setItem("user", JSON.stringify(newAuthUser));
+      }
 
-      // Refresh everything
+      // Clear pending files if any were uploaded
+      if (currentFiles.length > 0) {
+        // If the user has a property, upload all files to the property gallery as well
+        if (myProperties.length > 0) {
+          try {
+            const propertyId = myProperties[0].id;
+            const propertyFormData = new FormData();
+            
+            // To add images to gallery, we send them under 'files' key
+            // We use the same structure as PropertiesGrid
+            const updateData = {
+              removeImages: [],
+              // Keep current cover image if possible, or just add images
+            };
+            propertyFormData.append("data", JSON.stringify(updateData));
+            currentFiles.forEach((file) => {
+              propertyFormData.append("files", file);
+            });
+
+            await dispatch(updateProperty({ id: propertyId, updatedData: propertyFormData })).unwrap();
+          } catch (propError) {
+            console.error("Error updating property gallery:", propError);
+            // Don't fail the whole operation if property update fails
+          }
+        }
+        setFiles([]);
+      }
+
       await dispatch(fetchUser());
       await fetchOnboardingData();
-
+      await dispatch(fetchMyProperties());
       toast.success("Profile updated successfully!");
     } catch (error: any) {
       console.error("Error updating profile:", error);
@@ -217,6 +237,10 @@ const ProfileForm = () => {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleSubmit = async () => {
+    await updateUserProfile(formData, files);
   };
 
   if (loading || !onboardingData) return <p>{t("profile.loading")}</p>;
@@ -229,7 +253,7 @@ const ProfileForm = () => {
           <div className="flex flex-col items-center md:w-1/3">
             <div className="relative">
               <img
-                src={preview || ""}
+                src={files.length > 0 ? URL.createObjectURL(files[formData.coverImage]) : formData.photoUrl || "/defaultAvatar.png"}
                 className="h-48 w-48 object-cover rounded-full border-4 border-[#A0BFE8]"
                 alt="Profile"
               />
@@ -239,7 +263,7 @@ const ProfileForm = () => {
                     <img src={penIcon} alt="edit" className="w-6 h-6" />
                   </div>
                 </PopoverTrigger>
-                <PopoverContent className="w-64 p-4 space-y-4 bg-white border-gray-200">
+                <PopoverContent className="w-80 p-4 space-y-4 bg-white border-gray-200">
                   <h3 className="text-sm font-semibold text-gray-700 mb-2">Change Profile Photo</h3>
                   <div className="space-y-2">
                     <label
@@ -254,9 +278,48 @@ const ProfileForm = () => {
                       <span className="text-sm">Upload from file</span>
                     </label>
 
+                    {/* Multiple Upload Previews */}
+                    {files.length > 0 && (
+                      <div className="grid grid-cols-3 gap-2 pt-2">
+                        {files.map((file, index) => (
+                          <div
+                            key={index}
+                            className={`relative aspect-square cursor-pointer rounded-lg border-2 transition-all ${formData.coverImage === index ? "border-primary-blue shadow-md" : "border-transparent"
+                              }`}
+                            onClick={async () => {
+                              const newFormData = { ...formData, coverImage: index };
+                              setFormData(newFormData);
+                              await updateUserProfile(newFormData, files);
+                            }}
+                          >
+                            <img
+                              src={URL.createObjectURL(file)}
+                              alt="preview"
+                              className="w-full h-full object-cover rounded-md"
+                            />
+                            {formData.coverImage === index && (
+                              <div className="absolute top-1 left-1 bg-primary-blue text-white text-[8px] px-1 py-0.5 rounded-full">
+                                Cover
+                              </div>
+                            )}
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                removeFile(index);
+                              }}
+                              className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] shadow-lg"
+                            >
+                              &times;
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
                     {onboardingData?.homeImages && onboardingData.homeImages.length > 0 && (
                       <div className="pt-2">
-                        <p className="text-[10px] uppercase text-gray-400 font-bold mb-2">Uploaded Pictures</p>
+                        <p className="text-[10px] uppercase text-gray-400 font-bold mb-2">Gallery Pictures</p>
                         <div className="grid grid-cols-3 gap-2">
                           {onboardingData.homeImages.map((img: string, idx: number) => (
                             <img
@@ -278,6 +341,7 @@ const ProfileForm = () => {
                 id="photoUpload"
                 type="file"
                 accept="image/*"
+                multiple
                 className="hidden"
                 onChange={handlePhotoChange}
               />
@@ -696,7 +760,7 @@ const ProfileForm = () => {
                 <Button
                   onClick={handleSubmit}
                   disabled={isSubmitting}
-                  className="w-full h-14 rounded-lg bg-[#3174CD] hover:bg-[#255DA8] text-white text-lg disabled:opacity-70"
+                  className="w-full h-14 rounded-lg cursor-pointer bg-[#3174CD] hover:bg-[#255DA8] text-white text-lg disabled:opacity-70"
                 >
                   {isSubmitting ? "Saving..." : t("profile.saveChanges")}
                 </Button>

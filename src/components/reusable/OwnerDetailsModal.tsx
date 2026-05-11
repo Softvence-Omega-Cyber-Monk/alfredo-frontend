@@ -1,6 +1,7 @@
-import { X, MapPin } from "lucide-react";
 import { OwnerDetails } from "@/types/PropertyDetails";
+import { MapPin, X } from "lucide-react";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 interface OwnerDetailsModalProps {
   isOpen: boolean;
@@ -15,6 +16,9 @@ const OwnerDetailsModal = ({
   ownerDetails,
   city,
 }: OwnerDetailsModalProps) => {
+  const { t, i18n } = useTranslation(["onboarding", "addPlaceModal"]);
+  const currentLanguage = i18n.language;
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -63,20 +67,24 @@ const OwnerDetailsModal = ({
             <h2 className="text-2xl font-semibold text-dark-3 mb-2">
               {ownerDetails?.fullName}
             </h2>
-            <p className="text-sm text-dark-2">Property Owner</p>
+            <p className="text-sm text-dark-2">
+              {currentLanguage === "el" ? "Ιδιοκτήτης" : "Property Owner"}
+            </p>
           </div>
 
           {/* Information Section */}
           <div className="space-y-4 py-4 border-t border-gray-200">
             <h3 className="text-lg font-semibold text-dark-3 mb-3">
-              About the Owner
+              {currentLanguage === "el" ? "Πληροφορίες" : "About the Owner"}
             </h3>
 
             <div className="grid grid-cols-2 gap-4">
               {/* Age Range */}
               {ownerDetails?.onboarding?.ageRange && (
                 <div className="flex flex-col">
-                  <p className="text-xs text-dark-2">Age Range</p>
+                  <p className="text-xs text-dark-2">
+                    {currentLanguage === "el" ? "Ηλικιακή ομάδα" : "Age Range"}
+                  </p>
                   <p className="text-sm font-medium text-dark-3">
                     {ownerDetails.onboarding.ageRange.replace("AGE_", "").replace("_", "-")}
                   </p>
@@ -86,9 +94,13 @@ const OwnerDetailsModal = ({
               {/* Gender */}
               {ownerDetails?.onboarding?.gender && ownerDetails.onboarding.gender !== "NOT_SPECIFIED" && (
                 <div className="flex flex-col">
-                  <p className="text-xs text-dark-2">Gender</p>
+                  <p className="text-xs text-dark-2">
+                    {currentLanguage === "el" ? "Φύλο" : "Gender"}
+                  </p>
                   <p className="text-sm font-medium text-dark-3 capitalize">
-                    {ownerDetails.onboarding.gender.toLowerCase()}
+                    {currentLanguage === "el"
+                      ? (ownerDetails.onboarding.gender === "MALE" ? "Άνδρας" : "Γυναίκα")
+                      : ownerDetails.onboarding.gender.toLowerCase()}
                   </p>
                 </div>
               )}
@@ -96,9 +108,13 @@ const OwnerDetailsModal = ({
               {/* Employment Status */}
               {ownerDetails?.onboarding?.employmentStatus && (
                 <div className="flex flex-col">
-                  <p className="text-xs text-dark-2">Employment</p>
+                  <p className="text-xs text-dark-2">
+                    {currentLanguage === "el" ? "Εργασιακή κατάσταση" : "Employment"}
+                  </p>
                   <p className="text-sm font-medium text-dark-3 capitalize">
-                    {ownerDetails.onboarding.employmentStatus.toLowerCase()}
+                    {currentLanguage === "el"
+                      ? (t(`onboarding:onboarding.part2.iAmA.${ownerDetails.onboarding.employmentStatus.toLowerCase()}`) || "Εργαζόμενος/η")
+                      : ownerDetails.onboarding.employmentStatus.toLowerCase()}
                   </p>
                 </div>
               )}
@@ -106,9 +122,13 @@ const OwnerDetailsModal = ({
               {/* Travel Mostly With */}
               {ownerDetails?.onboarding?.travelMostlyWith && (
                 <div className="flex flex-col">
-                  <p className="text-xs text-dark-2">Travels With</p>
+                  <p className="text-xs text-dark-2">
+                    {currentLanguage === "el" ? "Ταξιδεύω με" : "Travels With"}
+                  </p>
                   <p className="text-sm font-medium text-dark-3 capitalize">
-                    {ownerDetails.onboarding.travelMostlyWith.toLowerCase().replace("_", " ")}
+                    {currentLanguage === "el"
+                      ? (ownerDetails.onboarding.travelMostlyWith === "BY_MYSELF" ? "Μόνος/ η" : t(`onboarding:onboarding.part2.iMostlyTravelWith.${ownerDetails.onboarding.travelMostlyWith.toLowerCase()}`))
+                      : ownerDetails.onboarding.travelMostlyWith.toLowerCase().replace("_", " ")}
                   </p>
                 </div>
               )}
@@ -117,11 +137,15 @@ const OwnerDetailsModal = ({
             {/* Favorite Destinations */}
             {ownerDetails?.onboarding?.favoriteDestinations && ownerDetails.onboarding.favoriteDestinations.length > 0 && (
               <div className="flex flex-col pt-2">
-                <p className="text-xs text-dark-2 mb-1">Favorite Destinations</p>
+                <p className="text-xs text-dark-2 mb-1">
+                  {currentLanguage === "el" ? "Αγαπημένοι Προορισμοί" : "Favorite Destinations"}
+                </p>
                 <div className="flex flex-wrap gap-1.5">
                   {ownerDetails.onboarding.favoriteDestinations.map((dest, idx) => (
                     <span key={idx} className="text-[11px] px-2 py-0.5 bg-blue-50 text-primary-blue rounded-md border border-blue-100">
-                      {dest}
+                      {currentLanguage === "el"
+                        ? (dest === "Small Cities" ? "Μικρές πόλεις" : dest)
+                        : dest}
                     </span>
                   ))}
                 </div>
@@ -131,11 +155,15 @@ const OwnerDetailsModal = ({
             {/* Travel Types */}
             {ownerDetails?.onboarding?.travelType && ownerDetails.onboarding.travelType.length > 0 && (
               <div className="flex flex-col pt-2">
-                <p className="text-xs text-dark-2 mb-1">Travel Style</p>
+                <p className="text-xs text-dark-2 mb-1">
+                  {currentLanguage === "el" ? "Ταξιδεύω για" : "Travel Style"}
+                </p>
                 <div className="flex flex-wrap gap-1.5">
                   {ownerDetails.onboarding.travelType.map((type, idx) => (
                     <span key={idx} className="text-[11px] px-2 py-0.5 bg-green-50 text-green-700 rounded-md border border-green-100">
-                      {type}
+                      {currentLanguage === "el"
+                        ? (type === "Leisure" ? "Αναψυχή" : type)
+                        : type}
                     </span>
                   ))}
                 </div>
@@ -144,9 +172,13 @@ const OwnerDetailsModal = ({
 
             {/* Pets */}
             <div className="flex items-center gap-2 pt-2">
-              <p className="text-xs text-dark-2">Travels with pets:</p>
+              <p className="text-xs text-dark-2">
+                {currentLanguage === "el" ? "Ταξιδεύω με κατοικίδια" : "Travels with pets"}:
+              </p>
               <p className="text-sm font-medium text-dark-3">
-                {ownerDetails?.onboarding?.isTravelWithPets ? "Yes" : "No"}
+                {ownerDetails?.onboarding?.isTravelWithPets
+                  ? (currentLanguage === "el" ? "Ναι" : "Yes")
+                  : (currentLanguage === "el" ? "Όχι" : "No")}
               </p>
             </div>
 
@@ -157,7 +189,9 @@ const OwnerDetailsModal = ({
                   <MapPin className="w-5 h-5 text-primary-blue" />
                 </div>
                 <div>
-                  <p className="text-xs text-dark-2">Location</p>
+                  <p className="text-xs text-dark-2">
+                    {currentLanguage === "el" ? "Τοποθεσία" : "Location"}
+                  </p>
                   <p className="text-sm font-medium">
                     {ownerDetails?.onboarding?.address || city}
                   </p>
@@ -168,7 +202,9 @@ const OwnerDetailsModal = ({
             {/* Notes */}
             {ownerDetails?.onboarding?.notes && (
               <div className="pt-4 border-t border-gray-100">
-                <p className="text-xs text-dark-2 mb-1">About</p>
+                <p className="text-xs text-dark-2 mb-1">
+                  {currentLanguage === "el" ? "Σχετικά" : "About"}
+                </p>
                 <p className="text-sm text-dark-3 italic leading-relaxed">
                   "{ownerDetails.onboarding.notes}"
                 </p>
@@ -180,7 +216,7 @@ const OwnerDetailsModal = ({
           {ownerDetails?.achievementBadges?.length > 0 && (
             <div className="py-4 border-t border-gray-200">
               <h3 className="text-lg font-semibold text-dark-3 mb-3">
-                Achievement Badges
+                {currentLanguage === "el" ? "Μετάλλια Κατορθωμάτων" : "Achievement Badges"}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {ownerDetails.achievementBadges.map((badge) => (
