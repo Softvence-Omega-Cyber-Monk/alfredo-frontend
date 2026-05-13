@@ -169,7 +169,7 @@ const SearchFilter = () => {
       }}
     >
       <div className="bg-white rounded-xl lg:rounded-full px-4 lg:px-4 py-6 shadow-md">
-        <div className="flex flex-col lg:flex-row items-stretch gap-6 flex-wrap">
+        <div className="flex flex-col lg:flex-row items-stretch gap-2 flex-wrap">
           {/* Destination */}
           <div className="flex-1">
             <label className="block text-sm text-dark-3 mb-1">
@@ -248,7 +248,7 @@ const SearchFilter = () => {
             <label className="block text-sm text-dark-3 mb-1">
               {t("search.dates")}
             </label>
-            <div className="flex items-center gap-2 border border-[#C4D7F1] p-0.5 px-2 rounded-lg">
+            <div className="flex items-center gap-2 border border-[#C4D7F1] p-0.5 px-1 w-[170px] rounded-lg">
               <img src={calendar} alt="calendar icon" className="w-5 h-5" />
               <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                 <PopoverTrigger asChild>

@@ -133,15 +133,15 @@ const HomeDetailsTabs = ({
   const transformedPhotos =
     singlePropertyData.images
       ? [...singlePropertyData.images]
-          .sort((a, b) => {
-            if (a.url === singlePropertyData.coverImage) return -1;
-            if (b.url === singlePropertyData.coverImage) return 1;
-            return 0;
-          })
-          .map((image) => ({
-            src: image.url,
-            alt: singlePropertyData.title,
-          }))
+        .sort((a, b) => {
+          if (a.url === singlePropertyData.coverImage) return -1;
+          if (b.url === singlePropertyData.coverImage) return 1;
+          return 0;
+        })
+        .map((image) => ({
+          src: image.url,
+          alt: singlePropertyData.title,
+        }))
       : [];
 
   const tabsData = [
@@ -273,7 +273,7 @@ const HomeDetailsTabs = ({
             owner={singlePropertyData.owner}
             title={singlePropertyData.title}
             features={{
-              rooms: singlePropertyData.bedrooms,
+              rooms: singlePropertyData.maxPeople,
               beds: singlePropertyData.bedrooms,
               baths: singlePropertyData.bathrooms,
               area: singlePropertyData.size,

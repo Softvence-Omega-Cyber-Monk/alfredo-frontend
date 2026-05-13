@@ -1,7 +1,7 @@
 {
   "title": "Choose your",
   "properties": {
-    "rooms": "Rooms",
+    "rooms": "Max People",
     "beds": "Beds",
     "baths": "Baths",
     "area": "sqm"
