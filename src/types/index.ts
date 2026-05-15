@@ -24,6 +24,7 @@ export type FormData = {
   email: string;
   phone: string;
   message: string;
+  promotionalAgree?: boolean;
 };
 
 // Service plan card

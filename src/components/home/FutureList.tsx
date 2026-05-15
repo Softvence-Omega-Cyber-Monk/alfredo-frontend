@@ -40,6 +40,7 @@ const FutureList = () => {
   }, [dispatch, isAuthenticated]);
 
 
+
   return (
     <div className="mt-16">
       <CommonWrapper>
@@ -57,11 +58,12 @@ const FutureList = () => {
               coverImage={card.coverImage}
               avatarImage={card.images?.[0]?.url || "/avatar-placeholder.png"}
               rating={"5.0"}
-              ownerName={card.owner?.fullName || "Unknown"}
+              ownerName={isUserSubscribed ? card.owner?.fullName || "Unknown" : (card.owner?.fullName || "Unknown").split(" ")[0]}
               location={card.location}
               title={card.title}
               price={card.price}
               features={{
+                maxPeople: card.maxPeople,
                 beds: card.bedrooms,
                 baths: card.bathrooms,
                 sqft: Math.floor(card.size),

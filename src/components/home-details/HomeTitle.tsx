@@ -1,6 +1,6 @@
 import PrimaryButton from "../reusable/PrimaryButton";
 import FeatureItem from "./FeatureItem";
-import House from "@/assets/icons/home-two.svg";
+import User from "@/assets/icons/userRounded.svg";
 import Bed from "@/assets/icons/double-bed.svg";
 import Scale from "@/assets/icons/scale.svg";
 import Bath from "@/assets/icons/sunbath.svg";
@@ -42,7 +42,7 @@ const HomeTitle = ({
 
   const featuresItems = [
     {
-      icon: House,
+      icon: User,
       label: t("properties.rooms"),
       value:
         features?.rooms !== undefined
@@ -154,9 +154,8 @@ const HomeTitle = ({
           >
             {isFavorited ? (
               <FaHeart
-                className={`w-7 h-7 text-[#3072C9] ${
-                  animateHeart ? "animate-bounce-once" : ""
-                }`}
+                className={`w-7 h-7 text-[#3072C9] ${animateHeart ? "animate-bounce-once" : ""
+                  }`}
               />
             ) : (
               <FaRegHeart className="w-7 h-7 text-[#3072C9] hover:text-blue-500 cursor-pointer" />

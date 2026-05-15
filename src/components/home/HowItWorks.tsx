@@ -23,8 +23,8 @@ const HowItWorks = () => {
       backgroundImage: bg1,
       title: t("section.firstCard.title"),
       description: t("section.firstCard.para"),
-      backgroundColor: "#FFF2F0",
-      titleColor: "#E82F1A",
+      backgroundColor: "#FFF8E6",
+      titleColor: "#FFBA00",
     },
     {
       mainImage: img2,
@@ -39,8 +39,8 @@ const HowItWorks = () => {
       backgroundImage: bg3,
       title: t("section.thirdCard.title"),
       description: t("section.thirdCard.para"),
-      backgroundColor: "#FFF8E6",
-      titleColor: "#FFBA00",
+      backgroundColor: "#D5F5E7",
+      titleColor: "#09995B",
     },
   ];
 
@@ -58,7 +58,7 @@ const HowItWorks = () => {
         {/* How it works Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10">
           {cardsData.map((card, index) => (
-            <Link to="/plans">
+            <Link to="/signup">
               <HowItWorksCard
                 key={index}
                 mainImage={card.mainImage}

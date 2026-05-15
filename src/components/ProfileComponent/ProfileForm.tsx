@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import NotificationPreferences from "../reusable/NotificationPreferences";
 import axios from "axios";
 import { setCredentials } from "@/store/Slices/AuthSlice/authSlice";
-import { fetchMyProperties, updateProperty } from "@/store/Slices/PropertySlice/propertySlice";
+
 
 type AgeGroup = "AGE_18_30" | "AGE_30_50" | "AGE_50_65" | "AGE_65_PLUS";
 type Gender = "MALE" | "FEMALE" | "NOT_SPECIFIED";
@@ -43,14 +43,16 @@ const ProfileForm = () => {
 
   const [files, setFiles] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; url: string }>({
+    isOpen: false,
+    url: "",
+  });
   const { user: authUser } = useAppSelector((state) => state.auth);
-  const { myProperties } = useAppSelector((state) => state.property);
 
   useEffect(() => {
     const loadData = async () => {
       await dispatch(fetchUser());
       await fetchOnboardingData();
-      await dispatch(fetchMyProperties());
     };
     loadData();
   }, [dispatch]);
@@ -132,17 +134,65 @@ const ProfileForm = () => {
     await updateUserProfile(newFormData, []);
   };
 
+  const handleDeleteClick = (e: React.MouseEvent, url: string) => {
+    e.stopPropagation();
+    setDeleteModal({ isOpen: true, url });
+  };
+
+  const confirmDeleteImage = async () => {
+    const urlToDelete = deleteModal.url;
+    if (!onboardingData || isSubmitting || !urlToDelete) return;
+
+    setIsSubmitting(true);
+    try {
+      const token = localStorage.getItem("token");
+      const updatedHomeImages = onboardingData.homeImages.filter((img: string) => img !== urlToDelete);
+
+      const onboardingPayload = new FormData();
+      const onboardingDataForBackend = {
+        ...onboardingData,
+        homeImages: updatedHomeImages,
+      };
+
+      onboardingPayload.append("data", JSON.stringify(onboardingDataForBackend));
+
+      await axios.post("https://vacanzagreece.gr/api/onboarding", onboardingPayload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // If the deleted image was the current profile photo, reset it
+      if (formData.photoUrl === urlToDelete) {
+        const resetFormData = { ...formData, photoUrl: "" };
+        setFormData(resetFormData);
+        await updateUserProfile(resetFormData, []);
+      }
+
+      await fetchOnboardingData();
+      toast.success("Image removed from gallery.");
+      setDeleteModal({ isOpen: false, url: "" });
+    } catch (error) {
+      console.error("Error deleting gallery image:", error);
+      toast.error("Failed to remove image.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const updateUserProfile = async (currentFormData: typeof formData, currentFiles: File[]) => {
     setIsSubmitting(true);
     try {
       const token = localStorage.getItem("token");
       let response;
 
+      // 1. Update basic user profile (active photo, phone, etc.)
       if (currentFiles.length > 0) {
         const payload = new FormData();
         payload.append("phoneNumber", currentFormData.phoneNumber);
-        
-        // Use the selected file as the profile photo
+
+        // This photo key is for the active profile picture
         payload.append("photo", currentFiles[currentFormData.coverImage]);
 
         payload.append("address", currentFormData.address);
@@ -162,6 +212,40 @@ const ProfileForm = () => {
             "Content-Type": "multipart/form-data",
           },
         });
+
+        // 2. Persist to Onboarding Gallery (Home Images)
+        // Since /user/me doesn't accept homeImages, we use the onboarding endpoint
+        try {
+          const onboardingPayload = new FormData();
+          const onboardingDataForBackend = {
+            ...onboardingData,
+            ageRange: currentFormData.ageRange,
+            employmentStatus: currentFormData.employmentStatus,
+            travelType: currentFormData.travelType,
+            favoriteDestinations: currentFormData.favoriteDestinations,
+            travelMostlyWith: currentFormData.travelMostlyWith,
+            isTravelWithPets: currentFormData.isTravelWithPets,
+            notes: currentFormData.notes,
+            address: currentFormData.address,
+            // Keep existing images
+            homeImages: onboardingData?.homeImages || [],
+          };
+          
+          onboardingPayload.append("data", JSON.stringify(onboardingDataForBackend));
+          currentFiles.forEach((file) => {
+            onboardingPayload.append("homeImages", file);
+          });
+
+          await axios.post("https://vacanzagreece.gr/api/onboarding", onboardingPayload, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          });
+        } catch (onboardingErr) {
+          console.error("Error updating onboarding gallery:", onboardingErr);
+          // We don't fail the whole operation if only the gallery update fails
+        }
       } else {
         const jsonPayload = {
           phoneNumber: currentFormData.phoneNumber,
@@ -191,45 +275,21 @@ const ProfileForm = () => {
           photo: userData.photo,
           fullName: userData.fullName,
         };
-        
+
         // Update local formData with the new photo URL from server
         setFormData((prev) => ({ ...prev, photoUrl: userData.photo || "" }));
-        
+
         dispatch(setCredentials({ user: newAuthUser, token: token! }));
         localStorage.setItem("user", JSON.stringify(newAuthUser));
       }
 
       // Clear pending files if any were uploaded
       if (currentFiles.length > 0) {
-        // If the user has a property, upload all files to the property gallery as well
-        if (myProperties.length > 0) {
-          try {
-            const propertyId = myProperties[0].id;
-            const propertyFormData = new FormData();
-            
-            // To add images to gallery, we send them under 'files' key
-            // We use the same structure as PropertiesGrid
-            const updateData = {
-              removeImages: [],
-              // Keep current cover image if possible, or just add images
-            };
-            propertyFormData.append("data", JSON.stringify(updateData));
-            currentFiles.forEach((file) => {
-              propertyFormData.append("files", file);
-            });
-
-            await dispatch(updateProperty({ id: propertyId, updatedData: propertyFormData })).unwrap();
-          } catch (propError) {
-            console.error("Error updating property gallery:", propError);
-            // Don't fail the whole operation if property update fails
-          }
-        }
         setFiles([]);
       }
 
       await dispatch(fetchUser());
       await fetchOnboardingData();
-      await dispatch(fetchMyProperties());
       toast.success("Profile updated successfully!");
     } catch (error: any) {
       console.error("Error updating profile:", error);
@@ -257,7 +317,11 @@ const ProfileForm = () => {
                 className="h-48 w-48 object-cover rounded-full border-4 border-[#A0BFE8]"
                 alt="Profile"
               />
-              <Popover>
+              <Popover onOpenChange={(open) => {
+                if (!open && files.length > 0) {
+                  updateUserProfile(formData, files);
+                }
+              }}>
                 <PopoverTrigger asChild>
                   <div className="absolute bottom-3 right-3 bg-white p-2 rounded-full shadow-md cursor-pointer">
                     <img src={penIcon} alt="edit" className="w-6 h-6" />
@@ -317,19 +381,29 @@ const ProfileForm = () => {
                       </div>
                     )}
 
+                    {/* Profile Gallery Pictures */}
                     {onboardingData?.homeImages && onboardingData.homeImages.length > 0 && (
                       <div className="pt-2">
                         <p className="text-[10px] uppercase text-gray-400 font-bold mb-2">Gallery Pictures</p>
                         <div className="grid grid-cols-3 gap-2">
                           {onboardingData.homeImages.map((img: string, idx: number) => (
-                            <img
-                              key={idx}
-                              src={img}
-                              className={`w-full h-12 object-cover rounded-md cursor-pointer border-2 hover:border-primary-blue transition ${formData.photoUrl === img ? "border-primary-blue" : "border-transparent"
-                                }`}
-                              onClick={() => handleGallerySelect(img)}
-                              alt={`Onboarding ${idx}`}
-                            />
+                            <div key={idx} className="relative group">
+                              <img
+                                src={img}
+                                className={`w-full h-12 object-cover rounded-md cursor-pointer border-2 hover:border-primary-blue transition ${formData.photoUrl === img ? "border-primary-blue" : "border-transparent"
+                                  }`}
+                                onClick={() => handleGallerySelect(img)}
+                                alt={`Profile Gallery ${idx}`}
+                              />
+                              <button
+                                type="button"
+                                onClick={(e) => handleDeleteClick(e, img)}
+                                className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center opacity-0 group-hover:opacity-100 transition shadow-sm z-10 text-[10px]"
+                                title="Delete photo"
+                              >
+                                &times;
+                              </button>
+                            </div>
                           ))}
                         </div>
                       </div>
@@ -769,6 +843,41 @@ const ProfileForm = () => {
           </div>
         </div>
       </div>
+      {/* Delete Confirmation Modal */}
+      {deleteModal.isOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 transform transition-all animate-in fade-in zoom-in duration-200">
+            <div className="text-center">
+              <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+                <svg className="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Delete Photo</h3>
+              <p className="text-sm text-gray-500 mb-6">
+                Are you sure you want to remove this photo from your gallery? This action cannot be undone.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                type="button"
+                onClick={() => setDeleteModal({ isOpen: false, url: "" })}
+                className="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-xl font-medium transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmDeleteImage}
+                disabled={isSubmitting}
+                className="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium transition-colors shadow-lg shadow-red-200 disabled:opacity-50"
+              >
+                {isSubmitting ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

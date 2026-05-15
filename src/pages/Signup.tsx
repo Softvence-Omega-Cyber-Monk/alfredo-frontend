@@ -28,7 +28,7 @@ const signupSchema = z
     firstName: z.string().min(2, "First name must be at least 2 characters"),
     lastName: z.string().min(2, "Last name must be at least 2 characters"),
     email: z.string().email("Invalid email format"),
-    phoneNumber: z.string().min(10, "Mobile number must be at least 10 digits"),
+    phoneNumber: z.string().optional(),
     password: z
       .string()
       .min(6, "Password must be at least 6 characters")
@@ -276,7 +276,8 @@ const Signup = () => {
             <div className="flex flex-col md:flex-row gap-6">
               <div className="w-full">
                 <label className="text-[18px] font-semibold text-basic-dark">
-                  {t("auth.signup.phoneNumber")} <span className="text-red-400">*</span>
+                  {t("auth.signup.phoneNumber")}
+                  {/* <span className="text-red-400">*</span> */}
                 </label>
                 <input
                   type="text"

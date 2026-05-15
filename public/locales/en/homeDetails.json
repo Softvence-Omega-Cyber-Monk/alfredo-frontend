@@ -2,7 +2,7 @@
   "title": "Choose your",
   "properties": {
     "rooms": "Max People",
-    "beds": "Beds",
+    "beds": "Bedrooms",
     "baths": "Baths",
     "area": "sqm"
   },

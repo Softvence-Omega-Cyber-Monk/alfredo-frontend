@@ -132,12 +132,13 @@ const CommonCard: React.FC<CommonCardProps> = ({
         </h3> */}
 
         {/* Features */}
-        <div className="my-4 grid grid-cols-3 gap-3">
+        <div className="my-4 grid grid-cols-4 gap-3">
+
           {features.beds !== undefined && (
             <div className="flex flex-col justify-center text-center items-center gap-1">
               <BedDouble className="text-primary-blue w-5 h-5" />
               <p className="text-dark-3 font-regular text-sm">
-                {features.beds} {i18n.language === "el" ? "Κρεβάτια" : "Beds"}
+                {features.beds} {i18n.language === "el" ? "Υ/Δ" : "Bedr."}
               </p>
             </div>
           )}
@@ -153,7 +154,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
             <div className="flex flex-col justify-center text-center items-center gap-1">
               <SquareArrowOutUpRight className="text-primary-blue w-5 h-5" />
               <p className="text-dark-3 font-regular text-sm">
-                {features.sqft} sqm
+                {features.sqft} {i18n.language === "el" ? "τμ" : "sqft"}
               </p>
             </div>
           )}
@@ -169,7 +170,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
             <div className="flex flex-col justify-center text-center items-center gap-1">
               <User className="text-primary-blue w-5 h-5" />
               <p className="text-dark-3 font-regular text-sm">
-                {features.maxPeople} {i18n.language === "el" ? "άτομα" : "max people"}
+                {features.maxPeople} {i18n.language === "el" ? "άτομα" : "Max People"}
               </p>
             </div>
           )}

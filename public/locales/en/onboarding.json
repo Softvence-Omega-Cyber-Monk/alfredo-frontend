@@ -40,7 +40,7 @@
     },
     "part2": {
       "step": "Complete Profile",
-      "headTitle": "Welcome!",
+      "headTitle": "About the owner",
       "headButton": "Save Draft",
       "button1": "Cancel",
       "button2": "Back",
@@ -80,8 +80,8 @@
         "title": "I mostly travel with",
         "byMyself": "By myself",
         "family": "Family",
-        "withPartner": "With A Partner",
-        "withFrends": "With Friends"
+        "withPartner": "With a partner",
+        "withFrends": "Friends"
       },
       "TravelWithPet": {
         "title": "Do You Travel With Pets?",

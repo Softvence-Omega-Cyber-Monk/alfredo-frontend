@@ -194,6 +194,22 @@ const Contact = () => {
                 )}
               </div>
 
+              {/* Promotional Checkbox */}
+              <div className="flex items-center gap-2 px-2">
+                <input
+                  type="checkbox"
+                  id="promotionalAgree"
+                  {...register("promotionalAgree")}
+                  className="w-4 h-4 cursor-pointer"
+                />
+                <label
+                  htmlFor="promotionalAgree"
+                  className="text-xs text-basic-dark cursor-pointer"
+                >
+                  {t("contact.promotionalAgree")}
+                </label>
+              </div>
+
               {/* Submit */}
               <ReusableButton
                 type="submit"

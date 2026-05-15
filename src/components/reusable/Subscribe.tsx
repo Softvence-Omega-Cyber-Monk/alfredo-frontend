@@ -115,6 +115,8 @@ const Subscribe = () => {
                 {message && (
                   <p className="mt-2 text-sm text-green-500">{message}</p>
                 )}
+                {/* Disclaimer  */}
+                <p className="mt-5 text-xs text-red-300">{t("disclaimer")}</p>
               </div>
             </div>
           </div>

@@ -9,9 +9,9 @@
     "part0": {
       "currentPlan": "Current Plan",
       "no": "None",
-      "plan1": "Upgrade to Base Plan",
+      "plan1": "Upgrade to Basic Plan",
       "plan2": "Upgrade to Premium Plan",
-      "base": "Base",
+      "base": "Basic",
       "premium": "Premium",
       "baseUpgrade": "Upgrade to Premium Plan",
       "premiumUnlock": "Discount Codes"

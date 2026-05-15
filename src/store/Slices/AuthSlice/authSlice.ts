@@ -57,7 +57,7 @@ export const signupUser = createAsyncThunk<
     firstName: string;
     lastName: string;
     email: string;
-    phoneNumber: string;
+    phoneNumber?: string;
     password: string;
     referralCode?: string;
   },

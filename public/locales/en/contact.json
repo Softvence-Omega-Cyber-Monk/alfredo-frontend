@@ -11,6 +11,7 @@
     "enterEmail": "Enter your email",
     "phone": "Enter phone no.",
     "writeMessage": "Write a message",
-    "startConversation": "Send Now"
+    "startConversation": "Send Now",
+    "promotionalAgree": "I agree to receive promotional and informational emails from Vacanza."
   }
 }
