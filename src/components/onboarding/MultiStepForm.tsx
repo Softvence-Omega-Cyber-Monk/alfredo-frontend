@@ -3,7 +3,7 @@ import { MoveLeft, MoveRight } from "lucide-react";
 import star1 from "../../assets/icons/Star22.svg";
 import star2 from "../../assets/icons/starBlue.svg";
 import GetStarted from "./GetStarted";
-import VerificationProcess, { AgeGroupLabels } from "./VerificationProcess";
+import VerificationProcess from "./VerificationProcess";
 import UploadPhoto from "./UploadPhoto";
 import { AddPlaceData } from "@/types";
 import { useNavigate } from "react-router-dom";
@@ -229,27 +229,13 @@ const MultiStepForm = () => {
         // destination: addPlaceData.destinationAddress,
 
         //next step (personal info)
-        ageRange: AgeGroupLabels[addPlaceData.personalInformation.age as keyof typeof AgeGroupLabels],
-        gender: t(`onboarding.part2.gender.${addPlaceData.personalInformation.gender === "NOT_SPECIFIED" ? "notSpecified" : addPlaceData.personalInformation.gender.toLowerCase()}`),
-        employmentStatus: t(`onboarding.part2.iAmA.${addPlaceData.personalInformation.role.toLowerCase()}`),
-        travelType: addPlaceData.personalInformation.travelType.map(type => t(`onboarding.part2.travelType.${type.toLowerCase()}`)),
-        favoriteDestinations:
-          addPlaceData.personalInformation.favoriteDestinations.map(dest => {
-            const destKeyMap: Record<string, string> = {
-              "Big Cities": "bigCities",
-              "Small Cities": "smallCities",
-              "Seaside": "seaSide",
-              "Mountain": "mountains"
-            };
-            return t(`onboarding.part2.favoriteDestinations.${destKeyMap[dest]}`);
-          }),
-        travelMostlyWith: t(`onboarding.part2.iMostlyTravelWith.${{
-          "BY_MYSELF": "byMyself",
-          "FAMILY": "family",
-          "COUPLE": "withPartner",
-          "FRIENDS": "withFrends"
-        }[addPlaceData.personalInformation.travelGroup]}`),
-        isTravelWithPets: t(`onboarding.part2.TravelWithPet.${addPlaceData.personalInformation.travelWithPets ? "yes" : "no"}`),
+        ageRange: addPlaceData.personalInformation.age,
+        gender: addPlaceData.personalInformation.gender,
+        employmentStatus: addPlaceData.personalInformation.role,
+        travelType: addPlaceData.personalInformation.travelType,
+        favoriteDestinations: addPlaceData.personalInformation.favoriteDestinations,
+        travelMostlyWith: addPlaceData.personalInformation.travelGroup,
+        isTravelWithPets: addPlaceData.personalInformation.travelWithPets,
         maxPeople: addPlaceData.personalInformation.maxPeople || 1,
         address: addPlaceData.personalInformation.address,
         notes: addPlaceData.personalInformation.notes,

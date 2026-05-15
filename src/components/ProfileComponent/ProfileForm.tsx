@@ -12,6 +12,8 @@ import { Textarea } from "@/components/ui/textarea";
 import NotificationPreferences from "../reusable/NotificationPreferences";
 import axios from "axios";
 import { setCredentials } from "@/store/Slices/AuthSlice/authSlice";
+import { fetchMyProperties } from "@/store/Slices/PropertySlice/propertySlice";
+import { AgeGroupLabels } from "../onboarding/VerificationProcess";
 
 
 type AgeGroup = "AGE_18_30" | "AGE_30_50" | "AGE_50_65" | "AGE_65_PLUS";
@@ -48,11 +50,13 @@ const ProfileForm = () => {
     url: "",
   });
   const { user: authUser } = useAppSelector((state) => state.auth);
+  const { myProperties } = useAppSelector((state) => state.property);
 
   useEffect(() => {
     const loadData = async () => {
       await dispatch(fetchUser());
       await fetchOnboardingData();
+      await dispatch(fetchMyProperties());
     };
     loadData();
   }, [dispatch]);
@@ -216,10 +220,13 @@ const ProfileForm = () => {
         // 2. Persist to Onboarding Gallery (Home Images)
         // Since /user/me doesn't accept homeImages, we use the onboarding endpoint
         try {
+          const mainProperty = myProperties?.[0];
           const onboardingPayload = new FormData();
+          
           const onboardingDataForBackend = {
             ...onboardingData,
-            ageRange: currentFormData.ageRange,
+            userId: authUser?.id,
+            ageRange: AgeGroupLabels[currentFormData.ageRange as keyof typeof AgeGroupLabels] || currentFormData.ageRange,
             employmentStatus: currentFormData.employmentStatus,
             travelType: currentFormData.travelType,
             favoriteDestinations: currentFormData.favoriteDestinations,
@@ -227,6 +234,15 @@ const ProfileForm = () => {
             isTravelWithPets: currentFormData.isTravelWithPets,
             notes: currentFormData.notes,
             address: currentFormData.address,
+            // Property details are often required by this endpoint to avoid 500 errors
+            homeName: (mainProperty as any)?.title || onboardingData?.homeName || "",
+            homeDescription: (mainProperty as any)?.description || onboardingData?.homeDescription || "",
+            aboutNeighborhood: (mainProperty as any)?.aboutNeighborhood || onboardingData?.aboutNeighborhood || "",
+            propertyType: (mainProperty as any)?.propertyType || onboardingData?.propertyType || "HOME",
+            isMainResidence: onboardingData?.isMainResidence ?? true,
+            amenities: (mainProperty as any)?.amenities?.map((a: any) => a.id) || onboardingData?.amenities || [],
+            transports: (mainProperty as any)?.transports?.map((t: any) => t.id) || onboardingData?.transports || [],
+            surroundings: (mainProperty as any)?.surroundings?.map((s: any) => s.id) || onboardingData?.surroundings || [],
             // Keep existing images
             homeImages: onboardingData?.homeImages || [],
           };
