@@ -19,6 +19,7 @@ interface OwnerInfoProps {
   isPremiumMember?: boolean;
   onViewDetails?: () => void;
   onContact?: () => void; // Add this prop
+  isSubscribed?: boolean;
 }
 
 const OwnerInfo = ({
@@ -28,6 +29,7 @@ const OwnerInfo = ({
   isPremiumMember = false,
   onViewDetails,
   onContact,
+  isSubscribed
 }: OwnerInfoProps) => {
   const { t } = useTranslation("homeDetails");
   const navigate = useNavigate();
@@ -94,7 +96,7 @@ const OwnerInfo = ({
       <div className="flex flex-col gap-4 pt-4 pb-6 border-b border-[#F4F7FC]">
         <button onClick={() => handleButtonClick("details")} className="w-full cursor-pointer">
           <h3 className="text-lg text-dark-2 font-semibold">
-            {ownerDetails?.fullName}
+            {isSubscribed ? ownerDetails?.fullName || "Unknown" : (ownerDetails?.fullName || "Unknown").split(" ")[0]}
           </h3>
         </button>
         <div className="flex items-start justify-start gap-1.5 text-dark-3 text-base">

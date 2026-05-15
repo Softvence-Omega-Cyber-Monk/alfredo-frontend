@@ -23,7 +23,7 @@ const HowItWorks = () => {
       backgroundImage: bg1,
       title: t("section.firstCard.title"),
       description: t("section.firstCard.para"),
-      backgroundColor: "#FFF8E6",
+      backgroundColor: "#FCFCED",
       titleColor: "#FFBA00",
     },
     {
@@ -39,7 +39,7 @@ const HowItWorks = () => {
       backgroundImage: bg3,
       title: t("section.thirdCard.title"),
       description: t("section.thirdCard.para"),
-      backgroundColor: "#D5F5E7",
+      backgroundColor: "#EDFCF3",
       titleColor: "#09995B",
     },
   ];

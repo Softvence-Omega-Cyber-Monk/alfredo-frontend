@@ -65,7 +65,7 @@ const OwnerDetailsModal = ({
           {/* Name */}
           <div>
             <h2 className="text-2xl font-semibold text-dark-3 mb-2">
-              {ownerDetails?.fullName}
+
             </h2>
             <p className="text-sm text-dark-2">
               {currentLanguage === "el" ? "Ιδιοκτήτης" : "Property Owner"}

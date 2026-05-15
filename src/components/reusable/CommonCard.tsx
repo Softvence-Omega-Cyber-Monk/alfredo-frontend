@@ -154,7 +154,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
             <div className="flex flex-col justify-center text-center items-center gap-1">
               <SquareArrowOutUpRight className="text-primary-blue w-5 h-5" />
               <p className="text-dark-3 font-regular text-sm">
-                {features.sqft} {i18n.language === "el" ? "τμ" : "sqft"}
+                {features.sqft} {i18n.language === "el" ? "τμ" : "sqm"}
               </p>
             </div>
           )}
@@ -170,7 +170,7 @@ const CommonCard: React.FC<CommonCardProps> = ({
             <div className="flex flex-col justify-center text-center items-center gap-1">
               <User className="text-primary-blue w-5 h-5" />
               <p className="text-dark-3 font-regular text-sm">
-                {features.maxPeople} {i18n.language === "el" ? "άτομα" : "Max People"}
+                {features.maxPeople} {i18n.language === "el" ? "άτομα" : "max people"}
               </p>
             </div>
           )}

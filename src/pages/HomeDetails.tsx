@@ -22,6 +22,12 @@ const HomeDetails = () => {
   const [isOwnerModalOpen, setIsOwnerModalOpen] = useState(false);
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
 
+  const storedUser = localStorage.getItem("user");
+  const currentUser = storedUser ? JSON.parse(storedUser) : null;
+  const isUserSubscribed = currentUser?.isSubscribed || false;
+
+
+  // console.log(isUserSubscribed, "mahimmmmmm")
   // console.log("singleProperty", singleProperty);
 
   useEffect(() => {
@@ -61,6 +67,7 @@ const HomeDetails = () => {
               isPremiumMember={true}
               onViewDetails={handleViewOwnerDetails}
               onContact={handleContact}
+              isSubscribed={isUserSubscribed}
             />
           </div>
         </div>
