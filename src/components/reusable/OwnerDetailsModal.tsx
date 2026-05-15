@@ -16,7 +16,7 @@ const OwnerDetailsModal = ({
   ownerDetails,
   city,
 }: OwnerDetailsModalProps) => {
-  const { t, i18n } = useTranslation(["onboarding", "addPlaceModal"]);
+  const { i18n } = useTranslation(["onboarding", "addPlaceModal"]);
   const currentLanguage = i18n.language;
 
   useEffect(() => {
