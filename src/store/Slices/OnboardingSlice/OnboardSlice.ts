@@ -70,6 +70,40 @@ export const getOnboarding = createAsyncThunk(
   }
 );
 
+//  DELETE: remove gallery image
+export const deleteGalleryImage = createAsyncThunk(
+  "onboarding/deleteGalleryImage",
+  async (imageUrl: string, { rejectWithValue }) => {
+    try {
+      const response = await api.delete("/onboarding/gallery-image", {
+        data: { imageUrl },
+      });
+      return response.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || "Error deleting image");
+    }
+  }
+);
+
+//  POST: upload gallery images
+export const uploadGalleryImages = createAsyncThunk(
+  "onboarding/uploadGalleryImages",
+  async (files: File[], { rejectWithValue }) => {
+    try {
+      const formData = new FormData();
+      files.forEach((file) => {
+        formData.append("homeImages", file);
+      });
+      const response = await api.post("/onboarding/gallery", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      return response.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data || "Error uploading images");
+    }
+  }
+);
+
 const onboardingSlice = createSlice({
   name: "onboarding",
   initialState,

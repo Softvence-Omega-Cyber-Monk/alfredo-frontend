@@ -9,11 +9,12 @@ import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { fetchUser } from "@/store/Slices/Profile/ProfileSlice";
 import penIcon from "@/assets/icons/pen-icon.svg";
 import { Textarea } from "@/components/ui/textarea";
-import NotificationPreferences from "../reusable/NotificationPreferences";
-import axios from "axios";
 import { setCredentials } from "@/store/Slices/AuthSlice/authSlice";
 import { fetchMyProperties } from "@/store/Slices/PropertySlice/propertySlice";
-import { AgeGroupLabels } from "../onboarding/VerificationProcess";
+// import { AgeGroupLabels } from "../onboarding/VerificationProcess";
+import { deleteGalleryImage, uploadGalleryImages } from "@/store/Slices/OnboardingSlice/OnboardSlice";
+import axios from "axios";
+import NotificationPreferences from "../reusable/NotificationPreferences";
 
 
 type AgeGroup = "AGE_18_30" | "AGE_30_50" | "AGE_50_65" | "AGE_65_PLUS";
@@ -50,7 +51,7 @@ const ProfileForm = () => {
     url: "",
   });
   const { user: authUser } = useAppSelector((state) => state.auth);
-  const { myProperties } = useAppSelector((state) => state.property);
+  // const { myProperties } = useAppSelector((state) => state.property);
 
   useEffect(() => {
     const loadData = async () => {
@@ -143,45 +144,43 @@ const ProfileForm = () => {
     setDeleteModal({ isOpen: true, url });
   };
 
-  const confirmDeleteImage = async () => {
+  const handleDelete = async () => {
     const urlToDelete = deleteModal.url;
-    if (!onboardingData || isSubmitting || !urlToDelete) return;
+    if (!urlToDelete) return;
 
-    setIsSubmitting(true);
     try {
-      const token = localStorage.getItem("token");
-      const updatedHomeImages = onboardingData.homeImages.filter((img: string) => img !== urlToDelete);
+      // 1. Call the new dedicated delete API
+      const resultAction = await dispatch(deleteGalleryImage(urlToDelete));
 
-      const onboardingPayload = new FormData();
-      const onboardingDataForBackend = {
-        ...onboardingData,
-        homeImages: updatedHomeImages,
-      };
+      if (deleteGalleryImage.fulfilled.match(resultAction)) {
+        // 2. Clear current profile photo if it was the one deleted
+        if (formData.photoUrl === urlToDelete) {
+          setFormData((prev) => ({ ...prev, photoUrl: "" }));
+          // Also update user profile on backend to remove the photo reference
+          const token = localStorage.getItem("token");
+          await axios.patch(
+            "https://vacanzagreece.gr/api/user/me",
+            { photo: "" },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+        }
 
-      onboardingPayload.append("data", JSON.stringify(onboardingDataForBackend));
-
-      await axios.post("https://vacanzagreece.gr/api/onboarding", onboardingPayload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      // If the deleted image was the current profile photo, reset it
-      if (formData.photoUrl === urlToDelete) {
-        const resetFormData = { ...formData, photoUrl: "" };
-        setFormData(resetFormData);
-        await updateUserProfile(resetFormData, []);
+        toast.success("Image deleted successfully!");
+        // 3. Refresh data
+        await fetchOnboardingData();
+      } else {
+        throw new Error("Failed to delete image from server");
       }
-
-      await fetchOnboardingData();
-      toast.success("Image removed from gallery.");
-      setDeleteModal({ isOpen: false, url: "" });
     } catch (error) {
       console.error("Error deleting gallery image:", error);
-      toast.error("Failed to remove image.");
+      toast.error("Failed to delete image.");
     } finally {
-      setIsSubmitting(false);
+      setDeleteModal({ isOpen: false, url: "" });
     }
   };
 
@@ -191,97 +190,37 @@ const ProfileForm = () => {
       const token = localStorage.getItem("token");
       let response;
 
-      // 1. Update basic user profile (active photo, phone, etc.)
+      // 1. Update basic user profile (phone, address, metadata, and active photo)
+      const profilePayload = new FormData();
+      profilePayload.append("phoneNumber", currentFormData.phoneNumber);
+      profilePayload.append("address", currentFormData.address);
+      profilePayload.append("ageRange", currentFormData.ageRange);
+      profilePayload.append("employmentStatus", currentFormData.employmentStatus);
+      currentFormData.travelType.forEach((type) => profilePayload.append("travelType", type));
+      currentFormData.favoriteDestinations.forEach((dest) => profilePayload.append("favoriteDestinations", dest));
+      profilePayload.append("travelMostlyWith", currentFormData.travelMostlyWith);
+      profilePayload.append("isTravelWithPets", String(currentFormData.isTravelWithPets));
+      profilePayload.append("notes", currentFormData.notes);
+
+      // If a specific gallery image was selected as profile photo
+      if (currentFormData.photoUrl) {
+        profilePayload.append("photo", currentFormData.photoUrl);
+      }
+
+      response = await axios.patch("https://vacanzagreece.gr/api/user/me", profilePayload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // 2. Dedicated Gallery Upload (Persist all new files to onboarding record)
       if (currentFiles.length > 0) {
-        const payload = new FormData();
-        payload.append("phoneNumber", currentFormData.phoneNumber);
-
-        // This photo key is for the active profile picture
-        payload.append("photo", currentFiles[currentFormData.coverImage]);
-
-        payload.append("address", currentFormData.address);
-        payload.append("ageRange", currentFormData.ageRange);
-        payload.append("employmentStatus", currentFormData.employmentStatus);
-
-        currentFormData.travelType.forEach((type) => payload.append("travelType", type));
-        currentFormData.favoriteDestinations.forEach((dest) => payload.append("favoriteDestinations", dest));
-
-        payload.append("travelMostlyWith", currentFormData.travelMostlyWith);
-        payload.append("isTravelWithPets", String(currentFormData.isTravelWithPets));
-        payload.append("notes", currentFormData.notes);
-
-        response = await axios.patch("https://vacanzagreece.gr/api/user/me", payload, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        });
-
-        // 2. Persist to Onboarding Gallery (Home Images)
-        // Since /user/me doesn't accept homeImages, we use the onboarding endpoint
         try {
-          const mainProperty = myProperties?.[0];
-          const onboardingPayload = new FormData();
-          
-          const onboardingDataForBackend = {
-            ...onboardingData,
-            userId: authUser?.id,
-            ageRange: AgeGroupLabels[currentFormData.ageRange as keyof typeof AgeGroupLabels] || currentFormData.ageRange,
-            employmentStatus: currentFormData.employmentStatus,
-            travelType: currentFormData.travelType,
-            favoriteDestinations: currentFormData.favoriteDestinations,
-            travelMostlyWith: currentFormData.travelMostlyWith,
-            isTravelWithPets: currentFormData.isTravelWithPets,
-            notes: currentFormData.notes,
-            address: currentFormData.address,
-            // Property details are often required by this endpoint to avoid 500 errors
-            homeName: (mainProperty as any)?.title || onboardingData?.homeName || "",
-            homeDescription: (mainProperty as any)?.description || onboardingData?.homeDescription || "",
-            aboutNeighborhood: (mainProperty as any)?.aboutNeighborhood || onboardingData?.aboutNeighborhood || "",
-            propertyType: (mainProperty as any)?.propertyType || onboardingData?.propertyType || "HOME",
-            isMainResidence: onboardingData?.isMainResidence ?? true,
-            amenities: (mainProperty as any)?.amenities?.map((a: any) => a.id) || onboardingData?.amenities || [],
-            transports: (mainProperty as any)?.transports?.map((t: any) => t.id) || onboardingData?.transports || [],
-            surroundings: (mainProperty as any)?.surroundings?.map((s: any) => s.id) || onboardingData?.surroundings || [],
-            // Keep existing images
-            homeImages: onboardingData?.homeImages || [],
-          };
-          
-          onboardingPayload.append("data", JSON.stringify(onboardingDataForBackend));
-          currentFiles.forEach((file) => {
-            onboardingPayload.append("homeImages", file);
-          });
-
-          await axios.post("https://vacanzagreece.gr/api/onboarding", onboardingPayload, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
-            },
-          });
+          await dispatch(uploadGalleryImages(currentFiles)).unwrap();
         } catch (onboardingErr) {
           console.error("Error updating onboarding gallery:", onboardingErr);
-          // We don't fail the whole operation if only the gallery update fails
         }
-      } else {
-        const jsonPayload = {
-          phoneNumber: currentFormData.phoneNumber,
-          address: currentFormData.address,
-          ageRange: currentFormData.ageRange,
-          employmentStatus: currentFormData.employmentStatus,
-          travelType: currentFormData.travelType,
-          favoriteDestinations: currentFormData.favoriteDestinations,
-          travelMostlyWith: currentFormData.travelMostlyWith,
-          isTravelWithPets: currentFormData.isTravelWithPets,
-          notes: currentFormData.notes,
-          photo: currentFormData.photoUrl || undefined,
-        };
-
-        response = await axios.patch("https://vacanzagreece.gr/api/user/me", jsonPayload, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
       }
 
       if (response.data) {
@@ -292,14 +231,12 @@ const ProfileForm = () => {
           fullName: userData.fullName,
         };
 
-        // Update local formData with the new photo URL from server
         setFormData((prev) => ({ ...prev, photoUrl: userData.photo || "" }));
-
         dispatch(setCredentials({ user: newAuthUser, token: token! }));
         localStorage.setItem("user", JSON.stringify(newAuthUser));
       }
 
-      // Clear pending files if any were uploaded
+      // Clear pending files
       if (currentFiles.length > 0) {
         setFiles([]);
       }
@@ -884,7 +821,7 @@ const ProfileForm = () => {
               </button>
               <button
                 type="button"
-                onClick={confirmDeleteImage}
+                onClick={handleDelete}
                 disabled={isSubmitting}
                 className="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium transition-colors shadow-lg shadow-red-200 disabled:opacity-50"
               >
