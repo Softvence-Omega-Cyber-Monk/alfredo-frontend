@@ -74,7 +74,7 @@ const Signup = () => {
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
-        phoneNumber: data.phoneNumber,
+        phoneNumber: data.phoneNumber || undefined,
         password: data.password,
         referralCode: data.referralCode,
       })
