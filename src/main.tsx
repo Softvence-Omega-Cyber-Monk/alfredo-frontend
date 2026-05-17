@@ -10,10 +10,13 @@ import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n.ts";
 import Loader from "./components/reusable/Loader.tsx";
 import AuthInitializer from "./common/AuthInitializer.tsx";
+import LanguageInitializer from "./common/LanguageInitializer.tsx";
+
 const savedLanguage = localStorage.getItem("i18nextLng");
 if (savedLanguage) {
   i18n.changeLanguage(savedLanguage);
 }
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
@@ -25,19 +28,21 @@ createRoot(document.getElementById("root")!).render(
             </div>
           }
         >
-          <AuthInitializer>
-            <RouterProvider router={routes} />
-            <Toaster
-              toastOptions={{
-                style: {
-                  background: "#153661f1",
-                  border: "#2C68B8",
-                  color: "white",
-                },
-              }}
-              position="top-right"
-            />
-          </AuthInitializer>
+          <LanguageInitializer>
+            <AuthInitializer>
+              <RouterProvider router={routes} />
+              <Toaster
+                toastOptions={{
+                  style: {
+                    background: "#153661f1",
+                    border: "#2C68B8",
+                    color: "white",
+                  },
+                }}
+                position="top-right"
+              />
+            </AuthInitializer>
+          </LanguageInitializer>
         </Suspense>
       </I18nextProvider>
     </Provider>

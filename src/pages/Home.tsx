@@ -17,9 +17,9 @@ const Home = () => {
       <CommunityStats />
       <Discover />
       <WhyChooseUs />
-      <ChooseYourPlan />
       <FutureList />
       <Testimonial />
+      <ChooseYourPlan />
       <Subscribe />
       <Social />
     </>
