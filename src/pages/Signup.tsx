@@ -20,7 +20,12 @@ import {
 } from "@/lib/data/termsAndCondition";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-import { signInWithPopup } from "firebase/auth";
+import {
+  signInWithPopup,
+  fetchSignInMethodsForEmail,
+  linkWithCredential,
+  FacebookAuthProvider,
+} from "firebase/auth";
 import { auth, googleProvider, facebookProvider } from "@/lib/firebase";
 
 const signupSchema = z
@@ -163,17 +168,12 @@ const Signup = () => {
       const user = result.user;
       const idToken = await user.getIdToken();
 
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/auth/facebook`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({ idToken }),
-        }
-      );
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/facebook`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ idToken }),
+      });
 
       const data = await response.json();
 
@@ -187,12 +187,7 @@ const Signup = () => {
           lastName: (data.user.fullName || "").split(" ").slice(1).join(" ") || data.user.lastName || "",
         };
 
-        dispatch(
-          setCredentials({
-            user: formattedUser,
-            token: data.accessToken,
-          })
-        );
+        dispatch(setCredentials({ user: formattedUser, token: data.accessToken }));
 
         if (!data.user.hasOnboarded) {
           navigate("/onboarding");
@@ -200,8 +195,79 @@ const Signup = () => {
           navigate("/dashboard");
         }
       }
-    } catch (error) {
-      console.error("Facebook login error::", error);
+    } catch (error: any) {
+      if (error.code === "auth/account-exists-with-different-credential") {
+        const email = error.customData?.email;
+        const pendingCred = FacebookAuthProvider.credentialFromError(error);
+
+        if (!email || !pendingCred) {
+          alert("Login failed. Please try again.");
+          return;
+        }
+
+        // Find what provider this email is registered with
+        const methods = await fetchSignInMethodsForEmail(auth, email);
+
+        if (methods.includes("google.com")) {
+          // Ask user to sign in with Google first, then link Facebook
+          alert(
+            `This email (${email}) is already linked to a Google account. Please sign in with Google first — your Facebook account will be linked automatically.`
+          );
+
+          try {
+            // Sign in with Google
+            const googleResult = await signInWithPopup(auth, googleProvider);
+
+            // Link Facebook credential to the Google account
+            await linkWithCredential(googleResult.user, pendingCred);
+
+            // Now get the ID token and send to backend as Google login
+            const idToken = await googleResult.user.getIdToken();
+
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/google`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              body: JSON.stringify({ idToken }),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              localStorage.setItem("user", JSON.stringify(data.user));
+              localStorage.setItem("token", data.accessToken);
+
+              const formattedUser = {
+                ...data.user,
+                firstName: (data.user.fullName || "").split(" ")[0] || data.user.firstName || "",
+                lastName: (data.user.fullName || "").split(" ").slice(1).join(" ") || data.user.lastName || "",
+              };
+
+              dispatch(setCredentials({ user: formattedUser, token: data.accessToken }));
+
+              if (!data.user.hasOnboarded) {
+                navigate("/onboarding");
+              } else {
+                navigate("/dashboard");
+              }
+            }
+          } catch (linkError) {
+            console.error("Account linking error:", linkError);
+            alert("Failed to link accounts. Please contact support.");
+          }
+        } else if (methods.includes("password")) {
+          alert(
+            `This email (${email}) is already registered with email/password. Please log in with your password instead.`
+          );
+        } else {
+          alert(`This email is already registered with: ${methods.join(", ")}. Please use that method to log in.`);
+        }
+      } else if (error.code === "auth/popup-closed-by-user") {
+        // User closed the popup — do nothing
+        console.log("Popup closed by user");
+      } else {
+        console.error("Facebook login error:", error.code, error.message);
+      }
     }
   };
 
