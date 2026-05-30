@@ -32,6 +32,7 @@ const AuthSection: React.FC<Props> = ({
   setMobileMenuOpen,
 }) => {
   const [popoverOpen, setPopoverOpen] = useState(false);
+  const [joinPopoverOpen, setJoinPopoverOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [hoveredLogout, setHoveredLogout] = useState(false);
   const navigate = useNavigate();
@@ -84,21 +85,37 @@ const AuthSection: React.FC<Props> = ({
     return (
       <div className="flex items-center gap-2">
         <LanguageSwitcher />
-        {/* <PrimaryButton
-          title="Join"
-          onClick={() => navigate("/signup")}
-          textColor="text-primary-blue text-sm md:text-base"
-          bgColor="bg-white"
-          bgImage="/buttonHomeWhite.svg"
-          borderColor="border-primary-blue"
-          className="px-2 py-2" 
-        /> */}
-        <PrimaryButton
-          title={t("navigation.Join")}
-          onClick={() => navigate("/signup")}
-          textColor="text-white text-sm md:text-base"
-          bgColor="bg-primary-blue"
-        />
+        <Popover open={joinPopoverOpen} onOpenChange={setJoinPopoverOpen}>
+          <PopoverTrigger>
+            <PrimaryButton
+              title={t("navigation.Join")}
+              textColor="text-white text-sm md:text-base"
+              bgColor="bg-primary-blue"
+            />
+          </PopoverTrigger>
+          <PopoverContent className="bg-white text-dark-3 w-[190px] md:w-[240px] mt-2 z-200 border-none rounded-xl p-4">
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={() => {
+                  setJoinPopoverOpen(false);
+                  navigate("/signup");
+                }}
+                className="w-full px-4 cursor-pointer py-2 bg-primary-blue text-white rounded-lg hover:bg-blue-600 transition-colors text-sm md:text-base font-medium"
+              >
+                {t("navigation.signup")}
+              </button>
+              <button
+                onClick={() => {
+                  setJoinPopoverOpen(false);
+                  navigate("/login");
+                }}
+                className="w-full cursor-pointer px-4 py-2 bg-white text-primary-blue border border-primary-blue rounded-lg hover:bg-blue-50 transition-colors text-sm md:text-base font-medium"
+              >
+                {t("navigation.Login")}
+              </button>
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
     );
 
@@ -126,7 +143,7 @@ const AuthSection: React.FC<Props> = ({
                   alt=""
                   className={clsx(
                     "transition-transform duration-300",
-                    popoverOpen ? "rotate-180" : "rotate-0"
+                    popoverOpen ? "rotate-180" : "rotate-0",
                   )}
                 />
               </div>
@@ -159,7 +176,7 @@ const AuthSection: React.FC<Props> = ({
             <span
               className={clsx(
                 "text-base md:text-lg",
-                hoveredItem === item.path ? "text-dark-2" : "text-dark-3"
+                hoveredItem === item.path ? "text-dark-2" : "text-dark-3",
               )}
             >
               {t(item.title)}
@@ -180,7 +197,7 @@ const AuthSection: React.FC<Props> = ({
           <span
             className={clsx(
               "text-base md:text-lg",
-              hoveredLogout ? "text-[#E33A4B]" : "text-dark-3"
+              hoveredLogout ? "text-[#E33A4B]" : "text-dark-3",
             )}
           >
             {t("navigation.logout")}

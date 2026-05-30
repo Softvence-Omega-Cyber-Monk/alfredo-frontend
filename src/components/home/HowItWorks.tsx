@@ -1,6 +1,6 @@
 import CommonWrapper from "@/common/CommonWrapper";
 import ClientHeading from "../reusable/ClientHeading";
-import img1 from "@/assets/home/htwImg1.png";
+import img1 from "@/assets/home/image1.png";
 import img2 from "@/assets/home/htwImg2.png";
 import img3 from "@/assets/home/htwImg3.png";
 

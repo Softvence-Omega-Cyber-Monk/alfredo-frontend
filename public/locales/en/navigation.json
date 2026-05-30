@@ -11,6 +11,7 @@
     "settings": "Settings",
     "logout": "Logout",
     "Join": "Join",
-    "Login": "Login"
+    "Login": "Login",
+    "signup": "Sign Up"
   }
 }

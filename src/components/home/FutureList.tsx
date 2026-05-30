@@ -16,12 +16,9 @@ import { fetchFavorites } from "@/store/Slices/FavoritesSlice/favoritesSlice";
 const FutureList = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { featuredProperties } = useAppSelector(
-    (state) => state.property
-  );
+  const { featuredProperties } = useAppSelector((state) => state.property);
 
   const displayProperties = featuredProperties;
-
 
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const { t } = useTranslation("futureList");
@@ -38,8 +35,6 @@ const FutureList = () => {
       dispatch(fetchFavorites());
     }
   }, [dispatch, isAuthenticated]);
-
-
 
   return (
     <div className="mt-16">
@@ -58,7 +53,11 @@ const FutureList = () => {
               coverImage={card.coverImage}
               avatarImage={card.images?.[0]?.url || "/avatar-placeholder.png"}
               rating={"5.0"}
-              ownerName={isUserSubscribed ? card.owner?.fullName || "Unknown" : (card.owner?.fullName || "Unknown").split(" ")[0]}
+              ownerName={
+                isUserSubscribed
+                  ? card.owner?.fullName || "Unknown"
+                  : (card.owner?.fullName || "Unknown").split(" ")[0]
+              }
               location={card.location}
               title={card.title}
               price={card.price}
@@ -80,7 +79,7 @@ const FutureList = () => {
               if (isUserSubscribed) {
                 navigate("/places");
               } else {
-                navigate("/plans");
+                navigate("/signup");
               }
             }}
           />
