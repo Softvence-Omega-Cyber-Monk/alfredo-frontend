@@ -36,6 +36,7 @@ import ExchangeRequest from "@/pages/ExchangeRequest";
 import ExchangeRequestDetails from "@/components/ExchangeRequest/ExchangeRequestDetails";
 import Success from "@/pages/Success";
 import Cancel from "@/pages/Cancel";
+import VacanzaSavingsCalculator from "../pages/Calculator";
 
 const routes = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const routes = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/calculator",
+        element: <VacanzaSavingsCalculator />,
       },
       {
         path: "/articles",

@@ -8,11 +8,17 @@ import FutureList from "../components/home/FutureList";
 import Testimonial from "../components/reusable/Testimonial";
 import Subscribe from "../components/reusable/Subscribe";
 import Social from "@/components/reusable/Social";
+import CalculatorSection from "@/components/calculator/CalculatorSection";
+import CtaButton from "@/components/reusable/CtaButton/CtaButton";
 
 const Home = () => {
   return (
     <>
       <Banner />
+      <CalculatorSection isHome={true} />
+      <div className="flex items-center justify-center">
+        <CtaButton />
+      </div>
       <HowItWorks />
       <CommunityStats />
       <Discover />
