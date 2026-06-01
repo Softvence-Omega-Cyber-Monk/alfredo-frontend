@@ -1,3 +1,4 @@
+import CommonWrapper from "@/common/CommonWrapper";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -144,20 +145,11 @@ export default function CalculatorSection({ isHome = false, className = "" }: Ca
 
 
     return (
-        <div className={className || (isHome ? "card w-full max-w-5xl mx-auto my-12" : "card w-1/2 mx-auto")} id="calculator">
-            <style>{`
+        <CommonWrapper>
+            <div className={className || (isHome ? "card w-full max-w-5xl mx-auto my-12" : "card w-full md:w-3/4 lg:w-1/2 mx-auto")} id="calculator">
+                <style>{`
         :root{--blue:#1565d8;--dark:#102033;--muted:#607086;--bg:#f4f9ff;--card:#fff}
-        *{box-sizing:border-box} 
-        body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(#eef7ff,#fff);color:var(--dark)}
-        .wrap{max-width:1120px;margin:auto;padding:24px}
-        header{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px}
-        .logo{font-weight:800;font-size:22px;color:var(--blue)}
-        .btn{background:var(--blue);color:#fff;border:0;border-radius:14px;padding:14px 20px;font-weight:700;text-decoration:none;display:inline-block;cursor:pointer}
-        .btn.secondary{background:#fff;color:var(--blue);border:1px solid #d7e7ff}
-        .hero{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
-        h1{font-size:52px;line-height:1.02;margin:0 0 18px}
-        p{font-size:18px;line-height:1.6;color:var(--muted)}
-        .badge{display:inline-block;background:#fff;color:var(--blue);padding:10px 14px;border-radius:999px;font-weight:700;margin-bottom:18px;box-shadow:0 6px 18px rgba(0,0,0,.06)}
+        *{box-sizing:border-box}
         .card{background:var(--card);border-radius:28px;padding:28px;box-shadow:0 18px 50px rgba(16,32,51,.12)}
         label{display:block;font-weight:700;margin-top:20px}
         .row{display:flex;justify-content:space-between;margin-bottom:8px;gap:12px}
@@ -166,15 +158,13 @@ export default function CalculatorSection({ isHome = false, className = "" }: Ca
         input[type=number]:focus{border-color:var(--blue)}
         .input-wrap{display:flex;align-items:center;gap:10px}
         .currency{font-weight:800;color:var(--blue)}
+        .btn{background:var(--blue);color:#fff;border:0;border-radius:14px;padding:14px 20px;font-weight:700;text-decoration:none;display:inline-block;cursor:pointer}
+        .btn.secondary{background:#fff;color:var(--blue);border:1px solid #d7e7ff}
         .result{background:var(--blue);color:#fff;border-radius:24px;padding:26px;margin-top:26px}
         .result small{opacity:1;font-size:24px;font-weight:900;letter-spacing:-0.8px;display:block;margin-bottom:8px}
         .big{font-size:84px;font-weight:900;margin:6px 0 22px;color:#31f06b;letter-spacing:-3px;line-height:0.95;text-shadow:0 0 18px rgba(49,240,107,0.38)}
-        .grid3{display:grid;grid-template-columns:minmax(92px,1fr) auto minmax(92px,1fr);gap:24px;font-size:18px;justify-content:center;align-items:center;text-align:center}
         .email{display:flex;gap:10px;margin-top:22px}
         .email input{flex:1;border:1px solid #d8e2ef;border-radius:14px;padding:14px;font-size:16px}
-        .features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
-        .feature{background:#fff;border-radius:22px;padding:22px;box-shadow:0 8px 24px rgba(16,32,51,.07);position:relative;overflow:hidden}
-        .feature-mark{width:54px;height:54px;border-radius:18px;background:linear-gradient(145deg,#f5fbff,#eaf4ff);color:var(--blue);display:flex;align-items:center;justify-content:center;margin-bottom:15px;box-shadow:inset 0 0 0 1px rgba(21,101,216,.10),0 8px 18px rgba(21,101,216,.08)}
         .compare-row{display:grid;grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr);align-items:start;justify-items:center;gap:14px;width:100%;max-width:620px;margin:0 auto 24px auto;text-align:center}
         .compare-item{width:100%;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center}
         .compare-item small{display:flex;width:100%;min-height:72px;align-items:center;justify-content:center;text-align:center;white-space:normal;line-height:1.05;font-size:30px;font-weight:900;color:#fff;margin:0}
@@ -182,29 +172,104 @@ export default function CalculatorSection({ isHome = false, className = "" }: Ca
         .compare-vs{width:54px;min-height:72px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;font-size:32px;color:#fff;line-height:1;padding-top:0}
         .compare-separator{width:84%;height:1px;background:rgba(255,255,255,.28);margin:0 auto 28px auto}
 
-        @media(min-width:851px){
-          .hero{align-items:start}
-          .hero > div:first-child{order:2;display:flex;flex-direction:column;justify-content:flex-start;padding-top:10px}
-          .hero > .card{order:1}
-          .desktop-hero-image{width:100%;max-width:100%;height:340px;border-radius:28px;object-fit:cover;display:block;margin-bottom:28px;box-shadow:0 18px 50px rgba(16,32,51,.12)}
-        }
-
-        @media(max-width:850px){
-          .desktop-hero-image{height:240px;border-radius:22px;margin-bottom:22px}
-          .wrap{padding:16px}
-          h1{font-size:clamp(34px,8vw,46px)}
-          .big{font-size:clamp(64px,19vw,92px)}
-          .compare-row{grid-template-columns:minmax(0,1fr) 46px minmax(0,1fr);gap:8px}
+        @media(max-width:640px){
+          .card{padding:18px;border-radius:20px}
+          .result{padding:18px;border-radius:18px;margin-top:18px}
+          .result small{font-size:18px;letter-spacing:-0.4px}
+          .big{font-size:clamp(42px,13vw,64px);margin:4px 0 14px;letter-spacing:-2px}
+          .compare-row{grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr);gap:6px}
+          .compare-item small{font-size:20px;min-height:48px}
+          .compare-item b{font-size:26px;margin-top:10px}
+          .compare-vs{font-size:22px;width:40px;min-height:48px}
+          .compare-separator{margin:0 auto 16px auto}
+          .email{flex-direction:column;gap:8px}
+          .email input{width:100%}
+          label{margin-top:14px;font-size:14px}
           .btn{width:100%;text-align:center}
         }
       `}</style>
 
-            {isHome ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                    <div className="flex flex-col gap-4">
-                        <h2 style={{ marginTop: 0, marginBottom: "12px" }}>{t.calcTitle}</h2>
+                {isHome ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                        <div className="flex flex-col gap-4">
+                            <h2 style={{ marginTop: 0, marginBottom: "12px" }}>{t.calcTitle}</h2>
 
-                        <label style={{ marginTop: 0 }}>
+                            <label style={{ marginTop: 0 }}>
+                                <div className="row">
+                                    <span>{t.nightsLabel}</span>
+                                    <span>{nights}</span>
+                                </div>
+                                <input
+                                    type="range"
+                                    min="2"
+                                    max="45"
+                                    value={nights}
+                                    onChange={(e) => setNights(Number(e.target.value))}
+                                />
+                            </label>
+
+                            <label style={{ marginTop: "12px" }}>
+                                <div className="row">
+                                    <span>{t.travelersLabel}</span>
+                                    <span>{travelers}</span>
+                                </div>
+                                <input
+                                    type="range"
+                                    min="1"
+                                    max="8"
+                                    value={travelers}
+                                    onChange={(e) => setTravelers(Number(e.target.value))}
+                                />
+                            </label>
+
+                            <label style={{ marginTop: "12px" }}>
+                                <div className="row">
+                                    <span>{t.tripsLabel}</span>
+                                    <span>{trips}</span>
+                                </div>
+                                <input
+                                    type="range"
+                                    min="1"
+                                    max="8"
+                                    value={trips}
+                                    onChange={(e) => setTrips(Number(e.target.value))}
+                                />
+                            </label>
+                        </div>
+
+                        <div className="flex flex-col gap-4">
+                            <div className="result" style={{ marginTop: 0 }}>
+                                <div className="compare-row">
+                                    <div className="compare-item">
+                                        <small>{t.hotelLabel}</small>
+                                        <b>{fmt(hotelCost)}</b>
+                                    </div>
+                                    <div className="compare-vs">VS</div>
+                                    <div className="compare-item">
+                                        <small>Vacanza</small>
+                                        <b>{fmt(membership)}</b>
+                                    </div>
+                                </div>
+
+                                <div className="compare-separator"></div>
+
+                                <div style={{ textAlign: 'center' }}>
+                                    <small>{t.savingLabel}</small>
+                                    <div className="big">{fmt(savings)}</div>
+                                </div>
+                            </div>
+
+                            <form className="email" action="https://vacanzagreece.gr/signup" method="get" style={{ marginTop: 0 }}>
+                                <input type="email" placeholder={t.email} />
+                                <button className="btn" type="submit">{t.start}</button>
+                            </form>
+                        </div>
+                    </div>
+                ) : (
+                    <>
+                        <h2>{t.calcTitle}</h2>
+
+                        <label>
                             <div className="row">
                                 <span>{t.nightsLabel}</span>
                                 <span>{nights}</span>
@@ -218,7 +283,7 @@ export default function CalculatorSection({ isHome = false, className = "" }: Ca
                             />
                         </label>
 
-                        <label style={{ marginTop: "12px" }}>
+                        <label>
                             <div className="row">
                                 <span>{t.travelersLabel}</span>
                                 <span>{travelers}</span>
@@ -232,7 +297,7 @@ export default function CalculatorSection({ isHome = false, className = "" }: Ca
                             />
                         </label>
 
-                        <label style={{ marginTop: "12px" }}>
+                        <label>
                             <div className="row">
                                 <span>{t.tripsLabel}</span>
                                 <span>{trips}</span>
@@ -245,10 +310,8 @@ export default function CalculatorSection({ isHome = false, className = "" }: Ca
                                 onChange={(e) => setTrips(Number(e.target.value))}
                             />
                         </label>
-                    </div>
 
-                    <div className="flex flex-col gap-4">
-                        <div className="result" style={{ marginTop: 0 }}>
+                        <div className="result">
                             <div className="compare-row">
                                 <div className="compare-item">
                                     <small>{t.hotelLabel}</small>
@@ -269,85 +332,13 @@ export default function CalculatorSection({ isHome = false, className = "" }: Ca
                             </div>
                         </div>
 
-                        <form className="email" action="https://vacanzagreece.gr/signup" method="get" style={{ marginTop: 0 }}>
+                        <form className="email" action="https://vacanzagreece.gr/signup" method="get">
                             <input type="email" placeholder={t.email} />
                             <button className="btn" type="submit">{t.start}</button>
                         </form>
-                    </div>
-                </div>
-            ) : (
-                <>
-                    <h2>{t.calcTitle}</h2>
-
-                    <label>
-                        <div className="row">
-                            <span>{t.nightsLabel}</span>
-                            <span>{nights}</span>
-                        </div>
-                        <input
-                            type="range"
-                            min="2"
-                            max="45"
-                            value={nights}
-                            onChange={(e) => setNights(Number(e.target.value))}
-                        />
-                    </label>
-
-                    <label>
-                        <div className="row">
-                            <span>{t.travelersLabel}</span>
-                            <span>{travelers}</span>
-                        </div>
-                        <input
-                            type="range"
-                            min="1"
-                            max="8"
-                            value={travelers}
-                            onChange={(e) => setTravelers(Number(e.target.value))}
-                        />
-                    </label>
-
-                    <label>
-                        <div className="row">
-                            <span>{t.tripsLabel}</span>
-                            <span>{trips}</span>
-                        </div>
-                        <input
-                            type="range"
-                            min="1"
-                            max="8"
-                            value={trips}
-                            onChange={(e) => setTrips(Number(e.target.value))}
-                        />
-                    </label>
-
-                    <div className="result">
-                        <div className="compare-row">
-                            <div className="compare-item">
-                                <small>{t.hotelLabel}</small>
-                                <b>{fmt(hotelCost)}</b>
-                            </div>
-                            <div className="compare-vs">VS</div>
-                            <div className="compare-item">
-                                <small>Vacanza</small>
-                                <b>{fmt(membership)}</b>
-                            </div>
-                        </div>
-
-                        <div className="compare-separator"></div>
-
-                        <div style={{ textAlign: 'center' }}>
-                            <small>{t.savingLabel}</small>
-                            <div className="big">{fmt(savings)}</div>
-                        </div>
-                    </div>
-
-                    <form className="email" action="https://vacanzagreece.gr/signup" method="get">
-                        <input type="email" placeholder={t.email} />
-                        <button className="btn" type="submit">{t.start}</button>
-                    </form>
-                </>
-            )}
-        </div>
+                    </>
+                )}
+            </div>
+        </CommonWrapper>
     );
 }

@@ -137,11 +137,15 @@ const VacanzaSavingsCalculator: React.FC = () => {
         .logo{font-weight:800;font-size:22px;color:var(--blue)}
         .btn{background:var(--blue);color:#fff;border:0;border-radius:14px;padding:14px 20px;font-weight:700;text-decoration:none;display:inline-block;cursor:pointer}
         .btn.secondary{background:#fff;color:var(--blue);border:1px solid #d7e7ff}
-        .hero{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+
+        /* Hero: flex-col on mobile, flex-row on desktop */
+        .hero{display:flex;flex-direction:column;gap:28px;align-items:stretch}
+        .hero > *{min-width:0}
+
         h1{font-size:52px;line-height:1.02;margin:0 0 18px}
         p{font-size:18px;line-height:1.6;color:var(--muted)}
         .badge{display:inline-block;background:#fff;color:var(--blue);padding:10px 14px;border-radius:999px;font-weight:700;margin-bottom:18px;box-shadow:0 6px 18px rgba(0,0,0,.06)}
-        .card{background:var(--card);border-radius:28px;padding:28px;box-shadow:0 18px 50px rgba(16,32,51,.12)}
+        .card{background:var(--card);border-radius:28px;padding:28px;box-shadow:0 18px 50px rgba(16,32,51,.12);width:100%}
         label{display:block;font-weight:700;margin-top:20px}
         .row{display:flex;justify-content:space-between;margin-bottom:8px;gap:12px}
         input[type=range]{width:100%}
@@ -155,7 +159,7 @@ const VacanzaSavingsCalculator: React.FC = () => {
         .grid3{display:grid;grid-template-columns:minmax(92px,1fr) auto minmax(92px,1fr);gap:24px;font-size:18px;justify-content:center;align-items:center;text-align:center}
         .email{display:flex;gap:10px;margin-top:22px}
         .email input{flex:1;border:1px solid #d8e2ef;border-radius:14px;padding:14px;font-size:16px}
-        .features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+        .features{display:grid;grid-template-columns:1fr;gap:18px;margin-top:40px}
         .feature{background:#fff;border-radius:22px;padding:22px;box-shadow:0 8px 24px rgba(16,32,51,.07);position:relative;overflow:hidden}
         .feature-mark{width:54px;height:54px;border-radius:18px;background:linear-gradient(145deg,#f5fbff,#eaf4ff);color:var(--blue);display:flex;align-items:center;justify-content:center;margin-bottom:15px;box-shadow:inset 0 0 0 1px rgba(21,101,216,.10),0 8px 18px rgba(21,101,216,.08)}
         .compare-row{display:grid;grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr);align-items:start;justify-items:center;gap:14px;width:100%;max-width:620px;margin:0 auto 24px auto;text-align:center}
@@ -164,21 +168,48 @@ const VacanzaSavingsCalculator: React.FC = () => {
         .compare-item b{display:block;width:100%;text-align:center;margin-top:16px;font-size:40px;line-height:1;color:#fff;font-weight:900}
         .compare-vs{width:54px;min-height:72px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;font-size:32px;color:#fff;line-height:1;padding-top:0}
         .compare-separator{width:84%;height:1px;background:rgba(255,255,255,.28);margin:0 auto 28px auto}
+        .desktop-hero-image{width:100%;max-width:100%;height:240px;border-radius:22px;object-fit:cover;display:block;margin-bottom:22px;box-shadow:0 18px 50px rgba(16,32,51,.12)}
 
-        @media(min-width:851px){
-          .hero{align-items:start}
-          .hero > div:first-child{order:2;display:flex;flex-direction:column;justify-content:flex-start;padding-top:10px}
-          .hero > .card{order:1}
-          .desktop-hero-image{width:100%;max-width:100%;height:340px;border-radius:28px;object-fit:cover;display:block;margin-bottom:28px;box-shadow:0 18px 50px rgba(16,32,51,.12)}
+        @media(min-width:640px) and (max-width:900px){
+          .features{grid-template-columns:repeat(2,1fr)}
         }
 
+        @media(min-width:901px){
+          .features{grid-template-columns:repeat(3,1fr)}
+        }
+
+        /* Desktop: flex-row, each child takes 50% */
+        @media(min-width:851px){
+          .hero{flex-direction:row;gap:36px;align-items:flex-start}
+          .hero > div:first-child{order:2;flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding-top:10px}
+          .hero > .card{order:1;flex:1}
+          .desktop-hero-image{height:340px;border-radius:28px;margin-bottom:28px}
+        }
+
+        /* Tablet */
         @media(max-width:850px){
-          .desktop-hero-image{height:240px;border-radius:22px;margin-bottom:22px}
           .wrap{padding:16px}
           h1{font-size:clamp(34px,8vw,46px)}
-          .big{font-size:clamp(64px,19vw,92px)}
-          .compare-row{grid-template-columns:minmax(0,1fr) 46px minmax(0,1fr);gap:8px}
           .btn{width:100%;text-align:center}
+        }
+
+        /* Mobile: scale down inner calculator elements */
+        @media(max-width:640px){
+          .wrap{padding:12px}
+          .card{padding:18px;border-radius:20px}
+          .result{padding:18px;border-radius:18px;margin-top:18px}
+          .result small{font-size:18px;letter-spacing:-0.4px}
+          .big{font-size:clamp(42px,13vw,64px);margin:4px 0 14px;letter-spacing:-2px}
+          .compare-row{grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr);gap:6px}
+          .compare-item small{font-size:18px;min-height:44px}
+          .compare-item b{font-size:24px;margin-top:8px}
+          .compare-vs{font-size:20px;width:40px;min-height:44px}
+          .compare-separator{margin:0 auto 16px auto}
+          .email{flex-direction:column;gap:8px}
+          .email input{width:100%}
+          label{margin-top:14px;font-size:14px}
+          h1{font-size:clamp(28px,7vw,38px)}
+          p{font-size:15px}
         }
       `}</style>
 
@@ -215,8 +246,10 @@ const VacanzaSavingsCalculator: React.FC = () => {
                         {t.socialProof}
                     </div>
 
-                    <a className="btn" href="#calculator">{t.calcCta}</a>
-                    <a className="btn secondary" href="https://vacanzagreece.gr/signup">{t.howCta}</a>
+                    <div className="flex flex-col sm:flex-row gap-4 mt-4">
+                        <a className="btn" href="#calculator" style={{ textAlign: 'center' }}>{t.calcCta}</a>
+                        <a className="btn secondary" href="https://vacanzagreece.gr/signup" style={{ textAlign: 'center' }}>{t.howCta}</a>
+                    </div>
                 </div>
                 <CalculatorSection className="card" />
 
