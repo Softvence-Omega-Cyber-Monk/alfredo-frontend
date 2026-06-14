@@ -32,17 +32,18 @@ jobs:
         uses: appleboy/ssh-action@v0.1.5 
         with: 
           host: ${{ secrets.VPS_HOST }}
-          username: root
+          username: juliano
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            mkdir -p /var/www/frontend/dist
-            rm -rf /var/www/frontend/dist/*
+            sudo mkdir -p /var/www/frontend/dist
+            sudo rm -rf /var/www/frontend/dist/*
+            sudo chown -R juliano:juliano /var/www/frontend
 
       - name: Upload build files to VPS
         uses: appleboy/scp-action@v0.1.5
         with:
           host: ${{ secrets.VPS_HOST }}
-          username: root
+          username: juliano
           key: ${{ secrets.VPS_SSH_KEY }}
           source: "dist/*"
           target: "/var/www/frontend"
