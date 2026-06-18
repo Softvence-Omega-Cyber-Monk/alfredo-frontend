@@ -4,6 +4,7 @@ import ClientHeading from "@/components/reusable/ClientHeading";
 import Conversation from "@/components/reusable/Conversation";
 import ServicePlan from "@/components/reusable/ServicePlan";
 import Subscribe from "@/components/reusable/Subscribe";
+import SocialProofPopup from "@/components/reusable/SocialProofPopup";
 import { bonus } from "@/lib/AccordionData/accordionData";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
@@ -40,6 +41,7 @@ const Plans: FC = () => {
       </CommonWrapper>
 
       <Subscribe />
+      <SocialProofPopup />
     </div>
   );
 };

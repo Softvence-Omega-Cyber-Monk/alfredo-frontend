@@ -10,6 +10,8 @@ import Subscribe from "../components/reusable/Subscribe";
 import Social from "@/components/reusable/Social";
 import CalculatorSection from "@/components/calculator/CalculatorSection";
 import CtaButton from "@/components/reusable/CtaButton/CtaButton";
+import NewsletterPopup from "@/components/home/NewsletterPopup";
+import SocialProofPopup from "@/components/reusable/SocialProofPopup";
 
 const Home = () => {
   return (
@@ -28,6 +30,8 @@ const Home = () => {
       <ChooseYourPlan />
       <Subscribe />
       <Social />
+      <NewsletterPopup />
+      <SocialProofPopup />
     </>
   );
 };

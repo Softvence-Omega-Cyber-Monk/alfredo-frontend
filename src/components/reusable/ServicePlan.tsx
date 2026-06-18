@@ -8,6 +8,8 @@ import { Button } from "../ui/button";
 import ReusableButton from "./ReusableButton";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 interface Translation {
   id: string;
@@ -55,6 +57,12 @@ const ServicePlan: FC = () => {
 
   const { t, i18n } = useTranslation("ourplan");
   const currentLanguage = i18n.language;
+
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
+
+  // Guest plan translations
+  const guestFeatures = t("ourplan.guestPlan.features", { returnObjects: true }) as string[];
+  const guestDisabledFeatures = t("ourplan.guestPlan.disabledFeatures", { returnObjects: true }) as string[];
 
   useEffect(() => {
     const fetchPlans = async () => {
@@ -139,6 +147,88 @@ const ServicePlan: FC = () => {
     <>
       <section className="flex items-center justify-center">
         <div className="flex flex-col lg:flex-row gap-14 md:gap-6 lg:gap-6">
+          {/* Guest Access Card — Static, always first */}
+          <div
+            className="relative p-[40px] flex flex-col w-full max-w-[394px] border border-primary-border-color rounded-[24px] text-center min-h-[680px] duration-300 transition-all ease-in-out bg-white hover:shadow-2xl hover:shadow-[#bfd4f0] hover:bg-[#EAF1FA]"
+          >
+            {/* Tag */}
+            <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary-blue text-white text-[16px] px-4 py-[10px] rounded-full shadow-md whitespace-nowrap">
+              {t("ourplan.guestPlan.badge")}
+            </div>
+
+            {/* Content */}
+            <div className="flex flex-col gap-6 flex-grow mt-12">
+              <h2 className="text-[24px] font-semibold text-[#505050] mt-5">
+                {t("ourplan.guestPlan.name")}
+              </h2>
+              <div className="mx-auto mt-1">
+                <p className="text-[64px] font-semibold text-primary-blue leading-tight">
+                  {t("ourplan.guestPlan.price")}
+                </p>
+              </div>
+              <p className="text-[16px] text-[#505050] mt-2">
+                {t("ourplan.guestPlan.description")}
+              </p>
+
+              <div className="border-b border-b-[#EAF1FA]" />
+
+              {/* Enabled features (✅) */}
+              <ul className="space-y-3 text-left">
+                {Array.isArray(guestFeatures) && guestFeatures.map((feature, i) => (
+                  <li
+                    key={`f-${i}`}
+                    className="flex items-center gap-3 text-basic-dark text-4"
+                  >
+                    <img src={check} alt="check icon" className="w-5 h-5 flex-shrink-0" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Disabled features (❌) */}
+              <ul className="space-y-3 text-left">
+                {Array.isArray(guestDisabledFeatures) && guestDisabledFeatures.map((feature, i) => (
+                  <li
+                    key={`d-${i}`}
+                    className="flex items-center gap-3 text-[#999] text-4"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+                      <circle cx="9" cy="9" r="8" stroke="#E05252" strokeWidth="1.5"/>
+                      <path d="M6 6L12 12M12 6L6 12" stroke="#E05252" strokeWidth="1.5" strokeLinecap="round"/>
+                    </svg>
+                    <span className="line-through">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* CTA Button */}
+            {isAuthenticated && user?.hasOnboarded ? (
+              <div className="mt-6 w-full">
+                <button
+                  disabled
+                  className="flex relative z-50 px-8 h-[43px] w-full justify-center items-center gap-2.5 overflow-hidden rounded-[35px] bg-[#8bb8e8] text-white font-[18px] cursor-not-allowed opacity-75"
+                >
+                  {t("ourplan.guestPlan.buttonActive")}
+                </button>
+              </div>
+            ) : (
+              <ReusableButton
+                className="mt-6 w-full"
+                onClick={() => {
+                  if (isAuthenticated && !user?.hasOnboarded) {
+                    window.location.href = "/onboarding";
+                  } else {
+                    window.location.href = "https://vacanzagreece.gr/signup";
+                  }
+                }}
+              >
+                {t("ourplan.guestPlan.button")}
+              </ReusableButton>
+            )}
+          </div>
+
+          {/* Paid plans from backend */}
           {loading ? (
             <p className="text-center">Loading plans...</p>
           ) : (

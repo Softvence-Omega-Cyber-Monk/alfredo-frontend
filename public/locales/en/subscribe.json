@@ -7,5 +7,13 @@
   "subscribe": "Subscribe For Instant Updates",
   "email": "Your email",
   "subscribeBtn": "Subscribe",
-  "disclaimer": "By subscribing, you consent to receive informational and promotional communications"
+  "disclaimer": "By subscribing, you consent to receive informational and promotional communications",
+  "newsletterPopup": {
+    "title": "Join our Newsletter",
+    "subtitle": "to know how it works",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "Your email",
+    "button": "Subscribe",
+    "success": "Thank you for subscribing!"
+  }
 }

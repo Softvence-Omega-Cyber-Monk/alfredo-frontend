@@ -2,8 +2,28 @@
   "ourplan": {
     "title": "our",
     "highlight": "plans",
-    "subtitle1": "Flexible membership options designed to fit every traveler’s needs—",
+    "subtitle1": "Flexible membership options designed to fit every traveler's needs—",
     "subtitle2": "whether you exchange once a year or every month",
+    "guestPlan": {
+      "name": "GUEST ACCESS",
+      "price": "FREE!",
+      "badge": "Guest Access",
+      "description": "Register and upload your house for free, receive messages and requests.",
+      "button": "Choose Plan",
+      "buttonActive": "Current Plan",
+      "features": [
+        "Access the Control Panel",
+        "Upload and manage properties",
+        "Add favourites from the Featured properties",
+        "Receive messages and exchange requests"
+      ],
+      "disabledFeatures": [
+        "Send messages and exchange requests",
+        "Use Advanced Search function",
+        "See members information and last names",
+        "See discount codes"
+      ]
+    },
     "plancard1": {
       "title1": "Traveler",
       "title2": "Premium Traveler",
