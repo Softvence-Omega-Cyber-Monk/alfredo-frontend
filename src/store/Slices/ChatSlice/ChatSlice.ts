@@ -9,6 +9,10 @@ interface ChatMessage {
   content: string;
   createdAt: string;
   exchangeRequestId?: string | null;
+  status?: "SENT" | "READ";
+  attachmentUrl?: string | null;
+  attachmentType?: string | null;
+  attachmentName?: string | null;
 }
 
 interface ChatState {
@@ -57,6 +61,17 @@ const chatSlice = createSlice({
         console.log("⚠️ Message already exists, skipping:", action.payload.id);
       }
     },
+    updateMessageStatus: (
+      state,
+      action: PayloadAction<{ messageIds: string[]; status: "SENT" | "READ" }>
+    ) => {
+      state.messages = state.messages.map((msg) => {
+        if (action.payload.messageIds.includes(msg.id)) {
+          return { ...msg, status: action.payload.status };
+        }
+        return msg;
+      });
+    },
     clearMessages: (state) => {
       console.log("🧹 Clearing all messages");
       state.messages = [];
@@ -85,5 +100,5 @@ const chatSlice = createSlice({
   },
 });
 
-export const { addMessage, clearMessages } = chatSlice.actions;
+export const { addMessage, updateMessageStatus, clearMessages } = chatSlice.actions;
 export default chatSlice.reducer;

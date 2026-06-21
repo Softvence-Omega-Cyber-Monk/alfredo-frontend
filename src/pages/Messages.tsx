@@ -1,18 +1,20 @@
 import { useEffect, useState, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Conversation, Message } from "@/components/messages/types";
 import ConversationsList from "../components/messages/ConversationsList";
 import ChatArea from "../components/messages/ChatArea";
 import ChatInfoPanel from "../components/messages/ChatInfoPanel";
+import DeleteChatModal from "../components/messages/DeleteChatModal";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import {
   fetchChatHistory,
   addMessage,
+  updateMessageStatus,
 } from "@/store/Slices/ChatSlice/ChatSlice";
 import { initSocket } from "@/services/socket";
-import { Socket } from "socket.io-client"; // ADD THIS IMPORT
+import { Socket } from "socket.io-client";
 import axios from "axios";
-import { toast } from "sonner"; // ADD THIS IMPORT
+import { toast } from "sonner";
 
 // Map API response to Conversation type
 const mapApiToConversation = (apiConv: any): Conversation => ({
@@ -20,21 +22,22 @@ const mapApiToConversation = (apiConv: any): Conversation => ({
   name: apiConv.fullName,
   lastMessage: apiConv.lastMessage?.content || "",
   timestamp: apiConv.lastMessage?.createdAt || "",
-  unread: 0, // You can update this if you have unread info
+  unread: 0,
   avatar: apiConv.photo || "/defaultAvatar.png",
-  online: false, // Update if you have online info
-  type: "supplier", // Or "support" if needed
-  rating: 0, // Update if you have rating info
+  online: false,
+  type: "supplier",
+  rating: 0,
   email: apiConv.email || "",
   location: apiConv.onboarding?.homeAddress || "Location not provided",
   achievementBadges: apiConv.achievementBadges || [],
   isSubscribed: apiConv.isSubscribed || false,
 });
+
 const token = localStorage.getItem("token");
+
 // Fetch conversations from /chat/partners/{userId}
 const fetchConversations = async (userId: string): Promise<Conversation[]> => {
   try {
-    // console.log("Fetching conversations for userId:", userId);
     const res = await axios.get(
       `${import.meta.env.VITE_API_URL}/chat/partners/${userId}`,
       {
@@ -66,23 +69,237 @@ const Messages = () => {
   const [, setSocketReady] = useState(false);
   const [searchParams] = useSearchParams();
   const targetUserId = searchParams.get("userId");
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
   const { messages } = useAppSelector((state) => state.chat);
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const userId = user?.id;
+  const isSubscribed = user?.isSubscribed;
 
-  // ADD THIS REF
   const socketRef = useRef<Socket | null>(null);
+  const selectedConversationRef = useRef<Conversation | null>(null);
+
+  // States for new features
+  const [blockedUserIds, setBlockedUserIds] = useState<string[]>([]);
+  const [blockedByThemIds, setBlockedByThemIds] = useState<string[]>([]);
+  const [receivedMessagesCount, setReceivedMessagesCount] = useState<number>(0);
+
+  // Delete Chat Modal State
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deletePartnerId, setDeletePartnerId] = useState("");
+  const [deletePartnerName, setDeletePartnerName] = useState("");
+
+  // Keep ref updated to avoid stale closures in socket listener
+  useEffect(() => {
+    selectedConversationRef.current = selectedConversation;
+  }, [selectedConversation]);
+
+  // Load blocked list on mount
+  const loadBlockedList = async () => {
+    if (!userId) return;
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/chat/block/list`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (Array.isArray(res.data)) {
+        setBlockedUserIds(res.data.map((u: any) => u.blockedId));
+      }
+    } catch (err) {
+      console.error("Failed to fetch blocked users:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (userId) {
+      loadBlockedList();
+    }
+  }, [userId]);
+
+  // Check block status and received count when conversation changes
+  useEffect(() => {
+    if (selectedConversation && userId) {
+      checkBlockStatus(selectedConversation.id);
+      fetchReceivedCount(selectedConversation.id);
+
+      // Emit mark_read socket event when selecting conversation
+      const socket = socketRef.current;
+      if (socket && socket.connected) {
+        socket.emit("mark_read", {
+          userId: userId,
+          senderId: selectedConversation.id,
+        });
+      }
+    }
+  }, [selectedConversation, userId]);
+
+  const checkBlockStatus = async (targetId: string) => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/chat/block/check/${targetId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const { blockedByMe, blockedByThem } = res.data;
+
+      setBlockedUserIds((prev) =>
+        blockedByMe ? [...prev.filter((id) => id !== targetId), targetId] : prev.filter((id) => id !== targetId)
+      );
+
+      setBlockedByThemIds((prev) =>
+        blockedByThem ? [...prev.filter((id) => id !== targetId), targetId] : prev.filter((id) => id !== targetId)
+      );
+    } catch (err) {
+      console.error("Failed to check block status:", err);
+    }
+  };
+
+  const fetchReceivedCount = async (targetId: string) => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/chat/received-count/${targetId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setReceivedMessagesCount(res.data.count);
+    } catch (err) {
+      console.error("Failed to fetch received message count:", err);
+    }
+  };
+
+  const handleBlockUser = async (targetId: string) => {
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/chat/block/${targetId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("User blocked successfully");
+      loadBlockedList();
+      if (selectedConversation?.id === targetId) {
+        checkBlockStatus(targetId);
+      }
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Failed to block user");
+    }
+  };
+
+  const handleUnblockUser = async (targetId: string) => {
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_API_URL}/chat/block/${targetId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("User unblocked successfully");
+      loadBlockedList();
+      if (selectedConversation?.id === targetId) {
+        checkBlockStatus(targetId);
+      }
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Failed to unblock user");
+    }
+  };
+
+  const handleDeleteChatClick = (partnerId: string, partnerName: string) => {
+    setDeletePartnerId(partnerId);
+    setDeletePartnerName(partnerName);
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDeleteChat = async () => {
+    if (!deletePartnerId) return;
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_API_URL}/chat/delete/${deletePartnerId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Conversation deleted permanently");
+      setDeleteModalOpen(false);
+
+      if (userId) {
+        const data = await fetchConversations(userId);
+        setConversations(data);
+        if (selectedConversation?.id === deletePartnerId) {
+          setSelectedConversation(data.length > 0 ? data[0] : null);
+          if (data.length === 0) {
+            setCurrentView("list");
+          }
+        }
+      }
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Failed to delete conversation");
+    }
+  };
+
+  const handleSendAttachment = async (file: File) => {
+    if (!selectedConversation?.id) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/chat/upload`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      const { url, type, name } = res.data;
+
+      const socket = socketRef.current;
+      if (socket && socket.connected) {
+        socket.emit("send_message", {
+          senderId: userId,
+          toUserId: selectedConversation.id,
+          content: `Shared an ${type === "image" ? "image" : "attachment"}: ${name}`,
+          attachmentUrl: url,
+          attachmentType: type,
+          attachmentName: name,
+        });
+      } else {
+        toast.error("Connection lost. Please refresh the page.");
+      }
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Failed to upload file");
+      throw err;
+    }
+  };
 
   useEffect(() => {
     if (userId) {
       fetchConversations(userId).then((data) => {
         console.log("📋 Fetched conversations:", data);
         setConversations(data);
-        
-        // If we have a targetUserId from URL, select it
+
         if (targetUserId) {
           const targetConv = data.find((c) => c.id === targetUserId);
           if (targetConv) {
@@ -92,7 +309,6 @@ const Messages = () => {
           }
         }
 
-        // Fallback: select first conversation if none selected
         if (data.length > 0 && !selectedConversation) {
           setSelectedConversation(data[0]);
         }
@@ -109,7 +325,7 @@ const Messages = () => {
 
     console.log("🔌 Initializing socket in Messages for user:", userId);
     const socket = initSocket(userId);
-    socketRef.current = socket; // STORE IN REF
+    socketRef.current = socket;
 
     const handleConnect = () => {
       console.log("✅ Socket connected in Messages:", socket.id);
@@ -129,7 +345,6 @@ const Messages = () => {
     const handleReceiveMessage = (msg: any) => {
       console.log("📩 Received message in Messages:", msg);
 
-      // Check if message already exists to prevent duplicates
       const messageExists = messages.some((m) => m.id === msg.id);
       if (!messageExists) {
         dispatch(
@@ -140,24 +355,47 @@ const Messages = () => {
             content: msg.content,
             createdAt: msg.createdAt || new Date().toISOString(),
             exchangeRequestId: msg.exchangeRequestId,
+            status: msg.status,
+            attachmentUrl: msg.attachmentUrl,
+            attachmentType: msg.attachmentType,
+            attachmentName: msg.attachmentName,
           })
         );
+
+        // If active conversation, read it & update received counter
+        const activeConv = selectedConversationRef.current;
+        if (activeConv && msg.senderId === activeConv.id) {
+          setReceivedMessagesCount((prev) => prev + 1);
+          socket.emit("mark_read", {
+            userId: userId,
+            senderId: activeConv.id,
+          });
+        }
       }
     };
 
-    // Remove existing listeners to avoid duplicates
+    const handleMessageRead = (data: any) => {
+      console.log("👀 Message read receipt received:", data);
+      dispatch(
+        updateMessageStatus({
+          messageIds: data.messageIds,
+          status: "READ",
+        })
+      );
+    };
+
     socket.off("connect");
     socket.off("connect_error");
     socket.off("disconnect");
     socket.off("receive_message");
+    socket.off("message_read");
 
-    // Add fresh listeners
     socket.on("connect", handleConnect);
     socket.on("connect_error", handleConnectError);
     socket.on("disconnect", handleDisconnect);
     socket.on("receive_message", handleReceiveMessage);
+    socket.on("message_read", handleMessageRead);
 
-    // Check if already connected
     if (socket.connected) {
       console.log("✅ Socket already connected on mount");
       setSocketReady(true);
@@ -166,13 +404,13 @@ const Messages = () => {
     return () => {
       console.log("🧹 Cleaning up socket listeners in Messages");
       socket.off("receive_message", handleReceiveMessage);
+      socket.off("message_read", handleMessageRead);
       socket.off("connect", handleConnect);
       socket.off("connect_error", handleConnectError);
       socket.off("disconnect", handleDisconnect);
     };
-  }, [userId, dispatch]); // Remove 'messages' from dependencies
+  }, [userId, dispatch]);
 
-  // Fetch chat history for selected conversation
   useEffect(() => {
     if (selectedConversation && userId) {
       console.log("📜 Fetching chat history for:", selectedConversation.id);
@@ -180,11 +418,9 @@ const Messages = () => {
     }
   }, [dispatch, selectedConversation, userId]);
 
-  // Get messages for the selected conversation
-  // ...existing code...
   const getCurrentMessages = (): Message[] => {
     if (!selectedConversation) return [];
-    return messages
+    return [...messages]
       .filter(
         (msg) =>
           (msg.senderId === userId &&
@@ -192,22 +428,25 @@ const Messages = () => {
           (msg.senderId === selectedConversation.id &&
             msg.receiverId === userId)
       )
+      .sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      )
       .map(
         (msg): Message => ({
           id: msg.id,
           sender: msg.senderId === userId ? "You" : selectedConversation.name,
           content: msg.content,
-          timestamp: new Date(msg.createdAt).toLocaleString(),
+          timestamp: new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           isOwn: msg.senderId === userId,
-          type: "text", // now enforced by the explicit Message return type
+          type: "text",
+          messageStatus: msg.status,
+          attachmentUrl: msg.attachmentUrl || undefined,
+          attachmentType: (msg.attachmentType as "image" | "file") || undefined,
+          attachmentName: msg.attachmentName || undefined,
         })
-      )
-      .sort(
-        (a, b) =>
-          new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-      ); // Sort by timestamp
+      );
   };
-  // ...existing code...
 
   const handleSendMessage = () => {
     if (!messageInput.trim() || !selectedConversation?.id) {
@@ -215,21 +454,10 @@ const Messages = () => {
       return;
     }
 
-    // USE SOCKET REF INSTEAD OF getSocket()
     const socket = socketRef.current;
 
-    if (!socket) {
-      console.error("❌ Socket not initialized");
-      toast.error("Connection not established. Please refresh the page.");
-      return;
-    }
-
-    if (!socket.connected) {
-      console.error("❌ Socket is not connected");
-      console.log("Socket state:", {
-        connected: socket.connected,
-        id: socket.id,
-      });
+    if (!socket || !socket.connected) {
+      console.error("❌ Socket not connected");
       toast.error("Connection lost. Please refresh the page.");
       return;
     }
@@ -237,7 +465,6 @@ const Messages = () => {
     console.log("📤 Sending message:", {
       to: selectedConversation.id,
       content: messageInput.substring(0, 50) + "...",
-      socketId: socket.id,
     });
 
     try {
@@ -265,7 +492,6 @@ const Messages = () => {
   const handleCall = () => {
     if (selectedConversation) {
       console.log("📞 Calling:", selectedConversation.name);
-      // Add call logic here
     }
   };
 
@@ -278,7 +504,44 @@ const Messages = () => {
   };
 
   return (
-    <div className="flex flex-col lg:h-[90vh] shadow-lg overflow-hidden bg-white">
+    <div className="relative flex flex-col lg:h-[90vh] shadow-lg overflow-hidden bg-white">
+      {/* Subscription gate overlay for non-subscribed users */}
+      {isSubscribed === false && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 backdrop-blur-md bg-white/40" />
+          <div className="relative z-10 bg-white rounded-2xl shadow-2xl border border-gray-200 px-8 py-10 max-w-md mx-4 text-center animate-in fade-in zoom-in duration-300">
+            <div className="mx-auto mb-5 w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-8 h-8 text-blue-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0110 0v4" />
+              </svg>
+            </div>
+
+            <h2 className="text-xl font-bold text-gray-800 mb-2">
+              Upgrade to Basic/Premium plan to unlock chat
+            </h2>
+            <p className="text-gray-500 text-sm mb-6">
+              Αναβάθμισε σε Basic ή Premium πρόγραμμα για να ξεκλειδώσεις τη
+              συνομιλία
+            </p>
+
+            <button
+              onClick={() => navigate("/plans")}
+              className="w-full cursor-pointer py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors duration-200 shadow-md hover:shadow-lg"
+            >
+              Buy Plans
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="flex-1 overflow-hidden">
         {/* Mobile view - Show either conversations list or chat */}
         <div className="md:hidden w-full h-full">
@@ -290,6 +553,10 @@ const Messages = () => {
               searchTerm={searchTerm}
               onSearchChange={setSearchTerm}
               isVisible={true}
+              onBlockUser={handleBlockUser}
+              onUnblockUser={handleUnblockUser}
+              onDeleteChat={handleDeleteChatClick}
+              blockedUserIds={blockedUserIds}
             />
           ) : selectedConversation ? (
             <ChatArea
@@ -302,6 +569,13 @@ const Messages = () => {
               onCloseChat={handleCloseChat}
               isVisible={true}
               onToggleInfo={() => setShowInfoPanel(!showInfoPanel)}
+              onBlockUser={handleBlockUser}
+              onUnblockUser={handleUnblockUser}
+              onDeleteChat={handleDeleteChatClick}
+              blockedUserIds={blockedUserIds}
+              blockedByThemIds={blockedByThemIds}
+              onSendAttachment={handleSendAttachment}
+              receivedMessagesCount={receivedMessagesCount}
             />
           ) : null}
 
@@ -320,7 +594,7 @@ const Messages = () => {
                     ✕ Close
                   </button>
                 </div>
-                 <ChatInfoPanel conversation={selectedConversation} />
+                <ChatInfoPanel conversation={selectedConversation} />
               </div>
             </div>
           )}
@@ -335,6 +609,10 @@ const Messages = () => {
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
             isVisible={true}
+            onBlockUser={handleBlockUser}
+            onUnblockUser={handleUnblockUser}
+            onDeleteChat={handleDeleteChatClick}
+            blockedUserIds={blockedUserIds}
           />
           {selectedConversation ? (
             <div className="flex-1 flex overflow-hidden">
@@ -348,6 +626,13 @@ const Messages = () => {
                 onCloseChat={handleCloseChat}
                 isVisible={true}
                 onToggleInfo={() => setShowInfoPanel(!showInfoPanel)}
+                onBlockUser={handleBlockUser}
+                onUnblockUser={handleUnblockUser}
+                onDeleteChat={handleDeleteChatClick}
+                blockedUserIds={blockedUserIds}
+                blockedByThemIds={blockedByThemIds}
+                onSendAttachment={handleSendAttachment}
+                receivedMessagesCount={receivedMessagesCount}
               />
               {showInfoPanel && (
                 <div className="w-80 border-l border-gray-100 bg-white overflow-y-auto animate-in slide-in-from-right duration-300">
@@ -378,10 +663,22 @@ const Messages = () => {
               onSearchChange={setSearchTerm}
               isVisible={true}
               onClose={handleCloseSidebar}
+              onBlockUser={handleBlockUser}
+              onUnblockUser={handleUnblockUser}
+              onDeleteChat={handleDeleteChatClick}
+              blockedUserIds={blockedUserIds}
             />
           </div>
         )}
       </div>
+
+      {/* Delete Chat Confirmation Modal */}
+      <DeleteChatModal
+        isOpen={deleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        onConfirm={confirmDeleteChat}
+        partnerName={deletePartnerName}
+      />
     </div>
   );
 };

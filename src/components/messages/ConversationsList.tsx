@@ -1,11 +1,9 @@
-import React from "react";
-import { Search, X } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Search, X, MoreVertical, Ban, Trash2, ShieldCheck } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 
 import { Conversation } from "./types";
-// import axios from "axios";
-// import { useAppDispatch } from "@/hooks/useRedux";
 
 interface ConversationsListProps {
   conversations: Conversation[];
@@ -15,33 +13,11 @@ interface ConversationsListProps {
   onSearchChange: (value: string) => void;
   isVisible: boolean;
   onClose?: () => void;
+  onBlockUser?: (partnerId: string) => void;
+  onUnblockUser?: (partnerId: string) => void;
+  onDeleteChat?: (partnerId: string, partnerName: string) => void;
+  blockedUserIds?: string[];
 }
-
-// const token = localStorage.getItem("token");
-
-// const fetchAllConversations = async (
-//   userId: string
-// ): Promise<Conversation[]> => {
-//   try {
-//     console.log("Fetching conversations for userId:", userId);
-//     const res = await axios.get(
-//       `https://alfredo-server-n9x6.onrender.com/chat/history/user/${userId}`,
-//       {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//           "Content-Type": "application/json",
-//         },
-//       }
-//     );
-//     // if (Array.isArray(res.data)) {
-//     //   return res.data.map(mapApiToConversation);
-//     // }
-//     return [];
-//   } catch (err) {
-//     console.error("Failed to fetch conversations:", err);
-//     return [];
-//   }
-// };
 
 const ConversationsList: React.FC<ConversationsListProps> = ({
   conversations,
@@ -51,24 +27,33 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
   onSearchChange,
   isVisible,
   onClose,
+  onBlockUser,
+  onUnblockUser,
+  onDeleteChat,
+  blockedUserIds,
 }) => {
+  const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = () => {
+      setActiveMenuId(null);
+    };
+    window.addEventListener("click", handleOutsideClick);
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
+
   const filteredConversations = conversations.filter((conv) =>
     conv.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  // const dispatch = useAppDispatch();
-
-  // useEffect(() => {
-  //   dispatch(fetchAllConversations as any);
-  // }, [dispatch]);
 
   console.log("Rendering ConversationsList with conversations:", conversations);
 
   return (
     <div
-      className={`${
-        isVisible ? "block" : "hidden"
-      } md:block w-full md:w-1/4 lg:w-1/5 flex flex-col md:mt-0 md:relative inset-0 md:inset-auto z-50 md:z-auto
+      className={`${isVisible ? "block" : "hidden"
+        } md:block w-full md:w-1/4 lg:w-1/5 flex flex-col md:mt-0 md:relative inset-0 md:inset-auto z-50 md:z-auto
     `}
     >
       {/* Header */}
@@ -93,7 +78,7 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
       </div>
 
       {/* Conversations List */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto h-[calc(100vh-200px)]">
         {filteredConversations.map((conversation) => (
           <div
             key={conversation.id}
@@ -101,39 +86,90 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
               onSelectConversation(conversation);
               if (onClose) onClose(); // Close sidebar on mobile after selection
             }}
-            className={`p-3 md:p-4 cursor-pointer  transition-colors  ${
-              selectedConversation?.id === conversation.id
-                ? "bg-[#EAF1FA] text-dark-2"
-                : "text-dark-3"
-            }`}
+            className={`p-3 md:p-4 cursor-pointer transition-colors ${selectedConversation?.id === conversation.id
+              ? "bg-[#EAF1FA] text-dark-2"
+              : "text-dark-3"
+              }`}
           >
-            <div className="flex items-start gap-3 xl:gap-5 ">
-              <div className="relative">
-                <Avatar className="w-10 h-10 md:w-12 md:h-12">
-                  <AvatarImage
-                    src={conversation.avatar}
-                    alt={conversation.name}
-                  />
-                  <AvatarFallback className="text-xs md:text-sm">
-                    {conversation.name.charAt(0)}
-                  </AvatarFallback>
-                </Avatar>
-                {conversation.online && (
-                  <div className="absolute -top-1 -left-1 w-3 h-3 md:w-3 md:h-3 bg-primary-blue rounded-full border-1 border-white shadow-[0px_4px_4px_0px_#26262640]"></div>
-                )}
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3
-                  className={`font-medium truncate text-sm md:text-base lg:text-lg ${
-                    conversation.online ? "text-primary-blue" : ""
-                  }`}
-                >
-                  {conversation.name}
-                </h3>
+            <div className="flex items-start gap-3 xl:gap-5 justify-between">
+              <div className="flex items-start gap-3 xl:gap-5 flex-1 min-w-0">
+                <div className="relative">
+                  <Avatar className="w-10 h-10 md:w-12 md:h-12">
+                    <AvatarImage
+                      src={conversation.avatar}
+                      alt={conversation.name}
+                    />
+                    <AvatarFallback className="text-xs md:text-sm">
+                      {conversation.name.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                  {conversation.online && (
+                    <div className="absolute -top-1 -left-1 w-3 h-3 md:w-3 md:h-3 bg-primary-blue rounded-full border-1 border-white shadow-[0px_4px_4px_0px_#26262640]"></div>
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3
+                    className={`font-medium truncate text-sm md:text-base lg:text-lg ${conversation.online ? "text-primary-blue" : ""
+                      }`}
+                  >
+                    {conversation.name}
+                  </h3>
 
-                <p className="text-xs md:text-sm truncate flex-1 xl:mt-2">
-                  {conversation.lastMessage}
-                </p>
+                  <p className="text-xs md:text-sm truncate flex-1 xl:mt-2">
+                    {conversation.lastMessage}
+                  </p>
+                </div>
+              </div>
+
+              {/* Action Menu (Three Dot) */}
+              <div className="relative self-center ml-2 " onClick={(e) => e.stopPropagation()}>
+                <button
+                  onClick={() =>
+                    setActiveMenuId(activeMenuId === conversation.id ? null : conversation.id)
+                  }
+                  className="p-1.5 hover:bg-slate-200/60 rounded-full text-slate-400 hover:text-slate-600 transition-colors"
+                  aria-label="Conversation actions"
+                >
+                  <MoreVertical className="w-4 md:w-5 h-5" />
+                </button>
+                {activeMenuId === conversation.id && (
+                  <div className="absolute right-0 mt-1 w-36 bg-white rounded-xl shadow-xl border border-slate-100 py-1 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                    <button
+                      onClick={() => {
+                        setActiveMenuId(null);
+                        const isBlocked = blockedUserIds?.includes(conversation.id);
+                        if (isBlocked) {
+                          onUnblockUser?.(conversation.id);
+                        } else {
+                          onBlockUser?.(conversation.id);
+                        }
+                      }}
+                      className="w-full text-left px-3 py-2 text-xs md:text-sm hover:bg-slate-50 text-slate-700 flex items-center gap-2 transition-colors font-medium"
+                    >
+                      {blockedUserIds?.includes(conversation.id) ? (
+                        <>
+                          <ShieldCheck className="w-3.5 h-3.5 text-green-500" />
+                          <span>Unblock</span>
+                        </>
+                      ) : (
+                        <>
+                          <Ban className="w-3.5 h-3.5 text-red-500" />
+                          <span>Block</span>
+                        </>
+                      )}
+                    </button>
+                    <button
+                      onClick={() => {
+                        setActiveMenuId(null);
+                        onDeleteChat?.(conversation.id, conversation.name);
+                      }}
+                      className="w-full text-left px-3 py-2 text-xs md:text-sm hover:bg-red-50 text-red-600 flex items-center gap-2 transition-colors font-medium"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      <span>Delete Chat</span>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

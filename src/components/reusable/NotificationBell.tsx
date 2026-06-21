@@ -36,6 +36,42 @@ const NotificationBell = () => {
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
+  // Format text to show only first name for non-subscribers
+  const formatNotificationText = (text: string) => {
+    if (user?.isSubscribed !== false || !text) return text;
+
+    let formattedText = text;
+
+    // Handle names following "from" (e.g. "Exchange Request from John Doe")
+    const fromIndex = formattedText.toLowerCase().lastIndexOf("from ");
+    if (fromIndex !== -1) {
+      const prefix = formattedText.substring(0, fromIndex + 5);
+      const namePart = formattedText.substring(fromIndex + 5).trim();
+      const nameWords = namePart.split(" ");
+      if (nameWords.length > 1) {
+        formattedText = prefix + nameWords[0];
+      }
+      return formattedText;
+    }
+
+    // Fallback: if the text is short (2-3 words) and lacks typical notification keywords,
+    // it might be just a name (e.g. "John Doe")
+    const words = formattedText.trim().split(" ");
+    const isNotificationWord = (word: string) =>
+      ["request", "message", "exchange", "notification", "new", "sent", "you", "your", "has", "have"].includes(word.toLowerCase());
+    if (words.length >= 2 && words.length <= 3 && !words.some(isNotificationWord)) {
+      return words[0];
+    }
+
+    // Default: split by space and take first word as user requested logic "before space <> the first name should be sliced"
+    // Only if it doesn't contain any keywords so we don't break "Exchange Request"
+    if (!words.some(isNotificationWord)) {
+      return words[0];
+    }
+
+    return formattedText;
+  };
+
   // Fetch notifications and unread count from single API
   const fetchNotifications = async () => {
     setLoading(true);
@@ -108,9 +144,9 @@ const NotificationBell = () => {
 
     // Navigate to messages if it's a message notification
     // We assume chat notifications have a senderId or specific title/type
-    const isChat = 
-      notification.title.toLowerCase().includes("message") || 
-      notification.senderId || 
+    const isChat =
+      notification.title.toLowerCase().includes("message") ||
+      notification.senderId ||
       notification.metadata?.senderId;
 
     if (isChat) {
@@ -265,22 +301,21 @@ const NotificationBell = () => {
               <div
                 key={notification.id}
                 onClick={() => handleNotificationClick(notification)}
-                className={`p-4 border-b border-gray-300 hover:bg-gray-100 cursor-pointer transition ${
-                  !notification.isRead ? "bg-blue-50/50" : ""
-                }`}
+                className={`p-4 border-b border-gray-300 hover:bg-gray-100 cursor-pointer transition ${!notification.isRead ? "bg-blue-50/50" : ""
+                  }`}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <h4 className="font-semibold text-sm">
-                        {notification.title}
+                        {formatNotificationText(notification.title)}
                       </h4>
                       {!notification.isRead && (
                         <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
                       )}
                     </div>
                     <p className="text-sm text-gray-600 mb-1 leading-relaxed">
-                      {notification.message}
+                      {formatNotificationText(notification.message)}
                     </p>
                     <p className="text-[10px] text-gray-400">
                       {new Date(notification.createdAt).toLocaleString()}

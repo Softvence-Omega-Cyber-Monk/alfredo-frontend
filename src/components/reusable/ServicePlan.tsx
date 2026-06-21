@@ -162,7 +162,7 @@ const ServicePlan: FC = () => {
                 {t("ourplan.guestPlan.name")}
               </h2>
               <div className="mx-auto mt-1">
-                <p className="text-[64px] font-semibold text-primary-blue leading-tight">
+                <p className="text-[52px] font-semibold text-primary-blue leading-tight">
                   {t("ourplan.guestPlan.price")}
                 </p>
               </div>
@@ -193,8 +193,8 @@ const ServicePlan: FC = () => {
                     className="flex items-center gap-3 text-[#999] text-4"
                   >
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
-                      <circle cx="9" cy="9" r="8" stroke="#E05252" strokeWidth="1.5"/>
-                      <path d="M6 6L12 12M12 6L6 12" stroke="#E05252" strokeWidth="1.5" strokeLinecap="round"/>
+                      <circle cx="9" cy="9" r="8" stroke="#E05252" strokeWidth="1.5" />
+                      <path d="M6 6L12 12M12 6L6 12" stroke="#E05252" strokeWidth="1.5" strokeLinecap="round" />
                     </svg>
                     <span className="line-through">{feature}</span>
                   </li>

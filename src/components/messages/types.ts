@@ -24,6 +24,10 @@ export interface Message {
   isOwn: boolean;
   type?: "text" | "request"; // NEW
   status?: "pending" | "accepted" | "rejected"; // NEW
+  messageStatus?: "SENT" | "READ"; // Read receipts
+  attachmentUrl?: string;
+  attachmentType?: "image" | "file";
+  attachmentName?: string;
 }
 
 export interface ConversationsListProps {
@@ -34,6 +38,10 @@ export interface ConversationsListProps {
   onSearchChange: (value: string) => void;
   isVisible: boolean;
   onClose?: () => void;
+  onBlockUser?: (partnerId: string) => void;
+  onUnblockUser?: (partnerId: string) => void;
+  onDeleteChat?: (partnerId: string, partnerName: string) => void;
+  blockedUserIds?: string[];
 }
 
 export interface ChatAreaProps {
@@ -46,4 +54,11 @@ export interface ChatAreaProps {
   onCloseChat: () => void;
   isVisible: boolean;
   onToggleInfo: () => void;
+  onBlockUser?: (partnerId: string) => void;
+  onUnblockUser?: (partnerId: string) => void;
+  onDeleteChat?: (partnerId: string, partnerName: string) => void;
+  blockedUserIds?: string[];
+  blockedByThemIds?: string[];
+  onSendAttachment?: (file: File) => Promise<void>;
+  receivedMessagesCount: number;
 }
