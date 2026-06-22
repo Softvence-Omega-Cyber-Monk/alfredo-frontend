@@ -46,6 +46,7 @@ const ProfileForm = () => {
 
   const [files, setFiles] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPhotoPopoverOpen, setIsPhotoPopoverOpen] = useState(false);
   const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; url: string }>({
     isOpen: false,
     url: "",
@@ -66,7 +67,7 @@ const ProfileForm = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "https://vacanzagreece.gr/api/onboarding/user",
+        `${import.meta.env.VITE_API_URL}/onboarding/user`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -132,11 +133,14 @@ const ProfileForm = () => {
     }
   };
 
-  const handleGallerySelect = async (url: string) => {
-    const newFormData = { ...formData, photoUrl: url };
-    setFormData(newFormData);
+  const handleGallerySelect = (url: string) => {
+    setFormData((prev) => ({ ...prev, photoUrl: url }));
     setFiles([]); // Clear newly uploaded files if picking from gallery
-    await updateUserProfile(newFormData, []);
+  };
+
+  const handleChangeProfilePicture = async () => {
+    setIsPhotoPopoverOpen(false);
+    await updateUserProfile(formData, files);
   };
 
   const handleDeleteClick = (e: React.MouseEvent, url: string) => {
@@ -159,7 +163,7 @@ const ProfileForm = () => {
           // Also update user profile on backend to remove the photo reference
           const token = localStorage.getItem("token");
           await axios.patch(
-            "https://vacanzagreece.gr/api/user/me",
+            `${import.meta.env.VITE_API_URL}/user/me`,
             { photo: "" },
             {
               headers: {
@@ -189,39 +193,51 @@ const ProfileForm = () => {
     try {
       const token = localStorage.getItem("token");
       let response;
+      let uploadedPhotoUrl = currentFormData.photoUrl;
 
-      // 1. Update basic user profile (phone, address, metadata, and active photo)
-      const profilePayload = new FormData();
-      profilePayload.append("phoneNumber", currentFormData.phoneNumber);
-      profilePayload.append("address", currentFormData.address);
-      profilePayload.append("ageRange", currentFormData.ageRange);
-      profilePayload.append("employmentStatus", currentFormData.employmentStatus);
-      currentFormData.travelType.forEach((type) => profilePayload.append("travelType", type));
-      currentFormData.favoriteDestinations.forEach((dest) => profilePayload.append("favoriteDestinations", dest));
-      profilePayload.append("travelMostlyWith", currentFormData.travelMostlyWith);
-      profilePayload.append("isTravelWithPets", String(currentFormData.isTravelWithPets));
-      profilePayload.append("notes", currentFormData.notes);
-
-      // If a specific gallery image was selected as profile photo
-      if (currentFormData.photoUrl) {
-        profilePayload.append("photo", currentFormData.photoUrl);
-      }
-
-      response = await axios.patch("https://vacanzagreece.gr/api/user/me", profilePayload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      // 2. Dedicated Gallery Upload (Persist all new files to onboarding record)
+      // 1. Upload new files to gallery FIRST so we can get the URL for the profile photo
       if (currentFiles.length > 0) {
         try {
-          await dispatch(uploadGalleryImages(currentFiles)).unwrap();
+          const uploadResult = await dispatch(uploadGalleryImages(currentFiles)).unwrap();
+          // The backend returns the full updated onboarding record with ALL homeImages
+          // Newly uploaded images are appended at the end
+          const allImages: string[] = uploadResult?.data?.homeImages || uploadResult?.homeImages || [];
+          // Extract only the newly uploaded URLs (last N items where N = files uploaded)
+          const newlyUploaded = allImages.slice(-currentFiles.length);
+          if (newlyUploaded.length > 0) {
+            // coverImage is the index within the newly uploaded files
+            const selectedIndex = Math.min(currentFormData.coverImage, newlyUploaded.length - 1);
+            uploadedPhotoUrl = newlyUploaded[selectedIndex] || newlyUploaded[0];
+          }
         } catch (onboardingErr) {
-          console.error("Error updating onboarding gallery:", onboardingErr);
+          console.error("Error uploading gallery images:", onboardingErr);
         }
       }
+
+      // 2. Update basic user profile (phone, address, metadata, and active photo)
+      const profilePayload: Record<string, any> = {
+        phoneNumber: currentFormData.phoneNumber,
+        address: currentFormData.address,
+        ageRange: currentFormData.ageRange,
+        employmentStatus: currentFormData.employmentStatus,
+        travelType: currentFormData.travelType,
+        favoriteDestinations: currentFormData.favoriteDestinations,
+        travelMostlyWith: currentFormData.travelMostlyWith,
+        isTravelWithPets: currentFormData.isTravelWithPets,
+        notes: currentFormData.notes,
+      };
+
+      // Set the photo — either from gallery selection or the newly uploaded image
+      if (uploadedPhotoUrl) {
+        profilePayload.photo = uploadedPhotoUrl;
+      }
+
+      response = await axios.patch(`${import.meta.env.VITE_API_URL}/user/me`, profilePayload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       if (response.data) {
         const userData = response.data.data || response.data;
@@ -270,11 +286,7 @@ const ProfileForm = () => {
                 className="h-48 w-48 object-cover rounded-full border-4 border-[#A0BFE8]"
                 alt="Profile"
               />
-              <Popover onOpenChange={(open) => {
-                if (!open && files.length > 0) {
-                  updateUserProfile(formData, files);
-                }
-              }}>
+              <Popover open={isPhotoPopoverOpen} onOpenChange={setIsPhotoPopoverOpen}>
                 <PopoverTrigger asChild>
                   <div className="absolute bottom-3 right-3 bg-white p-2 rounded-full shadow-md cursor-pointer">
                     <img src={penIcon} alt="edit" className="w-6 h-6" />
@@ -362,6 +374,15 @@ const ProfileForm = () => {
                       </div>
                     )}
                   </div>
+                  {/* Change Profile Picture button */}
+                  <Button
+                    type="button"
+                    onClick={handleChangeProfilePicture}
+                    disabled={isSubmitting || (files.length === 0 && !formData.photoUrl)}
+                    className="w-full mt-3 h-10 rounded-lg cursor-pointer bg-[#3174CD] hover:bg-[#255DA8] text-white text-sm disabled:opacity-50"
+                  >
+                    {isSubmitting ? "Saving..." : "Change Profile Picture"}
+                  </Button>
                 </PopoverContent>
               </Popover>
               <input

@@ -37,6 +37,9 @@ import ExchangeRequestDetails from "@/components/ExchangeRequest/ExchangeRequest
 import Success from "@/pages/Success";
 import Cancel from "@/pages/Cancel";
 import VacanzaSavingsCalculator from "../pages/Calculator";
+import PrivacyPolicy from "@/pages/PrivacyPolicy";
+import TermsOfService from "@/pages/TermsOfService";
+import DataDeletion from "@/pages/DataDeletion";
 
 const routes = createBrowserRouter([
   {
@@ -178,6 +181,18 @@ const routes = createBrowserRouter([
       {
         path: "/success",
         element: <Cancel />,
+      },
+      {
+        path: "/privacy-policy",
+        element: <PrivacyPolicy />,
+      },
+      {
+        path: "/terms",
+        element: <TermsOfService />,
+      },
+      {
+        path: "/data-deletion",
+        element: <DataDeletion />,
       },
       {
         path: "/admin",
