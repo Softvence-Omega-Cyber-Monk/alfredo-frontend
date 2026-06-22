@@ -132,6 +132,11 @@ const Login = () => {
       const result = await signInWithPopup(auth, facebookProvider);
       const user = result.user;
       const idToken = await user.getIdToken();
+      console.log("Facebook result:", result);
+
+
+      console.log("User:", user);
+      console.log("ID Token received");
 
       const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/facebook`, {
         method: "POST",
@@ -169,6 +174,10 @@ const Login = () => {
           alert("Login failed. Please try again.");
           return;
         }
+
+        console.error("FULL ERROR:", error);
+        console.error("ERROR CODE:", error.code);
+        console.error("ERROR MESSAGE:", error.message);
 
         // Instead of fetchSignInMethodsForEmail (deprecated),
         // just prompt Google sign-in and attempt linking
