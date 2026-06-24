@@ -129,9 +129,12 @@ const Login = () => {
     if (fbLoading) return;
     setFbLoading(true);
     try {
+      alert("Step 1: Starting Facebook login...");
       const result = await signInWithPopup(auth, facebookProvider);
+      alert("Step 2: Got result - " + result.user.email);
       const user = result.user;
       const idToken = await user.getIdToken();
+      alert("Step 3: Got token - length: " + idToken.length);
       console.log("Facebook result:", result);
 
 
@@ -166,6 +169,7 @@ const Login = () => {
         }
       }
     } catch (error: any) {
+      alert("ERROR CODE: " + error.code + "\nMESSAGE: " + error.message);
       if (error.code === "auth/account-exists-with-different-credential") {
         const email = error.customData?.email;
         const pendingCred = FacebookAuthProvider.credentialFromError(error);
