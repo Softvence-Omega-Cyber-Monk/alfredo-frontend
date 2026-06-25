@@ -97,6 +97,11 @@ const AuthSection: React.FC<Props> = ({
             <div className="flex flex-col gap-3">
               <button
                 onClick={() => {
+                  window.dataLayer = window.dataLayer || [];
+                  window.dataLayer.push({
+                    event: "navbar_signup_click",
+                  });
+
                   setJoinPopoverOpen(false);
                   navigate("/signup");
                 }}
@@ -106,6 +111,11 @@ const AuthSection: React.FC<Props> = ({
               </button>
               <button
                 onClick={() => {
+                  window.dataLayer = window.dataLayer || [];
+                  window.dataLayer.push({
+                    event: "navbar_login_click",
+                  });
+
                   setJoinPopoverOpen(false);
                   navigate("/login");
                 }}

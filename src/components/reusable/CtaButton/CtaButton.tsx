@@ -5,7 +5,14 @@ const CtaButton = () => {
   const { t } = useTranslation("banner");
   const navigate = useNavigate();
   return (
-    <button className="bg-primary-blue text-white button" onClick={() => navigate("/signup")}>{t("search.cta")}
+    <button className="bg-primary-blue text-white button" onClick={() => {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "homepage_signup_click",
+      });
+
+      navigate("/signup");
+    }}>{t("search.cta")}
       <span className="svg">
         <svg
           xmlns="http://www.w3.org/2000/svg"
