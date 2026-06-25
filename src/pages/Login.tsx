@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,11 +15,11 @@ import { useTranslation } from "react-i18next";
 import {
   signInWithPopup,
   // fetchSignInMethodsForEmail,
-  linkWithCredential,
-  FacebookAuthProvider,
-  getRedirectResult,
+  // linkWithCredential,
+  // FacebookAuthProvider,
+  // getRedirectResult,
 } from "firebase/auth";
-import { auth, googleProvider, facebookProvider } from "@/lib/firebase";
+import { auth, googleProvider } from "@/lib/firebase";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email format"),
@@ -30,7 +30,7 @@ type LoginFormInputs = z.infer<typeof loginSchema>;
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [fbLoading, setFbLoading] = useState(false);
+
   const togglePassword = () => setShowPassword((prev) => !prev);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -39,29 +39,70 @@ const Login = () => {
 
   const { t } = useTranslation("auth");
 
-  useEffect(() => {
-    // Check for any stored error from previous attempt
-    const storedError = localStorage.getItem('fb_error');
-    if (storedError) {
-      console.error('STORED FB ERROR:', storedError);
-      localStorage.removeItem('fb_error');
-    }
+  const [fbLoading, setFbLoading] = useState(false);
 
-    getRedirectResult(auth)
-      .then(async (result) => {
-        if (!result) return;
-        // ... your existing code
-      })
-      .catch((error) => {
-        // Store error so it survives redirect
-        localStorage.setItem('fb_error', JSON.stringify({
-          code: error.code,
-          message: error.message,
-          email: error.customData?.email,
-        }));
-        console.error('FB ERROR:', error.code, error.message);
-      });
-  }, []);
+  const handleFacebookLogin = () => {
+    if (fbLoading) return;
+    setFbLoading(true);
+
+    window.FB.login(
+      async (response) => {
+        if (response.authResponse) {
+          const accessToken = response.authResponse.accessToken;
+
+          try {
+            const res = await fetch(
+              `${import.meta.env.VITE_API_URL}/auth/facebook`,
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ accessToken }),
+              }
+            );
+
+            const data = await res.json();
+
+            if (data.success) {
+              localStorage.setItem("user", JSON.stringify(data.user));
+              localStorage.setItem("token", data.accessToken);
+
+              const formattedUser = {
+                ...data.user,
+                firstName:
+                  (data.user.fullName || "").split(" ")[0] ||
+                  data.user.firstName ||
+                  "",
+                lastName:
+                  (data.user.fullName || "").split(" ").slice(1).join(" ") ||
+                  data.user.lastName ||
+                  "",
+              };
+
+              dispatch(
+                setCredentials({ user: formattedUser, token: data.accessToken })
+              );
+
+              navigate(
+                !data.user.hasOnboarded ? "/onboarding" : "/dashboard"
+              );
+            } else {
+              console.error("Backend error:", data);
+            }
+          } catch (err) {
+            console.error("Facebook login error:", err);
+          } finally {
+            setFbLoading(false);
+          }
+        } else {
+          console.log("Facebook login cancelled by user");
+          setFbLoading(false);
+        }
+      },
+      { scope: "email,public_profile" }
+    );
+  };
+
 
   {
     /* <label>{t("auth.login.emailAddress")}</label> */
@@ -150,129 +191,129 @@ const Login = () => {
     }
   };
 
-  const handleFacebookLogin = async () => {
-    if (fbLoading) return;
-    setFbLoading(true);
-    try {
-      // Step 1: Firebase popup authentication
-      let result;
-      try {
-        result = await signInWithPopup(auth, facebookProvider);
-      } catch (firebaseError: any) {
-        // Handle Firebase-specific errors
-        if (firebaseError.code === "auth/account-exists-with-different-credential") {
-          const email = firebaseError.customData?.email;
-          const pendingCred = FacebookAuthProvider.credentialFromError(firebaseError);
+  // const handleFacebookLogin = async () => {
+  //   if (fbLoading) return;
+  //   setFbLoading(true);
+  //   try {
+  //     // Step 1: Firebase popup authentication
+  //     let result;
+  //     try {
+  //       result = await signInWithPopup(auth, facebookProvider);
+  //     } catch (firebaseError: any) {
+  //       // Handle Firebase-specific errors
+  //       if (firebaseError.code === "auth/account-exists-with-different-credential") {
+  //         const email = firebaseError.customData?.email;
+  //         const pendingCred = FacebookAuthProvider.credentialFromError(firebaseError);
 
-          if (!email || !pendingCred) {
-            alert("Login failed. Please try again.");
-            return;
-          }
+  //         if (!email || !pendingCred) {
+  //           alert("Login failed. Please try again.");
+  //           return;
+  //         }
 
-          const confirmLink = window.confirm(
-            `The email ${email} is already linked to another account (e.g. Google). Click OK to sign in with Google and link your Facebook account.`
-          );
+  //         const confirmLink = window.confirm(
+  //           `The email ${email} is already linked to another account (e.g. Google). Click OK to sign in with Google and link your Facebook account.`
+  //         );
 
-          if (!confirmLink) return;
+  //         if (!confirmLink) return;
 
-          try {
-            const googleResult = await signInWithPopup(auth, googleProvider);
-            await linkWithCredential(googleResult.user, pendingCred);
+  //         try {
+  //           const googleResult = await signInWithPopup(auth, googleProvider);
+  //           await linkWithCredential(googleResult.user, pendingCred);
 
-            const idToken = await googleResult.user.getIdToken();
+  //           const idToken = await googleResult.user.getIdToken();
 
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/google`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              credentials: "include",
-              body: JSON.stringify({ idToken }),
-            });
+  //           const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/google`, {
+  //             method: "POST",
+  //             headers: { "Content-Type": "application/json" },
+  //             credentials: "include",
+  //             body: JSON.stringify({ idToken }),
+  //           });
 
-            const data = await response.json();
+  //           const data = await response.json();
 
-            if (data.success) {
-              localStorage.setItem("user", JSON.stringify(data.user));
-              localStorage.setItem("token", data.accessToken);
+  //           if (data.success) {
+  //             localStorage.setItem("user", JSON.stringify(data.user));
+  //             localStorage.setItem("token", data.accessToken);
 
-              const formattedUser = {
-                ...data.user,
-                firstName: (data.user.fullName || "").split(" ")[0] || data.user.firstName || "",
-                lastName: (data.user.fullName || "").split(" ").slice(1).join(" ") || data.user.lastName || "",
-              };
+  //             const formattedUser = {
+  //               ...data.user,
+  //               firstName: (data.user.fullName || "").split(" ")[0] || data.user.firstName || "",
+  //               lastName: (data.user.fullName || "").split(" ").slice(1).join(" ") || data.user.lastName || "",
+  //             };
 
-              dispatch(setCredentials({ user: formattedUser, token: data.accessToken }));
-              navigate(!data.user.hasOnboarded ? "/onboarding" : "/dashboard");
-            } else {
-              alert(data.message || "Google login failed after linking.");
-            }
-          } catch (linkError: any) {
-            console.error("Account linking error:", linkError);
-            alert("Failed to link accounts. Please contact support.");
-          }
-          return;
-        } else if (firebaseError.code === "auth/popup-closed-by-user") {
-          console.log("Popup closed by user");
-          return;
-        } else if (firebaseError.code === "auth/popup-blocked") {
-          alert("Popup was blocked by your browser. Please allow popups for this site and try again.");
-          return;
-        } else {
-          console.error("Firebase Facebook error:", firebaseError.code, firebaseError.message);
-          alert(`Facebook login failed: ${firebaseError.message || "Unknown error"}`);
-          return;
-        }
-      }
+  //             dispatch(setCredentials({ user: formattedUser, token: data.accessToken }));
+  //             navigate(!data.user.hasOnboarded ? "/onboarding" : "/dashboard");
+  //           } else {
+  //             alert(data.message || "Google login failed after linking.");
+  //           }
+  //         } catch (linkError: any) {
+  //           console.error("Account linking error:", linkError);
+  //           alert("Failed to link accounts. Please contact support.");
+  //         }
+  //         return;
+  //       } else if (firebaseError.code === "auth/popup-closed-by-user") {
+  //         console.log("Popup closed by user");
+  //         return;
+  //       } else if (firebaseError.code === "auth/popup-blocked") {
+  //         alert("Popup was blocked by your browser. Please allow popups for this site and try again.");
+  //         return;
+  //       } else {
+  //         console.error("Firebase Facebook error:", firebaseError.code, firebaseError.message);
+  //         alert(`Facebook login failed: ${firebaseError.message || "Unknown error"}`);
+  //         return;
+  //       }
+  //     }
 
-      // Step 2: Get Firebase ID token
-      const user = result.user;
-      const idToken = await user.getIdToken();
+  //     // Step 2: Get Firebase ID token
+  //     const user = result.user;
+  //     const idToken = await user.getIdToken();
 
-      // Step 3: Send token to backend
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/facebook`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ idToken }),
-      });
+  //     // Step 3: Send token to backend
+  //     const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/facebook`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       credentials: "include",
+  //       body: JSON.stringify({ idToken }),
+  //     });
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => null);
-        console.error("Backend error:", response.status, errorData);
-        alert(errorData?.message || `Server error (${response.status}). Please try again.`);
-        return;
-      }
+  //     if (!response.ok) {
+  //       const errorData = await response.json().catch(() => null);
+  //       console.error("Backend error:", response.status, errorData);
+  //       alert(errorData?.message || `Server error (${response.status}). Please try again.`);
+  //       return;
+  //     }
 
-      const data = await response.json();
+  //     const data = await response.json();
 
-      if (data.success) {
-        localStorage.setItem("user", JSON.stringify(data.user));
-        localStorage.setItem("token", data.accessToken);
+  //     if (data.success) {
+  //       localStorage.setItem("user", JSON.stringify(data.user));
+  //       localStorage.setItem("token", data.accessToken);
 
-        const formattedUser = {
-          ...data.user,
-          firstName: (data.user.fullName || "").split(" ")[0] || data.user.firstName || "",
-          lastName: (data.user.fullName || "").split(" ").slice(1).join(" ") || data.user.lastName || "",
-        };
+  //       const formattedUser = {
+  //         ...data.user,
+  //         firstName: (data.user.fullName || "").split(" ")[0] || data.user.firstName || "",
+  //         lastName: (data.user.fullName || "").split(" ").slice(1).join(" ") || data.user.lastName || "",
+  //       };
 
-        dispatch(setCredentials({ user: formattedUser, token: data.accessToken }));
+  //       dispatch(setCredentials({ user: formattedUser, token: data.accessToken }));
 
-        if (!data.user.hasOnboarded) {
-          navigate("/onboarding");
-        } else {
-          navigate("/dashboard");
-        }
-      } else {
-        console.error("Backend returned unsuccessful:", data);
-        alert(data.message || "Facebook login failed. Please try again.");
-      }
-    } catch (error: any) {
-      // Catch-all for unexpected errors (network failures, JSON parse errors, etc.)
-      console.error("Unexpected Facebook login error:", error);
-      alert("Something went wrong during Facebook login. Please check your connection and try again.");
-    } finally {
-      setFbLoading(false);
-    }
-  };
+  //       if (!data.user.hasOnboarded) {
+  //         navigate("/onboarding");
+  //       } else {
+  //         navigate("/dashboard");
+  //       }
+  //     } else {
+  //       console.error("Backend returned unsuccessful:", data);
+  //       alert(data.message || "Facebook login failed. Please try again.");
+  //     }
+  //   } catch (error: any) {
+  //     // Catch-all for unexpected errors (network failures, JSON parse errors, etc.)
+  //     console.error("Unexpected Facebook login error:", error);
+  //     alert("Something went wrong during Facebook login. Please check your connection and try again.");
+  //   } finally {
+  //     setFbLoading(false);
+  //   }
+  // };
 
 
   return (
@@ -390,7 +431,7 @@ const Login = () => {
                 alt="Facebook"
                 className="w-5 h-5"
               />
-              {t("auth.continueWithFacebook")}
+              {fbLoading ? "Connecting..." : t("auth.continueWithFacebook")}
             </button>
 
           </form>
