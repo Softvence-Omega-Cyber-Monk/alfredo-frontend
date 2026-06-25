@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,6 +17,7 @@ import {
   // fetchSignInMethodsForEmail,
   linkWithCredential,
   FacebookAuthProvider,
+  getRedirectResult,
 } from "firebase/auth";
 import { auth, googleProvider, facebookProvider } from "@/lib/firebase";
 
@@ -37,6 +38,30 @@ const Login = () => {
   const { loading, error } = useSelector((state: RootState) => state.auth);
 
   const { t } = useTranslation("auth");
+
+  useEffect(() => {
+    // Check for any stored error from previous attempt
+    const storedError = localStorage.getItem('fb_error');
+    if (storedError) {
+      console.error('STORED FB ERROR:', storedError);
+      localStorage.removeItem('fb_error');
+    }
+
+    getRedirectResult(auth)
+      .then(async (result) => {
+        if (!result) return;
+        // ... your existing code
+      })
+      .catch((error) => {
+        // Store error so it survives redirect
+        localStorage.setItem('fb_error', JSON.stringify({
+          code: error.code,
+          message: error.message,
+          email: error.customData?.email,
+        }));
+        console.error('FB ERROR:', error.code, error.message);
+      });
+  }, []);
 
   {
     /* <label>{t("auth.login.emailAddress")}</label> */
