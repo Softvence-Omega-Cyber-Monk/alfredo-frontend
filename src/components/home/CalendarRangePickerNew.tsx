@@ -10,9 +10,9 @@ import {
   differenceInMonths,
 } from "date-fns";
 import clsx from "clsx";
-import { HiOutlineArrowNarrowRight } from "react-icons/hi";
+// import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 
 const weekDays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 
@@ -88,7 +88,7 @@ const CalendarRangePickerNew = ({
               <ChevronLeftIcon className="w-5 h-5 text-gray-600 group-hover:text-blue-600 transition-colors" />
             </button>
           ) : (
-            <div className="w-9 h-9" />
+            <div className="w-9 h-9 hidden md:block" />
           )}
 
           <h2 className="text-lg font-semibold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
@@ -105,7 +105,17 @@ const CalendarRangePickerNew = ({
               <ChevronRightIcon className="w-5 h-5 text-gray-600 group-hover:text-blue-600 transition-colors" />
             </button>
           ) : (
-            <div className="w-9 h-9" />
+            <>
+              <button
+                type="button"
+                onClick={() => handleMonthChange("next")}
+                disabled={isAnimating}
+                className="p-2 rounded-full hover:bg-blue-100 transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed group md:hidden"
+              >
+                <ChevronRightIcon className="w-5 h-5 text-gray-600 group-hover:text-blue-600 transition-colors" />
+              </button>
+              <div className="w-9 h-9 hidden md:block" />
+            </>
           )}
         </div>
 
@@ -127,7 +137,7 @@ const CalendarRangePickerNew = ({
           )}
         >
           {blanks.map((_, index) => (
-            <div key={`blank-${index}`} className="text-center h-10" />
+            <div key={`blank-${index}`} className="aspect-square w-full max-w-[40px]" />
           ))}
           {days.map((day, index) => {
             const isSelected =
@@ -155,7 +165,7 @@ const CalendarRangePickerNew = ({
                   animationDelay: `${index * 15}ms`
                 }}
                 className={clsx(
-                  "h-10 w-10 text-center rounded-full transition-all duration-300 ease-out font-medium relative overflow-hidden group",
+                  "aspect-square w-full max-w-[40px] flex items-center justify-center mx-auto rounded-full transition-all duration-300 ease-out font-medium relative overflow-hidden group",
                   "animate-fadeInScale",
                   isSelected && "bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/50 scale-105 z-10",
                   isInRange && !isSelected && "bg-blue-50 text-blue-700",
@@ -176,21 +186,25 @@ const CalendarRangePickerNew = ({
     );
   };
 
-  const { t } = useTranslation("onboarding");
+  // const { t } = useTranslation("onboarding");
 
   return (
     <div className="w-full mx-auto p-8 rounded-3xl shadow-xl bg-gradient-to-br from-white to-blue-50/30 border border-blue-100/50 backdrop-blur-sm">
-      <div className="flex items-center justify-between mb-6 bg-gradient-to-r from-blue-50 to-blue-100/50 px-6 py-3 rounded-2xl border border-blue-200/50 shadow-sm">
+      {/* <div className="flex items-center justify-between mb-6 bg-gradient-to-r from-blue-50 to-blue-100/50 px-6 py-3 rounded-2xl border border-blue-200/50 shadow-sm">
         <span className="flex items-center gap-3 text-blue-700 font-medium">
           <span className="animate-pulse">{t("onboarding.part7.date1")}</span>
           <HiOutlineArrowNarrowRight className="text-blue-500 animate-bounce-horizontal" />
           <span className="animate-pulse" style={{ animationDelay: "0.5s" }}>{t("onboarding.part7.date2")}</span>
         </span>
-      </div>
+      </div> */}
 
-      <div className="flex flex-col lg:flex-row gap-8">
-        {renderCalendar(0)}
-        {renderCalendar(1)}
+      <div className="flex flex-col md:flex-row gap-8">
+        <div className="w-full md:w-1/2">
+          {renderCalendar(0)}
+        </div>
+        <div className="hidden md:block w-full md:w-1/2">
+          {renderCalendar(1)}
+        </div>
       </div>
 
       <style>{`

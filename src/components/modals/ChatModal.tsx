@@ -4,10 +4,13 @@ import { X } from "lucide-react";
 import { OwnerDetails, PropertyDetails } from "@/types/PropertyDetails";
 import { initSocket, isSocketConnected } from "@/services/socket";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import PrimaryButton from "../reusable/PrimaryButton";
@@ -46,6 +49,8 @@ const ChatModal: React.FC<ChatModalProps> = ({
 
   const [selectedProperty, setSelectedProperty] = useState("");
   const [exchangeDates, setExchangeDates] = useState<{ start: Date | null; end: Date | null }>({ start: null, end: null });
+  const [isExchangeModalOpen, setIsExchangeModalOpen] = useState(false);
+  const [exchangeStep, setExchangeStep] = useState<"property" | "dates">("property");
   const { myProperties } = useAppSelector((state) => state.property);
   const dispatch = useAppDispatch();
 
@@ -341,54 +346,123 @@ const ChatModal: React.FC<ChatModalProps> = ({
 
             {/* Exchange Request Button */}
             <div className="p-3 bg-white border-t border-gray-300">
-              <Popover>
-                <PopoverTrigger>
+              <Dialog open={isExchangeModalOpen} onOpenChange={(open) => {
+                setIsExchangeModalOpen(open);
+                if (!open) {
+                  setExchangeStep("property");
+                }
+              }}>
+                <DialogTrigger asChild>
                   <PrimaryButton
                     title="Send Exchange Request"
                     className="w-full"
+                    onClick={() => {
+                      setIsExchangeModalOpen(true);
+                      setExchangeStep("property");
+                    }}
                   />
-                </PopoverTrigger>
-                <PopoverContent className="bg-primary-gray-bg backdrop-blur-lg border border-gray-300 absolute -top-44 -left-34 lg:-left-64 shadow-lg">
-                  <div className="mb-2">
-                    <Label className="font-semibold">
-                      Select your property to exchange:
-                    </Label>
-                  </div>
-                  <RadioGroup
-                    value={selectedProperty}
-                    onValueChange={(value) => setSelectedProperty(value)}
-                  >
-                    {myProperties?.map((property) => (
-                      <div
-                        key={property.id}
-                        className="flex items-center space-x-2 py-1"
+                </DialogTrigger>
+                <DialogContent className="bg-white border border-gray-300 p-5 shadow-xl max-w-[90%] md:max-w-3xl rounded-2xl w-full max-h-[80vh] mt-10 overflow-y-auto">
+                  <DialogHeader className="mb-0 md:mb-3">
+                    <DialogTitle className="text-xl font-bold text-gray-800">
+                      {exchangeStep === "property"
+                        ? "Select Property to Exchange"
+                        : "Select Exchange Dates"}
+                    </DialogTitle>
+                    <DialogDescription className="text-gray-500 text-sm">
+                      {exchangeStep === "property"
+                        ? "Choose which of your listed properties you'd like to offer for this exchange."
+                        : ""}
+                    </DialogDescription>
+                  </DialogHeader>
+
+                  {exchangeStep === "property" ? (
+                    <div className="space-y-4">
+                      <RadioGroup
+                        value={selectedProperty}
+                        onValueChange={(value) => setSelectedProperty(value)}
+                        className="space-y-3"
                       >
-                        <RadioGroupItem value={property.id} id={property.id} />
-                        <Label htmlFor={property.id}>{property.title}</Label>
+                        {myProperties && myProperties.length > 0 ? (
+                          myProperties.map((property) => (
+                            <div
+                              key={property.id}
+                              className="flex items-center space-x-3 p-3 rounded-xl border border-gray-200 hover:bg-blue-50/30 cursor-pointer transition-colors"
+                              onClick={() => setSelectedProperty(property.id)}
+                            >
+                              <RadioGroupItem value={property.id} id={property.id} className="cursor-pointer" />
+                              <Label htmlFor={property.id} className="font-medium text-gray-700 cursor-pointer flex-1">
+                                {property.title} ({property.location})
+                              </Label>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="text-center py-6 text-gray-500 text-sm">
+                            You don't have any properties listed yet. Please add a property first.
+                          </div>
+                        )}
+                      </RadioGroup>
+
+                      <div className="flex justify-end gap-3 pt-2">
+                        <button
+                          type="button"
+                          onClick={() => setIsExchangeModalOpen(false)}
+                          className="px-4 py-2 border rounded-xl text-gray-600 hover:bg-gray-50 transition"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (!selectedProperty) {
+                              toast.error("Please select a property first.");
+                              return;
+                            }
+                            setExchangeStep("dates");
+                          }}
+                          className="px-5 py-2 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition"
+                        >
+                          Next
+                        </button>
                       </div>
-                    ))}
-                  </RadioGroup>
-
-                  <div className="mt-4 mb-2">
-                    <Label className="font-semibold text-sm">
-                      Select exchange dates:
-                    </Label>
-                    <div className="mt-2">
-                      <CalendarRangePickerNew
-                        availabilityDates={exchangeDates}
-                        onAvailabilityChange={setExchangeDates}
-                      />
                     </div>
-                  </div>
+                  ) : (
+                    <div className="space-y-4">
+                      <div className="w-full flex justify-center">
+                        <CalendarRangePickerNew
+                          availabilityDates={exchangeDates}
+                          onAvailabilityChange={setExchangeDates}
+                        />
+                      </div>
 
-                  <PrimaryButton
-                    title="Send Request"
-                    className="w-full mt-4"
-                    onClick={handleExchangeRequest}
-                  // disabled={!selectedProperty}
-                  />
-                </PopoverContent>
-              </Popover>
+                      <div className="flex justify-between items-center pt-4border-t">
+                        <button
+                          type="button"
+                          onClick={() => setExchangeStep("property")}
+                          className="px-4 py-2 border rounded-xl text-gray-600 hover:bg-gray-50 transition font-medium"
+                        >
+                          Back
+                        </button>
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            if (!exchangeDates.start || !exchangeDates.end) {
+                              toast.error("Please select exchange dates first.");
+                              return;
+                            }
+                            await handleExchangeRequest();
+                            setIsExchangeModalOpen(false);
+                            setExchangeStep("property");
+                          }}
+                          className="px-6 py-2 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition"
+                        >
+                          Send Request
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </DialogContent>
+              </Dialog>
             </div>
           </motion.div>
         </motion.div>
