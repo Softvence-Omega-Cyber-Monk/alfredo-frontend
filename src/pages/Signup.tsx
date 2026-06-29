@@ -74,6 +74,10 @@ const Signup = () => {
   const [isCookieOpen, setIsCookieOpen] = useState(false);
 
   const onSubmit = async (data: SignupFormInputs) => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'signup_button_click'
+    });
     // Register the user
     const resultAction = await dispatch(
       signupUser({
