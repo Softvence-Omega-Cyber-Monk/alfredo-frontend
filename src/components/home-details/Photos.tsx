@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, Play } from "lucide-react";
 
 interface PhotoType {
   src: string;
@@ -9,6 +9,11 @@ interface PhotoType {
 interface PhotosProps {
   photos: PhotoType[];
 }
+
+const isVideoUrl = (url?: string): boolean => {
+  if (!url) return false;
+  return /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(url);
+};
 
 const Photos = ({ photos }: PhotosProps) => {
   const [showPreview, setShowPreview] = useState(false);
@@ -57,21 +62,56 @@ const Photos = ({ photos }: PhotosProps) => {
     );
   }
 
+  /** Renders image or video based on the URL */
+  const renderMedia = (
+    photo: PhotoType,
+    className: string,
+    options?: { controls?: boolean; muted?: boolean; autoPlay?: boolean; loop?: boolean }
+  ) => {
+    if (isVideoUrl(photo.src)) {
+      return (
+        <video
+          src={photo.src}
+          className={className}
+          controls={options?.controls ?? false}
+          muted={options?.muted ?? true}
+          autoPlay={options?.autoPlay ?? false}
+          loop={options?.loop ?? true}
+          playsInline
+        />
+      );
+    }
+    return (
+      <img
+        src={photo.src}
+        className={className}
+        alt={photo.alt}
+        onError={(e) => {
+          (e.target as HTMLImageElement).src = "/placeholder-image.jpg";
+        }}
+      />
+    );
+  };
+
   return (
     <div className="relative">
-      {/* Main Image */}
+      {/* Main Image / Video */}
       <div
-        className="rounded-lg md:rounded-xl lg:rounded-3xl overflow-hidden cursor-pointer"
+        className="rounded-lg md:rounded-xl lg:rounded-3xl overflow-hidden cursor-pointer relative"
         onClick={() => handleImageClick(0)}
       >
-        <img
-          src={photos[0]?.src}
-          className="w-full h-auto lg:h-[488px] object-cover"
-          alt={photos[0]?.alt}
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = "/placeholder-image.jpg";
-          }}
-        />
+        {renderMedia(photos[0], "w-full h-auto lg:h-[488px] object-cover", {
+          muted: true,
+          autoPlay: true,
+          loop: true,
+        })}
+        {isVideoUrl(photos[0]?.src) && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="bg-black/40 rounded-full p-4">
+              <Play className="w-10 h-10 text-white fill-white" />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Thumbnail Grid */}
@@ -83,21 +123,37 @@ const Photos = ({ photos }: PhotosProps) => {
               className="rounded-lg md:rounded-xl lg:rounded-3xl overflow-hidden cursor-pointer relative group"
               onClick={() => handleImageClick(index + 1)}
             >
-              <img
-                src={photo.src}
-                className="w-full h-auto lg:h-44 object-cover"
-                alt={photo.alt}
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = "/placeholder-image.jpg";
-                }}
-              />
+              {isVideoUrl(photo.src) ? (
+                <>
+                  <video
+                    src={photo.src}
+                    muted
+                    playsInline
+                    className="w-full h-auto lg:h-44 object-cover"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="bg-black/40 rounded-full p-2">
+                      <Play className="w-5 h-5 text-white fill-white" />
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <img
+                  src={photo.src}
+                  className="w-full h-auto lg:h-44 object-cover"
+                  alt={photo.alt}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/placeholder-image.jpg";
+                  }}
+                />
+              )}
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
           ))}
         </div>
       )}
 
-      {/* Image Preview Overlay */}
+      {/* Image/Video Preview Overlay */}
       {showPreview && (
         <div
           className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
@@ -130,19 +186,29 @@ const Photos = ({ photos }: PhotosProps) => {
               </button>
             )}
 
-            {/* Main Image */}
+            {/* Main Preview Content */}
             <div
               className="max-w-6xl max-h-[85vh] flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <img
-                src={photos[currentIndex]?.src}
-                className="max-w-full max-h-[85vh] object-contain rounded-2xl"
-                alt={photos[currentIndex]?.alt}
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = "/placeholder-image.jpg";
-                }}
-              />
+              {isVideoUrl(photos[currentIndex]?.src) ? (
+                <video
+                  key={photos[currentIndex]?.src}
+                  src={photos[currentIndex]?.src}
+                  controls
+                  autoPlay
+                  className="max-w-full max-h-[85vh] object-contain rounded-2xl"
+                />
+              ) : (
+                <img
+                  src={photos[currentIndex]?.src}
+                  className="max-w-full max-h-[85vh] object-contain rounded-2xl"
+                  alt={photos[currentIndex]?.alt}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/placeholder-image.jpg";
+                  }}
+                />
+              )}
             </div>
 
             {/* Next Button */}
@@ -161,7 +227,7 @@ const Photos = ({ photos }: PhotosProps) => {
                 {photos.map((photo, index) => (
                   <div
                     key={index}
-                    className={`flex-shrink-0 w-16 h-16 rounded cursor-pointer transition-all ${
+                    className={`flex-shrink-0 w-16 h-16 rounded cursor-pointer transition-all relative ${
                       index === currentIndex
                         ? "ring-2 ring-white scale-110"
                         : "opacity-60 hover:opacity-100"
@@ -171,15 +237,29 @@ const Photos = ({ photos }: PhotosProps) => {
                       setCurrentIndex(index);
                     }}
                   >
-                    <img
-                      src={photo.src}
-                      className="w-full h-full object-cover rounded"
-                      alt={photo.alt}
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src =
-                          "/placeholder-image.jpg";
-                      }}
-                    />
+                    {isVideoUrl(photo.src) ? (
+                      <>
+                        <video
+                          src={photo.src}
+                          muted
+                          playsInline
+                          className="w-full h-full object-cover rounded"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <Play className="w-3 h-3 text-white fill-white" />
+                        </div>
+                      </>
+                    ) : (
+                      <img
+                        src={photo.src}
+                        className="w-full h-full object-cover rounded"
+                        alt={photo.alt}
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src =
+                            "/placeholder-image.jpg";
+                        }}
+                      />
+                    )}
                   </div>
                 ))}
               </div>

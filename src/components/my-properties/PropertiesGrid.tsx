@@ -356,7 +356,7 @@ const PropertiesGrid = () => {
       {/* Edit Modal */}
       {editModalOpen && (
         <div className="fixed inset-0 backdrop-blur-lg flex items-center justify-center z-50 p-4">
-          <div className="bg-white p-6 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-white p-6 rounded-lg max-w-4xl w-full max-h-[80vh] md:max-h-[70vh] overflow-y-auto">
             <h2 className="text-2xl font-bold mb-4">Edit Property</h2>
 
             {actionError && (

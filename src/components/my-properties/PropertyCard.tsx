@@ -9,6 +9,11 @@ import {
 
 import PrimaryButton from "@/components/reusable/PrimaryButton";
 
+const isVideoUrl = (url?: string): boolean => {
+  if (!url) return false;
+  return /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(url);
+};
+
 interface PropertyFeatures {
   beds?: number;
   baths?: number;
@@ -40,10 +45,16 @@ const PropertyCard: React.FC<CommonCardProps> = ({
   onEdit,
   onDelete,
 }) => {
+  const mediaSrc = coverImage || image;
+
   return (
     <div className="p-3 rounded-3xl bg-[#F4F7FC]">
       <div className="rounded-2xl overflow-hidden max-h-64 relative">
-        <img src={coverImage || image} alt={title} className="w-full h-full object-cover" />
+        {isVideoUrl(mediaSrc) ? (
+          <video src={mediaSrc} muted autoPlay loop playsInline className="w-full h-full object-cover" />
+        ) : (
+          <img src={mediaSrc} alt={title} className="w-full h-full object-cover" />
+        )}
       </div>
 
       <div className="mt-4 px-2">

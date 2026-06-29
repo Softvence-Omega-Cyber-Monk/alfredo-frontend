@@ -21,6 +21,11 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 // import { Button } from "../ui/button";
 
+const isVideoUrl = (url?: string): boolean => {
+  if (!url) return false;
+  return /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(url);
+};
+
 const CommonCard: React.FC<CommonCardProps> = ({
   id,
   image,
@@ -73,11 +78,17 @@ const CommonCard: React.FC<CommonCardProps> = ({
     }
   };
 
+  const mediaSrc = coverImage || image;
+
   return (
     <button onClick={onViewDetails} className="p-3 rounded-3xl cursor-pointer bg-[#F4F7FC]">
       <div className="rounded-2xl overflow-hidden max-h-64 relative">
-        {/* Main Image */}
-        <img src={coverImage || image} alt={title} className="w-full h-full object-cover" />
+        {/* Main Image or Video */}
+        {isVideoUrl(mediaSrc) ? (
+          <video src={mediaSrc} muted autoPlay loop playsInline className="w-full h-full object-cover" />
+        ) : (
+          <img src={mediaSrc} alt={title} className="w-full h-full object-cover" />
+        )}
 
         <button
           onClick={toggleFavorite}

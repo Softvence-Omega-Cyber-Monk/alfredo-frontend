@@ -57,8 +57,8 @@ const ChatArea: FC<ChatAreaProps> = ({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 10 * 1024 * 1024) {
-      toast.error("File size cannot exceed 10MB");
+    if (file.size > 50 * 1024 * 1024) {
+      toast.error("File size cannot exceed 50MB");
       return;
     }
 

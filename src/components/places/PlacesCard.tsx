@@ -2,22 +2,40 @@ import { CommonCard } from "@/types/commonCard";
 import { MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 
+const isVideoUrl = (url?: string): boolean => {
+  if (!url) return false;
+  return /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(url);
+};
+
 const PlacesCard: React.FC<CommonCard> = ({ id, image, coverImage, location, title }) => {
+  const mediaSrc = coverImage || image;
+
   return (
     <Link
       to={`/home-details/${id}`}
       className="p-3 rounded-3xl bg-[#F4F7FC] block"
     >
       <div className="rounded-2xl overflow-hidden max-h-64 h-64">
-        {/* Main Image with fallback */}
-        <img
-          src={coverImage || image}
-          alt={title}
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = "/placeholder-image.jpg";
-          }}
-        />
+        {/* Main Image/Video with fallback */}
+        {isVideoUrl(mediaSrc) ? (
+          <video
+            src={mediaSrc}
+            muted
+            autoPlay
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <img
+            src={mediaSrc}
+            alt={title}
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = "/placeholder-image.jpg";
+            }}
+          />
+        )}
       </div>
 
       <div className="mt-4 px-2">
