@@ -15,7 +15,7 @@ const Plans: FC = () => {
   return (
     <div>
       <CommonWrapper>
-        <div className="mt-16 max-[767px]:mt-8">
+        <div className="mt-[150px] max-[767px]:mt-[100px]">
           <ClientHeading
             headingText={t("ourplan.title")}
             spanText={t("ourplan.highlight")}

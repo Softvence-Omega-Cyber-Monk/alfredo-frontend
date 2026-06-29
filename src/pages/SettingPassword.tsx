@@ -8,7 +8,7 @@ const background = {
 const SettingPassword = () => {
   return (
     <div
-      className="min-h-screen bg-bottom bg-repeat-x bg-contain"
+      className="min-h-screen bg-bottom bg-repeat-x bg-contain mt-[120px] max-[767px]:mt-[100px]"
       style={background}
     >
       <div className="mt-6 md:mt-10">

@@ -203,7 +203,7 @@ const Dashboard = () => {
   // };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="p-6 max-w-7xl mx-auto mt-[120px] max-[767px]:mt-[70px]">
       {/* <h1 className="text-3xl font-bold text-primary-blue mb-6">
         {t("dashboard.title")}
       </h1> */}

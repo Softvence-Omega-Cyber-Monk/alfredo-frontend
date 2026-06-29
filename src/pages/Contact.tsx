@@ -47,26 +47,24 @@ const Contact = () => {
     <div>
       <CommonWrapper>
         {/* top heading section */}
-        <div className="my-[64px] max-[767px]:my-[32px]">
+        <div className="my-[64px] mt-[150px] max-[767px]:my-[32px] max-[767px]:mt-[100px]">
           {/* <ClientHeading
             headingText={t("contact.title")}
             spanText={t("contact.highlight")}
           /> */}
           <div className="text-center">
             <h1
-              className={`font-Grand-Hotel text-primary-blue ${
-                currentLanguage === "el"
+              className={`font-Grand-Hotel text-primary-blue ${currentLanguage === "el"
                   ? "text-[28px] lg:text-[40px]" // smaller for Greek
                   : "text-3xl lg:text-[60px]" // default for English or others
-              } ${currentLanguage === "el" ? "ml-0" : "ml-4"}`}
+                } ${currentLanguage === "el" ? "ml-0" : "ml-4"}`}
             >
               {t("contact.title")}
               <span
-                className={`text-[#505050] text-center ${
-                  currentLanguage === "el"
+                className={`text-[#505050] text-center ${currentLanguage === "el"
                     ? "text-[28px] lg:text-[40px]" // smaller font for Greek
                     : "text-3xl lg:text-[60px]" // default size
-                }`}
+                  }`}
               >
                 {" "}
                 {t("contact.highlight")}

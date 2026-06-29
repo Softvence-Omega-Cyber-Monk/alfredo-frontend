@@ -6,9 +6,10 @@ import { useTranslation } from "react-i18next";
 
 interface Props {
   currentPath: string;
+  transparent: boolean;
 }
 
-const DesktopNavLinks: React.FC<Props> = ({ currentPath }) => {
+const DesktopNavLinks: React.FC<Props> = ({ currentPath, transparent }) => {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   const { t } = useTranslation("navigation");
@@ -20,7 +21,8 @@ const DesktopNavLinks: React.FC<Props> = ({ currentPath }) => {
           key={item.path}
           to={item.path}
           className={clsx(
-            "px-2 py-1 text-base xl:text-sm font-medium transition-colors text-[#0E110C] whitespace-nowrap",
+            "px-2 py-1 text-base xl:text-sm font-bold transition-colors whitespace-nowrap",
+            transparent ? "text-white" : "text-[#0E110C]",
             currentPath === item.path
               ? "border-b-2 border-b-primary-blue"
               : "hover:border-b-2 hover:border-b-primary-blue",
