@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { ChatAreaProps } from "@/components/messages/types";
-import { ChevronLeft, Paperclip, Ban, Trash2, FileText, Check, CheckCheck, Lock } from "lucide-react";
+import { ChevronLeft, Paperclip, Ban, Trash2, FileText, Check, CheckCheck, Lock, Flag } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppDispatch } from "@/hooks/useRedux";
 import { fetchMyProperties } from "@/store/Slices/PropertySlice/propertySlice";
@@ -143,6 +143,15 @@ const ChatArea: FC<ChatAreaProps> = ({
               </button>
             )}
 
+            {/* Report Button */}
+            <a
+              href={`mailto:info@vacanzagreece.gr?subject=Report User: ${selectedConversation.name} (ID: ${selectedConversation.id})&body=Please describe the issue (Spam / Abuse / Others):%0D%0A%0D%0A`}
+              className="text-xs bg-amber-500 hover:bg-amber-600 text-white font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 active:scale-95"
+            >
+              <Flag className="w-3 h-3" />
+              <span className="hidden sm:inline">Report</span>
+            </a>
+
             {/* Delete Chat Button */}
             <button
               onClick={() => onDeleteChat?.(selectedConversation.id, selectedConversation.name)}
@@ -198,6 +207,12 @@ const ChatArea: FC<ChatAreaProps> = ({
                           className="max-h-52 object-cover w-full hover:scale-[1.02] transition-transform duration-200"
                         />
                       </a>
+                    ) : msg.attachmentType === "video" ? (
+                      <video
+                        src={msg.attachmentUrl}
+                        controls
+                        className="max-h-52 object-cover w-full"
+                      />
                     ) : (
                       <a
                         href={msg.attachmentUrl}
@@ -247,7 +262,7 @@ const ChatArea: FC<ChatAreaProps> = ({
             ref={fileInputRef}
             onChange={handleFileChange}
             className="hidden"
-            accept="image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
+            accept="image/*,video/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
           />
 
           {/* Attachment trigger button */}

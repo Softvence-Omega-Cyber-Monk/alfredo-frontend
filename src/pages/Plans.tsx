@@ -8,6 +8,7 @@ import SocialProofPopup from "@/components/reusable/SocialProofPopup";
 import { bonus } from "@/lib/AccordionData/accordionData";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
+import CalculatorSection from "@/components/calculator/CalculatorSection";
 
 const Plans: FC = () => {
   const { t } = useTranslation("ourplan");
@@ -29,6 +30,10 @@ const Plans: FC = () => {
         <div className="mt-20">
           {/* this is service plan  */}
           <ServicePlan />
+        </div>
+
+        <div>
+          <CalculatorSection isHome={true} />
         </div>
 
         <div className="lg:w-3/4 md:w-3/4 w-full mx-auto mt-[140px] max-sm:mt-[72px]">

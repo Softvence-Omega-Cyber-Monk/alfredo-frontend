@@ -451,12 +451,21 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
                       }`}
                     onClick={() => setFormData({ ...formData, coverImage: index })}
                   >
-                    <img
-                      src={URL.createObjectURL(file)}
-                      alt="preview"
-                      className="w-full h-full object-cover rounded-md"
-                    />
-                    {formData.coverImage === index && (
+                    {file.type.startsWith("video/") ? (
+                      <video
+                        src={URL.createObjectURL(file)}
+                        className="w-full h-full object-cover rounded-md"
+                        muted
+                        playsInline
+                      />
+                    ) : (
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt="preview"
+                        className="w-full h-full object-cover rounded-md"
+                      />
+                    )}
+                    {formData.coverImage === index && !file.type.startsWith("video/") && (
                       <div className="absolute top-2 left-2 bg-primary-blue text-white text-[10px] px-2 py-0.5 rounded-full">
                         Cover
                       </div>
@@ -494,7 +503,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
                 <input
                   type="file"
                   multiple
-                  accept="image/*,.heic,.heif,.HEIC,.HEIF"
+                  accept="image/*,video/*,.heic,.heif,.HEIC,.HEIF"
                   onChange={handleFileChange}
                   className="hidden"
                 />
@@ -513,7 +522,7 @@ const AddPlaceModal = ({ isOpen, onClose }: AddPlaceModalProps) => {
                 </div>
                 <input
                   type="file"
-                  accept="image/*,.heic,.heif,.HEIC,.HEIF"
+                  accept="image/*,video/*,.heic,.heif,.HEIC,.HEIF"
                   capture="environment"
                   onChange={handleFileChange}
                   className="hidden"

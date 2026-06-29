@@ -208,9 +208,30 @@ const ProfileForm = () => {
             // coverImage is the index within the newly uploaded files
             const selectedIndex = Math.min(currentFormData.coverImage, newlyUploaded.length - 1);
             uploadedPhotoUrl = newlyUploaded[selectedIndex] || newlyUploaded[0];
+          } else {
+            throw new Error("No images returned from gallery upload");
           }
         } catch (onboardingErr) {
-          console.error("Error uploading gallery images:", onboardingErr);
+          console.error("Error uploading gallery images, falling back to basic upload:", onboardingErr);
+          try {
+            const fallbackFormData = new FormData();
+            const fileToUpload = currentFiles[currentFormData.coverImage] || currentFiles[0];
+            fallbackFormData.append("file", fileToUpload);
+            const fallbackRes = await axios.post(
+              `${import.meta.env.VITE_API_URL}/chat/upload`,
+              fallbackFormData,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "multipart/form-data",
+                },
+              }
+            );
+            uploadedPhotoUrl = fallbackRes.data.url;
+          } catch (fallbackErr) {
+            console.error("Fallback upload failed", fallbackErr);
+            throw new Error("Failed to upload profile photo");
+          }
         }
       }
 

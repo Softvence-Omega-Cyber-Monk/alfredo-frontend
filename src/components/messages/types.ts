@@ -26,7 +26,7 @@ export interface Message {
   status?: "pending" | "accepted" | "rejected"; // NEW
   messageStatus?: "SENT" | "READ"; // Read receipts
   attachmentUrl?: string;
-  attachmentType?: "image" | "file";
+  attachmentType?: "image" | "file" | "video";
   attachmentName?: string;
 }
 

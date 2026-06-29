@@ -33,7 +33,7 @@ const mapApiToConversation = (apiConv: any): Conversation => ({
   isSubscribed: apiConv.isSubscribed || false,
 });
 
-const token = localStorage.getItem("token");
+// token will be fetched dynamically inside functions
 
 // Fetch conversations from /chat/partners/{userId}
 const fetchConversations = async (userId: string): Promise<Conversation[]> => {
@@ -42,7 +42,7 @@ const fetchConversations = async (userId: string): Promise<Conversation[]> => {
       `${import.meta.env.VITE_API_URL}/chat/partners/${userId}`,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
       }
@@ -104,7 +104,7 @@ const Messages = () => {
         `${import.meta.env.VITE_API_URL}/chat/block/list`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -145,7 +145,7 @@ const Messages = () => {
         `${import.meta.env.VITE_API_URL}/chat/block/check/${targetId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -169,7 +169,7 @@ const Messages = () => {
         `${import.meta.env.VITE_API_URL}/chat/received-count/${targetId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -186,7 +186,7 @@ const Messages = () => {
         {},
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -206,7 +206,7 @@ const Messages = () => {
         `${import.meta.env.VITE_API_URL}/chat/block/${targetId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -233,7 +233,7 @@ const Messages = () => {
         `${import.meta.env.VITE_API_URL}/chat/delete/${deletePartnerId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -267,7 +267,7 @@ const Messages = () => {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "multipart/form-data",
           },
         }
@@ -294,27 +294,34 @@ const Messages = () => {
     }
   };
 
+  // Fetch conversations on mount
   useEffect(() => {
     if (userId) {
       fetchConversations(userId).then((data) => {
         console.log("📋 Fetched conversations:", data);
         setConversations(data);
-
-        if (targetUserId) {
-          const targetConv = data.find((c) => c.id === targetUserId);
-          if (targetConv) {
-            setSelectedConversation(targetConv);
-            setCurrentView("chat");
-            return;
-          }
-        }
-
-        if (data.length > 0 && !selectedConversation) {
-          setSelectedConversation(data[0]);
-        }
       });
     }
-  }, [userId, targetUserId]);
+  }, [userId]);
+
+  // Handle targetUserId changes (from notifications)
+  useEffect(() => {
+    if (conversations.length > 0) {
+      if (targetUserId) {
+        const targetConv = conversations.find((c) => c.id === targetUserId);
+        if (targetConv) {
+          setSelectedConversation(targetConv);
+          setCurrentView("chat");
+          return;
+        }
+      }
+      
+      // Select first conversation if none selected
+      if (!selectedConversation) {
+        setSelectedConversation(conversations[0]);
+      }
+    }
+  }, [targetUserId, conversations]);
 
   // Initialize WebSocket
   useEffect(() => {
@@ -442,7 +449,7 @@ const Messages = () => {
           type: "text",
           messageStatus: msg.status,
           attachmentUrl: msg.attachmentUrl || undefined,
-          attachmentType: (msg.attachmentType as "image" | "file") || undefined,
+          attachmentType: (msg.attachmentType as "image" | "file" | "video") || undefined,
           attachmentName: msg.attachmentName || undefined,
         })
       );

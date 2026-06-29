@@ -348,9 +348,14 @@ const ExchangeRequest = () => {
                     {request.status}
                   </span>
                 </p>
-                <p className="text-gray-600 text-sm mb-3">
+                <p className="text-gray-600 text-sm mb-2">
                   Created: {new Date(request.createdAt).toLocaleDateString()}
                 </p>
+                {request.exchangeStartDate && request.exchangeEndDate && (
+                  <p className="text-gray-600 text-sm mb-3">
+                    Dates: {new Date(request.exchangeStartDate).toLocaleDateString()} - {new Date(request.exchangeEndDate).toLocaleDateString()}
+                  </p>
+                )}
                 <div className="mt-auto pt-3 border-t border-gray-100">
                   <p className="text-gray-700 text-sm mb-4 line-clamp-2">
                     {request.message || "No message provided"}
@@ -391,9 +396,14 @@ const ExchangeRequest = () => {
                         {request.status}
                       </span>
                     </div>
-                    <p className="text-gray-600 text-sm mb-2">
+                    <p className="text-gray-600 text-sm mb-1">
                       {new Date(request.createdAt).toLocaleDateString()}
                     </p>
+                    {request.exchangeStartDate && request.exchangeEndDate && (
+                      <p className="text-gray-600 text-sm mb-2">
+                        Exchange: {new Date(request.exchangeStartDate).toLocaleDateString()} to {new Date(request.exchangeEndDate).toLocaleDateString()}
+                      </p>
+                    )}
                     <p className="text-gray-700 text-sm mb-3 line-clamp-1">
                       {request.message || "No message provided"}
                     </p>

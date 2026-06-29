@@ -11,6 +11,8 @@ export interface ExchangeRequest {
   toPropertyId: string;
   message: string;
   status: "PENDING" | "ACCEPTED" | "REJECTED" | "completed" | "cancelled";
+  exchangeStartDate?: string;
+  exchangeEndDate?: string;
   createdAt: string;
   updatedAt: string;
   // You might want to add related property/user details here
@@ -44,6 +46,8 @@ export const sendExchangeRequest = createAsyncThunk(
       fromPropertyId: string;
       toPropertyId: string;
       message: string;
+      exchangeStartDate?: string;
+      exchangeEndDate?: string;
     },
     { rejectWithValue }
   ) => {

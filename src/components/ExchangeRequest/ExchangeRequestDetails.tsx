@@ -87,6 +87,14 @@ const ExchangeRequestDetails = () => {
                 Created:{" "}
                 {new Date(currentRequest.createdAt).toLocaleDateString()}
               </div>
+              {currentRequest.exchangeStartDate && currentRequest.exchangeEndDate && (
+                <div className="flex items-center text-gray-600 text-sm bg-blue-50 px-3 py-1 rounded-full">
+                  <Calendar size={16} className="mr-2 text-blue-600" />
+                  <span className="font-medium text-blue-800">
+                    Exchange Dates: {new Date(currentRequest.exchangeStartDate).toLocaleDateString()} - {new Date(currentRequest.exchangeEndDate).toLocaleDateString()}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
           <div className="flex flex-wrap gap-4 mt-8">

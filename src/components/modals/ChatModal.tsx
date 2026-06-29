@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { sendExchangeRequest } from "@/store/Slices/ExchangeRequestSlice/ExchangeRequestSlice";
 import { sendNotification } from "@/helper/NotificationService";
+import CalendarRangePickerNew from "../home/CalendarRangePickerNew";
 
 interface ChatModalProps {
   isOpen: boolean;
@@ -44,6 +45,7 @@ const ChatModal: React.FC<ChatModalProps> = ({
   const receiverId = owner?.id;
 
   const [selectedProperty, setSelectedProperty] = useState("");
+  const [exchangeDates, setExchangeDates] = useState<{ start: Date | null; end: Date | null }>({ start: null, end: null });
   const { myProperties } = useAppSelector((state) => state.property);
   const dispatch = useAppDispatch();
 
@@ -100,8 +102,14 @@ const ChatModal: React.FC<ChatModalProps> = ({
       toast.error("Please select a property before sending request");
       return;
     }
+    if (!exchangeDates.start || !exchangeDates.end) {
+      toast.error("Please select exchange dates before sending request");
+      return;
+    }
 
-    const exchangeMessage = `I want to exchange my property "${selectedPropertyTitle}" for your property "${singlePropertyData.title}". Please check your exchange route on dashboard for details.`;
+    const formatDate = (date: Date) => date.toLocaleDateString();
+    const dateRangeStr = `from ${formatDate(exchangeDates.start)} to ${formatDate(exchangeDates.end)}`;
+    const exchangeMessage = `I want to exchange my property "${selectedPropertyTitle}" for your property "${singlePropertyData.title}" ${dateRangeStr}. Please check your exchange route on dashboard for details.`;
 
     try {
       const result = await dispatch(
@@ -111,6 +119,8 @@ const ChatModal: React.FC<ChatModalProps> = ({
           fromPropertyId: selectedProperty,
           toPropertyId: id!,
           message: exchangeMessage,
+          exchangeStartDate: exchangeDates.start.toISOString(),
+          exchangeEndDate: exchangeDates.end.toISOString(),
         })
       ).unwrap();
 
@@ -133,6 +143,7 @@ const ChatModal: React.FC<ChatModalProps> = ({
       );
 
       setSelectedProperty("");
+      setExchangeDates({ start: null, end: null });
       toast.success("Request sent successfully");
     } catch (error) {
       console.error("Failed to send exchange request:", error);
@@ -357,6 +368,18 @@ const ChatModal: React.FC<ChatModalProps> = ({
                       </div>
                     ))}
                   </RadioGroup>
+
+                  <div className="mt-4 mb-2">
+                    <Label className="font-semibold text-sm">
+                      Select exchange dates:
+                    </Label>
+                    <div className="mt-2">
+                      <CalendarRangePickerNew
+                        availabilityDates={exchangeDates}
+                        onAvailabilityChange={setExchangeDates}
+                      />
+                    </div>
+                  </div>
 
                   <PrimaryButton
                     title="Send Request"
