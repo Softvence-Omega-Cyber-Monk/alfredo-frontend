@@ -24,7 +24,6 @@ interface Props {
   isAuthenticated: boolean;
   user: AuthUser | null;
   setMobileMenuOpen: (state: boolean) => void;
-  transparent: boolean;
 }
 
 const AuthSection: React.FC<Props> = ({

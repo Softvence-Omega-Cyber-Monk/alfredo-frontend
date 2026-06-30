@@ -10,7 +10,7 @@ const Articles = () => {
   return (
     <div className="">
       <CommonWrapper>
-        <div className="mt-[150px] max-[767px]:mt-[100px]">
+        <div>
           <h1 className="font-Grand-Hotel text-[56px] ml-4 text-primary-blue text-center">
             {t("articles.title")}
           </h1>

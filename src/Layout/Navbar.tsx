@@ -10,65 +10,37 @@ import AuthSection from "../components/navbar/AuthSection";
 import MobileMenu from "../components/navbar/MobileMenu";
 import { MdOutlineFavorite } from "react-icons/md";
 import { fetchFavorites } from "@/store/Slices/FavoritesSlice/favoritesSlice";
+// import NotificationBell from "@/components/reusable/NotificationBell";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const dispatch = useAppDispatch();
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const { favorites } = useAppSelector((state) => state.favorites);
 
-  // Detect scroll to toggle between transparent and solid
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 60);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+  // Fetch favorites when user authenticates
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(fetchFavorites());
     }
   }, [isAuthenticated, dispatch]);
 
-  // Only show transparent navbar on the home route
-  const isHome = location.pathname === "/";
-  const isTransparent = isHome && !isScrolled;
-
   return (
-    <nav
-      className={`w-full fixed top-0 z-[100] transition-all duration-300 ease-in-out
-        ${isTransparent
-          ? "bg-transparent"
-          : "bg-[#F4F7FC] shadow-sm"
-        }`}
-    >
+    <nav className="bg-[#F4F7FC] text-dark-3 w-full sticky top-0 z-100">
       <CommonWrapper>
         <div className="mx-auto px-2 py-2 md:py-4 lg:py-6">
           <div className="flex items-center justify-between relative">
-            {/* Logo — white when transparent, brand colour when solid */}
-            <div className={isTransparent ? "brightness-0 invert" : ""}>
-              <Logo />
-            </div>
+            <Logo />
+            <DesktopNavLinks currentPath={location.pathname} />
 
-            {/* Nav Links */}
-            <DesktopNavLinks
-              currentPath={location.pathname}
-              transparent={isTransparent}
-            />
-
-            {/* Right section */}
+            {/* Desktop Auth Section */}
             <div className="flex items-center gap-3">
+              {/* <NotificationBell /> */}
               {isAuthenticated && (
                 <Link to="/my-favorite">
                   <div className="relative inline-block">
-                    <MdOutlineFavorite
-                      className={`text-3xl cursor-pointer transition-colors
-                        ${isTransparent ? "text-white" : "text-primary-blue"}`}
-                    />
+                    <MdOutlineFavorite className="text-3xl text-primary-blue cursor-pointer" />
                     {favorites.length > 0 && (
                       <span className="absolute -top-2 -right-3 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full shadow-lg">
                         {favorites.length}
@@ -78,19 +50,15 @@ const Navbar: React.FC = () => {
                 </Link>
               )}
 
-              {/* Auth section — pass transparent flag so it can style icons accordingly */}
               <AuthSection
                 isAuthenticated={isAuthenticated}
                 user={user}
                 setMobileMenuOpen={setIsOpen}
-                transparent={isTransparent}
               />
-
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
-                className={`hover:opacity-70 focus:outline-none lg:hidden transition-colors
-                  ${isTransparent ? "text-white" : "text-primary-blue"}`}
+                className="text-primary-blue hover:text-primary-blue/80 focus:outline-none lg:hidden"
               >
                 <Menu className="w-6 h-6 md:w-8 md:h-8" />
               </button>

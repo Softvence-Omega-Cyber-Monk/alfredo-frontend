@@ -6,7 +6,7 @@ const background = {
 
 const Profile = () => {
   return (
-    <div className=" bg-bottom bg-repeat-x bg-contain mt-[120px] max-[767px]:mt-[100px]" style={background}>
+    <div className=" bg-bottom bg-repeat-x bg-contain" style={background}>
       <div className="min-h-screen  bg-bottom bg-repeat-x bg-contain">
         <div className="mt-6 md:mt-10  z-10">
           <MiniWrapper>

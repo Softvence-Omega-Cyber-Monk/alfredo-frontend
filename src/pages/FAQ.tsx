@@ -21,7 +21,7 @@ const FAQ = () => {
   return (
     <div>
       <CommonWrapper>
-        <div className="mt-[150px] max-[767px]:mt-[104px] max-[767px]:text-center border-b border-[#BFD4F0] pb-3 mb-6">
+        <div className="mt-[64px] max-[767px]:mt-[34px] max-[767px]:text-center border-b border-[#BFD4F0] pb-3 mb-6">
           {/*  Dynamic Heading */}
           {currentLanguage === "el" ? (
             <h1 className="text-center font-Grand-Hotel text-4xl lg:text-[60px] text-primary-blue mb-2">

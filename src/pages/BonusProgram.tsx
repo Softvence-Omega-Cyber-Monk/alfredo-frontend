@@ -38,7 +38,7 @@ const BonusProgram: FC = () => {
     <div>
       <CommonWrapper>
         {/* Heading */}
-        <div className="mt-[150px] max-[767px]:mt-[100px] mb-[40px] text-center">
+        <div className="mt-[64px] mb-[40px] text-center">
           <h1
             className={`text-[#505050] leading-22 max-[767px]:leading-tight ${currentLanguage === "el"
               ? "text-[40px] max-[767px]:text-[28px]" // smaller font for Greek
