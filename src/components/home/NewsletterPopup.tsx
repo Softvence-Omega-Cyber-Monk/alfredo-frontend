@@ -93,7 +93,7 @@ const NewsletterPopup: FC = () => {
             <div className="flex flex-col items-center gap-4 py-6">
               <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 13L9 17L19 7" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M5 13L9 17L19 7" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
               <p className="text-xl font-semibold text-[#505050] text-center">
@@ -142,7 +142,7 @@ const NewsletterPopup: FC = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full h-[48px] rounded-full bg-[#3174CD] text-white font-semibold text-base hover:bg-[#2a65b5] transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full h-[48px] rounded-full bg-[#5599f3] text-white font-semibold text-base hover:bg-[#2a65b5] transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {loading ? "..." : t("newsletterPopup.button")}
                 </button>

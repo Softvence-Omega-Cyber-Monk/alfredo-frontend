@@ -134,11 +134,10 @@ const SocialProofPopup: FC = () => {
 
   return (
     <div
-      className={`fixed bottom-6 left-6 z-[90] max-w-[360px] w-[calc(100vw-48px)] sm:w-auto ${
-        exiting ? "animate-[slideOut_0.4s_ease_forwards]" : "animate-[slideIn_0.5s_ease]"
-      }`}
+      className={`fixed bottom-6 left-6 z-[90] max-w-[360px] w-[calc(100vw-48px)] sm:w-auto ${exiting ? "animate-[slideOut_0.4s_ease_forwards]" : "animate-[slideIn_0.5s_ease]"
+        }`}
     >
-      <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-gray-100 p-4 flex items-start gap-3">
+      <div className="bg-[#5599f3] text-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-gray-100 p-4 flex items-start gap-3">
         {/* Icon */}
         <div
           className={`w-10 h-10 rounded-full ${currentMessage.iconBg} flex items-center justify-center flex-shrink-0`}
@@ -147,14 +146,14 @@ const SocialProofPopup: FC = () => {
         </div>
 
         {/* Text */}
-        <p className="text-sm text-[#333] font-medium leading-snug flex-1 pt-2">
+        <p className="text-sm text-white font-medium leading-snug flex-1 pt-2">
           {currentMessage.getText(lang)}
         </p>
 
         {/* Close */}
         <button
           onClick={dismiss}
-          className="w-6 h-6 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors text-gray-400 hover:text-gray-600 flex-shrink-0 cursor-pointer"
+          className="w-6 h-6 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors text-white flex-shrink-0 cursor-pointer"
           aria-label="Close"
         >
           <IoClose size={14} />

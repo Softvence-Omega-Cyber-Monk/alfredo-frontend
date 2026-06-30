@@ -40,9 +40,10 @@ const Layout: React.FC = () => {
       {!shouldHideMessageButton && token && (
         <Link
           to={`${user.isSubscribed ? "/messages" : "/plans"}`}
-          className="p-2 md:p-2.5 rounded-full bg-white shadow-[0_0_10px_0_#B9D7FF] fixed bottom-10 right-8 z-100"
+          className="p-2 md:p-3 rounded-[14px] bg-primary-blue shadow-[0_0_10px_0_#B9D7FF] fixed bottom-10 right-8 z-100 flex items-center gap-2"
         >
           <img src={messageIcon} className="w-4 h-4 md:w-6 md:h-6" alt="" />
+          <span className="text-white">Chat</span>
         </Link>
       )}
     </div>

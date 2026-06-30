@@ -67,11 +67,77 @@ const Signup = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [fbLoading, setFbLoading] = useState(false);
 
   const [isTermsOpen, setIsTermsOpen] = useState(false);
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [isCookieOpen, setIsCookieOpen] = useState(false);
+
+
+  const [fbLoading, setFbLoading] = useState(false);
+
+  const handleFacebookLogin = () => {
+    if (fbLoading) return;
+    setFbLoading(true);
+
+    window.FB.login(
+      (response) => {
+        // Cannot be async directly
+        // Call a separate async function instead
+        if (response.authResponse) {
+          processFacebookLogin(response.authResponse.accessToken);
+        } else {
+          console.log("Facebook login cancelled by user");
+          setFbLoading(false);
+        }
+      },
+      { scope: "email,public_profile" }
+    );
+  };
+
+  const processFacebookLogin = async (accessToken: string) => {
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/auth/facebook`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ accessToken }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (data.success) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("token", data.accessToken);
+
+        const formattedUser = {
+          ...data.user,
+          firstName:
+            (data.user.fullName || "").split(" ")[0] ||
+            data.user.firstName ||
+            "",
+          lastName:
+            (data.user.fullName || "").split(" ").slice(1).join(" ") ||
+            data.user.lastName ||
+            "",
+        };
+
+        dispatch(
+          setCredentials({ user: formattedUser, token: data.accessToken })
+        );
+
+        navigate(!data.user.hasOnboarded ? "/onboarding" : "/dashboard");
+      } else {
+        console.error("Backend error:", data);
+      }
+    } catch (err) {
+      console.error("Facebook login error:", err);
+    } finally {
+      setFbLoading(false);
+    }
+  };
 
   const onSubmit = async (data: SignupFormInputs) => {
     window.dataLayer = window.dataLayer || [];
@@ -167,67 +233,7 @@ const Signup = () => {
     }
   };
 
-  const handleFacebookLogin = () => {
-    if (fbLoading) return;
-    setFbLoading(true);
 
-    window.FB.login(
-      async (response) => {
-        if (response.authResponse) {
-          const accessToken = response.authResponse.accessToken;
-
-          try {
-            const res = await fetch(
-              `${import.meta.env.VITE_API_URL}/auth/facebook`,
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
-                body: JSON.stringify({ accessToken }),
-              }
-            );
-
-            const data = await res.json();
-
-            if (data.success) {
-              localStorage.setItem("user", JSON.stringify(data.user));
-              localStorage.setItem("token", data.accessToken);
-
-              const formattedUser = {
-                ...data.user,
-                firstName:
-                  (data.user.fullName || "").split(" ")[0] ||
-                  data.user.firstName ||
-                  "",
-                lastName:
-                  (data.user.fullName || "").split(" ").slice(1).join(" ") ||
-                  data.user.lastName ||
-                  "",
-              };
-
-              dispatch(
-                setCredentials({ user: formattedUser, token: data.accessToken })
-              );
-
-              navigate(
-                !data.user.hasOnboarded ? "/onboarding" : "/dashboard"
-              );
-            } else {
-              console.error("Backend error:", data);
-            }
-          } catch (err) {
-            console.error("Facebook login error:", err);
-          } finally {
-            setFbLoading(false);
-          }
-        } else {
-          console.log("Facebook login cancelled by user");
-          setFbLoading(false);
-        }
-      },
-      { scope: "email,public_profile" }
-    );
-  };
 
 
   return (
