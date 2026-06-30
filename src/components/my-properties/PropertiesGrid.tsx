@@ -106,6 +106,7 @@ const PropertiesGrid = () => {
         isAvailable: singleProperty.isAvailable,
         availabilityStartDate: singleProperty.availabilityStartDate || "",
         availabilityEndDate: singleProperty.availabilityEndDate || "",
+        maxPeople: singleProperty.maxPeople || 4,
         amenities: singleProperty.amenities?.map((a) => a.id) || [],
         transports: singleProperty.transports?.map((t) => t.id) || [],
         surroundings: singleProperty.surroundings?.map((s) => s.id) || [],
@@ -405,6 +406,18 @@ const PropertiesGrid = () => {
                       onChange={handleInputChange}
                       className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                       min="0"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block mb-2 font-medium">Max Guests</label>
+                    <input
+                      type="number"
+                      name="maxPeople"
+                      value={formData.maxPeople || 1}
+                      onChange={handleInputChange}
+                      className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      min="1"
                     />
                   </div>
 

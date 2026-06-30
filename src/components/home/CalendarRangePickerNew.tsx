@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   addMonths,
   format,
@@ -7,7 +7,6 @@ import {
   eachDayOfInterval,
   isSameDay,
   isWithinInterval,
-  differenceInMonths,
 } from "date-fns";
 import clsx from "clsx";
 // import { HiOutlineArrowNarrowRight } from "react-icons/hi";
@@ -31,12 +30,6 @@ const CalendarRangePickerNew = ({
   const [slideDirection, setSlideDirection] = useState<"left" | "right" | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  useEffect(() => {
-    if (availabilityDates.start) {
-      const offset = differenceInMonths(availabilityDates.start, currentMonth);
-      setMonthOffset(offset);
-    }
-  }, [availabilityDates.start, currentMonth]);
 
   const handleMonthChange = (direction: "prev" | "next") => {
     if (isAnimating) return;

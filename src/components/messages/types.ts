@@ -57,6 +57,7 @@ export interface ChatAreaProps {
   onBlockUser?: (partnerId: string) => void;
   onUnblockUser?: (partnerId: string) => void;
   onDeleteChat?: (partnerId: string, partnerName: string) => void;
+  onReportUser?: (targetId: string, reason: string, details?: string) => Promise<void>;
   blockedUserIds?: string[];
   blockedByThemIds?: string[];
   onSendAttachment?: (file: File) => Promise<void>;

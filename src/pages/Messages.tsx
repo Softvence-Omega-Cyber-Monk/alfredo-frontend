@@ -220,6 +220,23 @@ const Messages = () => {
     }
   };
 
+  const handleReportUser = async (targetId: string, reason: string, details?: string) => {
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/chat/report/${targetId}`,
+        { reason, details },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Failed to report user");
+      throw err;
+    }
+  };
+
   const handleDeleteChatClick = (partnerId: string, partnerName: string) => {
     setDeletePartnerId(partnerId);
     setDeletePartnerName(partnerName);
@@ -511,7 +528,7 @@ const Messages = () => {
   };
 
   return (
-    <div className="relative flex flex-col lg:h-[90vh] shadow-lg overflow-hidden bg-white">
+    <div className="relative flex flex-col h-[calc(100vh-70px)] md:h-[calc(100vh-90px)] lg:h-[calc(100vh-110px)] shadow-lg overflow-hidden bg-white">
       {/* Subscription gate overlay for non-subscribed users */}
       {isSubscribed === false && (
         <div className="absolute inset-0 z-50 flex items-center justify-center">
@@ -583,6 +600,7 @@ const Messages = () => {
               blockedByThemIds={blockedByThemIds}
               onSendAttachment={handleSendAttachment}
               receivedMessagesCount={receivedMessagesCount}
+              onReportUser={handleReportUser}
             />
           ) : null}
 
@@ -640,6 +658,7 @@ const Messages = () => {
                 blockedByThemIds={blockedByThemIds}
                 onSendAttachment={handleSendAttachment}
                 receivedMessagesCount={receivedMessagesCount}
+                onReportUser={handleReportUser}
               />
               {showInfoPanel && (
                 <div className="w-80 border-l border-gray-100 bg-white overflow-y-auto animate-in slide-in-from-right duration-300">

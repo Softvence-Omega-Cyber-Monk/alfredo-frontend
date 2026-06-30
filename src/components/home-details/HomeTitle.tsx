@@ -4,8 +4,8 @@ import User from "@/assets/icons/userRounded.svg";
 import Bed from "@/assets/icons/double-bed.svg";
 import Scale from "@/assets/icons/scale.svg";
 import Bath from "@/assets/icons/sunbath.svg";
-import { Share2, Lock, Eye } from "lucide-react";
-import { useState, useMemo } from "react";
+import { Share2, Lock } from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import ChatModal from "../modals/ChatModal";
@@ -77,7 +77,7 @@ const HomeTitle = ({
 
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [animateHeart, setAnimateHeart] = useState(false);
-  const visitorCount = useMemo(() => Math.floor(Math.random() * (3200 - 800 + 1)) + 800, []);
+  // const visitorCount = useMemo(() => Math.floor(Math.random() * (3200 - 800 + 1)) + 800, []);
 
   const dispatch = useAppDispatch();
 
@@ -148,10 +148,10 @@ const HomeTitle = ({
           <h1 className="text-2xl md:text-3xl lg:text-[32px] font-medium text-dark-3">
             {title}
           </h1>
-          <div className="flex items-center gap-1.5 text-sm text-gray-500 mt-1">
+          {/* <div className="flex items-center gap-1.5 text-sm text-gray-500 mt-1">
             <Eye className="w-4 h-4" />
             <span>{visitorCount} visitors</span>
-          </div>
+          </div> */}
         </div>
         <div className="flex items-center justify-end gap-2">
           <button
