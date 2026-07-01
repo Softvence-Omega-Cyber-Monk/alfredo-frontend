@@ -254,7 +254,7 @@ const Signup = () => {
                   placeholder={t("auth.signup.firstName")}
                   {...register("firstName")}
                   autoComplete="given-name"
-                  className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
+                  className="w-full px-4 py-3 mt-2 border border-gray-300 rounded-full text-[#333] placeholder-gray-400 focus:outline-none focus:border-[#3174CD] focus:ring-2 focus:ring-[#3174CD]/20 transition-all"
                 />
                 {errors.firstName && (
                   <p className="text-red-500 text-sm mt-1">
@@ -272,7 +272,7 @@ const Signup = () => {
                   placeholder={t("auth.signup.lastName")}
                   {...register("lastName")}
                   autoComplete="family-name"
-                  className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
+                  className="w-full px-4 py-3 mt-2 border border-gray-300 rounded-full text-[#333] placeholder-gray-400 focus:outline-none focus:border-[#3174CD] focus:ring-2 focus:ring-[#3174CD]/20 transition-all"
                 />
                 {errors.lastName && (
                   <p className="text-red-500 text-sm mt-1">
@@ -293,7 +293,7 @@ const Signup = () => {
                   placeholder={t("auth.signup.emailAddress")}
                   {...register("email")}
                   autoComplete="email"
-                  className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2"
+                  className="w-full py-3 px-4 mt-2 border border-gray-300 rounded-full text-[#333] placeholder-gray-400 focus:outline-none focus:border-[#3174CD] focus:ring-2 focus:ring-[#3174CD]/20 transition-all"
                 />
                 {errors.email && (
                   <p className="text-red-500 text-sm mt-1">
@@ -314,10 +314,7 @@ const Signup = () => {
                   placeholder={t("auth.signup.phoneNumber")}
                   {...register("phoneNumber")}
                   autoComplete="tel"
-                  className="w-full border border-basic-dark py-3 px-4 rounded-[8px] mt-2
-                    [&::-webkit-outer-spin-button]:appearance-none 
-                    [&::-webkit-inner-spin-button]:appearance-none 
-                    [-moz-appearance:textfield]"
+                  className="w-full py-3 px-4 mt-2 border border-gray-300 rounded-full text-[#333] placeholder-gray-400 focus:outline-none focus:border-[#3174CD] focus:ring-2 focus:ring-[#3174CD]/20 transition-all"
                 />
                 {errors.phoneNumber && (
                   <p className="text-red-500 text-sm mt-1">
@@ -359,7 +356,7 @@ const Signup = () => {
                     placeholder={t("auth.signup.password")}
                     {...register("password")}
                     autoComplete="new-password"
-                    className="w-full px-4 py-3 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue pr-12"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-full text-[#333] placeholder-gray-400 focus:outline-none focus:border-[#3174CD] focus:ring-2 focus:ring-[#3174CD]/20 transition-all pr-12"
                   />
                   <button
                     type="button"
@@ -391,7 +388,7 @@ const Signup = () => {
                     placeholder={t("auth.signup.confirmPassword")}
                     {...register("confirmPassword")}
                     autoComplete="new-password"
-                    className="w-full px-4 py-3 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue pr-12"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-full text-[#333] placeholder-gray-400 focus:outline-none focus:border-[#3174CD] focus:ring-2 focus:ring-[#3174CD]/20 transition-all pr-12"
                   />
                   <button
                     type="button"

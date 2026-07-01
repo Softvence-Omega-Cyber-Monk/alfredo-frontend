@@ -336,7 +336,7 @@ const Login = () => {
                 placeholder={t("auth.login.emailAddress")}
                 {...register("email")}
                 autoComplete="email"
-                className="w-full px-4 py-3 mt-2 border border-basic-dark rounded-[8px] focus:ring-1 focus:ring-primary-blue"
+                className="w-full px-4 py-3 mt-2 border border-gray-300 rounded-full text-[#333] placeholder-gray-400 focus:outline-none focus:border-[#3174CD] focus:ring-2 focus:ring-[#3174CD]/20 transition-all"
               />
               {errors.email && (
                 <p className="text-red-500 text-sm mt-1">
@@ -356,7 +356,7 @@ const Login = () => {
                   placeholder={t("auth.login.password")}
                   {...register("password")}
                   autoComplete="current-password"
-                  className="w-full px-4 py-3 border border-[#808080] rounded-[8px] focus:ring-1 focus:ring-primary-blue pr-12"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-full text-[#333] placeholder-gray-400 focus:outline-none focus:border-[#3174CD] focus:ring-2 focus:ring-[#3174CD]/20 transition-all pr-12"
                 />
                 <div
                   className="absolute top-1/2 right-4 -translate-y-1/2 text-xl text-gray-500 cursor-pointer"

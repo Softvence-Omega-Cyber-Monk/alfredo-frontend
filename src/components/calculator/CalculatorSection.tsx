@@ -150,7 +150,7 @@ export default function CalculatorSection({ isHome = false, className = "" }: Ca
                 <style>{`
         :root{--blue:#1565d8;--dark:#102033;--muted:#607086;--bg:#f4f9ff;--card:#fff}
         *{box-sizing:border-box}
-        .card{background:var(--card);border-radius:28px;padding:28px;box-shadow:0 18px 50px rgba(16,32,51,.12)}
+        .card{background:var(--card);border-radius:48px;padding:28px;box-shadow:0 18px 50px rgba(16,32,51,.12)}
         label{display:block;font-weight:700;margin-top:20px}
         .row{display:flex;justify-content:space-between;margin-bottom:8px;gap:12px}
         input[type=range]{width:100%}
@@ -160,11 +160,11 @@ export default function CalculatorSection({ isHome = false, className = "" }: Ca
         .currency{font-weight:800;color:var(--blue)}
         .btn{background:var(--blue);color:#fff;border:0;border-radius:14px;padding:14px 20px;font-weight:700;text-decoration:none;display:inline-block;cursor:pointer}
         .btn.secondary{background:#fff;color:var(--blue);border:1px solid #d7e7ff}
-        .result{background:var(--blue);color:#fff;border-radius:24px;padding:26px;margin-top:26px}
+        .result{background:var(--blue);color:#fff;border-radius:48px;padding:26px;margin-top:26px}
         .result small{opacity:1;font-size:24px;font-weight:900;letter-spacing:-0.8px;display:block;margin-bottom:8px}
         .big{font-size:84px;font-weight:900;margin:6px 0 22px;color:#31f06b;letter-spacing:-3px;line-height:0.95;text-shadow:0 0 18px rgba(49,240,107,0.38)}
         .email{display:flex;gap:10px;margin-top:22px}
-        .email input{flex:1;border:1px solid #d8e2ef;border-radius:14px;padding:14px;font-size:16px}
+        .email input{flex:1;border:1px solid #d8e2ef;border-radius:50px;padding:14px;font-size:16px}
         .compare-row{display:grid;grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr);align-items:start;justify-items:center;gap:14px;width:100%;max-width:620px;margin:0 auto 24px auto;text-align:center}
         .compare-item{width:100%;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center}
         .compare-item small{display:flex;width:100%;min-height:72px;align-items:center;justify-content:center;text-align:center;white-space:normal;line-height:1.05;font-size:30px;font-weight:900;color:#fff;margin:0}
