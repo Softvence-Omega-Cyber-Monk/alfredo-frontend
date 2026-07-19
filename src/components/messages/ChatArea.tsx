@@ -25,15 +25,18 @@ const ChatArea: FC<ChatAreaProps> = ({
   receivedMessagesCount,
   onReportUser,
 }) => {
-  const bottomRef = useRef<HTMLDivElement | null>(null);
+  const messagesContainerRef = useRef<HTMLDivElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
   const [isUploading, setIsUploading] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
   useEffect(() => {
-    if (bottomRef.current) {
-      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
   }, [messages]);
 
@@ -161,7 +164,7 @@ const ChatArea: FC<ChatAreaProps> = ({
               className="text-xs bg-slate-700 hover:bg-slate-800 text-white font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 active:scale-95"
             >
               <Trash2 className="w-3 h-3" />
-              Delete Chat
+
             </button>
           </div>
         </div>
@@ -187,7 +190,10 @@ const ChatArea: FC<ChatAreaProps> = ({
         )}
 
         {/* Messages */}
-        <div className="flex-1 p-4 overflow-y-auto space-y-3">
+        <div
+          ref={messagesContainerRef}
+          className="flex-1 p-4 overflow-y-auto space-y-3"
+        >
           {messages.map((msg) => (
             <div
               key={msg.id}
@@ -254,7 +260,6 @@ const ChatArea: FC<ChatAreaProps> = ({
               </div>
             </div>
           ))}
-          <div ref={bottomRef} />
         </div>
 
         {/* Input area — always visible at bottom */}

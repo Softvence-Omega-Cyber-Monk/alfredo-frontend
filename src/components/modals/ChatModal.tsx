@@ -41,7 +41,7 @@ const ChatModal: React.FC<ChatModalProps> = ({
   const [input, setInput] = useState("");
   const [socketReady, setSocketReady] = useState(false);
   const socketRef = useRef<any>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const senderId = user?.id;
@@ -169,8 +169,11 @@ const ChatModal: React.FC<ChatModalProps> = ({
   }, [isOpen]);
 
   useEffect(() => {
-    if (bottomRef.current) {
-      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
   }, [messages]);
 
@@ -303,6 +306,7 @@ const ChatModal: React.FC<ChatModalProps> = ({
 
             {/* Messages */}
             <div
+              ref={messagesContainerRef}
               className="flex-1 p-4 overflow-y-auto space-y-2 bg-gray-50"
               style={{ maxHeight: "300px" }}
             >
@@ -322,7 +326,6 @@ const ChatModal: React.FC<ChatModalProps> = ({
                   </div>
                 </div>
               ))}
-              <div ref={bottomRef} />
             </div>
 
             {/* Input */}

@@ -23,8 +23,12 @@ const NAME_CITY_COMBOS = [
 const getRandomCombo = () =>
   NAME_CITY_COMBOS[Math.floor(Math.random() * NAME_CITY_COMBOS.length)];
 
+const getRandomViewerCount = () =>
+  Math.floor(Math.random() * (1600 - 300 + 1)) + 300;
+
 const buildMessages = (): SocialMessage[] => {
   const combo = getRandomCombo();
+  const viewerCount = getRandomViewerCount();
   return [
     {
       getText: (lang: string) =>
@@ -37,8 +41,8 @@ const buildMessages = (): SocialMessage[] => {
     {
       getText: (lang: string) =>
         lang === "el"
-          ? "1300 χρήστες βλέπουν αυτόν τον ιστότοπο τώρα"
-          : "1300 users are seeing this site right now",
+          ? `${viewerCount} χρήστες βλέπουν αυτόν τον ιστότοπο τώρα`
+          : `${viewerCount} users are seeing this site right now`,
       icon: <HiUsers className="text-white text-lg" />,
       iconBg: "bg-blue-500",
     },
@@ -62,10 +66,10 @@ const buildMessages = (): SocialMessage[] => {
 };
 
 const getInitialDelay = () =>
-  (Math.floor(Math.random() * 6) + 30) * 1000; // 30-35 seconds in ms
+  (Math.floor(Math.random() * 11) + 20) * 1000; // 20-30 seconds in ms
 
 const getRandomDelay = () =>
-  (Math.floor(Math.random() * 46) + 45) * 1000; // 45-90 seconds in ms
+  (Math.floor(Math.random() * 11) + 30) * 1000; // 30-40 seconds in ms
 
 const SocialProofPopup: FC = () => {
   const [visible, setVisible] = useState(false);

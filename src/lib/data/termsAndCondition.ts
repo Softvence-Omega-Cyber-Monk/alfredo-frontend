@@ -6,7 +6,7 @@ Effective date: 4 September, 2025.
 
 1. Parties, Platform and Contact Details
 1.1. The Vacanza platform available at https://vacanzagreece.gr/ is operated by A.J. Marketeers Ltd, a company incorporated in Cyprus, Tax Identification Number 60073521P. Trade name: Vacanza.
-1.2. For customer support and general correspondence, you may contact Vacanza at 758/2, Athens, Greece, or by email at info@vacanza.gr. Legal notices should be delivered to the Cyprus address in Section 1.1, unless mandatory law allows consumers to use their local forums and channels.
+1.2. For customer support and general correspondence, you may contact Vacanza at 758/2, Athens, Greece, or by email at info@vacanzagreece.gr. Legal notices should be delivered to the Cyprus address in Section 1.1, unless mandatory law allows consumers to use their local forums and channels.
 1.3. Vacanza operates a home exchange membership service. Members create profiles, search for listings, and may enter into reciprocal or non-reciprocal home exchange arrangements with other members. Vacanza does not own, manage, or control the properties listed by members. Vacanza does not become a party to exchange agreements concluded between members.
 1.4.Acceptance. By creating an account, purchasing a membership, or otherwise using the Platform, you accept these Terms and Conditions, including policies incorporated by reference. If you do not agree, do not use the Platform.
 2. Role of Vacanza and Nature of the Service
@@ -116,7 +116,7 @@ Effective date: 4 September, 2025.
 
 1. Μέρη, Πλατφόρμα και Στοιχεία Επικοινωνίας
 1.1. Η πλατφόρμα Vacanza, διαθέσιμη στη διεύθυνση https://vacanzagreece.gr/, λειτουργεί από την A.J. Marketeers Ltd, εταιρεία συσταθείσα στην Κύπρο, Αριθμός Φορολογικού Μητρώου 60073521P. Εμπορική ονομασία: Vacanza.
-1.2. Για υποστήριξη πελατών και γενική αλληλογραφία, μπορείτε να επικοινωνείτε με τη Vacanza στη διεύθυνση 758/2, Αθήνα, Ελλάδα, ή μέσω email στο info@vacanza.gr. Οι νομικές κοινοποιήσεις πρέπει να αποστέλλονται στη διεύθυνση Κύπρου της Ενότητας 1.1, εκτός αν υποχρεωτικό δίκαιο επιτρέπει στους καταναλωτές να χρησιμοποιούν τα τοπικά τους fora και διαύλους.
+1.2. Για υποστήριξη πελατών και γενική αλληλογραφία, μπορείτε να επικοινωνείτε με τη Vacanza στη διεύθυνση 758/2, Αθήνα, Ελλάδα, ή μέσω email στο info@vacanzagreece.gr. Οι νομικές κοινοποιήσεις πρέπει να αποστέλλονται στη διεύθυνση Κύπρου της Ενότητας 1.1, εκτός αν υποχρεωτικό δίκαιο επιτρέπει στους καταναλωτές να χρησιμοποιούν τα τοπικά τους fora και διαύλους.
 1.3. Η Vacanza λειτουργεί υπηρεσία συνδρομητικής ανταλλαγής κατοικιών. Τα μέλη δημιουργούν προφίλ, αναζητούν καταχωρίσεις και μπορούν να συνάπτουν αμοιβαίες ή μη αμοιβαίες συμφωνίες ανταλλαγής κατοικιών με άλλα μέλη. Η Vacanza δεν κατέχει, δεν διαχειρίζεται ούτε ελέγχει τα ακίνητα που καταχωρίζουν τα μέλη. Η Vacanza δεν καθίσταται συμβαλλόμενο μέρος στις συμφωνίες ανταλλαγής που συνάπτονται μεταξύ των μελών.
 1.4. Αποδοχή. Με τη δημιουργία λογαριασμού, την αγορά συνδρομής ή με οποιονδήποτε άλλο τρόπο χρήσης της Πλατφόρμας, αποδέχεστε τους παρόντες Όρους και Προϋποθέσεις, συμπεριλαμβανομένων των πολιτικών που ενσωματώνονται με παραπομπή. Αν δεν συμφωνείτε, μην χρησιμοποιείτε την Πλατφόρμα.
 2. Ρόλος της Vacanza και Φύση της Υπηρεσίας

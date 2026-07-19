@@ -31,6 +31,8 @@ import SearchFilter from "@/components/home/SearchFilter";
 import SearchResults from "@/components/Search/SearchResults";
 import { fetchUser } from "@/store/Slices/Profile/ProfileSlice";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import PrimaryButton from "@/components/reusable/PrimaryButton";
 // import { Link } from "react-router-dom";
 
 const Dashboard = () => {
@@ -41,6 +43,8 @@ const Dashboard = () => {
   const { data: user } = useAppSelector((state) => state.user);
   const [plans, setPlans] = useState<any[]>([]);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -57,6 +61,10 @@ const Dashboard = () => {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
+
+  const storedUser = localStorage.getItem("user");
+  const currentUser = storedUser ? JSON.parse(storedUser) : null;
+  const isUserSubscribed = currentUser?.isSubscribed || false;
 
   // const storedUser = localStorage.getItem("user");
   // const user = storedUser ? JSON.parse(storedUser) : null;
@@ -324,6 +332,7 @@ const Dashboard = () => {
                     <Button
                       variant="secondary"
                       className="w-full cursor-pointer bg-primary-blue text-white px-8 py-6 hover:bg-[#114480] rounded-full"
+                      onClick={() => window.open("https://www.ferryhopper.com/en/blog/special-offers?aff_uid=vcnzag&utm_source=affiliate-link&utm_medium=in-house&utm_campaign=vcnzag&utm_content=vacanzagreece", "_blank")}
                     >
                       {t("dashboard.part0.premiumUnlock")}
                     </Button>
@@ -342,6 +351,24 @@ const Dashboard = () => {
             <SearchResults />
           </div>
         </SearchProvider>
+
+        <div className="mt-2 flex justify-center">
+          <PrimaryButton
+            title={t("dashboard.exploreMore")}
+            onClick={() => {
+              if (isUserSubscribed) {
+                navigate("/places");
+              } else {
+                navigate("/plans");
+              }
+            }}
+          />
+        </div>
+
+
+        <div className="mt-16">
+          <iframe width="390" height="420" scrolling="no" src="https://www.ferryhopper.com/el/embed/simple?aff_uid=vcnzag&options=nologo"></iframe>
+        </div>
 
 
         <AddPlaceModal isOpen={isModalOpen} onClose={handleModalClose} />
