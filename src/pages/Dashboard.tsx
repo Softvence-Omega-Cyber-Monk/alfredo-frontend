@@ -366,7 +366,7 @@ const Dashboard = () => {
         </div>
 
 
-        <div className="mt-16">
+        <div className="mt-16 flex justify-center ">
           <iframe width="390" height="420" scrolling="no" src="https://www.ferryhopper.com/el/embed/simple?aff_uid=vcnzag&options=nologo"></iframe>
         </div>
 

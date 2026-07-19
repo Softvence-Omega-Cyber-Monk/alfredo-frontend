@@ -14,6 +14,9 @@ export interface Conversation {
   location?: string;
   achievementBadges?: any[];
   isSubscribed?: boolean;
+  onboarding?: {
+    address?: string
+  }
 }
 
 export interface Message {

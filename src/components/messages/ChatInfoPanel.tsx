@@ -7,12 +7,15 @@ import {
   UserCheck,
 } from "lucide-react";
 import badge from "@/assets/icons/crown2.svg"; // Replace with your real badge path
+import { useTranslation } from "react-i18next";
 
 interface ChatInfoPanelProps {
   conversation: Conversation;
 }
 
 const ChatInfoPanel = ({ conversation }: ChatInfoPanelProps) => {
+  const { i18n } = useTranslation();
+
   const owner = {
     image: conversation.avatar || "/defaultAvatar.png",
     name: conversation.name,
@@ -45,8 +48,14 @@ const ChatInfoPanel = ({ conversation }: ChatInfoPanelProps) => {
   };
 
   const callToAction = {
-    message: "Start exchanging your home! Create a VACANZA account to start contacting members.",
+    message: {
+      en: "Start exchanging your home! Chat with this user to define the terms of the exchange, and prepare for your next trip!",
+      el: "Ξεκίνα να ανταλλάσσεις το σπίτι σου! Συνομίλησε με αυτό το μέλος για να συμφωνήσετε τους όρους της ανταλλαγής και προετοιμάσου για το επόμενο ταξίδι σου!"
+    }
   };
+
+  const language = i18n.language?.startsWith("el") ? "el" : "en";
+  console.log(conversation, "this is conversation in chat info panel")
 
 
   return (
@@ -109,7 +118,7 @@ const ChatInfoPanel = ({ conversation }: ChatInfoPanelProps) => {
       {/* Call to Action */}
       <div className="py-6">
         <h4 className="text-sm font-regular text-dark-2">
-          {callToAction.message}
+          {language === "en" ? callToAction.message.en : callToAction.message.el}
         </h4>
       </div>
     </div>

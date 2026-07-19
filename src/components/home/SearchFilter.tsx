@@ -160,7 +160,7 @@ const SearchFilter = () => {
 
   return (
     <div
-      className="w-full max-w-[2066px] mx-auto px-4 py-6 rounded-xl lg:rounded-full"
+      className="w-full mx-auto px-4 py-6 rounded-xl lg:rounded-full"
       style={{
         backgroundImage: `url("/footerBg.svg")`,
         backgroundSize: "cover",
@@ -316,7 +316,7 @@ const SearchFilter = () => {
           </div>
 
           {/* Search Button */}
-          <div className="flex-1 flex items-end">
+          <div className="flex-1 flex items-end mt-3">
             <PrimaryButton
               onClick={() => {
                 if (!userData?.subscriptions?.some(sub => sub.status === "ACTIVE")) {

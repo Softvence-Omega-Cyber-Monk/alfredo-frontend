@@ -28,7 +28,7 @@ const mapApiToConversation = (apiConv: any): Conversation => ({
   type: "supplier",
   rating: 0,
   email: apiConv.email || "",
-  location: apiConv.onboarding?.homeAddress || "Location not provided",
+  location: apiConv.onboarding?.address || "Location not provided",
   achievementBadges: apiConv.achievementBadges || [],
   isSubscribed: apiConv.isSubscribed || false,
 });
@@ -56,6 +56,7 @@ const fetchConversations = async (userId: string): Promise<Conversation[]> => {
     return [];
   }
 };
+
 
 const Messages = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -90,6 +91,9 @@ const Messages = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deletePartnerId, setDeletePartnerId] = useState("");
   const [deletePartnerName, setDeletePartnerName] = useState("");
+
+
+  console.log(conversations, "this is mahim's conversationnnnnnnn newwwwww")
 
   // Keep ref updated to avoid stale closures in socket listener
   useEffect(() => {
@@ -332,7 +336,7 @@ const Messages = () => {
           return;
         }
       }
-      
+
       // Select first conversation if none selected
       if (!selectedConversation) {
         setSelectedConversation(conversations[0]);
@@ -343,31 +347,31 @@ const Messages = () => {
   // Initialize WebSocket
   useEffect(() => {
     if (!userId) {
-      console.error("❌ No userId found");
+      console.error(" No userId found");
       return;
     }
 
-    console.log("🔌 Initializing socket in Messages for user:", userId);
+    console.log("Initializing socket in Messages for user:", userId);
     const socket = initSocket(userId);
     socketRef.current = socket;
 
     const handleConnect = () => {
-      console.log("✅ Socket connected in Messages:", socket.id);
+      console.log("Socket connected in Messages:", socket.id);
       setSocketReady(true);
     };
 
     const handleConnectError = (error: any) => {
-      console.error("❌ Socket connection error:", error);
+      console.error("Socket connection error:", error);
       setSocketReady(false);
     };
 
     const handleDisconnect = (reason: string) => {
-      console.log("❌ Socket disconnected in Messages:", reason);
+      console.log("Socket disconnected in Messages:", reason);
       setSocketReady(false);
     };
 
     const handleReceiveMessage = (msg: any) => {
-      console.log("📩 Received message in Messages:", msg);
+      console.log("Received message in Messages:", msg);
 
       const messageExists = messages.some((m) => m.id === msg.id);
       if (!messageExists) {
@@ -399,7 +403,7 @@ const Messages = () => {
     };
 
     const handleMessageRead = (data: any) => {
-      console.log("👀 Message read receipt received:", data);
+      console.log("Message read receipt received:", data);
       dispatch(
         updateMessageStatus({
           messageIds: data.messageIds,
@@ -421,12 +425,12 @@ const Messages = () => {
     socket.on("message_read", handleMessageRead);
 
     if (socket.connected) {
-      console.log("✅ Socket already connected on mount");
+      console.log("Socket already connected on mount");
       setSocketReady(true);
     }
 
     return () => {
-      console.log("🧹 Cleaning up socket listeners in Messages");
+      console.log("Cleaning up socket listeners in Messages");
       socket.off("receive_message", handleReceiveMessage);
       socket.off("message_read", handleMessageRead);
       socket.off("connect", handleConnect);
@@ -437,7 +441,7 @@ const Messages = () => {
 
   useEffect(() => {
     if (selectedConversation && userId) {
-      console.log("📜 Fetching chat history for:", selectedConversation.id);
+      console.log("Fetching chat history for:", selectedConversation.id);
       dispatch(fetchChatHistory(selectedConversation.id) as any);
     }
   }, [dispatch, selectedConversation, userId]);
@@ -474,19 +478,19 @@ const Messages = () => {
 
   const handleSendMessage = () => {
     if (!messageInput.trim() || !selectedConversation?.id) {
-      console.log("❌ Cannot send: empty message or no conversation selected");
+      console.log("Cannot send: empty message or no conversation selected");
       return;
     }
 
     const socket = socketRef.current;
 
     if (!socket || !socket.connected) {
-      console.error("❌ Socket not connected");
+      console.error("Socket not connected");
       toast.error("Connection lost. Please refresh the page.");
       return;
     }
 
-    console.log("📤 Sending message:", {
+    console.log("Sending message:", {
       to: selectedConversation.id,
       content: messageInput.substring(0, 50) + "...",
     });
@@ -498,16 +502,16 @@ const Messages = () => {
         content: messageInput,
       });
 
-      console.log("✅ Message emitted successfully");
+      console.log("Message emitted successfully");
       setMessageInput("");
     } catch (error) {
-      console.error("❌ Error sending message:", error);
+      console.error("Error sending message:", error);
       toast.error("Failed to send message. Please try again.");
     }
   };
 
   const handleSelectConversation = (conversation: Conversation) => {
-    console.log("👤 Selected conversation:", conversation.name);
+    console.log("Selected conversation:", conversation.name);
     setSelectedConversation(conversation);
     setCurrentView("chat");
     setShowSidebar(false);
@@ -515,7 +519,7 @@ const Messages = () => {
 
   const handleCall = () => {
     if (selectedConversation) {
-      console.log("📞 Calling:", selectedConversation.name);
+      console.log("Calling:", selectedConversation.name);
     }
   };
 

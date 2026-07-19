@@ -142,17 +142,17 @@ const ChatArea: FC<ChatAreaProps> = ({
             ) : (
               <button
                 onClick={() => onBlockUser?.(selectedConversation.id)}
-                className="text-xs bg-red-600 hover:bg-red-700 text-white font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 active:scale-95"
+                className="text-xs cursor-pointer bg-red-600 hover:bg-red-700 text-white font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 active:scale-95"
               >
                 <Ban className="w-3 h-3" />
-                Block
+                <span className="hidden sm:inline">Block</span>
               </button>
             )}
 
             {/* Report Button */}
             <button
               onClick={() => setIsReportModalOpen(true)}
-              className="text-xs bg-amber-500 hover:bg-amber-600 text-white font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 active:scale-95"
+              className="text-xs cursor-pointer bg-amber-500 hover:bg-amber-600 text-white font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 active:scale-95"
             >
               <Flag className="w-3 h-3" />
               <span className="hidden sm:inline">Report</span>
@@ -164,7 +164,7 @@ const ChatArea: FC<ChatAreaProps> = ({
               className="text-xs bg-slate-700 hover:bg-slate-800 text-white font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 active:scale-95"
             >
               <Trash2 className="w-3 h-3" />
-
+              <span className="hidden sm:inline cursor-pointer">Delete Chat</span>
             </button>
           </div>
         </div>
