@@ -1,10 +1,41 @@
 import CommonWrapper from "@/common/CommonWrapper";
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 
 interface CalculatorSectionProps {
     isHome?: boolean;
     className?: string;
+}
+
+interface RangeFieldProps {
+    label: string;
+    value: number;
+    min: number;
+    max: number;
+    onChange: (value: number) => void;
+    style?: CSSProperties;
+}
+
+function RangeField({ label, value, min, max, onChange, style }: RangeFieldProps) {
+    const pct = ((value - min) / (max - min)) * 100;
+
+    return (
+        <label style={style}>
+            <div className="row">
+                <span className="lbl">{label}</span>
+                <span className="val">{value}</span>
+            </div>
+            <input
+                className="range"
+                type="range"
+                min={min}
+                max={max}
+                value={value}
+                onChange={(e) => onChange(Number(e.target.value))}
+                style={{ "--pct": `${pct}%` } as CSSProperties}
+            />
+        </label>
+    );
 }
 
 export default function CalculatorSection({ isHome = false, className = "" }: CalculatorSectionProps) {
@@ -152,8 +183,27 @@ export default function CalculatorSection({ isHome = false, className = "" }: Ca
         *{box-sizing:border-box}
         .card{background:var(--card);border-radius:48px;padding:28px;box-shadow:0 18px 50px rgba(16,32,51,.12)}
         label{display:block;font-weight:700;margin-top:20px}
-        .row{display:flex;justify-content:space-between;margin-bottom:8px;gap:12px}
-        input[type=range]{width:100%}
+        .row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:12px}
+        .row .lbl{font-size:15px;font-weight:600;color:var(--dark);letter-spacing:-0.1px}
+        .row .val{font-size:14px;font-weight:800;color:var(--blue);background:#eaf2ff;border-radius:999px;padding:4px 12px;min-width:46px;text-align:center;font-variant-numeric:tabular-nums;line-height:1.2}
+
+        .range{-webkit-appearance:none;appearance:none;display:block;width:100%;height:24px;margin:0;padding:0;background:transparent;cursor:pointer}
+        .range:focus{outline:none}
+        .range::-webkit-slider-runnable-track{height:6px;border-radius:999px;border:0;background:linear-gradient(90deg,var(--blue) 0 var(--pct,50%),#e6edf7 var(--pct,50%) 100%)}
+        .range::-moz-range-track{height:6px;border-radius:999px;border:0;background:#e6edf7}
+        .range::-moz-range-progress{height:6px;border-radius:999px;border:0;background:var(--blue)}
+        .range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;box-sizing:border-box;width:22px;height:22px;margin-top:-8px;border-radius:50%;background:#fff;border:2px solid var(--blue);box-shadow:0 2px 6px rgba(16,32,51,.16),0 0 0 0 rgba(21,101,216,.16);transition:transform .15s ease,box-shadow .15s ease}
+        .range::-moz-range-thumb{box-sizing:border-box;width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid var(--blue);box-shadow:0 2px 6px rgba(16,32,51,.16),0 0 0 0 rgba(21,101,216,.16);transition:transform .15s ease,box-shadow .15s ease}
+        .range:hover::-webkit-slider-thumb{transform:scale(1.08);box-shadow:0 2px 8px rgba(16,32,51,.18),0 0 0 6px rgba(21,101,216,.12)}
+        .range:hover::-moz-range-thumb{transform:scale(1.08);box-shadow:0 2px 8px rgba(16,32,51,.18),0 0 0 6px rgba(21,101,216,.12)}
+        .range:focus-visible::-webkit-slider-thumb{box-shadow:0 2px 10px rgba(16,32,51,.2),0 0 0 8px rgba(21,101,216,.2)}
+        .range:focus-visible::-moz-range-thumb{box-shadow:0 2px 10px rgba(16,32,51,.2),0 0 0 8px rgba(21,101,216,.2)}
+        .range:active::-webkit-slider-thumb{transform:scale(1.14);box-shadow:0 3px 10px rgba(16,32,51,.22),0 0 0 9px rgba(21,101,216,.16)}
+        .range:active::-moz-range-thumb{transform:scale(1.14);box-shadow:0 3px 10px rgba(16,32,51,.22),0 0 0 9px rgba(21,101,216,.16)}
+        @media (prefers-reduced-motion:reduce){
+          .range::-webkit-slider-thumb{transition:none}
+          .range::-moz-range-thumb{transition:none}
+        }
         input[type=number]{width:100%;border:1px solid #d8e2ef;border-radius:14px;padding:14px;font-size:16px;font-weight:700;color:var(--dark);outline:none}
         input[type=number]:focus{border-color:var(--blue)}
         .input-wrap{display:flex;align-items:center;gap:10px}
@@ -185,6 +235,9 @@ export default function CalculatorSection({ isHome = false, className = "" }: Ca
           .email{flex-direction:column;gap:8px}
           .email input{width:100%}
           label{margin-top:14px;font-size:14px}
+          .row{margin-bottom:10px}
+          .row .lbl{font-size:14px}
+          .row .val{font-size:13px;padding:3px 10px;min-width:42px}
           .btn{width:100%;text-align:center}
         }
       `}</style>
@@ -194,47 +247,32 @@ export default function CalculatorSection({ isHome = false, className = "" }: Ca
                         <div className="flex flex-col gap-4">
                             <h2 style={{ marginTop: 0, marginBottom: "12px" }}>{t.calcTitle}</h2>
 
-                            <label style={{ marginTop: 0 }}>
-                                <div className="row">
-                                    <span>{t.nightsLabel}</span>
-                                    <span>{nights}</span>
-                                </div>
-                                <input
-                                    type="range"
-                                    min="2"
-                                    max="45"
-                                    value={nights}
-                                    onChange={(e) => setNights(Number(e.target.value))}
-                                />
-                            </label>
+                            <RangeField
+                                label={t.nightsLabel}
+                                value={nights}
+                                min={2}
+                                max={45}
+                                onChange={setNights}
+                                style={{ marginTop: 0 }}
+                            />
 
-                            <label style={{ marginTop: "12px" }}>
-                                <div className="row">
-                                    <span>{t.travelersLabel}</span>
-                                    <span>{travelers}</span>
-                                </div>
-                                <input
-                                    type="range"
-                                    min="1"
-                                    max="8"
-                                    value={travelers}
-                                    onChange={(e) => setTravelers(Number(e.target.value))}
-                                />
-                            </label>
+                            <RangeField
+                                label={t.travelersLabel}
+                                value={travelers}
+                                min={1}
+                                max={8}
+                                onChange={setTravelers}
+                                style={{ marginTop: "12px" }}
+                            />
 
-                            <label style={{ marginTop: "12px" }}>
-                                <div className="row">
-                                    <span>{t.tripsLabel}</span>
-                                    <span>{trips}</span>
-                                </div>
-                                <input
-                                    type="range"
-                                    min="1"
-                                    max="8"
-                                    value={trips}
-                                    onChange={(e) => setTrips(Number(e.target.value))}
-                                />
-                            </label>
+                            <RangeField
+                                label={t.tripsLabel}
+                                value={trips}
+                                min={1}
+                                max={8}
+                                onChange={setTrips}
+                                style={{ marginTop: "12px" }}
+                            />
                         </div>
 
                         <div className="flex flex-col gap-4">
@@ -269,47 +307,29 @@ export default function CalculatorSection({ isHome = false, className = "" }: Ca
                     <>
                         <h2>{t.calcTitle}</h2>
 
-                        <label>
-                            <div className="row">
-                                <span>{t.nightsLabel}</span>
-                                <span>{nights}</span>
-                            </div>
-                            <input
-                                type="range"
-                                min="2"
-                                max="45"
-                                value={nights}
-                                onChange={(e) => setNights(Number(e.target.value))}
-                            />
-                        </label>
+                        <RangeField
+                            label={t.nightsLabel}
+                            value={nights}
+                            min={2}
+                            max={45}
+                            onChange={setNights}
+                        />
 
-                        <label>
-                            <div className="row">
-                                <span>{t.travelersLabel}</span>
-                                <span>{travelers}</span>
-                            </div>
-                            <input
-                                type="range"
-                                min="1"
-                                max="8"
-                                value={travelers}
-                                onChange={(e) => setTravelers(Number(e.target.value))}
-                            />
-                        </label>
+                        <RangeField
+                            label={t.travelersLabel}
+                            value={travelers}
+                            min={1}
+                            max={8}
+                            onChange={setTravelers}
+                        />
 
-                        <label>
-                            <div className="row">
-                                <span>{t.tripsLabel}</span>
-                                <span>{trips}</span>
-                            </div>
-                            <input
-                                type="range"
-                                min="1"
-                                max="8"
-                                value={trips}
-                                onChange={(e) => setTrips(Number(e.target.value))}
-                            />
-                        </label>
+                        <RangeField
+                            label={t.tripsLabel}
+                            value={trips}
+                            min={1}
+                            max={8}
+                            onChange={setTrips}
+                        />
 
                         <div className="result">
                             <div className="compare-row">

@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
-import {
-  getOnboarding,
-} from "@/store/Slices/OnboardingSlice/OnboardSlice";
+import { getOnboarding } from "@/store/Slices/OnboardingSlice/OnboardSlice";
 import { useTranslation } from "react-i18next";
 import DashboardHeading from "@/components/dashboard/DashboardHeading";
 import Loader from "@/components/reusable/Loader";
@@ -22,6 +20,10 @@ import { fetchUser } from "@/store/Slices/Profile/ProfileSlice";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import PrimaryButton from "@/components/reusable/PrimaryButton";
+import DiscoverCarsWidget from "@/components/dashboard/DiscoverCarWidget";
+import VacanzaProtectWidget from "@/components/dashboard/VacanzaProtectWidget";
+import { FaFerry } from "react-icons/fa6";
+import { FaCar } from "react-icons/fa";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -47,9 +49,9 @@ const Dashboard = () => {
     setIsModalOpen(false);
   };
 
-  const storedUser = localStorage.getItem("user");
-  const currentUser = storedUser ? JSON.parse(storedUser) : null;
-  const isUserSubscribed = currentUser?.isSubscribed || false;
+  // const storedUser = localStorage.getItem("user");
+  // const currentUser = storedUser ? JSON.parse(storedUser) : null;
+  // const isUserSubscribed = currentUser?.isSubscribed || false;
 
   useEffect(() => {
     dispatch(getOnboarding());
@@ -73,8 +75,12 @@ const Dashboard = () => {
       // Find the plan that matches the type
       // We look for plans where the translation name or planType matches our target
       const targetPlan = plans.find((p) => {
-        const translation = p.translations.find((tr: any) => tr.language === currentLanguage) || p.translations.find((tr: any) => tr.language === "en");
-        return translation?.name?.toLowerCase().includes(planType.toLowerCase());
+        const translation =
+          p.translations.find((tr: any) => tr.language === currentLanguage) ||
+          p.translations.find((tr: any) => tr.language === "en");
+        return translation?.name
+          ?.toLowerCase()
+          .includes(planType.toLowerCase());
       });
 
       if (!targetPlan) {
@@ -82,7 +88,10 @@ const Dashboard = () => {
         return;
       }
 
-      const planTranslation = targetPlan.translations.find((tr: any) => tr.language === currentLanguage) || targetPlan.translations.find((tr: any) => tr.language === "en");
+      const planTranslation =
+        targetPlan.translations.find(
+          (tr: any) => tr.language === currentLanguage,
+        ) || targetPlan.translations.find((tr: any) => tr.language === "en");
       const planDuration = planTranslation?.planType === "TWO_YEARLY" ? 2 : 1;
 
       const payload = {
@@ -128,7 +137,6 @@ const Dashboard = () => {
 
       {/* HomeType Section */}
       <div className="mt-10">
-
         {/* New HomeType component is under development.  */}
         <CardButtons
           buttons={[
@@ -160,32 +168,41 @@ const Dashboard = () => {
           ]}
         />
 
-        {
-          !user?.subscriptions?.some(sub => sub.status === "ACTIVE") ? (
-            <div className="mt-22">
-              <p className="text-sm text-dark-3 font-regular text-center">{t("dashboard.part0.currentPlan")} : <span className="text-red-500 font-semibold capitalize">{t("dashboard.part0.no")}</span></p>
-              <div className="mt-12 w-[90%] sm:w-[80%] md:w-[50%] lg:w-[40%] mx-auto flex flex-col md:flex-row items-center gap-4 justify-center">
-                <Button
-                  onClick={() => handleCheckout("BASE")}
-                  disabled={checkoutLoading}
-                  variant="secondary"
-                  className="w-full cursor-pointer bg-primary-blue text-white px-6 py-7 hover:bg-[#114480]"
-                >
-                  {checkoutLoading ? "Processing..." : t("dashboard.part0.plan1")}
-                </Button>
-                <Button
-                  onClick={() => handleCheckout("PREMIUM")}
-                  disabled={checkoutLoading}
-                  variant="secondary"
-                  className="w-full cursor-pointer bg-[#174075] text-white px-6 py-7 hover:bg-[#114480]"
-                >
-                  {checkoutLoading ? "Processing..." : t("dashboard.part0.plan2")}
-                </Button>
-              </div>
+        {!user?.subscriptions?.some((sub) => sub.status === "ACTIVE") ? (
+          <div className="mt-22">
+            <p className="text-sm text-dark-3 font-regular text-center">
+              {t("dashboard.part0.currentPlan")} :{" "}
+              <span className="text-red-500 font-semibold capitalize">
+                {t("dashboard.part0.no")}
+              </span>
+            </p>
+            <div className="mt-12 w-[90%] sm:w-[80%] md:w-[50%] lg:w-[40%] mx-auto flex flex-col md:flex-row items-center gap-4 justify-center">
+              <Button
+                onClick={() => handleCheckout("BASE")}
+                disabled={checkoutLoading}
+                variant="secondary"
+                className="w-full cursor-pointer bg-primary-blue text-white px-6 py-7 hover:bg-[#114480]"
+              >
+                {checkoutLoading ? "Processing..." : t("dashboard.part0.plan1")}
+              </Button>
+              <Button
+                onClick={() => handleCheckout("PREMIUM")}
+                disabled={checkoutLoading}
+                variant="secondary"
+                className="w-full cursor-pointer bg-[#174075] text-white px-6 py-7 hover:bg-[#114480]"
+              >
+                {checkoutLoading ? "Processing..." : t("dashboard.part0.plan2")}
+              </Button>
             </div>
-          ) : (() => {
-            const activeSub = user?.subscriptions?.find(sub => sub.status === "ACTIVE");
-            const activePlanName = activeSub?.plan?.translations?.find(tr => tr.language === "en")?.name || "";
+          </div>
+        ) : (
+          (() => {
+            const activeSub = user?.subscriptions?.find(
+              (sub) => sub.status === "ACTIVE",
+            );
+            const activePlanName =
+              activeSub?.plan?.translations?.find((tr) => tr.language === "en")
+                ?.name || "";
             const isBase = activePlanName.toLowerCase().includes("base");
             const isPremium = activePlanName.toLowerCase().includes("premium");
 
@@ -193,15 +210,26 @@ const Dashboard = () => {
               <div className="mt-10 flex flex-col items-center">
                 <p className="text-sm text-dark-3 font-regular text-center">
                   {t("dashboard.part0.currentPlan")} :
-                  <span className={`${isBase ? "text-green-500" : isPremium ? "text-[#FFB800]" : "text-red-500"} capitalize ml-1 font-semibold`}>
-                    {isBase ? t("dashboard.part0.base") : isPremium ? t("dashboard.part0.premium") : activePlanName}
+                  <span
+                    className={`${isBase ? "text-green-500" : isPremium ? "text-[#FFB800]" : "text-red-500"} capitalize ml-1 font-semibold`}
+                  >
+                    {isBase
+                      ? t("dashboard.part0.base")
+                      : isPremium
+                        ? t("dashboard.part0.premium")
+                        : activePlanName}
                   </span>
                 </p>
 
                 <div className="mt-6 flex flex-col md:flex-row items-center gap-4">
                   {isBase && (
                     <Button
-                      onClick={() => window.open("https://buy.stripe.com/28E7sL0L43GK5aT9LWdIA01?prefilled_promo_code=UPREMIUM", "_blank")}
+                      onClick={() =>
+                        window.open(
+                          "https://buy.stripe.com/28E7sL0L43GK5aT9LWdIA01?prefilled_promo_code=UPREMIUM",
+                          "_blank",
+                        )
+                      }
                       variant="secondary"
                       className="w-full cursor-pointer bg-[#174075] text-white px-8 py-6 hover:bg-[#114480] rounded-full"
                     >
@@ -212,7 +240,12 @@ const Dashboard = () => {
                     <Button
                       variant="secondary"
                       className="w-full cursor-pointer bg-primary-blue text-white px-8 py-6 hover:bg-[#114480] rounded-full"
-                      onClick={() => window.open("https://www.ferryhopper.com/en/blog/special-offers?aff_uid=vcnzag&utm_source=affiliate-link&utm_medium=in-house&utm_campaign=vcnzag&utm_content=vacanzagreece", "_blank")}
+                      onClick={() =>
+                        window.open(
+                          "https://www.ferryhopper.com/en/blog/special-offers?aff_uid=vcnzag&utm_source=affiliate-link&utm_medium=in-house&utm_campaign=vcnzag&utm_content=vacanzagreece",
+                          "_blank",
+                        )
+                      }
                     >
                       {t("dashboard.part0.premiumUnlock")}
                     </Button>
@@ -221,44 +254,206 @@ const Dashboard = () => {
               </div>
             );
           })()
-        }
+        )}
+        {/* header part for all widget  */}
+        {/* Travel hub header */}
+        <div className="w-full mt-16 md:mt-20">
+          <div className="relative overflow-hidden rounded-[32px] border border-primary-blue/10 bg-gradient-to-br from-primary-blue/[0.06] via-white to-[#eef6ff] px-6 py-12 md:px-12 md:py-16">
+            {/* Decorative background */}
+            <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary-blue/[0.08] blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-[#62c2f9]/[0.10] blur-3xl" />
+
+            <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
+              {/* Eyebrow */}
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary-blue/10 bg-white/80 px-4 py-2 shadow-sm backdrop-blur-sm">
+                <span className="h-2 w-2 rounded-full bg-primary-blue" />
+                <span className="font-DM-sans text-xs font-semibold uppercase tracking-[0.18em] text-primary-blue">
+                  Your travel hub
+                </span>
+              </div>
+
+              {/* Main heading */}
+              <h1 className="font-DM-sans text-3xl font-bold leading-tight tracking-tight text-primary-blue md:text-5xl">
+                Organize your next trip
+                <span className="block text-[#174075]">in one page!</span>
+              </h1>
+
+              {/* Description */}
+              {/* <p className="mt-5 max-w-2xl text-sm leading-7 text-gray-500 md:text-base">
+                Search accommodations and plan your journey all from one place.
+              </p> */}
+              <p className="mt-5 max-w-2xl text-sm leading-7 text-gray-500 md:text-base">
+                Discover, find, or exchange accommodations for your next
+                journey. From homes and apartments to rooms, boats, vans, and
+                more.
+              </p>
+
+              {/* CTA */}
+              <div className="mt-8">
+                <PrimaryButton
+                  title={t("dashboard.exploreMore")}
+                  onClick={() => {
+                    navigate("/places");
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
 
         <SearchProvider>
-          <div className="mt-6 md:mt-8 lg:mt-10 w-full">
-            <SearchFilter />
+          <div className="mt-12 md:mt-16 w-full">
+            {/* Search section heading */}
+            <div className="mb-7 text-center">
+              <span className="font-DM-sans text-xs font-semibold uppercase tracking-[0.18em] text-primary-blue/70">
+                Find your stay
+              </span>
+
+              <h2 className="mt-2 font-DM-sans text-2xl font-bold tracking-tight text-primary-blue md:text-3xl">
+                Advance Search
+              </h2>
+
+              <p className="mx-auto mt-2 max-w-xl text-sm text-gray-500">
+                Refine your search and find the perfect accommodation for your
+                trip.
+              </p>
+            </div>
+
+            {/* Search box */}
+            <div className="rounded-[28px] border border-primary-blue/10 bg-white p-3 shadow-[0_12px_40px_rgba(23,64,117,0.08)] md:p-5">
+              <SearchFilter />
+            </div>
           </div>
-          <div>
+
+          <div className="mt-8">
             <SearchResults />
           </div>
         </SearchProvider>
 
-        <div className="mt-2 flex justify-center">
-          <PrimaryButton
-            title={t("dashboard.exploreMore")}
-            onClick={() => {
-              if (isUserSubscribed) {
-                navigate("/places");
-              } else {
-                navigate("/plans");
-              }
+        {/* Travel services */}
+        <div className="mt-20 md:mt-24">
+          <div className="mb-10 text-center">
+            <span className="font-DM-sans text-xs font-semibold uppercase tracking-[0.18em] text-primary-blue/70">
+              Travel services
+            </span>
+
+            <h2 className="mt-2 font-DM-sans text-2xl font-bold tracking-tight text-primary-blue md:text-3xl">
+              Everything you need for your journey
+            </h2>
+
+            <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-gray-500 md:text-base">
+              Protect your home, book ferries, compare car rentals, and discover
+              flights from trusted travel partners.
+            </p>
+          </div>
+        </div>
+
+        {/* Vacanza Protect widget */}
+        <VacanzaProtectWidget />
+
+        {/* Ferry widget */}
+        <div className="mt-8 overflow-hidden rounded-[28px] border border-primary-blue/10 bg-gradient-to-br from-white via-white to-[#f5f9ff] shadow-[0_16px_50px_rgba(23,64,117,0.08)]">
+          {/* Header */}
+          <div className="flex flex-col gap-4 border-b border-primary-blue/10 px-6 py-5 sm:flex-row sm:items-center sm:justify-between md:px-8">
+            <div className="flex items-center gap-4">
+              {/* Icon */}
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-blue/10">
+                <FaFerry />
+              </div>
+
+              <div>
+                <h3 className="font-DM-sans text-lg font-bold text-primary-blue md:text-xl">
+                  Book your ferry
+                </h3>
+
+                <p className="mt-1 text-sm text-gray-500">
+                  Find ferry routes and plan your island journey.
+                </p>
+              </div>
+            </div>
+
+            <div className="hidden rounded-full bg-primary-blue/5 px-4 py-2 text-xs font-semibold text-primary-blue sm:block">
+              Ferry booking
+            </div>
+          </div>
+
+          {/* Widget */}
+          <div className="flex justify-center px-4 py-7 md:px-8 md:py-9">
+            <div className="overflow-hidden rounded-2xl bg-white ">
+              {language === "en" ? (
+                <iframe
+                  width="390"
+                  height="420"
+                  scrolling="no"
+                  src="https://www.ferryhopper.com/en/embed/simple?aff_uid=vcnzag&options=nologo"
+                  className="block max-w-full"
+                  title="Ferryhopper ferry booking"
+                />
+              ) : (
+                <iframe
+                  width="390"
+                  height="420"
+                  scrolling="no"
+                  src="https://www.ferryhopper.com/el/embed/simple?aff_uid=vcnzag&options=nologo"
+                  className="block max-w-full"
+                  title="Ferryhopper ferry booking"
+                />
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* car widget */}
+
+        {/* Car rental widget */}
+        <div className="mt-8 overflow-hidden rounded-[28px] border border-primary-blue/10 bg-gradient-to-br from-white via-white to-[#f5f9ff] shadow-[0_16px_50px_rgba(23,64,117,0.08)]">
+          {/* Header */}
+          <div className="flex flex-col gap-4 border-b border-primary-blue/10 px-6 py-3 sm:flex-row sm:items-center sm:justify-between md:px-8">
+            <div className="flex items-center gap-4">
+              {/* Icon */}
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-blue/10">
+                <FaCar />
+              </div>
+
+              {/* Title */}
+              <div>
+                <h3 className="font-DM-sans text-lg font-bold text-primary-blue md:text-xl">
+                  Find your perfect car
+                </h3>
+
+                <p className="mt-1 text-sm text-gray-500">
+                  Compare rental cars and find the best offer for your trip.
+                </p>
+              </div>
+            </div>
+
+            {/* Badge */}
+            <div className="hidden rounded-full bg-primary-blue/5 px-4 py-2 text-xs font-semibold text-primary-blue sm:block">
+              Car rental
+            </div>
+          </div>
+
+          {/* Discover Cars */}
+          <div className="flex justify-center px-4 py-7 md:px-8 md:py-9">
+            <DiscoverCarsWidget language={language} />
+          </div>
+        </div>
+
+        {/* flight widget */}
+
+        <div className="mt-16 flex justify-center">
+          <iframe
+            src="https://www.trip.com/partners/ad/S19050852?Allianceid=9679412&SID=326856440&trip_sub1="
+            width="900"
+            height="200"
+            frameBorder="0"
+            scrolling="no"
+            title="Trip.com Advertisement"
+            style={{
+              border: "none",
             }}
           />
         </div>
-
-
-        <div className="mt-16 flex justify-center ">
-          {
-            language === "en" ?
-              <div className="">
-                <iframe width="390" height="420" scrolling="no" src="https://www.ferryhopper.com/en/embed/simple?aff_uid=vcnzag&options=nologo"></iframe>
-              </div>
-              :
-              <div className="">
-                <iframe width="390" height="420" scrolling="no" src="https://www.ferryhopper.com/el/embed/simple?aff_uid=vcnzag&options=nologo"></iframe>
-              </div>
-          }
-        </div>
-
 
         <AddPlaceModal isOpen={isModalOpen} onClose={handleModalClose} />
       </div>

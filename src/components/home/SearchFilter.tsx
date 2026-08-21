@@ -63,13 +63,16 @@ const SearchFilter = () => {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   // Memoized property types
-  const availablePropertyTypes = useMemo<PropertyType[]>(() => [
-    { value: "HOME", label: t("search.home") },
-    { value: "APARTMENT", label: t("search.apartment") },
-    { value: "ROOM", label: t("search.room") },
-    { value: "BOAT", label: t("search.boat") },
-    { value: "VAN", label: t("search.van") },
-  ], [t]);
+  const availablePropertyTypes = useMemo<PropertyType[]>(
+    () => [
+      { value: "HOME", label: t("search.home") },
+      { value: "APARTMENT", label: t("search.apartment") },
+      { value: "ROOM", label: t("search.room") },
+      { value: "BOAT", label: t("search.boat") },
+      { value: "VAN", label: t("search.van") },
+    ],
+    [t],
+  );
 
   // Handle date changes from CalendarRangePicker
   const handleDateChange = (dates: {
@@ -119,7 +122,11 @@ const SearchFilter = () => {
       const plans = res.data.data;
 
       const basePlan = plans.find((p: any) => {
-        const translation = p.translations.find((tr: any) => tr.language === (currentLanguage === "en" ? "en" : "el")) || p.translations.find((tr: any) => tr.language === "en");
+        const translation =
+          p.translations.find(
+            (tr: any) =>
+              tr.language === (currentLanguage === "en" ? "en" : "el"),
+          ) || p.translations.find((tr: any) => tr.language === "en");
         return translation?.name?.toLowerCase().includes("base");
       });
 
@@ -129,7 +136,10 @@ const SearchFilter = () => {
         return;
       }
 
-      const planTranslation = basePlan.translations.find((tr: any) => tr.language === (currentLanguage === "en" ? "en" : "el")) || basePlan.translations.find((tr: any) => tr.language === "en");
+      const planTranslation =
+        basePlan.translations.find(
+          (tr: any) => tr.language === (currentLanguage === "en" ? "en" : "el"),
+        ) || basePlan.translations.find((tr: any) => tr.language === "en");
       const planDuration = planTranslation?.planType === "TWO_YEARLY" ? 2 : 1;
 
       const payload = {
@@ -168,7 +178,7 @@ const SearchFilter = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="bg-white rounded-xl lg:rounded-full px-4 lg:px-4 py-6 shadow-md">
+      <div className="bg-white rounded-xl lg:rounded-full px-4 lg:px-6 py-6 shadow-md">
         <div className="flex flex-col lg:flex-row items-stretch gap-2 flex-wrap">
           {/* Destination */}
           <div className="flex-1">
@@ -274,7 +284,7 @@ const SearchFilter = () => {
                 </PopoverTrigger>
                 <PopoverContent
                   className="w-auto border-none shadow-none"
-                // align="start"
+                  // align="start"
                 >
                   <CalendarRangePickerNew
                     availabilityDates={availabilityDates}
@@ -319,7 +329,11 @@ const SearchFilter = () => {
           <div className="flex-1 flex items-end mt-3">
             <PrimaryButton
               onClick={() => {
-                if (!userData?.subscriptions?.some(sub => sub.status === "ACTIVE")) {
+                if (
+                  !userData?.subscriptions?.some(
+                    (sub) => sub.status === "ACTIVE",
+                  )
+                ) {
                   handleBasePlanCheckout();
                 } else {
                   runSearch();
@@ -329,13 +343,26 @@ const SearchFilter = () => {
               title={
                 <div className="flex items-center gap-2">
                   {checkoutLoading ? "..." : t("search.search")}
-                  {!userData?.subscriptions?.some(sub => sub.status === "ACTIVE") && !checkoutLoading && <FaLock className="w-3 h-3 text-white/70" />}
+                  {!userData?.subscriptions?.some(
+                    (sub) => sub.status === "ACTIVE",
+                  ) &&
+                    !checkoutLoading && (
+                      <FaLock className="w-3 h-3 text-white/70" />
+                    )}
                 </div>
               }
               textColor="text-white w-full text-sm md:text-base text-center lg:text-lg"
-              bgColor={!userData?.subscriptions?.some(sub => sub.status === "ACTIVE") ? "bg-gray-400" : "bg-primary-blue hover:brightness-90"}
+              bgColor={
+                !userData?.subscriptions?.some((sub) => sub.status === "ACTIVE")
+                  ? "bg-gray-400"
+                  : "bg-primary-blue hover:brightness-90"
+              }
               bgImage="/buttonHomeIcon.svg"
-              className={!userData?.subscriptions?.some(sub => sub.status === "ACTIVE") ? "grayscale opacity-80" : ""}
+              className={
+                !userData?.subscriptions?.some((sub) => sub.status === "ACTIVE")
+                  ? "grayscale opacity-80"
+                  : ""
+              }
             />
           </div>
         </div>

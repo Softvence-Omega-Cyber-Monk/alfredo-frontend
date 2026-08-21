@@ -37,6 +37,7 @@ import ExchangeRequestDetails from "@/components/ExchangeRequest/ExchangeRequest
 import Success from "@/pages/Success";
 import Cancel from "@/pages/Cancel";
 import VacanzaSavingsCalculator from "../pages/Calculator";
+import VacanzaProtect from "@/pages/VacanzaProtect";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfService from "@/pages/TermsOfService";
 import DataDeletion from "@/pages/DataDeletion";
@@ -65,6 +66,10 @@ const routes = createBrowserRouter([
       {
         path: "/calculator",
         element: <VacanzaSavingsCalculator />,
+      },
+      {
+        path: "/vacanzaprotect",
+        element: <VacanzaProtect />,
       },
       {
         path: "/articles",
