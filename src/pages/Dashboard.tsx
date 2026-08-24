@@ -12,7 +12,7 @@ import CardButtons from "@/components/reusable/CardButtons";
 import { FaHandshake } from "react-icons/fa";
 import { PiHeartbeatLight } from "react-icons/pi";
 import { GiHouse } from "react-icons/gi";
-import { FaHouseChimneyMedical } from "react-icons/fa6";
+import { FaHouseChimneyMedical, FaPlane } from "react-icons/fa6";
 import { SearchProvider } from "@/contexts/SearchContext";
 import SearchFilter from "@/components/home/SearchFilter";
 import SearchResults from "@/components/Search/SearchResults";
@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import PrimaryButton from "@/components/reusable/PrimaryButton";
 import DiscoverCarsWidget from "@/components/dashboard/DiscoverCarWidget";
-import VacanzaProtectWidget from "@/components/dashboard/VacanzaProtectWidget";
+// import VacanzaProtectWidget from "@/components/dashboard/VacanzaProtectWidget";
 import { FaFerry } from "react-icons/fa6";
 import { FaCar } from "react-icons/fa";
 
@@ -349,7 +349,7 @@ const Dashboard = () => {
         </div>
 
         {/* Vacanza Protect widget */}
-        <VacanzaProtectWidget />
+        {/* <VacanzaProtectWidget /> */}
 
         {/* Ferry widget */}
         <div className="mt-8 overflow-hidden rounded-[28px] border border-primary-blue/10 bg-gradient-to-br from-white via-white to-[#f5f9ff] shadow-[0_16px_50px_rgba(23,64,117,0.08)]">
@@ -441,18 +441,51 @@ const Dashboard = () => {
 
         {/* flight widget */}
 
-        <div className="mt-16 flex justify-center">
-          <iframe
-            src="https://www.trip.com/partners/ad/S19050852?Allianceid=9679412&SID=326856440&trip_sub1="
-            width="900"
-            height="200"
-            frameBorder="0"
-            scrolling="no"
-            title="Trip.com Advertisement"
-            style={{
-              border: "none",
-            }}
-          />
+        {/* Flight widget */}
+        <div className="mt-8 overflow-hidden rounded-[28px] border border-primary-blue/10 bg-gradient-to-br from-white via-white to-[#f5f9ff] shadow-[0_16px_50px_rgba(23,64,117,0.08)]">
+          {/* Header */}
+          <div className="flex flex-col gap-4 border-b border-primary-blue/10 px-6 py-5 sm:flex-row sm:items-center sm:justify-between md:px-8">
+            <div className="flex items-center gap-4">
+              {/* Icon */}
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-blue/10">
+                <FaPlane />
+              </div>
+
+              {/* Title */}
+              <div>
+                <h3 className="font-DM-sans text-lg font-bold text-primary-blue md:text-xl">
+                  Book your flight
+                </h3>
+                <p className="mt-1 text-sm text-gray-500">
+                  Search flights and find the best offers for your journey.
+                </p>
+              </div>
+            </div>
+
+            {/* Badge */}
+            <div className="hidden rounded-full bg-primary-blue/5 px-4 py-2 text-xs font-semibold text-primary-blue sm:block">
+              Flight booking
+            </div>
+          </div>
+
+          {/* Trip.com Widget */}
+          <div className="flex justify-center px-4 py-7 md:px-8 md:py-9">
+            <div className="overflow-hidden rounded-2xl bg-white">
+              <iframe
+                src="https://www.trip.com/partners/ad/S19050852?Allianceid=9679412&SID=326856440&trip_sub1="
+                width="320"
+                height="320"
+                frameBorder="0"
+                scrolling="no"
+                style={{
+                  border: "none",
+                  display: "block",
+                }}
+                id="S19050852"
+                title="Trip.com Flight Booking"
+              />
+            </div>
+          </div>
         </div>
 
         <AddPlaceModal isOpen={isModalOpen} onClose={handleModalClose} />

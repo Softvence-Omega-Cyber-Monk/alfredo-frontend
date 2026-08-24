@@ -3,27 +3,42 @@ import PlacesGrid from "@/components/places/PlacesGrid";
 import PlacesHeading from "@/components/places/PlacesHeading";
 import PlacesEmpty from "@/components/places/PlacesEmpty";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   fetchAllProperties,
   fetchMyProperties,
+  PROPERTIES_PER_PAGE,
 } from "@/store/Slices/PropertySlice/propertySlice";
 import Loader from "@/components/reusable/Loader";
+import Pagination from "@/components/reusable/Pagination";
 
 const Places = () => {
   const dispatch = useAppDispatch();
-  const { allProperties, myProperties, loading, error } = useAppSelector(
-    (state) => state.property
-  );
+  const [page, setPage] = useState(1);
+  const { allProperties, allPropertiesMeta, myProperties, loading, error } =
+    useAppSelector((state) => state.property);
 
   const filteredProperties = allProperties.filter(
     (property) => !myProperties.some((myProp) => myProp.id === property.id)
   );
 
   useEffect(() => {
-    dispatch(fetchAllProperties());
+    dispatch(fetchAllProperties({ page, limit: PROPERTIES_PER_PAGE }));
+  }, [dispatch, page]);
+
+  useEffect(() => {
     dispatch(fetchMyProperties());
   }, [dispatch]);
+
+  const totalPages = allPropertiesMeta.totalPages;
+  const hasPlaces = allPropertiesMeta.total > 0;
+  const isInitialLoad = loading && allProperties.length === 0;
+
+  const handlePageChange = (nextPage: number) => {
+    if (nextPage === page || nextPage < 1 || nextPage > totalPages) return;
+    setPage(nextPage);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   // Transform PropertyListItem to CommonCard format
   const propertyCards = filteredProperties.map((property) => ({
@@ -40,9 +55,7 @@ const Places = () => {
     isAvailable: property.isAvailable,
   }));
 
-  const hasPlaces = allProperties.length > 0;
-
-  if (loading) {
+  if (isInitialLoad) {
     return (
       <div className="mt-6 md:mt-10">
         <CommonWrapper>
@@ -74,7 +87,21 @@ const Places = () => {
         <div className="p-6">
           <PlacesHeading hasPlaces={hasPlaces} />
           {hasPlaces ? (
-            <PlacesGrid propertyCards={propertyCards} />
+            <>
+              <div
+                className={
+                  loading ? "opacity-50 pointer-events-none transition-opacity" : ""
+                }
+              >
+                <PlacesGrid propertyCards={propertyCards} />
+              </div>
+              <Pagination
+                currentPage={page}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+                disabled={loading}
+              />
+            </>
           ) : (
             <PlacesEmpty />
           )}

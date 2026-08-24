@@ -58,8 +58,24 @@ export interface PropertyListItem {
   coverImage?: string;
 }
 
+export interface PaginationMeta {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface PaginatedProperties {
+  items: PropertyListItem[];
+  meta: PaginationMeta;
+}
+
+// Server default page size for `/property`
+export const PROPERTIES_PER_PAGE = 12;
+
 interface PropertyState {
   allProperties: PropertyListItem[];
+  allPropertiesMeta: PaginationMeta;
   featuredProperties: PropertyListItem[];
   myProperties: PropertyListItem[];
   singleProperty: PropertyDetails | null;
@@ -69,6 +85,12 @@ interface PropertyState {
 
 const initialState: PropertyState = {
   allProperties: [],
+  allPropertiesMeta: {
+    total: 0,
+    page: 1,
+    limit: PROPERTIES_PER_PAGE,
+    totalPages: 0,
+  },
   featuredProperties: [],
   myProperties: [],
   singleProperty: null,
@@ -76,14 +98,31 @@ const initialState: PropertyState = {
   error: null,
 };
 
-// ✅ Fetch all properties
-export const fetchAllProperties = createAsyncThunk<PropertyListItem[]>(
-  "properties/fetchAll",
-  async () => {
-    const response = await api.get("/property");
-    return response.data.data || response.data || [];
-  }
-);
+// ✅ Fetch all properties (server-side paginated)
+export const fetchAllProperties = createAsyncThunk<
+  PaginatedProperties,
+  { page?: number; limit?: number }
+>("properties/fetchAll", async ({ page = 1, limit = PROPERTIES_PER_PAGE }) => {
+  const response = await api.get("/property", { params: { page, limit } });
+
+  const items: PropertyListItem[] = Array.isArray(response.data?.data)
+    ? response.data.data
+    : Array.isArray(response.data)
+    ? response.data
+    : [];
+
+  // Older responses may not carry `meta` — fall back to a single page.
+  const meta = response.data?.meta;
+  return {
+    items,
+    meta: {
+      total: meta?.total ?? items.length,
+      page: meta?.page ?? page,
+      limit: meta?.limit ?? limit,
+      totalPages: meta?.totalPages ?? (items.length > 0 ? 1 : 0),
+    },
+  };
+});
 
 // ✅ Fetch my properties
 export const fetchMyProperties = createAsyncThunk<PropertyListItem[]>(
@@ -154,21 +193,21 @@ const propertySlice = createSlice({
       // Fetch All
       .addCase(fetchAllProperties.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(fetchAllProperties.fulfilled, (state, action) => {
         state.loading = false;
-        state.allProperties = Array.isArray(action.payload)
-          ? action.payload
-          : [];
+        state.error = null;
+        state.allProperties = action.payload.items;
+        state.allPropertiesMeta = action.payload.meta;
       })
       .addCase(fetchAllProperties.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to fetch all properties";
       })
 
-      // Fetch My
+      // Fetch My — must not clear `loading`, which tracks the all-properties request
       .addCase(fetchMyProperties.fulfilled, (state, action) => {
-        state.loading = false;
         state.myProperties = Array.isArray(action.payload)
           ? action.payload
           : [];
@@ -196,6 +235,10 @@ const propertySlice = createSlice({
       .addCase(addProperty.fulfilled, (state, action) => {
         state.allProperties.push(action.payload);
         state.myProperties.push(action.payload);
+        state.allPropertiesMeta.total += 1;
+        state.allPropertiesMeta.totalPages = Math.ceil(
+          state.allPropertiesMeta.total / state.allPropertiesMeta.limit
+        );
       })
 
       // Update
@@ -217,9 +260,19 @@ const propertySlice = createSlice({
 
       // Delete
       .addCase(deleteProperty.fulfilled, (state, action) => {
-        state.allProperties = state.allProperties.filter(
+        const nextAll = state.allProperties.filter(
           (p) => p.id !== action.payload
         );
+        if (nextAll.length !== state.allProperties.length) {
+          state.allPropertiesMeta.total = Math.max(
+            0,
+            state.allPropertiesMeta.total - 1
+          );
+          state.allPropertiesMeta.totalPages = Math.ceil(
+            state.allPropertiesMeta.total / state.allPropertiesMeta.limit
+          );
+        }
+        state.allProperties = nextAll;
         state.myProperties = state.myProperties.filter(
           (p) => p.id !== action.payload
         );
