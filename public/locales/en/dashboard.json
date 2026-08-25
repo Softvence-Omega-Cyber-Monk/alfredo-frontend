@@ -7,6 +7,7 @@
     "button3": "Exchange Request",
     "button4": "My Places",
     "exploreMore": "Explore All",
+    "seeAllAvailableHouse": "See all available house",
     "part0": {
       "currentPlan": "Current Plan",
       "no": "None",
@@ -124,6 +125,17 @@
     },
     "part5": {
       "title": "Available for Home Exchange?"
+    },
+    "widgetText": {
+      "searchTitle": "Advance Search",
+      "searchSubtitle": "(only for members)",
+      "travelServiceSubtitle": "Flights, ferries, car rentals, travel insurance and more. All in one place, from trusted travel partners.",
+      "ferryTitle": "Search for a ferry",
+      "ferrySubtitle": "Book ferry tickets easily in one step.",
+      "carTitle": "Search for a car",
+      "carSubtitle": "Compare rental cars and find the best prices.",
+      "flightTitle": "Search for a flight",
+      "flightSubtitle": "Compare flights and find the right option for your journey."
     }
   }
 }

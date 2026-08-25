@@ -278,20 +278,10 @@ const Dashboard = () => {
                 <span className="block text-[#174075]">in one page!</span>
               </h1>
 
-              {/* Description */}
-              {/* <p className="mt-5 max-w-2xl text-sm leading-7 text-gray-500 md:text-base">
-                Search accommodations and plan your journey all from one place.
-              </p> */}
-              <p className="mt-5 max-w-2xl text-sm leading-7 text-gray-500 md:text-base">
-                Discover, find, or exchange accommodations for your next
-                journey. From homes and apartments to rooms, boats, vans, and
-                more.
-              </p>
-
               {/* CTA */}
               <div className="mt-8">
                 <PrimaryButton
-                  title={t("dashboard.exploreMore")}
+                  title={t("dashboard.seeAllAvailableHouse")}
                   onClick={() => {
                     navigate("/places");
                   }}
@@ -305,17 +295,16 @@ const Dashboard = () => {
           <div className="mt-12 md:mt-16 w-full">
             {/* Search section heading */}
             <div className="mb-7 text-center">
-              <span className="font-DM-sans text-xs font-semibold uppercase tracking-[0.18em] text-primary-blue/70">
+              {/* <span className="font-DM-sans text-xs font-semibold uppercase tracking-[0.18em] text-primary-blue/70">
                 Find your stay
-              </span>
+              </span> */}
 
               <h2 className="mt-2 font-DM-sans text-2xl font-bold tracking-tight text-primary-blue md:text-3xl">
-                Advance Search
+                {t("dashboard.widgetText.searchTitle")}
               </h2>
 
               <p className="mx-auto mt-2 max-w-xl text-sm text-gray-500">
-                Refine your search and find the perfect accommodation for your
-                trip.
+                {t("dashboard.widgetText.searchSubtitle")}
               </p>
             </div>
 
@@ -342,8 +331,7 @@ const Dashboard = () => {
             </h2>
 
             <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-gray-500 md:text-base">
-              Protect your home, book ferries, compare car rentals, and discover
-              flights from trusted travel partners.
+              {t("dashboard.widgetText.travelServiceSubtitle")}
             </p>
           </div>
         </div>
@@ -363,17 +351,13 @@ const Dashboard = () => {
 
               <div>
                 <h3 className="font-DM-sans text-lg font-bold text-primary-blue md:text-xl">
-                  Book your ferry
+                  {t("dashboard.widgetText.ferryTitle")}
                 </h3>
 
                 <p className="mt-1 text-sm text-gray-500">
-                  Find ferry routes and plan your island journey.
+                  {t("dashboard.widgetText.ferrySubtitle")}
                 </p>
               </div>
-            </div>
-
-            <div className="hidden rounded-full bg-primary-blue/5 px-4 py-2 text-xs font-semibold text-primary-blue sm:block">
-              Ferry booking
             </div>
           </div>
 
@@ -418,18 +402,13 @@ const Dashboard = () => {
               {/* Title */}
               <div>
                 <h3 className="font-DM-sans text-lg font-bold text-primary-blue md:text-xl">
-                  Find your perfect car
+                  {t("dashboard.widgetText.carTitle")}
                 </h3>
 
                 <p className="mt-1 text-sm text-gray-500">
-                  Compare rental cars and find the best offer for your trip.
+                  {t("dashboard.widgetText.carSubtitle")}
                 </p>
               </div>
-            </div>
-
-            {/* Badge */}
-            <div className="hidden rounded-full bg-primary-blue/5 px-4 py-2 text-xs font-semibold text-primary-blue sm:block">
-              Car rental
             </div>
           </div>
 
@@ -454,17 +433,12 @@ const Dashboard = () => {
               {/* Title */}
               <div>
                 <h3 className="font-DM-sans text-lg font-bold text-primary-blue md:text-xl">
-                  Book your flight
+                  {t("dashboard.widgetText.flightTitle")}
                 </h3>
                 <p className="mt-1 text-sm text-gray-500">
-                  Search flights and find the best offers for your journey.
+                  {t("dashboard.widgetText.flightSubtitle")}
                 </p>
               </div>
-            </div>
-
-            {/* Badge */}
-            <div className="hidden rounded-full bg-primary-blue/5 px-4 py-2 text-xs font-semibold text-primary-blue sm:block">
-              Flight booking
             </div>
           </div>
 
