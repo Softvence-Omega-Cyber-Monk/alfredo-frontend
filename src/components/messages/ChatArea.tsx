@@ -1,11 +1,13 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { ChatAreaProps } from "@/components/messages/types";
-import { ChevronLeft, Paperclip, Ban, Trash2, FileText, Check, CheckCheck, Lock, Flag } from "lucide-react";
+import { ChevronLeft, Paperclip, Ban, Trash2, FileText, Check, CheckCheck, Lock, Flag, Phone, Video } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppDispatch } from "@/hooks/useRedux";
 import { fetchMyProperties } from "@/store/Slices/PropertySlice/propertySlice";
 import { toast } from "sonner";
 import ReportUserModal from "./ReportUserModal";
+import { useCall } from "@/contexts/CallContext";
+import { CallType } from "@/types/call";
 
 const ChatArea: FC<ChatAreaProps> = ({
   selectedConversation,
@@ -30,6 +32,7 @@ const ChatArea: FC<ChatAreaProps> = ({
   const dispatch = useAppDispatch();
   const [isUploading, setIsUploading] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const { startCall, status: callStatus } = useCall();
 
   useEffect(() => {
     if (messagesContainerRef.current) {
@@ -88,6 +91,21 @@ const ChatArea: FC<ChatAreaProps> = ({
     return urlRegex.test(text);
   };
 
+  const handleStartCall = (callType: CallType) => {
+    if (isBlocked) {
+      toast.warning("You can't call a blocked user.");
+      return;
+    }
+    startCall(
+      {
+        id: selectedConversation.id,
+        name: selectedConversation.name,
+        avatar: selectedConversation.avatar,
+      },
+      callType
+    );
+  };
+
   const handleSendClick = () => {
     if (isAttachmentLocked && containsLink(messageInput)) {
       toast.warning("Sending links, files, and photos is blocked until you receive at least 3 messages from this user.");
@@ -131,6 +149,26 @@ const ChatArea: FC<ChatAreaProps> = ({
             </button>
           </div>
           <div className="flex items-center space-x-2 z-100">
+            {/* Audio / Video Call Buttons */}
+            <button
+              onClick={() => handleStartCall("audio")}
+              disabled={isBlocked || callStatus !== "idle"}
+              aria-label="Start audio call"
+              title="Audio call"
+              className="p-2 cursor-pointer rounded-full bg-white/20 hover:bg-white/30 transition-colors active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white/20"
+            >
+              <Phone className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => handleStartCall("video")}
+              disabled={isBlocked || callStatus !== "idle"}
+              aria-label="Start video call"
+              title="Video call"
+              className="p-2 cursor-pointer rounded-full bg-white/20 hover:bg-white/30 transition-colors active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white/20"
+            >
+              <Video className="w-4 h-4" />
+            </button>
+
             {/* Block / Unblock Button */}
             {isBlockedByMe ? (
               <button
