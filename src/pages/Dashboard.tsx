@@ -24,6 +24,8 @@ import DiscoverCarsWidget from "@/components/dashboard/DiscoverCarWidget";
 // import VacanzaProtectWidget from "@/components/dashboard/VacanzaProtectWidget";
 import { FaFerry } from "react-icons/fa6";
 import { FaCar } from "react-icons/fa";
+import ferry from "@/assets/dashboard/ferry1.jpeg";
+import car from "@/assets/dashboard/caar2.png";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -345,7 +347,7 @@ const Dashboard = () => {
           <div className="flex flex-col gap-4 border-b border-primary-blue/10 px-6 py-5 sm:flex-row sm:items-center sm:justify-between md:px-8">
             <div className="flex items-center gap-4">
               {/* Icon */}
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-blue/10">
+              <div className="flex h-12 w-12  shrink-0 items-center justify-center rounded-2xl bg-primary-blue/10">
                 <FaFerry />
               </div>
 
@@ -362,15 +364,18 @@ const Dashboard = () => {
           </div>
 
           {/* Widget */}
-          <div className="flex justify-center px-4 py-7 md:px-8 md:py-9">
-            <div className="overflow-hidden rounded-2xl bg-white ">
+          <div
+            className="flex justify-center px-4 py-7 md:px-8 md:py-9 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${ferry})` }}
+          >
+            <div className="overflow-hidden rounded-2xl ">
               {language === "en" ? (
                 <iframe
                   width="390"
                   height="420"
                   scrolling="no"
                   src="https://www.ferryhopper.com/en/embed/simple?aff_uid=vcnzag&options=nologo"
-                  className="block max-w-full"
+                  className="block max-w-full opacity-90"
                   title="Ferryhopper ferry booking"
                 />
               ) : (
@@ -413,7 +418,13 @@ const Dashboard = () => {
           </div>
 
           {/* Discover Cars */}
-          <div className="flex justify-center px-4 py-7 md:px-8 md:py-9">
+          <div
+            className="flex justify-center px-4 py-7 md:px-8 md:py-9 bg-cover bg-center"
+            style={{
+              backgroundImage: `url(${car})`,
+              backgroundRepeat: "no-repeat",
+            }}
+          >
             <DiscoverCarsWidget language={language} />
           </div>
         </div>
