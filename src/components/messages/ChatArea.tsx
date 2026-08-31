@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { ChatAreaProps } from "@/components/messages/types";
-import { ChevronLeft, Paperclip, Ban, Trash2, FileText, Check, CheckCheck, Lock, Flag, Phone, Video } from "lucide-react";
+import { ChevronLeft, Paperclip, Ban, FileText, Check, CheckCheck, Lock, Flag, Phone, Video } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppDispatch } from "@/hooks/useRedux";
 import { fetchMyProperties } from "@/store/Slices/PropertySlice/propertySlice";
@@ -20,7 +20,6 @@ const ChatArea: FC<ChatAreaProps> = ({
   onToggleInfo,
   onBlockUser,
   onUnblockUser,
-  onDeleteChat,
   blockedUserIds = [],
   blockedByThemIds = [],
   onSendAttachment,
@@ -194,15 +193,6 @@ const ChatArea: FC<ChatAreaProps> = ({
             >
               <Flag className="w-3 h-3" />
               <span className="hidden sm:inline">Report</span>
-            </button>
-
-            {/* Delete Chat Button */}
-            <button
-              onClick={() => onDeleteChat?.(selectedConversation.id, selectedConversation.name)}
-              className="text-xs bg-slate-700 hover:bg-slate-800 text-white font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 active:scale-95"
-            >
-              <Trash2 className="w-3 h-3" />
-              <span className="hidden sm:inline cursor-pointer">Delete Chat</span>
             </button>
           </div>
         </div>

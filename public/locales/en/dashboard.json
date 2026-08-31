@@ -127,8 +127,12 @@
       "title": "Available for Home Exchange?"
     },
     "widgetText": {
+      "travelHubTitle": "Your Travel Hub",
+      "travelHubSubtitle": "Organize your next trip in one page!",
       "searchTitle": "Advance Search",
       "searchSubtitle": "(only for members)",
+      "travelServiceHeading": "Travel Services",
+      "travelServiceTitle": "Everything you need for your journey",
       "travelServiceSubtitle": "Flights, ferries, car rentals, travel insurance and more. All in one place, from trusted travel partners.",
       "ferryTitle": "Search for a ferry",
       "ferrySubtitle": "Book ferry tickets easily in one step.",

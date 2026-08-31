@@ -1,6 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mic, MicOff, PhoneOff, Video, VideoOff } from "lucide-react";
+import {
+  Mic,
+  MicOff,
+  PhoneOff,
+  SwitchCamera,
+  Video,
+  VideoOff,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 import { useCall } from "@/contexts/CallContext";
 
 const formatDuration = (seconds: number) => {
@@ -20,14 +29,17 @@ const CallScreen = () => {
     remoteStream,
     isMuted,
     isCameraOff,
+    canSwitchCamera,
     hangUp,
     toggleMute,
     toggleCamera,
+    switchCamera,
   } = useCall();
 
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const [duration, setDuration] = useState(0);
+  const [isSpeakerOn, setIsSpeakerOn] = useState(true);
 
   const isOnScreen =
     status === "outgoing" ||
@@ -53,6 +65,40 @@ const CallScreen = () => {
     const id = setInterval(() => setDuration((d) => d + 1), 1000);
     return () => clearInterval(id);
   }, [status]);
+
+  // Default back to the loudspeaker for every fresh call.
+  useEffect(() => {
+    if (status === "outgoing" || status === "connecting") {
+      setIsSpeakerOn(true);
+    }
+  }, [status]);
+
+  const toggleSpeaker = async () => {
+    const nextSpeakerOn = !isSpeakerOn;
+    const audioEl = remoteVideoRef.current as
+      | (HTMLVideoElement & { setSinkId?: (sinkId: string) => Promise<void> })
+      | null;
+
+    // setSinkId lets us pick the actual output device (e.g. "Speakerphone" vs
+    // "Earpiece" on Android). Unsupported browsers (notably Safari) just keep
+    // playing on the default output — the toggle still tracks intent for the UI.
+    if (audioEl && typeof audioEl.setSinkId === "function") {
+      try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const outputs = devices.filter((d) => d.kind === "audiooutput");
+        const speaker = outputs.find((d) => /speaker/i.test(d.label));
+        const earpiece = outputs.find((d) => /earpiece|receiver/i.test(d.label));
+        const targetId = nextSpeakerOn
+          ? speaker?.deviceId || "default"
+          : earpiece?.deviceId || speaker?.deviceId || "default";
+        await audioEl.setSinkId(targetId);
+      } catch (err) {
+        console.error("Failed to change audio output:", err);
+      }
+    }
+
+    setIsSpeakerOn(nextSpeakerOn);
+  };
 
   const statusLabel = () => {
     switch (status) {
@@ -156,6 +202,24 @@ const CallScreen = () => {
               {isMuted ? <MicOff className="w-6 h-6" /> : <Mic className="w-6 h-6" />}
             </button>
 
+            <button
+              type="button"
+              onClick={toggleSpeaker}
+              aria-label={isSpeakerOn ? "Turn speaker off" : "Turn speaker on"}
+              title={isSpeakerOn ? "Speaker on" : "Speaker off"}
+              className={`w-14 h-14 rounded-full flex items-center justify-center transition-colors cursor-pointer active:scale-95 ${
+                isSpeakerOn
+                  ? "bg-white text-[#0d1b2a]"
+                  : "bg-white/15 hover:bg-white/25 text-white"
+              }`}
+            >
+              {isSpeakerOn ? (
+                <Volume2 className="w-6 h-6" />
+              ) : (
+                <VolumeX className="w-6 h-6" />
+              )}
+            </button>
+
             {isVideo && (
               <button
                 type="button"
@@ -172,6 +236,19 @@ const CallScreen = () => {
                 ) : (
                   <Video className="w-6 h-6" />
                 )}
+              </button>
+            )}
+
+            {isVideo && canSwitchCamera && (
+              <button
+                type="button"
+                onClick={switchCamera}
+                disabled={isCameraOff}
+                aria-label="Switch camera"
+                title="Switch camera"
+                className="w-14 h-14 rounded-full flex items-center justify-center transition-colors cursor-pointer active:scale-95 bg-white/15 hover:bg-white/25 text-white disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                <SwitchCamera className="w-6 h-6" />
               </button>
             )}
 

@@ -73,7 +73,7 @@ const DiscoverCarsWidget = ({ language }: DiscoverCarsWidgetProps) => {
   }, [language]);
 
   return (
-    <div className="mt-16 flex justify-center opacity-90">
+    <div className="flex w-full justify-center">
       <div ref={widgetRef} />
     </div>
   );

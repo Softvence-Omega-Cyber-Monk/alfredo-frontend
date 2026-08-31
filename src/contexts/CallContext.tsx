@@ -41,12 +41,14 @@ interface CallContextValue {
   remoteStream: MediaStream | null;
   isMuted: boolean;
   isCameraOff: boolean;
+  canSwitchCamera: boolean;
   startCall: (peer: CallPeer, callType: CallType) => Promise<void>;
   acceptCall: () => Promise<void>;
   rejectCall: () => void;
   hangUp: (reason?: string) => void;
   toggleMute: () => void;
   toggleCamera: () => void;
+  switchCamera: () => Promise<void>;
 }
 
 const CallContext = createContext<CallContextValue | null>(null);
@@ -65,6 +67,7 @@ export const CallProvider = ({ children }: { children: ReactNode }) => {
   const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
   const [isMuted, setIsMuted] = useState(false);
   const [isCameraOff, setIsCameraOff] = useState(false);
+  const [canSwitchCamera, setCanSwitchCamera] = useState(false);
 
   const authUser = useAppSelector((state) => state.auth.user);
   const userId =
@@ -82,6 +85,12 @@ export const CallProvider = ({ children }: { children: ReactNode }) => {
   const pendingCandidatesRef = useRef<RTCIceCandidateInit[]>([]);
   // Likewise the offer can beat our peer connection into existence.
   const pendingOfferRef = useRef<RTCSessionDescriptionInit | null>(null);
+
+  // Available camera deviceIds and which one is currently streaming, for the
+  // "rotate camera" control. Populated once getUserMedia grants permission —
+  // device labels/ids aren't available beforehand.
+  const videoDeviceIdsRef = useRef<string[]>([]);
+  const activeVideoDeviceIndexRef = useRef(0);
 
   // Mirror of `status` readable from inside socket listeners without re-binding them.
   const statusRef = useRef<CallStatus>("idle");
@@ -117,6 +126,8 @@ export const CallProvider = ({ children }: { children: ReactNode }) => {
     pendingCandidatesRef.current = [];
     pendingOfferRef.current = null;
     callIdRef.current = null;
+    videoDeviceIdsRef.current = [];
+    activeVideoDeviceIndexRef.current = 0;
   }, []);
 
   const teardown = useCallback(
@@ -127,6 +138,7 @@ export const CallProvider = ({ children }: { children: ReactNode }) => {
       setRemoteStream(null);
       setIsMuted(false);
       setIsCameraOff(false);
+      setCanSwitchCamera(false);
 
       if (showEndedScreen) {
         setStatus("ended");
@@ -216,6 +228,27 @@ export const CallProvider = ({ children }: { children: ReactNode }) => {
     []
   );
 
+  /** Refreshes the known camera list and records which one `stream` is using. */
+  const syncVideoDevices = useCallback(async (stream: MediaStream) => {
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const videoInputIds = devices
+        .filter((d) => d.kind === "videoinput" && d.deviceId)
+        .map((d) => d.deviceId);
+
+      videoDeviceIdsRef.current = videoInputIds;
+      setCanSwitchCamera(videoInputIds.length > 1);
+
+      const activeDeviceId = stream.getVideoTracks()[0]?.getSettings().deviceId;
+      const activeIndex = activeDeviceId ? videoInputIds.indexOf(activeDeviceId) : -1;
+      activeVideoDeviceIndexRef.current = activeIndex !== -1 ? activeIndex : 0;
+    } catch (err) {
+      console.error("Failed to enumerate camera devices:", err);
+      videoDeviceIdsRef.current = [];
+      setCanSwitchCamera(false);
+    }
+  }, []);
+
   const requestMedia = useCallback(
     async (type: CallType): Promise<MediaStream | null> => {
       if (!isMediaSupported()) {
@@ -223,13 +256,20 @@ export const CallProvider = ({ children }: { children: ReactNode }) => {
         return null;
       }
       try {
-        return await navigator.mediaDevices.getUserMedia(getMediaConstraints(type));
+        const stream = await navigator.mediaDevices.getUserMedia(getMediaConstraints(type));
+        if (type === "video") {
+          await syncVideoDevices(stream);
+        } else {
+          videoDeviceIdsRef.current = [];
+          setCanSwitchCamera(false);
+        }
+        return stream;
       } catch (err) {
         toast.error(describeMediaError(err));
         return null;
       }
     },
-    []
+    [syncVideoDevices]
   );
 
   const startCall = useCallback(
@@ -326,6 +366,50 @@ export const CallProvider = ({ children }: { children: ReactNode }) => {
     track.enabled = !track.enabled;
     setIsCameraOff(!track.enabled);
   }, []);
+
+  /** Flips to the next available camera (e.g. front ↔ back on mobile). */
+  const switchCamera = useCallback(async () => {
+    const pc = pcRef.current;
+    const stream = localStreamRef.current;
+    const deviceIds = videoDeviceIdsRef.current;
+    if (!pc || !stream || callType !== "video" || deviceIds.length < 2) return;
+
+    const nextIndex = (activeVideoDeviceIndexRef.current + 1) % deviceIds.length;
+    const nextDeviceId = deviceIds[nextIndex];
+
+    try {
+      const newStream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          deviceId: { exact: nextDeviceId },
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+        },
+      });
+      const newTrack = newStream.getVideoTracks()[0];
+      if (!newTrack) return;
+
+      const sender = pc.getSenders().find((s) => s.track?.kind === "video");
+      if (sender) await sender.replaceTrack(newTrack);
+
+      const oldTrack = stream.getVideoTracks()[0];
+      if (oldTrack) {
+        stream.removeTrack(oldTrack);
+        oldTrack.stop();
+      }
+      newTrack.enabled = !isCameraOff;
+      stream.addTrack(newTrack);
+      activeVideoDeviceIndexRef.current = nextIndex;
+
+      // New track on the same MediaStream object won't re-render the local
+      // preview on its own — give it a fresh reference so the effect fires.
+      const refreshedStream = new MediaStream(stream.getTracks());
+      localStreamRef.current = refreshedStream;
+      setLocalStream(refreshedStream);
+    } catch (err) {
+      console.error("Failed to switch camera:", err);
+      toast.error("Could not switch camera.");
+    }
+  }, [callType, isCameraOff]);
 
   // ── Signaling ────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -476,12 +560,14 @@ export const CallProvider = ({ children }: { children: ReactNode }) => {
       remoteStream,
       isMuted,
       isCameraOff,
+      canSwitchCamera,
       startCall,
       acceptCall,
       rejectCall,
       hangUp,
       toggleMute,
       toggleCamera,
+      switchCamera,
     }),
     [
       status,
@@ -491,12 +577,14 @@ export const CallProvider = ({ children }: { children: ReactNode }) => {
       remoteStream,
       isMuted,
       isCameraOff,
+      canSwitchCamera,
       startCall,
       acceptCall,
       rejectCall,
       hangUp,
       toggleMute,
       toggleCamera,
+      switchCamera,
     ]
   );
 

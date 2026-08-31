@@ -26,6 +26,7 @@ import { FaFerry } from "react-icons/fa6";
 import { FaCar } from "react-icons/fa";
 import ferry from "@/assets/dashboard/ferry1.jpeg";
 import car from "@/assets/dashboard/caar2.png";
+import travelhub from "@/assets/dashboard/travel-hub-3.png";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -260,24 +261,41 @@ const Dashboard = () => {
         {/* header part for all widget  */}
         {/* Travel hub header */}
         <div className="w-full mt-16 md:mt-20">
-          <div className="relative overflow-hidden rounded-[32px] border border-primary-blue/10 bg-gradient-to-br from-primary-blue/[0.06] via-white to-[#eef6ff] px-6 py-12 md:px-12 md:py-16">
+          {/* bg-gradient-to-br from-primary-blue/[0.06] via-white to-[#eef6ff]  */}
+          <div
+            className="relative overflow-hidden rounded-[32px] border border-primary-blue/10 px-6 py-12 md:px-12 md:py-16"
+            style={{
+              backgroundImage: `url(${travelhub})`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
             {/* Decorative background */}
-            <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary-blue/[0.08] blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-[#62c2f9]/[0.10] blur-3xl" />
+            {/* <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary-blue/[0.08] blur-3xl" />
+    <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-[#62c2f9]/[0.10] blur-3xl" /> */}
+
+            {/* Dark subtle overlay for text readability */}
+            <div className="absolute inset-0 bg-black/20" />
+
+            {/* Soft white gradient behind content */}
+            <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-black/20 to-black/35" />
 
             <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
               {/* Eyebrow */}
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary-blue/10 bg-white/80 px-4 py-2 shadow-sm backdrop-blur-sm">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/90 px-4 py-2 shadow-md backdrop-blur-md">
                 <span className="h-2 w-2 rounded-full bg-primary-blue" />
-                <span className="font-DM-sans text-xs font-semibold uppercase tracking-[0.18em] text-primary-blue">
-                  Your travel hub
+
+                <span className="font-DM-sans text-xs font-semibold uppercase tracking-[0.12em] text-primary-blue">
+                  {t("dashboard.widgetText.travelHubTitle")}
                 </span>
               </div>
 
               {/* Main heading */}
-              <h1 className="font-DM-sans text-3xl font-bold leading-tight tracking-tight text-primary-blue md:text-5xl">
-                Organize your next trip
-                <span className="block text-[#174075]">in one page!</span>
+              <h1 className="font-DM-sans text-3xl max-w-2xl font-bold leading-tight tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)] md:text-5xl">
+                {/* Organize your next trip
+                <span className="block text-white">in one page!</span> */}
+                {t("dashboard.widgetText.travelHubSubtitle")}
               </h1>
 
               {/* CTA */}
@@ -325,11 +343,11 @@ const Dashboard = () => {
         <div className="mt-20 md:mt-24">
           <div className="mb-10 text-center">
             <span className="font-DM-sans text-xs font-semibold uppercase tracking-[0.18em] text-primary-blue/70">
-              Travel services
+              {t("dashboard.widgetText.travelServiceHeading")}
             </span>
 
             <h2 className="mt-2 font-DM-sans text-2xl font-bold tracking-tight text-primary-blue md:text-3xl">
-              Everything you need for your journey
+              {t("dashboard.widgetText.travelServiceTitle")}
             </h2>
 
             <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-gray-500 md:text-base">
@@ -375,7 +393,7 @@ const Dashboard = () => {
                   height="420"
                   scrolling="no"
                   src="https://www.ferryhopper.com/en/embed/simple?aff_uid=vcnzag&options=nologo"
-                  className="block max-w-full opacity-90"
+                  className="block max-w-full"
                   title="Ferryhopper ferry booking"
                 />
               ) : (
@@ -419,7 +437,7 @@ const Dashboard = () => {
 
           {/* Discover Cars */}
           <div
-            className="flex justify-center px-4 py-7 md:px-8 md:py-9 bg-cover bg-center"
+            className="flex min-h-[700px] items-center justify-center px-4 py-7 md:px-8 md:py-9 bg-cover bg-center"
             style={{
               backgroundImage: `url(${car})`,
               backgroundRepeat: "no-repeat",
@@ -454,20 +472,37 @@ const Dashboard = () => {
           </div>
 
           {/* Trip.com Widget */}
-          <div className="flex justify-center px-4 py-7 md:px-8 md:py-9">
+          <div className="flex justify-center px-4 py-7 md:px-8 md:py-9 overflow-x-auto">
             <div className="overflow-hidden rounded-2xl bg-white">
+              {/* Phone layout */}
               <iframe
                 src="https://www.trip.com/partners/ad/S19050852?Allianceid=9679412&SID=326856440&trip_sub1="
                 width="320"
-                height="320"
+                height="480"
                 frameBorder="0"
                 scrolling="no"
                 style={{
                   border: "none",
                   display: "block",
                 }}
-                id="S19050852"
+                id="S19050852-mobile"
                 title="Trip.com Flight Booking"
+                className="block md:hidden"
+              />
+              {/* Computer layout */}
+              <iframe
+                src="https://www.trip.com/partners/ad/S19050852?Allianceid=9679412&SID=326856440&trip_sub1="
+                width="900"
+                height="200"
+                frameBorder="0"
+                scrolling="no"
+                style={{
+                  border: "none",
+                  display: "block",
+                }}
+                id="S19050852-desktop"
+                title="Trip.com Flight Booking"
+                className="hidden md:block"
               />
             </div>
           </div>
